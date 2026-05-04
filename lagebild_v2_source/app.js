@@ -53,15 +53,12 @@ function setLanguage(lang) {
 
 // ============ THEME TOGGLE ============
 function setupThemeToggle() {
+  // v2.2 GSM dialect: light-only.
+  // Government Statistical Modernism dialect ships light-only (BMWK,
+  // Destatis, Eurostat). Toggle button removed from header. Function kept
+  // as a safe no-op so any legacy caller still resolves without throwing.
   const btn = document.getElementById('theme-toggle');
-  btn.addEventListener('click', () => {
-    const current = document.documentElement.dataset.theme || 'dark';
-    const next = current === 'dark' ? 'light' : 'dark';
-    document.documentElement.dataset.theme = next;
-    btn.textContent = next === 'dark' ? '☀' : '☾';
-    // Re-render map with new colors
-    if (map) updateMapColors();
-  });
+  if (!btn) return;
 }
 
 // ============ TICKER ============
@@ -192,7 +189,7 @@ function animateCounters() {
 const COLOR_PALETTES = {
   pop:        ['#ffffcc','#ffeda0','#fed976','#feb24c','#fd8d3c','#fc4e2a','#e31a1c','#bd0026','#800026'], // YlOrRd
   foreign:    ['#fcfbfd','#efedf5','#dadaeb','#bcbddc','#9e9ac8','#807dba','#6a51a3','#54278f','#3f007d'], // Purples
-  baustellen: ['#fff5f0','#fee0d2','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#a50f15','#67000d'], // Reds
+  baustellen: ['#fff5f0','#fee0d2','#fcbba1','#fc9272','#B63D3D','#ef3b2c','#cb181d','#a50f15','#67000d'], // Reds
   aqi:        ['#1a9850','#66bd63','#a6d96a','#d9ef8b','#ffffbf','#fee08b','#fdae61','#f46d43','#d73027'], // RdYlGn (low=green=good)
   bikePaths:  ['#ffffd9','#edf8b1','#c7e9b4','#7fcdbb','#41b6c4','#1d91c0','#225ea8','#253494','#081d58'], // YlGnBu
   charging:   ['#f7fcfd','#e0ecf4','#bfd3e6','#9ebcda','#8c96c6','#8c6bb1','#88419d','#810f7c','#4d004b']  // BuPu
@@ -503,13 +500,13 @@ function renderDetailChart(o) {
       datasets: [{
         label: 'Bevölkerung',
         data: baseTrend,
-        borderColor: '#FF6B47',
-        backgroundColor: 'rgba(255, 107, 71, 0.1)',
+        borderColor: '#1B2B4C',
+        backgroundColor: 'rgba(27, 43, 76, 0.1)',
         borderWidth: 2,
         fill: true,
         tension: 0.3,
         pointRadius: 3,
-        pointBackgroundColor: '#FF6B47'
+        pointBackgroundColor: '#1B2B4C'
       }]
     },
     options: {
@@ -863,7 +860,7 @@ function setupModal() {
     geoBtn.addEventListener('click', () => {
       if (!navigator.geolocation) {
         geoInfo.textContent = _i18nFromActiveLang('modal_gps_unsupported', 'GPS nicht verfügbar in diesem Browser.');
-        geoInfo.style.color = '#fb6a4a';
+        geoInfo.style.color = '#B63D3D';
         return;
       }
       geoInfo.textContent = _i18nFromActiveLang('modal_gps_loading', 'Standort wird ermittelt…');
@@ -885,7 +882,7 @@ function setupModal() {
         }
       }, (err) => {
         geoInfo.textContent = _i18nFromActiveLang('modal_gps_denied', 'Standort verweigert oder Fehler: ') + (err.message || '');
-        geoInfo.style.color = '#fb6a4a';
+        geoInfo.style.color = '#B63D3D';
       }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 });
     });
   }
@@ -1326,11 +1323,11 @@ document.addEventListener('DOMContentLoaded', () => {
         </span>
       </div>
       ${top3.map((s, i) => `
-        <div class="grocery-stat-item" style="cursor:pointer; border-left: 3px solid ${i===0?'#4ADE80':'var(--border)'};" data-fuel-id="${s.id}">
-          <span class="grocery-stat-value" style="color: ${i===0?'#4ADE80':'var(--text-primary)'};">${medals[i]} ${s.e10.toFixed(3)} €</span>
+        <div class="grocery-stat-item" style="cursor:pointer; border-left: 3px solid ${i===0?'#2F855A':'var(--border)'};" data-fuel-id="${s.id}">
+          <span class="grocery-stat-value" style="color: ${i===0?'#2F855A':'var(--text-primary)'};">${medals[i]} ${s.e10.toFixed(3)} €</span>
           <span class="grocery-stat-label">
             ${s.brand} · ${s.district || '—'}
-            ${s._dist != null ? ` · <span style="color: var(--accent-cool, #4ADE80); font-family: var(--font-mono);">${s._dist.toFixed(1)} km</span>` : ''}
+            ${s._dist != null ? ` · <span style="color: var(--accent-cool, #2F855A); font-family: var(--font-mono);">${s._dist.toFixed(1)} km</span>` : ''}
           </span>
         </div>
       `).join('')}
@@ -1348,7 +1345,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function fuelMarkerHtml(s, rank) {
     // Color by rank: 1 = green, 2/3 = amber, rest = neutral grey
     let bg, border;
-    if (rank === 0)      { bg = '#4ADE80'; border = '#16a34a'; }
+    if (rank === 0)      { bg = '#2F855A'; border = '#1F5C3F'; }
     else if (rank < 3)   { bg = '#fbbf24'; border = '#d97706'; }
     else                 { bg = 'rgba(30,41,59,0.92)'; border = '#475569'; }
     const fg = (rank < 3) ? '#0f172a' : '#fff';
@@ -1396,7 +1393,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (fuelUserLoc) {
       const userIcon = L.divIcon({
         className: 'fuel-user-pin',
-        html: '<div style="width:14px; height:14px; background:#FF6B47; border:2px solid #fff; border-radius:50%; box-shadow:0 0 0 3px rgba(255,107,71,0.3);"></div>',
+        html: '<div style="width:14px; height:14px; background:#1B2B4C; border:2px solid #fff; border-radius:50%; box-shadow:0 0 0 3px rgba(27, 43, 76, 0.3);"></div>',
         iconSize: null,
         iconAnchor: [9, 9]
       });
@@ -1485,7 +1482,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const v = (input.value || '').trim();
       if (!/^\d{5}$/.test(v)) {
         info.textContent = t('fuel_plz_invalid', '5-stellige PLZ eingeben');
-        info.style.color = '#fb6a4a';
+        info.style.color = '#B63D3D';
         return;
       }
       info.textContent = t('fuel_plz_loading', 'Suche…');
@@ -1493,7 +1490,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const loc = await geocodePLZ(v);
       if (!loc) {
         info.textContent = t('fuel_plz_notfound', 'PLZ nicht gefunden');
-        info.style.color = '#fb6a4a';
+        info.style.color = '#B63D3D';
         return;
       }
       fuelUserLoc = { lat: loc.lat, lng: loc.lng, plz: v };
@@ -1905,8 +1902,8 @@ document.addEventListener('DOMContentLoaded', () => {
         labels,
         datasets: [
           { label: t('wm_chart_median', 'Median (alle Größen)'),
-            data: median, borderColor: '#FF6B47',
-            backgroundColor: 'rgba(255,107,71,0.12)', borderWidth: 2.5, tension: 0.25, pointRadius: 2, fill: true },
+            data: median, borderColor: '#1B2B4C',
+            backgroundColor: 'rgba(27, 43, 76, 0.12)', borderWidth: 2.5, tension: 0.25, pointRadius: 2, fill: true },
           { label: t('wm_chart_small', '<40 m² (klein)'),
             data: small, borderColor: '#9e9ac8', borderWidth: 1.5, tension: 0.25, pointRadius: 0, borderDash: [4,4], fill: false },
           { label: t('wm_chart_large', '>100 m² (groß)'),
@@ -2102,7 +2099,7 @@ document.addEventListener('DOMContentLoaded', () => {
             borderColor: '#41b6c4', borderWidth: 1.5, tension: 0.25, pointRadius: 0, borderDash: [4,4], fill: false },
           { label: t('wm_boden_new', 'Neubau'),
             data: series.map(r => r.durchschnittspreise_eur_pro_qm_neubauwohnungen),
-            borderColor: '#FF6B47', borderWidth: 2.5, tension: 0.25, pointRadius: 2, fill: false },
+            borderColor: '#1B2B4C', borderWidth: 2.5, tension: 0.25, pointRadius: 2, fill: false },
         ]
       },
       options: {
@@ -2306,7 +2303,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <span class="grocery-stat-label">${t('dem_kpi_city', 'Wahlbeteiligung Stadt 2026')}</span>
       </div>
       <div class="grocery-stat-item">
-        <span class="grocery-stat-value" style="color:#4ADE80;">+${diff.toFixed(1)} pp</span>
+        <span class="grocery-stat-value" style="color:#2F855A;">+${diff.toFixed(1)} pp</span>
         <span class="grocery-stat-label">${t('dem_kpi_diff', 'gegenüber 2021')}</span>
       </div>
       <div class="grocery-stat-item">
@@ -2314,7 +2311,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <span class="grocery-stat-label">${t('dem_kpi_highest', 'Höchste:')} ${highest.name}</span>
       </div>
       <div class="grocery-stat-item">
-        <span class="grocery-stat-value" style="color:#fb6a4a;">${lowest.wahlbeteiligung_2026.toFixed(1)}%</span>
+        <span class="grocery-stat-value" style="color:#B63D3D;">${lowest.wahlbeteiligung_2026.toFixed(1)}%</span>
         <span class="grocery-stat-label">${t('dem_kpi_lowest', 'Niedrigste:')} ${lowest.name}</span>
       </div>
     `;
@@ -2381,7 +2378,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     const diff = turnout.diff_pp;
-    const diffColor = diff > 0 ? '#4ADE80' : '#fb6a4a';
+    const diffColor = diff > 0 ? '#2F855A' : '#B63D3D';
     el.innerHTML = `
       <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start;">
         <div style="flex:0 0 auto;">
@@ -2417,7 +2414,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <tbody>
         ${rows.map(r => {
           if (r.wahlbeteiligung_2026 == null) return '';
-          const dColor = r.diff_pp > 0 ? '#4ADE80' : '#fb6a4a';
+          const dColor = r.diff_pp > 0 ? '#2F855A' : '#B63D3D';
           return `
             <tr>
               <td><strong>${r.name}</strong>${r.name_opendata !== r.name ? `<br><span style="font-size:10px; color:var(--text-tertiary);">(${r.name_opendata})</span>` : ''}</td>
@@ -2530,7 +2527,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const diff = my - avg;
     const pct = (diff / avg) * 100;
     const better = invert ? diff < 0 : diff > 0;
-    const color = Math.abs(pct) < 3 ? 'var(--text-tertiary)' : (better ? '#4ADE80' : '#fb6a4a');
+    const color = Math.abs(pct) < 3 ? 'var(--text-tertiary)' : (better ? '#2F855A' : '#B63D3D');
     const sign = diff > 0 ? '+' : '';
     return `<span style="color:${color}; font-family: var(--font-mono); font-size:11px; margin-left:6px;">(${sign}${diff.toFixed(unit === '%' ? 1 : 1)}${unit || ''} ${t('mo_vs', 'vs Stadt')})</span>`;
   }
@@ -2621,11 +2618,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===== v2.1 — Daten view (data-source transparency) =====
   function statusBadge(s) {
     const map = {
-      live:        { bg: '#16a34a', label: 'LIVE' },
+      live:        { bg: '#1F5C3F', label: 'LIVE' },
       static_real: { bg: '#0ea5e9', label: 'STATIC' },
       mock:        { bg: '#f59e0b', label: 'MOCK' },
       mock_demo:   { bg: '#a78bfa', label: 'DEMO-MOCK' },
-      citizen:     { bg: '#FF6B47', label: 'BÜRGER' }
+      citizen:     { bg: '#1B2B4C', label: 'BÜRGER' }
     };
     const c = map[s] || { bg: '#475569', label: s.toUpperCase() };
     return `<span style="background:${c.bg}; color:#fff; padding:2px 8px; border-radius:3px; font-family: var(--font-mono); font-size:9px; letter-spacing:.06em; font-weight:600;">${c.label}</span>`;
@@ -2642,9 +2639,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (summary) {
       summary.innerHTML = `
         <div class="grocery-stat-item"><span class="grocery-stat-value">${D.DATA_SOURCES.length}</span><span class="grocery-stat-label">${t('dk_kpi_total', 'Datenquellen insgesamt')}</span></div>
-        <div class="grocery-stat-item"><span class="grocery-stat-value" style="color:#16a34a;">${counts.live + counts.static_real}</span><span class="grocery-stat-label">${t('dk_kpi_live', 'Echte Daten (live + static)')}</span></div>
+        <div class="grocery-stat-item"><span class="grocery-stat-value" style="color:#1F5C3F;">${counts.live + counts.static_real}</span><span class="grocery-stat-label">${t('dk_kpi_live', 'Echte Daten (live + static)')}</span></div>
         <div class="grocery-stat-item"><span class="grocery-stat-value" style="color:#f59e0b;">${counts.mock + counts.mock_demo}</span><span class="grocery-stat-label">${t('dk_kpi_mock', 'Mock (transparent ausgewiesen)')}</span></div>
-        <div class="grocery-stat-item"><span class="grocery-stat-value" style="color:#FF6B47;">${counts.citizen}</span><span class="grocery-stat-label">${t('dk_kpi_citizen', 'Bürger-Beiträge')}</span></div>
+        <div class="grocery-stat-item"><span class="grocery-stat-value" style="color:#1B2B4C;">${counts.citizen}</span><span class="grocery-stat-label">${t('dk_kpi_citizen', 'Bürger-Beiträge')}</span></div>
       `;
     }
 
@@ -2712,13 +2709,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     list.innerHTML = enriched.map((c, i) => {
       const myVote = votes['_my_' + c.id] || 0; // 1 = up, -1 = down, 0 = none
-      const upClass = myVote === 1 ? 'style="color: #4ADE80;"' : '';
-      const downClass = myVote === -1 ? 'style="color: #fb6a4a;"' : '';
+      const upClass = myVote === 1 ? 'style="color: #2F855A;"' : '';
+      const downClass = myVote === -1 ? 'style="color: #B63D3D;"' : '';
       return `
         <div role="listitem" style="display:flex; gap:14px; align-items:flex-start; padding:12px 0; border-top:1px solid var(--border);">
           <div style="display:flex; flex-direction:column; gap:4px; align-items:center;">
             <button data-vote="up" data-id="${c.id}" ${upClass} aria-label="${t('mm_data_upvote', 'Hochstimmen')}" style="background:none; border:1px solid var(--border); color: var(--text-secondary); width:28px; height:24px; border-radius:3px; cursor:pointer; font-size:12px;">▲</button>
-            <span style="font-family: var(--font-mono); font-size:14px; font-weight:600; color: ${c.score > 0 ? '#4ADE80' : c.score < 0 ? '#fb6a4a' : 'var(--text-secondary)'};">${c.score > 0 ? '+' : ''}${c.score}</span>
+            <span style="font-family: var(--font-mono); font-size:14px; font-weight:600; color: ${c.score > 0 ? '#2F855A' : c.score < 0 ? '#B63D3D' : 'var(--text-secondary)'};">${c.score > 0 ? '+' : ''}${c.score}</span>
             <button data-vote="down" data-id="${c.id}" ${downClass} aria-label="${t('mm_data_downvote', 'Runterstimmen')}" style="background:none; border:1px solid var(--border); color: var(--text-secondary); width:28px; height:24px; border-radius:3px; cursor:pointer; font-size:12px;">▼</button>
           </div>
           <div style="flex:1;">
