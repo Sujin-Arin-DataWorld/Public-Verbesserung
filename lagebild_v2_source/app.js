@@ -14,7 +14,8 @@ let detailChart;
 
 // ============ I18N ============
 function t(key) {
-  return I18N[currentLang][key] || I18N.de[key] || key;
+  // LS only translates ~30 core keys; everything else falls back to DE.
+  return (I18N[currentLang] && I18N[currentLang][key]) || I18N.de[key] || key;
 }
 
 function applyTranslations() {
@@ -27,8 +28,8 @@ function applyTranslations() {
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     el.placeholder = t(el.dataset.i18nPlaceholder);
   });
-  // Update language attribute
-  document.documentElement.lang = currentLang === 'kr' ? 'ko' : currentLang;
+  // Update language attribute (LS = German simplified register)
+  document.documentElement.lang = currentLang === 'kr' ? 'ko' : (currentLang === 'ls' ? 'de' : currentLang);
 }
 
 function setLanguage(lang) {
@@ -36,6 +37,10 @@ function setLanguage(lang) {
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.lang === lang);
   });
+  // LS (Leichte Sprache) is a German register — keep document lang="de"
+  // for screen readers, mark the special mode via data-lang for CSS.
+  document.documentElement.dataset.lang = lang;
+  document.documentElement.lang = lang === 'kr' ? 'ko' : (lang === 'ls' ? 'de' : lang);
   applyTranslations();
   renderKPIs(); // re-render with new labels
   renderTicker();
@@ -2145,6 +2150,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderDemokratie();
     setupDemoTabs();
     renderDatenkatalog();
+    setupMeinOrtsbezirk();
   }
 
   // ===== v2.1 — Demokratie view (turnout choropleth + compare + AI) =====
@@ -2375,6 +2381,138 @@ document.addEventListener('DOMContentLoaded', () => {
     renderDemoMap();
     renderDemoCompareTable();
     renderDemoAI();
+  }
+
+  // ===== v2.1 — Mein Ortsbezirk (personalized district view on home) =====
+  const MO_KEY = 'wiesbaden_lagebild_my_ortsbezirk';
+
+  function moCityAvg() {
+    const list = D.ORTSBEZIRKE || [];
+    if (!list.length) return {};
+    const sum = (k) => list.reduce((s, o) => s + (Number(o[k]) || 0), 0);
+    const totalPop = sum('pop') || 1;
+    return {
+      pop: sum('pop'),
+      foreign: list.reduce((s, o) => s + (Number(o.foreign) || 0) * (Number(o.pop) || 0), 0) / totalPop,
+      age: list.reduce((s, o) => s + (Number(o.age) || 0) * (Number(o.pop) || 0), 0) / totalPop,
+      rent: list.reduce((s, o) => s + (Number(o.rent) || 0), 0) / list.length,
+      kita_free: list.reduce((s, o) => s + (Number(o.kita_free) || 0), 0) / list.length,
+      complaint_days: list.reduce((s, o) => s + (Number(o.complaint_days) || 0), 0) / list.length,
+      baustellen: sum('baustellen') / list.length,
+      aqi: list.reduce((s, o) => s + (Number(o.aqi) || 0), 0) / list.length,
+      charging: sum('charging') / list.length
+    };
+  }
+
+  function moTurnoutFor(o) {
+    return (D.ELECTION_TURNOUT || []).find(e =>
+      e.name === o.name ||
+      e.name_opendata === o.name ||
+      _normNameLocal(e.name) === _normNameLocal(o.name) ||
+      _normNameLocal(e.name_opendata || '') === _normNameLocal(o.name)
+    ) || null;
+  }
+
+  function moTurnoutAvg() {
+    const list = D.ELECTION_TURNOUT || [];
+    const valid = list.filter(e => e.wahlbeteiligung_2026 != null);
+    if (!valid.length) return null;
+    const totalEligible = valid.reduce((s, e) => s + (e.wahlberechtigte_2026 || 0), 0);
+    const totalVoters = valid.reduce((s, e) => s + Math.round((e.wahlberechtigte_2026 || 0) * (e.wahlbeteiligung_2026 || 0) / 100), 0);
+    return totalEligible ? totalVoters / totalEligible * 100 : null;
+  }
+
+  function moDeltaBadge(my, avg, unit, invert) {
+    if (my == null || avg == null || avg === 0) return '';
+    const diff = my - avg;
+    const pct = (diff / avg) * 100;
+    const better = invert ? diff < 0 : diff > 0;
+    const color = Math.abs(pct) < 3 ? 'var(--text-tertiary)' : (better ? '#4ADE80' : '#fb6a4a');
+    const sign = diff > 0 ? '+' : '';
+    return `<span style="color:${color}; font-family: var(--font-mono); font-size:11px; margin-left:6px;">(${sign}${diff.toFixed(unit === '%' ? 1 : 1)}${unit || ''} ${t('mo_vs', 'vs Stadt')})</span>`;
+  }
+
+  function moCard(label, myVal, formatter, deltaHtml, sublabel) {
+    return `
+      <div class="grocery-stat-item" style="text-align:left; padding:10px 12px; align-items:flex-start;">
+        <span style="font-family: var(--font-mono); font-size:9px; letter-spacing:.08em; color: var(--text-tertiary); margin-bottom:4px;">${label}</span>
+        <span class="grocery-stat-value" style="font-size:18px; line-height:1.2;">${formatter(myVal)}</span>
+        ${sublabel ? `<span class="grocery-stat-label" style="margin-top:2px;">${sublabel}</span>` : ''}
+        ${deltaHtml ? `<span style="margin-top:2px;">${deltaHtml}</span>` : ''}
+      </div>
+    `;
+  }
+
+  function moRender(o) {
+    const wrap = document.getElementById('mo-cards');
+    if (!wrap) return;
+    if (!o) { wrap.style.display = 'none'; wrap.innerHTML = ''; return; }
+    wrap.style.display = 'block';
+    const avg = moCityAvg();
+    const tu = moTurnoutFor(o);
+    const turnoutCity = moTurnoutAvg();
+    const turnoutMy = tu ? tu.wahlbeteiligung_2026 : null;
+    const fmtInt = (v) => v == null ? '—' : Number(v).toLocaleString('de-DE');
+    const fmtPct = (v) => v == null ? '—' : Number(v).toFixed(1) + '%';
+    const fmtAge = (v) => v == null ? '—' : Number(v).toFixed(1) + ' J.';
+    const fmtRent = (v) => v == null ? '—' : '€' + Number(v).toFixed(2) + '/m²';
+
+    wrap.innerHTML = `
+      <div style="display:flex; gap:12px; align-items:baseline; flex-wrap:wrap; margin-bottom:10px;">
+        <h3 style="margin:0; font-family: var(--font-display); font-size:24px;">${o.name}</h3>
+        <span style="font-size:11px; color: var(--text-tertiary); font-family: var(--font-mono);">Ortsbezirk ${o.id}</span>
+        <span style="flex:1; text-align:right; font-size:11px; color: var(--text-tertiary);" data-i18n="mo_compare_note">Vergleich mit Stadt-Durchschnitt</span>
+      </div>
+      <div class="grocery-stats" style="grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));">
+        ${moCard(t('mo_lbl_pop', 'BEVÖLKERUNG'), o.pop, fmtInt, moDeltaBadge(o.pop, avg.pop / (D.ORTSBEZIRKE || []).length, '', false), t('mo_sub_pop', 'Einwohner'))}
+        ${moCard(t('mo_lbl_foreign', 'AUSLÄNDERANTEIL'), o.foreign, fmtPct, moDeltaBadge(o.foreign, avg.foreign, ' pp', false), '')}
+        ${moCard(t('mo_lbl_age', 'Ø ALTER'), o.age, fmtAge, moDeltaBadge(o.age, avg.age, ' J.', false), '')}
+        ${o.rent != null ? moCard(t('mo_lbl_rent', 'KALTMIETE Ø'), o.rent, fmtRent, moDeltaBadge(o.rent, avg.rent, '€', false), '') : ''}
+        ${o.kita_free != null ? moCard(t('mo_lbl_kita', 'KITA-PLÄTZE FREI'), o.kita_free, fmtInt, moDeltaBadge(o.kita_free, avg.kita_free, '', false), t('mo_sub_kita', 'Plätze')) : ''}
+        ${turnoutMy != null ? moCard(t('mo_lbl_turnout', 'WAHLBETEILIGUNG 2026'), turnoutMy, fmtPct, moDeltaBadge(turnoutMy, turnoutCity, ' pp', false), '') : ''}
+        ${o.charging != null ? moCard(t('mo_lbl_charging', 'E-LADESÄULEN'), o.charging, fmtInt, moDeltaBadge(o.charging, avg.charging, '', false), t('mo_sub_charging', 'Ladepunkte')) : ''}
+        ${o.baustellen != null ? moCard(t('mo_lbl_baustellen', 'BAUSTELLEN'), o.baustellen, fmtInt, moDeltaBadge(o.baustellen, avg.baustellen, '', true), '') : ''}
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+        <button data-mm-goto="demokratie" class="btn-secondary" style="padding:7px 14px; font-size:12px;">🗳 ${t('mo_action_demo', 'Mehr im Demokratie-Tab')}</button>
+        <button data-mm-goto="wohnen" class="btn-secondary" style="padding:7px 14px; font-size:12px;">🏘 ${t('mo_action_wohnen', 'Mietspiegel im Wohnen-Tab')}</button>
+        <button data-mm-goto="mitmachen" class="btn-secondary" style="padding:7px 14px; font-size:12px;">📋 ${t('mo_action_report', 'Mängel hier melden')}</button>
+      </div>
+    `;
+    // Wire goto buttons (router already binds [data-mm-goto] but those were
+    // bound at init time before this card existed)
+    wrap.querySelectorAll('[data-mm-goto]').forEach(el => {
+      el.addEventListener('click', () => {
+        const v = el.dataset.mmGoto;
+        location.hash = v === 'home' ? '' : v;
+      });
+    });
+  }
+
+  function setupMeinOrtsbezirk() {
+    const sel = document.getElementById('mo-select');
+    const clearBtn = document.getElementById('mo-clear');
+    if (!sel) return;
+    const list = (D.ORTSBEZIRKE || []).slice();
+    sel.innerHTML = `<option value="">— ${t('mo_pick_placeholder', 'Bitte wählen')} —</option>` +
+      list.map(o => `<option value="${o.id}">${o.name} (Ortsbezirk ${o.id})</option>`).join('');
+
+    function pick(id) {
+      const o = list.find(x => x.id === id);
+      moRender(o);
+      try { id ? localStorage.setItem(MO_KEY, id) : localStorage.removeItem(MO_KEY); } catch (e) {}
+    }
+
+    sel.addEventListener('change', () => pick(sel.value));
+    if (clearBtn) clearBtn.addEventListener('click', () => { sel.value = ''; pick(''); });
+
+    // Restore previous selection
+    let saved = '';
+    try { saved = localStorage.getItem(MO_KEY) || ''; } catch (e) {}
+    if (saved && list.some(o => o.id === saved)) {
+      sel.value = saved;
+      pick(saved);
+    }
   }
 
   // ===== v2.1 — Daten view (data-source transparency) =====
