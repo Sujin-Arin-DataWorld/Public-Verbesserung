@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "cd lagebild_v2_source && bash build_v2.sh",
+  "outputDirectory": "lagebild_v2_source",
+  "cleanUrls": false,
+  "rewrites": [
+    { "source": "/",        "destination": "/Wiesbaden_Lagebild_v2.html" },
+    { "source": "/home",    "destination": "/Wiesbaden_Lagebild_v2.html" },
+    { "source": "/(.*)",    "destination": "/Wiesbaden_Lagebild_v2.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy",        "value": "strict-origin-when-cross-origin" }
+      ]
+    }
+  ]
+}
