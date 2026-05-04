@@ -1014,8 +1014,10 @@ function setupViewRouter() {
     }, 100);
   });
 
-  // Initial view from URL hash
-  const initial = (location.hash || '').replace('#', '').trim() || 'home';
+  // Initial view from URL hash. Strip query string so deep-anchor URLs
+  // like #daten?id=foo route to the 'daten' view instead of falling back
+  // to 'home' (정교화 1 prerequisite).
+  const initial = (location.hash || '').replace('#', '').split('?')[0].trim() || 'home';
   showView(initial);
 
   // Click handlers
@@ -1035,9 +1037,10 @@ function setupViewRouter() {
     });
   });
 
-  // React to back/forward + manual hash edits
+  // React to back/forward + manual hash edits. Same query-strip as above
+  // so the user can paste a deep-anchor URL into the address bar.
   window.addEventListener('hashchange', () => {
-    const v = (location.hash || '').replace('#', '').trim() || 'home';
+    const v = (location.hash || '').replace('#', '').split('?')[0].trim() || 'home';
     showView(v);
   });
 }
