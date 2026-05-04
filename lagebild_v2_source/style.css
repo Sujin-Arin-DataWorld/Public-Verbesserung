@@ -268,6 +268,550 @@ body::before {
   color: var(--accent);
 }
 
+/* ============== v2.5 — DATENASSISTENT (Floating BM25 drawer) ============== */
+/* Floating button — bottom-right, always reachable */
+.assist-btn {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 990;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 28px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.assist-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+}
+.assist-btn:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 2px;
+}
+@media (max-width: 600px) {
+  .assist-btn { right: 14px; bottom: 14px; padding: 12px 14px; }
+  .assist-btn-label { display: none; }
+}
+
+/* Drawer — slides from the right */
+.assist-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(440px, 92vw);
+  background: var(--bg-elevated);
+  border-left: 1px solid var(--border);
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.45);
+  transform: translateX(100%);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1010;
+  display: flex;
+  flex-direction: column;
+}
+.assist-drawer.open {
+  transform: translateX(0);
+}
+.assist-drawer[aria-hidden="true"] { pointer-events: none; }
+.assist-drawer.open[aria-hidden="false"] { pointer-events: auto; }
+
+.assist-drawer-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+  padding: 18px;
+  gap: 14px;
+}
+.assist-drawer-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.assist-drawer-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  flex: 1;
+  margin: 0;
+}
+.assist-info-btn,
+.assist-close-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary, var(--text-muted));
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: inherit;
+}
+.assist-info-btn:hover,
+.assist-close-btn:hover { color: var(--accent); border-color: var(--accent); }
+.assist-info-btn:focus-visible,
+.assist-close-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.assist-close-btn { font-size: 16px; padding: 6px 12px; }
+
+.assist-search-row {
+  display: flex;
+  gap: 8px;
+}
+#assist-input {
+  flex: 1;
+  padding: 12px 14px;
+  background: var(--bg-card, var(--bg));
+  color: var(--text-primary, var(--text));
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+}
+#assist-input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-color: var(--accent);
+}
+.assist-submit-btn {
+  padding: 0 18px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.assist-submit-btn:focus-visible { outline: 2px solid white; outline-offset: 2px; }
+
+.assist-results {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.assist-result-card {
+  padding: 14px;
+  background: var(--bg-card, var(--bg));
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s ease;
+}
+.assist-result-card:hover { border-color: var(--accent); }
+.assist-result-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.assist-result-rank {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary, var(--text-muted));
+}
+.assist-result-title {
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-display);
+  line-height: 1.3;
+}
+.assist-result-desc {
+  font-size: 12px;
+  color: var(--text-secondary, var(--text-muted));
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.assist-result-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.assist-result-link {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  margin-top: 4px;
+}
+.assist-empty {
+  padding: 20px 16px;
+  background: rgba(255, 107, 71, 0.08);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary, var(--text-muted));
+}
+.assist-empty-cta {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 14px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+.assist-hint {
+  padding: 14px;
+  background: rgba(74, 111, 165, 0.08);
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-secondary, var(--text-muted));
+}
+.assist-hint-list {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.assist-suggestion {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 5px 12px;
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--text-secondary, var(--text-muted));
+  cursor: pointer;
+  text-align: left;
+}
+.assist-suggestion:hover { color: var(--accent); border-color: var(--accent); }
+
+/* Helsinki AI Register-style algorithm card */
+.algorithm-card {
+  margin-top: 10px;
+  padding: 16px;
+  background: rgba(74, 222, 128, 0.06);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  border-radius: 6px;
+}
+.algorithm-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.algorithm-card-list {
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+.algorithm-card-list dt {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary, var(--text-muted));
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.algorithm-card-list dd {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-secondary, var(--text-muted));
+  line-height: 1.5;
+}
+.algorithm-card-source {
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--text-tertiary, var(--text-muted));
+}
+.algorithm-card-source a { color: var(--accent); text-decoration: none; }
+.algorithm-card-source a:hover { text-decoration: underline; }
+
+/* ============== v2.5 — DATENKATALOG BROWSER (232 datasets) ============== */
+/* Editorial Statistical aesthetic preserved · BITV 2.0 / WCAG 2.1 AA friendly */
+.catalog-filters {
+  margin-top: 18px;
+  padding: 18px;
+  background: var(--bg-secondary, var(--bg-elevated));
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.catalog-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.catalog-filter-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary, var(--text-muted));
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.catalog-sort-label { margin-left: auto; }
+#cat-search {
+  flex: 1;
+  min-width: 240px;
+  padding: 10px 14px;
+  background: var(--bg-primary, var(--bg));
+  color: var(--text-primary, var(--text));
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+}
+#cat-search:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-color: var(--accent);
+}
+#cat-sort {
+  padding: 7px 10px;
+  background: var(--bg-primary, var(--bg));
+  color: var(--text-primary, var(--text));
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: inherit;
+}
+.catalog-result-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary, var(--text-muted));
+  margin-left: auto;
+}
+.catalog-chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1;
+}
+.catalog-chip {
+  padding: 5px 12px;
+  background: transparent;
+  color: var(--text-secondary, var(--text-muted));
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.catalog-chip:hover {
+  color: var(--text-primary, var(--text));
+  border-color: var(--accent);
+}
+.catalog-chip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.catalog-chip.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+.catalog-reset-btn {
+  padding: 6px 12px;
+  background: transparent;
+  color: var(--text-tertiary, var(--text-muted));
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.catalog-reset-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.catalog-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+.catalog-card {
+  padding: 16px;
+  background: var(--bg-card, var(--bg-elevated));
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: border-color 0.2s ease, transform 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+.catalog-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.catalog-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.catalog-card.highlight {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 107, 71, 0.15);
+  animation: catalogHighlight 1.6s ease-out;
+}
+@keyframes catalogHighlight {
+  0%   { box-shadow: 0 0 0 8px rgba(255, 107, 71, 0.35); }
+  100% { box-shadow: 0 0 0 3px rgba(255, 107, 71, 0.15); }
+}
+.catalog-card-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-primary, var(--text));
+}
+.catalog-card-desc {
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--text-secondary, var(--text-muted));
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.catalog-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+}
+.catalog-theme-badge,
+.catalog-format-badge {
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+.catalog-theme-badge {
+  background: rgba(74, 111, 165, 0.18);
+  color: var(--wiesbaden-blue-light, #4A6FA5);
+}
+.catalog-format-badge {
+  background: rgba(74, 222, 128, 0.18);
+  color: var(--good, #4ADE80);
+}
+.catalog-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-tertiary, var(--text-muted));
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+  letter-spacing: 0.05em;
+}
+.catalog-card-link {
+  color: var(--accent);
+  font-weight: 600;
+}
+.catalog-empty {
+  margin-top: 24px;
+  padding: 32px 18px;
+  text-align: center;
+  background: var(--bg-secondary, var(--bg-elevated));
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+}
+.catalog-empty p {
+  margin-bottom: 14px;
+  color: var(--text-secondary, var(--text-muted));
+}
+.catalog-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  margin-top: 24px;
+}
+.catalog-pagination-btn {
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--text-primary, var(--text));
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.catalog-pagination-btn:hover { border-color: var(--accent); color: var(--accent); }
+.catalog-pagination-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.catalog-pagination-btn[disabled] { opacity: 0.4; cursor: not-allowed; }
+.catalog-pagination-info {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-tertiary, var(--text-muted));
+}
+.catalog-stats {
+  margin-top: 28px;
+  padding: 16px 18px;
+  background: rgba(74, 111, 165, 0.06);
+  border-left: 3px solid var(--wiesbaden-blue-light, #4A6FA5);
+  border-radius: 4px;
+}
+.catalog-stats-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary, var(--text-muted));
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.catalog-stats-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.catalog-stats-pill {
+  padding: 4px 10px;
+  background: var(--bg-primary, var(--bg));
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor: pointer;
+  color: var(--text-secondary, var(--text-muted));
+}
+.catalog-stats-pill:hover { color: var(--accent); border-color: var(--accent); }
+.catalog-stats-pill .catalog-stats-count {
+  margin-left: 6px;
+  color: var(--text-tertiary, var(--text-muted));
+  font-size: 10px;
+}
+.catalog-stats-note {
+  font-size: 11px;
+  color: var(--text-tertiary, var(--text-muted));
+  line-height: 1.5;
+}
+
 /* ============== v2.1 — LEICHTE SPRACHE (BFSG 2025 / BITV 2.0) ============== */
 .lang-btn-ls {
   background: rgba(74, 222, 128, 0.12);
@@ -2349,21 +2893,35 @@ html[data-lang="ls"] .ls-banner { display: block; }
 }
 
 .kpi-card[data-kpi-disabled="1"] {
-  opacity: 0.62;
+  opacity: 0.78;
   cursor: not-allowed;
   position: relative;
 }
 
+/* GSM dialect — top-right capsule badge for "data exists but not yet in
+   official Open-Data catalog" disclosure. Mirrors the BMWK / Destatis
+   pattern of footnoting indicator provenance with a small monospace tag.
+   Capsule is constrained (nowrap + max-width + ellipsis) so long
+   translations cannot wrap into the KPI value area. */
 .kpi-card[data-kpi-disabled="1"]::after {
   content: attr(data-disabled-label);
   position: absolute;
-  bottom: 8px;
-  right: 10px;
+  top: 12px;
+  right: 12px;
+  max-width: 56%;
+  padding: 2px 7px;
   font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  color: var(--text-faint);
+  font-size: 8.5px;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 2px;
   text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
 }
 
 .kpi-card .kpi-population-hint {
