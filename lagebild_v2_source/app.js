@@ -1167,6 +1167,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const popHint = isPop
         ? `<span class="kpi-population-hint">${(D.I18N[document.querySelector('.lang-btn.active')?.dataset.lang || 'de'] || D.I18N.de).kpi_population_hint || '↗ Story'}</span>`
         : '';
+      // v2.6.3: change/source now have language variants (fall back to _de via pickLang)
+      const change = pickLang(opt, 'change') || opt.change || '';
+      const source = pickLang(opt, 'source') || opt.source || '';
       card.innerHTML = `
         <div class="kpi-card-header">
           <span class="kpi-icon">${opt.icon}</span>
@@ -1174,8 +1177,8 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="kpi-value-v2">${opt.value}</div>
         <div class="kpi-meta">
-          <span class="kpi-change">${opt.change}</span>
-          <span class="kpi-source">${opt.source}</span>
+          <span class="kpi-change">${change}</span>
+          <span class="kpi-source">${source}</span>
         </div>
         ${popHint}
       `;
@@ -1196,7 +1199,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <span class="curator-item-icon">${opt.icon}</span>
         <div style="flex:1;">
           <div class="curator-item-label">${pickLang(opt, 'label')}</div>
-          <div class="curator-item-source">${opt.source}</div>
+          <div class="curator-item-source">${pickLang(opt, 'source') || opt.source || ''}</div>
         </div>
       `;
       grid.appendChild(item);
@@ -3056,6 +3059,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ----- detail builders -----
+  // v2.6.3: Gastronomie drawer ranks venues by OSM-tag completeness (s 0..5)
+  // — a public, ToS-clean proxy for "well-curated, currently-operating" places.
+  // Google reviews would be more direct but the Places API ToS forbids
+  // displaying ratings outside Google Maps + caching beyond 30 days.
   function kiezBuildGastro(district) {
     const list = (D.OSM_GASTRONOMIE || []).filter(g => !district || g.d === district.name);
     const types = ['cafe', 'restaurant', 'bar', 'pub', 'biergarten', 'fast_food'];
@@ -3064,23 +3071,40 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="kiez-stat-label">${escapeHtml(t('kiez_amenity_' + tp, tp))}</div>
         <div class="kiez-stat-value">${list.filter(x => x.t === tp).length}</div>
       </div>`).join('');
-    const sample = list.filter(x => x.n).slice(0, 8);
-    const cards = sample.map(s => `
-      <div class="kiez-event-item">
-        <div>
-          <div class="kiez-event-title">${escapeHtml(s.n)}</div>
-          <div class="kiez-event-where">${escapeHtml(t('kiez_amenity_' + s.t, s.t))}${s.c ? ' · ' + escapeHtml(s.c) : ''}${s.d ? ' · ' + escapeHtml(s.d) : ''}</div>
-        </div>
-      </div>`).join('');
+    // Top 10 by tag-richness — proxy for "well-maintained spots".
+    const top = list.filter(x => x.n).sort((a, b) =>
+      (b.s || 0) - (a.s || 0) || a.n.localeCompare(b.n, 'de')
+    ).slice(0, 10);
+    const cards = top.map(s => {
+      const meta = [];
+      if (s.c) meta.push(`<span class="kiez-tag">${escapeHtml(s.c)}</span>`);
+      if (s.os === 'yes') meta.push(`<span class="kiez-tag">${t('kiez_gastro_outdoor', '🌤 Terrasse')}</span>`);
+      if (s.wc === 'yes') meta.push(`<span class="kiez-tag">${t('kiez_gastro_wheelchair', '♿ barrierefrei')}</span>`);
+      const links = [];
+      if (s.w) links.push(`<a href="${escapeHtml(s.w)}" target="_blank" rel="noopener" class="kiez-link">${t('kiez_gastro_website', 'Website ↗')}</a>`);
+      if (s.h) links.push(`<span class="kiez-hours" title="${escapeHtml(s.h)}">🕐 ${escapeHtml(s.h.length > 30 ? s.h.slice(0,28)+'…' : s.h)}</span>`);
+      const score = '★'.repeat(Math.max(1, s.s || 0));
+      return `
+        <div class="kiez-venue-item">
+          <div class="kiez-venue-row">
+            <div class="kiez-venue-name">${escapeHtml(s.n)}</div>
+            <div class="kiez-venue-score" title="${t('kiez_gastro_score_hint', 'OSM-Datenvollständigkeit (Name, Küche, Öffnungszeiten, Website, Barrierefreiheit)')}">${score}</div>
+          </div>
+          <div class="kiez-venue-sub">${escapeHtml(t('kiez_amenity_' + s.t, s.t))}${s.d ? ' · ' + escapeHtml(s.d) : ''}</div>
+          ${meta.length ? `<div class="kiez-venue-meta">${meta.join(' ')}</div>` : ''}
+          ${links.length ? `<div class="kiez-venue-links">${links.join(' · ')}</div>` : ''}
+        </div>`;
+    }).join('');
     return {
       title: t('kiez_gastro_title', 'Gastronomie'),
       body: `
         <div class="kiez-stat-grid">${stats}</div>
-        ${sample.length ? `
-          <div style="margin-top:6px; font-family: var(--font-mono); font-size:10px; letter-spacing:.06em; color: var(--text-tertiary, var(--text-muted));">${escapeHtml(t('kiez_gastro_sample', 'AUSWAHL'))}</div>
-          <div class="kiez-events-list">${cards}</div>
+        ${top.length ? `
+          <h4 class="kiez-section-h4">${escapeHtml(t('kiez_gastro_top_title', 'Top 10 · vollständigste Einträge'))}</h4>
+          <p class="kiez-section-note">${escapeHtml(t('kiez_gastro_top_note', 'Sortiert nach OSM-Tag-Vollständigkeit (Name · Küche · Öffnungszeiten · Website · Barrierefreiheit). Kein Bewertungs-Score — die Google-Places-API verbietet das Anzeigen externer Sterne. Vollständig gepflegte Einträge sind aber ein guter Proxy für „wirklich offene, gut betreute" Orte.'))}</p>
+          <div class="kiez-venues-list">${cards}</div>
         ` : ''}
-        <p style="font-size:11px; color: var(--text-tertiary, var(--text-muted));">${escapeHtml(t('kiez_gastro_note', 'Quelle: OpenStreetMap, Bürger-Editionen. Stand: Build-Zeit, ODbL.'))}</p>
+        <p class="kiez-source-note">${escapeHtml(t('kiez_gastro_note', 'Quelle: OpenStreetMap, Bürger-Editionen. Stand: Build-Zeit, ODbL.'))}</p>
       `,
       sourceUrl: 'https://www.openstreetmap.org/',
       sourceLabel: t('kiez_source_osm', 'OpenStreetMap ↗')
@@ -3093,17 +3117,49 @@ document.addEventListener('DOMContentLoaded', () => {
     const free = list.filter(x => x.f === 'no').length;
     const paid = list.filter(x => x.f === 'yes').length;
     const unknown = list.filter(x => x.f === 'unknown').length;
+    // Free + named, sorted by capacity desc (when known).
+    const freeNamed = list
+      .filter(x => x.f === 'no' && x.n)
+      .sort((a, b) => (b.c || 0) - (a.c || 0))
+      .slice(0, 10);
+    const paidNamed = list
+      .filter(x => x.f === 'yes' && x.n)
+      .sort((a, b) => (b.c || 0) - (a.c || 0))
+      .slice(0, 5);
+    const renderRow = (p) => {
+      const tags = [];
+      if (p.c) tags.push(`${p.c} ${t('kiez_park_spots_short', 'Plätze')}`);
+      if (p.t && p.t !== 'surface') tags.push(t('kiez_park_type_' + p.t, p.t));
+      if (p.wc === 'yes') tags.push('♿');
+      if (p.op) tags.push(escapeHtml(p.op));
+      return `
+        <div class="kiez-venue-item">
+          <div class="kiez-venue-row">
+            <div class="kiez-venue-name">${escapeHtml(p.n)}</div>
+            <div class="kiez-venue-score">${p.f === 'no' ? `<span class="kiez-tag-good">${t('kiez_free', 'kostenlos')}</span>` : `<span class="kiez-tag-warn">${t('kiez_paid', 'gebührenpflichtig')}</span>`}</div>
+          </div>
+          <div class="kiez-venue-sub">${p.d ? escapeHtml(p.d) : ''}${tags.length ? ' · ' + tags.join(' · ') : ''}</div>
+        </div>`;
+    };
     return {
       title: t('kiez_parking_title', 'Parken'),
       body: `
         <div class="kiez-stat-grid">
           <div class="kiez-stat-cell"><div class="kiez-stat-label">${t('kiez_park_total', 'Total')}</div><div class="kiez-stat-value">${list.length}</div></div>
-          <div class="kiez-stat-cell"><div class="kiez-stat-label">${t('kiez_park_free', 'Kostenlos')}</div><div class="kiez-stat-value">${free}</div></div>
+          <div class="kiez-stat-cell"><div class="kiez-stat-label">${t('kiez_park_free', 'Kostenlos')}</div><div class="kiez-stat-value" style="color:#2d8659;">${free}</div></div>
           <div class="kiez-stat-cell"><div class="kiez-stat-label">${t('kiez_park_paid', 'Gebührenpflichtig')}</div><div class="kiez-stat-value">${paid}</div></div>
           <div class="kiez-stat-cell"><div class="kiez-stat-label">${t('kiez_park_unknown', 'Unbekannt')}</div><div class="kiez-stat-value">${unknown}</div></div>
         </div>
         ${cap > 0 ? `<p style="font-size:12px; color: var(--text-secondary, var(--text-muted));">${t('kiez_park_capacity_note', 'Bekannte Stellplätze gesamt:')} <strong>${cap}</strong></p>` : ''}
-        <p style="font-size:11px; color: var(--text-tertiary, var(--text-muted));">${escapeHtml(t('kiez_park_osm_note', 'Quelle: OpenStreetMap. Hoher „Unbekannt"-Anteil = nicht alle Schilder im OSM gepflegt.'))}</p>
+        ${freeNamed.length ? `
+          <h4 class="kiez-section-h4">${escapeHtml(t('kiez_park_free_title', '🟢 Kostenlos parken — benannte Plätze'))}</h4>
+          <div class="kiez-venues-list">${freeNamed.map(renderRow).join('')}</div>
+        ` : ''}
+        ${paidNamed.length ? `
+          <h4 class="kiez-section-h4">${escapeHtml(t('kiez_park_paid_title', '💶 Größte gebührenpflichtige Anlagen'))}</h4>
+          <div class="kiez-venues-list">${paidNamed.map(renderRow).join('')}</div>
+        ` : ''}
+        <p class="kiez-source-note">${escapeHtml(t('kiez_park_osm_note', 'Quelle: OpenStreetMap. Hoher „Unbekannt"-Anteil = nicht alle Schilder im OSM gepflegt — ggf. vor Ort prüfen.'))}</p>
       `,
       sourceUrl: 'https://www.openstreetmap.org/',
       sourceLabel: t('kiez_source_osm', 'OpenStreetMap ↗')

@@ -61,21 +61,27 @@ def main():
         except (ValueError, TypeError): cap = None
         out.append({
             "id": n["id"], "lat": round(lat, 5), "lng": round(lng, 5),
-            "n": (tags.get("name") or "")[:36],
+            "n": (tags.get("name") or "")[:48],
             "t": tags.get("parking") or "",        # surface / underground / multi-storey / etc.
             "f": tags.get("fee") or "unknown",     # yes / no / unknown
             "c": cap,
             "d": district,
+            "a": tags.get("access") or "",         # yes / customers / private — public access?
+            "wc": tags.get("wheelchair") or "",    # accessible parking?
+            "op": (tags.get("operator") or "")[:32],
         })
 
     def js(o):
-        return ('{id:%d,lat:%g,lng:%g,n:%s,t:%s,f:%s,c:%s,d:%s}' % (
+        return ('{id:%d,lat:%g,lng:%g,n:%s,t:%s,f:%s,c:%s,d:%s,a:%s,wc:%s,op:%s}' % (
             o["id"], o["lat"], o["lng"],
             json.dumps(o["n"], ensure_ascii=False),
             json.dumps(o["t"]),
             json.dumps(o["f"]),
             "null" if o["c"] is None else o["c"],
             json.dumps(o["d"], ensure_ascii=False),
+            json.dumps(o["a"]),
+            json.dumps(o["wc"]),
+            json.dumps(o["op"], ensure_ascii=False),
         ))
     arr = "[" + ",".join(js(o) for o in out) + "]"
     snippet = (
