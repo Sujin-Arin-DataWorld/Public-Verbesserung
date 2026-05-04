@@ -85,6 +85,20 @@ def main():
             if point_in_polygon(lat, lng, ring):
                 district = name
                 break
+        # v2.6.3: capture extra OSM tags as a "completeness" proxy for
+        # well-maintained venues (no public review API exists for free —
+        # tag richness correlates with well-curated, currently-operating
+        # spots).
+        website = (tags.get("website") or tags.get("contact:website") or "")[:120]
+        opening = (tags.get("opening_hours") or "")[:80]
+        # Score = tag-richness (max 5). Used to surface "best-known" venues.
+        score = sum([
+            1 if tags.get("name") else 0,
+            1 if tags.get("cuisine") else 0,
+            1 if opening else 0,
+            1 if website else 0,
+            1 if tags.get("wheelchair") in ("yes", "limited") else 0,
+        ])
         out.append({
             "id": n["id"],
             "lat": round(lat, 5),
@@ -93,17 +107,27 @@ def main():
             "t": tags.get("amenity") or "",
             "c": shorten_cuisine(tags.get("cuisine") or ""),
             "d": district,
+            "h": opening,                                # hours
+            "w": website,                                # website (+ contact:website fallback)
+            "wc": tags.get("wheelchair") or "",          # wheelchair
+            "os": tags.get("outdoor_seating") or "",     # outdoor seating
+            "s": score,                                  # 0..5 completeness score
         })
 
     # Compact JS
     def js_obj(o):
         return (
-            "{id:%d,lat:%g,lng:%g,n:%s,t:%s,c:%s,d:%s}" % (
+            "{id:%d,lat:%g,lng:%g,n:%s,t:%s,c:%s,d:%s,h:%s,w:%s,wc:%s,os:%s,s:%d}" % (
                 o["id"], o["lat"], o["lng"],
                 json.dumps(o["n"], ensure_ascii=False),
                 json.dumps(o["t"]),
                 json.dumps(o["c"], ensure_ascii=False),
                 json.dumps(o["d"], ensure_ascii=False),
+                json.dumps(o["h"], ensure_ascii=False),
+                json.dumps(o["w"], ensure_ascii=False),
+                json.dumps(o["wc"]),
+                json.dumps(o["os"]),
+                o["s"],
             )
         )
     arr = "[" + ",".join(js_obj(o) for o in out) + "]"
