@@ -817,6 +817,38 @@
     </div>
   </div>
 
+  <!-- MODAL: KPI Detail (v2.4) — opens when a clickable KPI card is clicked -->
+  <div class="modal-backdrop" id="kpi-detail-modal" role="dialog" aria-modal="true" aria-labelledby="kpi-detail-title">
+    <div class="modal kpi-detail-modal">
+      <button type="button" class="story-modal-close" onclick="closeKpiDetail()" aria-label="Close">×</button>
+      <div class="kpi-detail-eyebrow">
+        <span class="kpi-detail-icon" id="kpi-detail-icon">🌬️</span>
+        <span class="kpi-detail-eyebrow-text" data-i18n="kpi_detail_eyebrow">LIVE-INDIKATOR · STADT WIESBADEN</span>
+      </div>
+      <h3 id="kpi-detail-title"></h3>
+      <div class="story-modal-section">
+        <div class="story-modal-section-label" data-i18n="story_finding_label">BEFUND</div>
+        <p id="kpi-detail-finding" class="story-modal-finding"></p>
+      </div>
+      <div class="story-modal-section">
+        <div class="story-modal-section-label" data-i18n="story_facts_label">EINORDNUNG</div>
+        <div id="kpi-detail-facts" class="story-modal-facts"></div>
+      </div>
+      <div class="story-modal-section" id="kpi-detail-chart-section">
+        <div class="story-modal-section-label" data-i18n="story_chart_label">DATEN</div>
+        <div class="story-modal-chart-wrap"><canvas id="kpi-detail-chart"></canvas></div>
+      </div>
+      <div class="kpi-detail-action" id="kpi-detail-action" style="display:none;">
+        <button type="button" class="btn-primary" id="kpi-detail-action-btn"></button>
+      </div>
+      <div class="story-modal-source">
+        <div class="story-modal-source-label"><span data-i18n="story_source_label">Datenquelle</span></div>
+        <div class="story-modal-source-value" id="kpi-detail-source-text"></div>
+        <a id="kpi-detail-source-link" href="#" target="_blank" rel="noopener" class="story-modal-source-link" data-i18n="story_modal_view_source">Auf opendata.cloud.wiesbaden.de öffnen ↗</a>
+      </div>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-grid">
