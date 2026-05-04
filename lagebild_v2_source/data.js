@@ -1402,6 +1402,13 @@ Object.assign(I18N.tr, { charging_fast: "Hızlı şarj", charging_normal: "Norma
 Object.assign(I18N.ua, { charging_fast: "Швидке заряджання", charging_normal: "Звичайне заряджання", charging_plugs: "роз'ємів" });
 Object.assign(I18N.kr, { charging_fast: "급속 충전", charging_normal: "완속 충전", charging_plugs: "구" });
 
+// v2.1 — charging "outside city" tooltip label (5 langs)
+Object.assign(I18N.de, { charging_outside: "außerhalb Wiesbadens (ESWE-Versorgungsgebiet)" });
+Object.assign(I18N.en, { charging_outside: "outside Wiesbaden city (ESWE supply area)" });
+Object.assign(I18N.tr, { charging_outside: "Wiesbaden dışında (ESWE bölgesi)" });
+Object.assign(I18N.ua, { charging_outside: "поза межами Вісбадена (зона ESWE)" });
+Object.assign(I18N.kr, { charging_outside: "비스바덴 시 외부 (ESWE 공급 구역)" });
+
 // v2.1 — Tankstellen Top 3 label (5 langs)
 Object.assign(I18N.de, { fuel_top3_label: "GÜNSTIGSTE 3 HEUTE · SUPER E10" });
 Object.assign(I18N.en, { fuel_top3_label: "TODAY'S CHEAPEST 3 · SUPER E10" });
