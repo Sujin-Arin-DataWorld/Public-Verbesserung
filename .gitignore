@@ -1,0 +1,15 @@
+# Build artifact (single self-contained HTML — rebuild via build_v2.sh)
+lagebild_v2_source/Wiesbaden_Lagebild_v2.html
+
+# Local secrets (Tankerkönig API key etc.)
+.env
+.env.local
+*.local
+
+# macOS
+.DS_Store
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp

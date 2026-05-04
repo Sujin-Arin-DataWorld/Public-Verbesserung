@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wiesbaden-Lagebild · Echtzeit-Daten der Landeshauptstadt</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- TICKER BAR -->
+  <div class="ticker-bar">
+    <div class="ticker-label" data-i18n="liveLabel">LIVE</div>
+    <div class="ticker-content" id="ticker-content"></div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-left">
+      <h1>WIESBADEN<span class="accent-letter">·</span><span data-i18n="title_short">LAGEBILD</span></h1>
+      <p>
+        <span class="live-dot"></span>
+        <span data-i18n="subtitle">Echtzeit-Daten der Landeshauptstadt</span>
+        ·
+        <span id="live-time">00:00:00</span>
+      </p>
+    </div>
+    <div class="header-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="de">DE</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="tr">TR</button>
+        <button class="lang-btn" data-lang="ua">UA</button>
+        <button class="lang-btn" data-lang="kr">KR</button>
+      </div>
+      <button class="kpi-curator-btn" id="curator-btn" title="KPI anpassen">
+        ⚙ <span data-i18n="curator_button">KPI anpassen</span>
+      </button>
+      <button class="theme-toggle" id="theme-toggle" title="Theme">☀</button>
+    </div>
+  </header>
+
+  <!-- v2.1 — VIEW NAVIGATION -->
+  <nav class="view-nav" role="navigation" aria-label="Hauptnavigation">
+    <button class="view-nav-btn active" data-view="home">
+      <span class="view-nav-icon" aria-hidden="true">🏠</span>
+      <span data-i18n="nav_home">Übersicht</span>
+    </button>
+    <button class="view-nav-btn" data-view="alltag">
+      <span class="view-nav-icon" aria-hidden="true">🛒</span>
+      <span data-i18n="nav_alltag">Alltag</span>
+    </button>
+    <button class="view-nav-btn" data-view="wohnen">
+      <span class="view-nav-icon" aria-hidden="true">🏘</span>
+      <span data-i18n="nav_wohnen">Wohnen</span>
+    </button>
+    <button class="view-nav-btn" data-view="demokratie">
+      <span class="view-nav-icon" aria-hidden="true">🗳</span>
+      <span data-i18n="nav_demokratie">Demokratie</span>
+    </button>
+    <button class="view-nav-btn" data-view="mitmachen">
+      <span class="view-nav-icon" aria-hidden="true">👥</span>
+      <span data-i18n="nav_mitmachen">Mitmachen</span>
+    </button>
+    <button class="view-nav-btn" data-view="daten">
+      <span class="view-nav-icon" aria-hidden="true">🔍</span>
+      <span data-i18n="nav_daten">Daten</span>
+    </button>
+  </nav>
+
+  <!-- ============================================
+       VIEW: HOME (Übersicht)
+       ============================================ -->
+  <div class="view active" id="view-home" data-view="home">
+  <!-- KPI GRID -->
+  <section class="kpi-section" id="kpi-grid"></section>
+
+  <!-- MAP SECTION -->
+  <section class="map-section">
+    <aside class="map-controls">
+      <h3 data-i18n="layers">EBENEN</h3>
+      <div class="layer-list">
+        <button class="layer-btn active" data-layer="pop">
+          <span class="layer-dot"></span>
+          <span data-i18n="layer_pop">Bevölkerung</span>
+        </button>
+        <button class="layer-btn" data-layer="foreign">
+          <span class="layer-dot"></span>
+          <span data-i18n="layer_foreign">Ausländeranteil</span>
+        </button>
+        <button class="layer-btn" data-layer="baustellen">
+          <span class="layer-dot"></span>
+          <span data-i18n="layer_construction">Baustellen</span>
+        </button>
+        <button class="layer-btn" data-layer="aqi">
+          <span class="layer-dot"></span>
+          <span data-i18n="layer_air">Luftqualität</span>
+        </button>
+        <button class="layer-btn" data-layer="bikePaths">
+          <span class="layer-dot"></span>
+          <span data-i18n="layer_bike">Radwege (km)</span>
+        </button>
+        <button class="layer-btn" data-layer="charging">
+          <span class="layer-dot"></span>
+          <span data-i18n="layer_charging">E-Ladesäulen</span>
+        </button>
+      </div>
+
+      <div class="timeline-block">
+        <div class="timeline-label" data-i18n="timeline">ZEITREIHE</div>
+        <input type="range" min="0" max="6" value="6" step="1" class="timeline-slider" id="timeline-slider">
+        <div class="timeline-year" id="timeline-year">2026</div>
+        <div class="timeline-pop" id="timeline-pop">300.089 · 25,1% Ausländer</div>
+      </div>
+    </aside>
+
+    <div class="map-wrapper">
+      <div class="map-header">
+        <div>
+          <h2 data-i18n="map_title">Stadtkarte mit Datenebenen</h2>
+          <p data-i18n="map_subtitle">26 Ortsbezirke · Klick für Details</p>
+        </div>
+        <div class="legend">
+          <span>min</span>
+          <div class="legend-bar">
+            <div style="background: rgba(255, 107, 71, 0.2)"></div>
+            <div style="background: rgba(255, 107, 71, 0.4)"></div>
+            <div style="background: rgba(255, 107, 71, 0.6)"></div>
+            <div style="background: rgba(255, 107, 71, 0.8)"></div>
+            <div style="background: rgba(255, 107, 71, 1)"></div>
+          </div>
+          <span>max</span>
+        </div>
+      </div>
+      <div id="map"></div>
+    </div>
+  </section>
+
+  <!-- BOTTOM GRID: STORIES + CITIZEN -->
+  <section class="bottom-grid">
+    <div class="panel">
+      <div class="panel-header">
+        <h2 data-i18n="stories_title">Daten-Stories</h2>
+        <p data-i18n="stories_subtitle">Kuratiert vom Amt für Statistik</p>
+      </div>
+      <div class="story-list" id="story-list"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <h2 data-i18n="citizen_title">Bürger-Hinweise</h2>
+        <p data-i18n="citizen_subtitle">Citizen Science · Status</p>
+      </div>
+      <div class="report-stats">
+        <div class="report-stat open">
+          <div class="report-stat-num" id="rep-open">0</div>
+          <div class="report-stat-label" id="rep-open-label">offen</div>
+        </div>
+        <div class="report-stat progress">
+          <div class="report-stat-num" id="rep-progress">0</div>
+          <div class="report-stat-label" id="rep-progress-label">in Bearb.</div>
+        </div>
+        <div class="report-stat resolved">
+          <div class="report-stat-num" id="rep-resolved">0</div>
+          <div class="report-stat-label" id="rep-resolved-label">erledigt</div>
+        </div>
+      </div>
+      <div class="report-list" id="report-list"></div>
+      <button class="btn-primary" id="btn-send" data-i18n="citizen_send">Hinweis senden</button>
+    </div>
+  </section>
+
+  <!-- DETAIL PANEL -->
+  <aside class="detail-panel" id="detail-panel">
+    <div class="detail-header">
+      <span class="detail-label" data-i18n="detail_district">ORTSBEZIRK</span>
+      <button class="detail-close" id="detail-close">×</button>
+    </div>
+    <div class="detail-name" id="detail-name">-</div>
+    <div class="detail-id" id="detail-id">-</div>
+    <div class="detail-stats">
+      <div class="detail-stat">
+        <div class="detail-stat-label" data-i18n="detail_population">Einwohner</div>
+        <div class="detail-stat-value" id="stat-pop">-</div>
+      </div>
+      <div class="detail-stat">
+        <div class="detail-stat-label" data-i18n="detail_foreign">Ausländer</div>
+        <div class="detail-stat-value" id="stat-foreign">-</div>
+      </div>
+      <div class="detail-stat">
+        <div class="detail-stat-label" data-i18n="detail_age">Ø Alter</div>
+        <div class="detail-stat-value" id="stat-age">-</div>
+      </div>
+      <div class="detail-stat">
+        <div class="detail-stat-label" data-i18n="detail_rent">Kaltmiete Ø</div>
+        <div class="detail-stat-value" id="stat-rent">-</div>
+      </div>
+      <div class="detail-stat">
+        <div class="detail-stat-label" data-i18n="detail_kita">Kita-Plätze frei</div>
+        <div class="detail-stat-value" id="stat-kita">-</div>
+      </div>
+      <div class="detail-stat">
+        <div class="detail-stat-label" data-i18n="detail_complaints">Bearbeitungszeit</div>
+        <div class="detail-stat-value" id="stat-complaints">-</div>
+      </div>
+    </div>
+    <div class="detail-actions">
+      <div class="detail-actions-title" data-i18n="detail_action_title">Was kann ich tun?</div>
+      <button class="detail-action-btn" onclick="document.getElementById('modal-backdrop').classList.add('active')">
+        📋 <span data-i18n="detail_action_report">Mängel melden</span>
+      </button>
+      <button class="detail-action-btn" onclick="window.open('https://wiesbadenwirkt.de','_blank')">
+        🗳 <span data-i18n="detail_action_participate">Beteiligungsverfahren ansehen</span>
+      </button>
+      <button class="detail-action-btn" onclick="alert('CSV-Download (Mock)')">
+        📊 <span data-i18n="detail_action_data">Daten herunterladen</span>
+      </button>
+    </div>
+    <div class="detail-chart">
+      <div class="detail-chart-title">BEVÖLKERUNG 2020–2026</div>
+      <canvas id="detail-chart-canvas"></canvas>
+    </div>
+  </aside>
+
+  </div><!-- /view-home -->
+
+  <!-- ============================================
+       VIEW: ALLTAG (Tankstellen / Lebensmittel / Wirtschaft + Citizen Science)
+       ============================================ -->
+  <div class="view" id="view-alltag" data-view="alltag">
+
+  <!-- ALLTAG SECTION (placed in main flow, not modal) -->
+  <section class="map-section" style="grid-template-columns: 1fr; padding-top: 0;">
+    <div class="map-container" style="padding: 24px 28px;">
+      <div class="section-major">
+        <h2 class="section-major-title">🛒 <span data-i18n="alltag_title">Wiesbaden Alltag</span></h2>
+        <p class="section-major-subtitle" data-i18n="alltag_subtitle">Daten, die deine Woche betreffen — Tankstellen, Supermarkt, Wirtschaft</p>
+      </div>
+
+      <div class="alltag-tabs">
+        <button class="alltag-tab active" data-tab="fuel"    data-i18n="alltag_tab_fuel">Tankstellen</button>
+        <button class="alltag-tab"        data-tab="grocery" data-i18n="alltag_tab_grocery">Lebensmittel</button>
+        <button class="alltag-tab"        data-tab="economy" data-i18n="alltag_tab_economy">Wirtschaft</button>
+      </div>
+
+      <div class="alltag-content active" id="alltag-fuel">
+        <!-- v2.1: oil-now-inspired UX with explicit MOCK marker -->
+        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:14px;">
+          <span style="display:inline-flex; align-items:center; gap:6px; padding:4px 10px; background:rgba(251,191,36,0.15); color:#fbbf24; border-radius:4px; font-family: var(--font-mono); font-size:10px; letter-spacing:.08em;">
+            ⚠ <span data-i18n="fuel_mock_badge">MOCK · WARTET AUF TANKERKÖNIG-API-KEY</span>
+          </span>
+          <span style="font-size:11px; color: var(--text-tertiary);" data-i18n="fuel_mock_note">Koordinaten + Marken: OpenStreetMap (live). Preise: anker-basiertes Mock.</span>
+        </div>
+
+        <!-- PLZ search bar -->
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:14px; padding:12px; background:var(--bg-secondary); border-radius:6px; border:1px solid var(--border);">
+          <span style="font-size:18px;">📍</span>
+          <input type="text" id="fuel-plz" maxlength="5" placeholder="65183" data-i18n-placeholder="fuel_plz_ph"
+                 style="width:90px; padding:6px 10px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border); border-radius:4px; font-family: var(--font-mono); font-size:13px;">
+          <button id="fuel-plz-btn" class="btn-primary" style="padding:6px 14px; font-size:12px;" data-i18n="fuel_plz_btn">Standort setzen</button>
+          <span id="fuel-plz-info" style="font-size:11px; color: var(--text-tertiary); margin-left:auto;"></span>
+        </div>
+
+        <!-- Top 3 (location-aware once PLZ set) -->
+        <div id="fuel-top3" class="grocery-stats" style="margin-bottom:14px;"></div>
+
+        <!-- Mini-map with price labels -->
+        <div style="display:flex; gap:14px; flex-wrap:wrap; margin-bottom:14px;">
+          <div id="fuel-minimap" style="flex:1 1 360px; height:340px; border-radius:6px; border:1px solid var(--border); background:var(--bg-secondary); position:relative;"></div>
+          <div id="fuel-detail" style="flex:0 0 240px; padding:14px; background:var(--bg-secondary); border-radius:6px; border:1px solid var(--border); font-size:12px;"></div>
+        </div>
+
+        <!-- Citizen CTA -->
+        <div id="fuel-cta" style="margin-bottom:14px; padding:14px; background:linear-gradient(135deg, rgba(255,107,71,0.08), rgba(74,111,165,0.08)); border:1px dashed var(--accent); border-radius:6px;">
+          <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
+            <span style="font-size:24px;">👀</span>
+            <div style="flex:1; min-width:200px;">
+              <div style="font-weight:600; font-size:13px;" data-i18n="fuel_cta_title">Hast du heute einen anderen Preis gesehen?</div>
+              <div style="font-size:11px; color: var(--text-secondary); margin-top:2px;" data-i18n="fuel_cta_desc">Bürger als Sensoren — melde live, wir zeigen es anonym im Dashboard.</div>
+            </div>
+            <button id="fuel-cta-btn" class="btn-primary" style="padding:8px 16px; font-size:12px;" data-i18n="fuel_cta_btn">+ Preis melden</button>
+          </div>
+          <div id="fuel-citizen-list" style="margin-top:10px; font-size:11px; display:none;"></div>
+        </div>
+
+        <details style="margin-bottom:14px;">
+          <summary style="cursor:pointer; font-family: var(--font-mono); font-size:11px; letter-spacing:.08em; color: var(--text-secondary); padding:8px 0;">
+            <span data-i18n="fuel_table_toggle">▸ ALLE 33 TANKSTELLEN (TABELLE)</span>
+          </summary>
+          <table class="fuel-table" id="fuel-table" style="margin-top:8px;"></table>
+        </details>
+
+        <p class="fuel-source-note" data-i18n="fuel_source">Koordinaten/Marken: OpenStreetMap (ODbL). Preise: Mock. Live-Quelle in Vorbereitung: Tankerkönig MTS-K (Markttransparenzstelle Kraftstoffe, Bundeskartellamt) · CC BY 4.0.</p>
+      </div>
+
+      <div class="alltag-content" id="alltag-grocery">
+        <p class="grocery-disclaimer" data-i18n="grocery_disclaimer">Crowdsourced von Wiesbadener Bürger:innen · Methode validiert: Weltbank/NCBI 2024 (Pearson r=0,94–0,96)</p>
+        <div class="grocery-stats" id="grocery-stats"></div>
+        <table class="grocery-table" id="grocery-table"></table>
+        <button class="grocery-join-btn" data-i18n="grocery_join">+ Bei der Wochenmessung mitmachen</button>
+      </div>
+
+      <div class="alltag-content" id="alltag-economy">
+        <div class="economy-grid" id="economy-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  </div><!-- /view-alltag (continues in Citizen Science below) -->
+
+  <!-- ============================================
+       VIEW: WOHNEN (Mietspiegel + Bodenrichtwert)
+       ============================================ -->
+  <div class="view" id="view-wohnen" data-view="wohnen">
+
+  <!-- WOHNUNGSMARKT SECTION (v2.1) -->
+  <section class="map-section" style="grid-template-columns: 1fr; padding-top: 0;">
+    <div class="map-container" style="padding: 24px 28px;">
+      <div class="section-major">
+        <h2 class="section-major-title">🏠 <span data-i18n="wm_title">Wohnungsmarkt</span></h2>
+        <p class="section-major-subtitle" data-i18n="wm_subtitle">Mietspiegel §558d (Bestand) vs. Angebotsmieten (Markt) — beide aus städtischen Quellen</p>
+      </div>
+
+      <!-- Headline KPIs: Bestand vs Angebot -->
+      <div class="grocery-stats" id="wm-stats"></div>
+
+      <div class="alltag-tabs">
+        <button class="alltag-tab active" data-wm-tab="trend"  data-i18n="wm_tab_trend">Angebotsmieten 2007–2024</button>
+        <button class="alltag-tab"        data-wm-tab="matrix" data-i18n="wm_tab_matrix">Mietspiegel 2025 Matrix</button>
+        <button class="alltag-tab"        data-wm-tab="gap"    data-i18n="wm_tab_gap">Angebot vs Bestand</button>
+        <button class="alltag-tab"        data-wm-tab="boden"  data-i18n="wm_tab_boden">Bodenrichtwert 2000–2024</button>
+      </div>
+
+      <!-- Trend tab -->
+      <div class="alltag-content active" id="wm-trend">
+        <div style="display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap;">
+          <div style="flex:1 1 480px; min-height:280px;">
+            <canvas id="wm-trend-chart"></canvas>
+          </div>
+          <div style="flex:0 0 200px; font-size:12px; color: var(--text-secondary); line-height:1.6;">
+            <div style="font-family: var(--font-mono); font-size:10px; letter-spacing:.08em; color: var(--text-tertiary); margin-bottom:8px;" data-i18n="wm_trend_note">QUELLE</div>
+            <p data-i18n="wm_trend_source">Stadt Wiesbaden: „Angebotsmieten 2007 bis 2024" — Median €/m²/Monat. 6.000–9.000 Inserate/Jahr.</p>
+            <p style="margin-top:12px;" data-i18n="wm_trend_method">Methode: Median über alle Inserate auf städtisch ausgewerteten Plattformen. Asking-rents, nicht Bestandsmieten.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Matrix tab -->
+      <div class="alltag-content" id="wm-matrix">
+        <p class="grocery-disclaimer" data-i18n="wm_matrix_intro">Mittelwert €/m²/Monat (Nettokaltmiete). Quelle: Mietspiegel Wiesbaden 2025 — qualifizierter §558d-Mietspiegel, 14. Fortschreibung.</p>
+        <div style="display:flex; gap:16px; flex-wrap:wrap; margin: 12px 0 16px 0; font-size:12px;">
+          <label style="display:flex; align-items:center; gap:6px;">
+            <span data-i18n="wm_matrix_size" style="color: var(--text-secondary);">Größe:</span>
+            <select id="wm-matrix-size" style="padding:6px 8px; background:var(--bg-secondary); color:var(--text-primary); border:1px solid var(--border); border-radius:4px; font-family:inherit; font-size:12px;">
+              <option value="A">&lt;60 m²</option>
+              <option value="B" selected>60–100 m²</option>
+              <option value="C">≥100 m²</option>
+            </select>
+          </label>
+          <label style="display:flex; align-items:center; gap:6px;">
+            <span data-i18n="wm_matrix_aus" style="color: var(--text-secondary);">Ausstattung:</span>
+            <select id="wm-matrix-aus" style="padding:6px 8px; background:var(--bg-secondary); color:var(--text-primary); border:1px solid var(--border); border-radius:4px; font-family:inherit; font-size:12px;">
+              <option value="b" selected>mit Heizung, mit Bad</option>
+              <option value="c">mit besonderer Ausstattung</option>
+            </select>
+          </label>
+        </div>
+        <table class="grocery-table" id="wm-matrix-table"></table>
+      </div>
+
+      <!-- Gap tab -->
+      <div class="alltag-content" id="wm-gap">
+        <p class="grocery-disclaimer" data-i18n="wm_gap_intro">Was zeigt der Markt — und was sagt der gesetzliche Mietspiegel?</p>
+        <div class="economy-grid" id="wm-gap-grid"></div>
+        <p style="font-size:11px; color: var(--text-tertiary); margin-top:14px; line-height:1.6;" data-i18n="wm_gap_disclaimer">Wichtig: Angebots- ≠ Bestandsmieten. Plattformen wie ImmoScout24 zeigen Angebotsmieten (Inserate), die Mieterhöhungen folgen aber dem qualifizierten §558d-Mietspiegel der Stadt. Beide Werte sind notwendig — für unterschiedliche Fragen.</p>
+      </div>
+
+      <!-- Bodenrichtwert tab -->
+      <div class="alltag-content" id="wm-boden">
+        <p class="grocery-disclaimer" data-i18n="wm_boden_intro">Bodenrichtwert &amp; Immobilienpreise 2000–2024 — Quelle: Gutachterausschuss für Immobilienwerte Wiesbaden.</p>
+        <div class="grocery-stats" id="wm-boden-stats"></div>
+        <div style="display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap; margin-top:14px;">
+          <div style="flex:1 1 480px; min-height:300px;">
+            <canvas id="wm-boden-chart"></canvas>
+          </div>
+          <div style="flex:0 0 220px; font-size:12px; color: var(--text-secondary); line-height:1.6;">
+            <div style="font-family: var(--font-mono); font-size:10px; letter-spacing:.08em; color: var(--text-tertiary); margin-bottom:8px;" data-i18n="wm_boden_note_label">25 JAHRE PREISTREND</div>
+            <p data-i18n="wm_boden_note">Wohnbauland (€/m²): Bodenrichtwert. Eigentumswohnungen, Neubau, Wiederverkauf: Durchschnittspreise €/m². Datenbasis: Gutachterausschuss-Auswertungen.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  </div><!-- /view-wohnen -->
+
+  <!-- ============================================
+       VIEW: MITMACHEN (Citizen Science + Phase E + Datenwunsch)
+       ============================================ -->
+  <div class="view" id="view-mitmachen" data-view="mitmachen">
+
+  <!-- Mitmachen intro hero -->
+  <section class="map-section" style="grid-template-columns: 1fr; padding-top: 24px;">
+    <div class="map-container" style="padding: 28px 28px 8px 28px;">
+      <div class="section-major">
+        <h2 class="section-major-title">👥 <span data-i18n="mm_title">Mitmachen — Wiesbaden gestalten</span></h2>
+        <p class="section-major-subtitle" data-i18n="mm_subtitle">6 konkrete Wege, wie deine Beobachtung in städtische Daten und Entscheidungen einfließt.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Phase E: Mängelmelder card (real Hesse-wide reporting) -->
+  <section class="map-section" style="grid-template-columns: 1fr; padding-top: 0;">
+    <div class="map-container" style="padding: 0 28px 24px 28px;">
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:16px;">
+
+        <!-- Card 1: Mängel melden -->
+        <div class="panel" style="padding:20px;" role="region" aria-labelledby="mm-card-melden-title">
+          <div style="font-size:24px; margin-bottom:8px;" aria-hidden="true">📋</div>
+          <h3 id="mm-card-melden-title" style="font-size:16px; margin-bottom:6px;" data-i18n="mm_melden_title">Mängel melden</h3>
+          <p style="font-size:12px; color: var(--text-secondary); margin-bottom:14px; line-height:1.5;" data-i18n="mm_melden_desc">Schlagloch, defekte Beleuchtung, illegale Müllablagerung — direkt an die zuständige Stelle. Hessen-weiter Mängelmelder oder per E-Mail an die Stadtverwaltung.</p>
+          <button class="btn-primary" id="mm-melden-btn" style="width:100%; padding:10px;" data-i18n="mm_melden_btn">+ Hinweis senden</button>
+          <div id="mm-melden-history" style="margin-top:12px; font-size:11px;"></div>
+        </div>
+
+        <!-- Card 2: Datenwunsch -->
+        <div class="panel" style="padding:20px;" role="region" aria-labelledby="mm-card-data-title">
+          <div style="font-size:24px; margin-bottom:8px;" aria-hidden="true">📊</div>
+          <h3 id="mm-card-data-title" style="font-size:16px; margin-bottom:6px;" data-i18n="mm_data_title">Datenwunsch äußern</h3>
+          <p style="font-size:12px; color: var(--text-secondary); margin-bottom:14px; line-height:1.5;" data-i18n="mm_data_desc">Welche städtischen Daten fehlen dir? Stimme ab — die Top 3 gehen ans Open-Data-Team.</p>
+          <button class="btn-primary" id="mm-data-btn" style="width:100%; padding:10px;" data-i18n="mm_data_btn">▾ Vorschläge ansehen</button>
+        </div>
+
+        <!-- Card 3: Tankstellen-Preise (link to Alltag) -->
+        <div class="panel" style="padding:20px;" role="region" aria-labelledby="mm-card-fuel-title">
+          <div style="font-size:24px; margin-bottom:8px;" aria-hidden="true">⛽</div>
+          <h3 id="mm-card-fuel-title" style="font-size:16px; margin-bottom:6px;" data-i18n="mm_fuel_title">Spritpreis melden</h3>
+          <p style="font-size:12px; color: var(--text-secondary); margin-bottom:14px; line-height:1.5;" data-i18n="mm_fuel_desc">Andere Preise gesehen als im Dashboard? Anonym melden, lokal gespeichert.</p>
+          <button class="btn-secondary" data-mm-goto="alltag" style="width:100%; padding:10px;" data-i18n="mm_fuel_btn">→ Zu Tankstellen wechseln</button>
+        </div>
+
+        <!-- Card 4: Citizen Science (existing block link) -->
+        <div class="panel" style="padding:20px;" role="region" aria-labelledby="mm-card-cs-title">
+          <div style="font-size:24px; margin-bottom:8px;" aria-hidden="true">🔬</div>
+          <h3 id="mm-card-cs-title" style="font-size:16px; margin-bottom:6px;" data-i18n="mm_cs_title">Citizen Science</h3>
+          <p style="font-size:12px; color: var(--text-secondary); margin-bottom:14px; line-height:1.5;" data-i18n="mm_cs_desc">3 laufende Bürger-Messprojekte. CurieuzeNeuzen-Vorbild, EU Citizen Science Prize 2023.</p>
+          <a href="#cs-projects-grid" class="btn-secondary" style="display:block; text-align:center; width:100%; padding:10px; text-decoration:none;" data-i18n="mm_cs_btn">↓ Zu den Projekten</a>
+        </div>
+
+      </div>
+
+      <!-- Datenwunsch panel (expanded inline) -->
+      <div id="mm-data-panel" style="margin-top:18px; display:none; padding:20px; background:var(--bg-secondary); border-radius:6px; border:1px solid var(--border);" role="region" aria-labelledby="mm-data-heading">
+        <h3 id="mm-data-heading" style="font-size:15px; margin-bottom:6px;" data-i18n="mm_data_heading">Welche Daten fehlen dir?</h3>
+        <p style="font-size:11px; color: var(--text-tertiary); margin-bottom:14px;" data-i18n="mm_data_intro">Klicke ↑/↓ um zu unterstützen. Die Top 3 schicken wir ans Open-Data-Team. (Lokal gespeichert, anonym.)</p>
+        <div id="mm-data-list" role="list"></div>
+
+        <!-- Send CTA: bundle the user's votes into a mailto to the open-data team -->
+        <div style="margin-top:18px; padding-top:14px; border-top:1px solid var(--border); display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+          <div style="flex:1; min-width:220px; font-size:12px; color: var(--text-secondary); line-height:1.5;">
+            <strong data-i18n="mm_data_send_label">Bereit, deine Stimmen abzuschicken?</strong>
+            <span data-i18n="mm_data_send_desc"> — Wir bündeln deine Top-Wünsche in eine E-Mail an das Open-Data-Team der Stadt.</span>
+          </div>
+          <button id="mm-data-send-btn" class="btn-primary" style="padding:10px 18px; font-size:12px;" data-i18n="mm_data_send_btn">📧 An opendata@wiesbaden.de senden</button>
+        </div>
+        <p style="font-size:10px; color: var(--text-tertiary); margin-top:12px;" data-i18n="mm_data_note">Nur Vorschläge zu Datensätzen, die heute nicht im Katalog sind.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CITIZEN SCIENCE SECTION (now inside view-mitmachen) -->
+  <section class="map-section" style="grid-template-columns: 1fr; padding-top: 0;">
+    <div class="map-container" style="padding: 24px 28px;">
+      <div class="section-major">
+        <h2 class="section-major-title">🔬 <span data-i18n="cs_title">Citizen Science Wiesbaden</span></h2>
+        <p class="section-major-subtitle" data-i18n="cs_subtitle">Bürger:innen messen, melden, gestalten mit</p>
+      </div>
+
+      <div class="cs-inspiration-box">
+        <div class="cs-inspiration-label" data-i18n="cs_inspiration">Vorbild: 20.000 Bürger:innen, eine Politikänderung</div>
+        <h3 class="cs-inspiration-title">CurieuzeNeuzen Vlaanderen 2018 · EU Citizen Science Prize 2023</h3>
+        <p class="cs-inspiration-desc" data-i18n="cs_inspiration_desc">CurieuzeNeuzen Vlaanderen 2018 zeigte: Citizen Science ändert messbar Verhalten und Stadtpolitik. Wiesbaden kann der erste deutsche Anwendungsfall werden.</p>
+      </div>
+
+      <div class="cs-projects-grid" id="cs-projects-grid"></div>
+    </div>
+  </section>
+
+  </div><!-- /view-mitmachen -->
+
+  <!-- ============================================
+       VIEW: DEMOKRATIE (Wahlen + AI Register)
+       ============================================ -->
+  <div class="view" id="view-demokratie" data-view="demokratie">
+
+    <section class="map-section" style="grid-template-columns: 1fr; padding-top: 24px;">
+      <div class="map-container" style="padding: 28px;">
+        <div class="section-major">
+          <h2 class="section-major-title">🗳 <span data-i18n="dem_title">Demokratie & Beteiligung</span></h2>
+          <p class="section-major-subtitle" data-i18n="dem_subtitle">Kommunalwahl 2026 vs 2021 — wer geht in welchem Ortsbezirk wählen, und wie hat sich das verändert?</p>
+        </div>
+
+        <!-- Headline KPIs -->
+        <div class="grocery-stats" id="dem-stats" style="margin-top:14px;"></div>
+
+        <!-- Tabs: Karte / Vergleich / KI-Register -->
+        <div class="alltag-tabs" style="margin-top:18px;">
+          <button class="alltag-tab active" data-dem-tab="map" data-i18n="dem_tab_map">Wahlbeteiligung Karte</button>
+          <button class="alltag-tab"        data-dem-tab="compare" data-i18n="dem_tab_compare">2026 vs 2021</button>
+          <button class="alltag-tab"        data-dem-tab="ai" data-i18n="dem_tab_ai">KI-Register</button>
+        </div>
+
+        <!-- Map tab -->
+        <div class="alltag-content active" id="dem-map">
+          <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:14px;">
+            <div id="dem-minimap" style="flex:1 1 480px; height:420px; border-radius:6px; border:1px solid var(--border); background:var(--bg-secondary);"></div>
+            <div style="flex:0 0 260px; padding:14px; background:var(--bg-secondary); border-radius:6px; border:1px solid var(--border); font-size:12px;">
+              <div style="font-family: var(--font-mono); font-size:10px; letter-spacing:.08em; color: var(--text-tertiary); margin-bottom:8px;" data-i18n="dem_legend_label">FARBSKALA · WAHLBETEILIGUNG 2026</div>
+              <div id="dem-legend" style="display:flex; gap:2px; height:14px; margin-bottom:6px;"></div>
+              <div style="display:flex; justify-content:space-between; font-family: var(--font-mono); font-size:10px; color: var(--text-tertiary);">
+                <span id="dem-legend-min">30%</span><span id="dem-legend-max">75%</span>
+              </div>
+              <p style="margin-top:14px; line-height:1.6;" data-i18n="dem_legend_note">Hover/Click einen Ortsbezirk für Details. Heßloch, Igstadt, Frauenstein zeigen die höchste Beteiligung — historisch wohlhabende, kleine Außenortsbezirke.</p>
+            </div>
+          </div>
+          <div id="dem-detail" style="margin-top:14px; padding:14px; background:var(--bg-secondary); border-radius:6px; border:1px solid var(--border); font-size:12px; min-height:60px;"></div>
+        </div>
+
+        <!-- Compare tab -->
+        <div class="alltag-content" id="dem-compare">
+          <p class="grocery-disclaimer" data-i18n="dem_compare_intro">Wahlbeteiligung Ortsbeiratswahlen — alle 27 Ortsbezirke, 2026 gegenüber 2021. Briefwahl-Anteil rechts.</p>
+          <table class="grocery-table" id="dem-compare-table" style="margin-top:12px;"></table>
+        </div>
+
+        <!-- AI Register tab -->
+        <div class="alltag-content" id="dem-ai">
+          <p class="grocery-disclaimer" data-i18n="dem_ai_intro">Welche Algorithmen setzt die Stadt ein? Modell: Helsinki AI Register + Berlin Verwaltungsregister. Bürger können Feedback geben.</p>
+          <table class="ai-register-table" id="dem-ai-table" style="margin-top:12px;"></table>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /view-demokratie -->
+
+  <!-- ============================================
+       VIEW: DATEN (Datenkatalog + Quellen-Transparenz)
+       ============================================ -->
+  <div class="view" id="view-daten" data-view="daten">
+
+    <section class="map-section" style="grid-template-columns: 1fr; padding-top: 24px;">
+      <div class="map-container" style="padding: 28px;">
+        <div class="section-major">
+          <h2 class="section-major-title">🔍 <span data-i18n="dk_title">Datenkatalog & Transparenz</span></h2>
+          <p class="section-major-subtitle" data-i18n="dk_subtitle">Jede Zahl im Dashboard hat eine Quelle. Hier siehst du alle: live oder mock, Lizenz, Aktualisierungsfrequenz.</p>
+        </div>
+
+        <div class="grocery-stats" id="dk-summary" style="margin-top:14px;"></div>
+
+        <table class="grocery-table" id="dk-table" style="margin-top:18px;"></table>
+
+        <p style="font-size:11px; color: var(--text-tertiary); margin-top:14px; line-height:1.6;" data-i18n="dk_footer">Alle Datensätze stammen von <a href="https://opendata.cloud.wiesbaden.de" target="_blank" rel="noopener">opendata.cloud.wiesbaden.de</a>, OpenStreetMap (ODbL) oder dem Bundeskartellamt MTS-K. Keine personenbezogenen Daten — DSGVO-konform.</p>
+      </div>
+    </section>
+
+  </div><!-- /view-daten -->
+
+  <!-- =======================================================
+       MODALS — kept OUTSIDE all view containers so they stay
+       reachable regardless of which view is currently active.
+       ======================================================= -->
+
+  <!-- MODAL: Hinweis senden (v2.1 — Mängelmelder deep link + mailto fallback) -->
+  <div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="hinweis-modal-title">
+    <div class="modal" style="max-width:560px;">
+      <h3 id="hinweis-modal-title" data-i18n="modal_title">Hinweis senden</h3>
+      <p class="modal-sub" data-i18n="modal_subtitle">Helfen Sie uns, die Datenqualität zu verbessern</p>
+      <form id="hinweis-form" novalidate>
+        <div class="form-group">
+          <label for="hinweis-cat" data-i18n="modal_type">Art des Hinweises</label>
+          <select id="hinweis-cat" required aria-required="true">
+            <option value="schlagloch" data-i18n="modal_type_pothole">Schlagloch</option>
+            <option value="beleuchtung" data-i18n="modal_type_light">Beleuchtung defekt</option>
+            <option value="muell" data-i18n="modal_type_trash">Müll / illegale Ablagerung</option>
+            <option value="vandalismus" data-i18n="modal_type_vandal">Vandalismus</option>
+            <option value="grunflache" data-i18n="modal_type_green">Grünfläche / Baum</option>
+            <option value="radweg" data-i18n="modal_type_bike">Radinfrastruktur</option>
+            <option value="data" data-i18n="modal_type_data">Datensatz unklar</option>
+            <option value="sonstiges" data-i18n="modal_type_other">Sonstiges</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="hinweis-ort" data-i18n="modal_location">Ort / Adresse / Ortsbezirk</label>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <input id="hinweis-ort" type="text" placeholder="z. B. Wilhelmstr. 1, 65183 Wiesbaden" style="flex:1;">
+            <button type="button" id="hinweis-geo" class="btn-secondary" style="padding:8px 12px; white-space:nowrap; font-size:12px;" aria-label="GPS-Standort verwenden">
+              📍 <span data-i18n="modal_use_gps">GPS</span>
+            </button>
+          </div>
+          <span id="hinweis-geo-info" style="display:block; font-size:11px; color: var(--text-tertiary); margin-top:4px;"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="hinweis-desc" data-i18n="modal_description">Beschreibung</label>
+          <textarea id="hinweis-desc" rows="3" placeholder="Was hast du wo gesehen?"></textarea>
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="anon" checked>
+          <label for="anon" data-i18n="modal_anonymous">Anonym (keine personenbezogenen Daten gespeichert)</label>
+        </div>
+
+        <div style="margin-top:14px; padding:12px; background:rgba(74,111,165,0.08); border-left:3px solid var(--accent-cool, #4A6FA5); border-radius:4px; font-size:11px; color: var(--text-secondary); line-height:1.5;">
+          <div data-i18n="modal_route_intro" style="margin-bottom:8px;">Wir können deinen Hinweis auf zwei Wegen weiterleiten:</div>
+          <div style="margin-bottom:6px;">
+            <strong data-i18n="modal_route_1">1. Mängelmelder Hessen</strong>
+            <span data-i18n="modal_route_1_desc">— offizielles, hessenweites System (sicherheitsportal.hessen.de). Empfohlen.</span>
+          </div>
+          <div>
+            <strong data-i18n="modal_route_2">2. E-Mail an die Stadtverwaltung</strong>
+            <span data-i18n="modal_route_2_desc">— öffnet dein Mail-Programm mit vorausgefülltem Text. Fallback ohne Account.</span>
+          </div>
+        </div>
+
+        <div class="modal-buttons" style="margin-top:14px; flex-wrap:wrap;">
+          <button type="button" class="btn-secondary" id="btn-cancel" data-i18n="modal_cancel">Abbrechen</button>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn-secondary" id="btn-mailto" data-i18n="modal_send_mail">📧 Per E-Mail</button>
+            <button type="submit" class="btn-primary" id="btn-modal-send" data-i18n="modal_send_official">→ An Mängelmelder Hessen</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Citizen fuel-price report -->
+  <div class="modal-backdrop" id="fuel-report-modal" role="dialog" aria-modal="true">
+    <div class="modal" style="max-width:480px;">
+      <h3 data-i18n="fuel_modal_title">Preis melden</h3>
+      <p class="modal-sub" data-i18n="fuel_modal_subtitle">Anonym, DSGVO-konform, lokal gespeichert (kein Server, kein Tracking).</p>
+      <form id="fuel-report-form">
+        <div class="form-group">
+          <label data-i18n="fuel_modal_station">Welche Tankstelle?</label>
+          <select id="fuel-report-station" required></select>
+        </div>
+        <div class="form-group">
+          <label data-i18n="fuel_modal_fuel">Spritsorte</label>
+          <select id="fuel-report-fuel">
+            <option value="e10">Super E10</option>
+            <option value="diesel">Diesel</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label data-i18n="fuel_modal_price">Preis (€/Liter)</label>
+          <input type="number" id="fuel-report-price" step="0.001" min="0.5" max="5" placeholder="1.659" required>
+        </div>
+        <div class="modal-buttons">
+          <button type="button" class="btn-secondary" id="fuel-report-cancel" data-i18n="modal_cancel">Abbrechen</button>
+          <button type="submit" class="btn-primary" data-i18n="fuel_modal_send">Senden</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: KPI Curator -->
+  <div class="modal-backdrop" id="curator-modal">
+    <div class="modal" style="max-width: 540px;">
+      <h3 data-i18n="curator_title">Wähle deine KPIs</h3>
+      <p class="modal-sub" data-i18n="curator_subtitle">Stell dir das Lagebild so zusammen, wie es zu deinem Alltag passt</p>
+      <div class="curator-grid" id="curator-grid"></div>
+      <p class="curator-min-warning" id="curator-warning" data-i18n="curator_min">Mindestens 3 KPIs auswählen</p>
+      <div class="curator-actions">
+        <button class="btn-secondary" id="curator-reset" data-i18n="curator_reset">Standard wiederherstellen</button>
+        <div>
+          <button class="btn-secondary" id="curator-cancel" data-i18n="modal_cancel">Abbrechen</button>
+          <button class="btn-primary" id="curator-save" data-i18n="curator_save">Speichern</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: AI Register -->
+  <div class="modal-backdrop" id="ai-modal">
+    <div class="modal" style="max-width: 720px;">
+      <h3 data-i18n="ai_title">AI-Register Wiesbaden</h3>
+      <p class="modal-sub" data-i18n="ai_subtitle">Jeder Algorithmus, den die Stadt einsetzt — in einfacher Sprache. Modell: Helsinki AI Register.</p>
+      <table class="ai-register-table" id="ai-register-table"></table>
+      <div class="modal-buttons" style="margin-top:16px;">
+        <button type="button" class="btn-primary" onclick="document.getElementById('ai-modal').classList.remove('active')" data-i18n="modal_cancel">Schließen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Meta Usage -->
+  <div class="modal-backdrop" id="meta-modal">
+    <div class="modal" style="max-width: 640px;">
+      <h3 data-i18n="meta_title">Welche Panels werden am meisten genutzt?</h3>
+      <p class="modal-sub" data-i18n="meta_subtitle">Transparenz wie auf daten.berlin.de — wir messen, was wirklich relevant ist</p>
+      <div class="meta-total" id="meta-total"></div>
+      <div class="meta-bars" id="meta-bars"></div>
+      <div class="modal-buttons" style="margin-top:16px;">
+        <button type="button" class="btn-primary" onclick="document.getElementById('meta-modal').classList.remove('active')" data-i18n="modal_cancel">Schließen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Kita-Versorgung — citizen-facing details when KPI is clicked -->
+  <div class="modal-backdrop" id="kita-modal">
+    <div class="modal" style="max-width: 880px;">
+      <h3 data-i18n="kita_modal_title">Kita-Versorgung 2024/25 · Alle 26 Ortsbezirke</h3>
+      <p class="modal-sub" data-i18n="kita_modal_sub">Quelle: „Tagesbetreuung für Kinder 2024/25“ · Amt für Soziale Arbeit · Stand 09/2025</p>
+
+      <div class="kita-summary" id="kita-summary"></div>
+
+      <div class="kita-tabs">
+        <button class="kita-tab active" data-kita-band="u3" data-i18n="kita_modal_u3">Krippe (0–3 Jahre)</button>
+        <button class="kita-tab" data-kita-band="elem" data-i18n="kita_modal_elem">Kindergarten (3–6 Jahre)</button>
+      </div>
+
+      <div class="kita-table-wrap">
+        <table class="kita-table" id="kita-table">
+          <thead>
+            <tr>
+              <th data-i18n="kita_col_district">Ortsbezirk</th>
+              <th data-i18n="kita_col_quote" class="num">Quote</th>
+              <th data-i18n="kita_col_bilanz" class="num">Bilanz</th>
+              <th data-i18n="kita_col_delta" class="num">Δ ggü. Vorjahr</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <p class="kita-legend" data-i18n="kita_legend">
+        Quote = Plätze ÷ Basiszahl Kinder · 100% = bedarfsdeckend.
+      </p>
+
+      <div class="kita-actions">
+        <a class="kita-action-btn" href="https://wikita.wiesbaden.de/" target="_blank" rel="noopener">
+          📝 <span data-i18n="kita_action_register">Kind vormerken (WiKITA)</span>
+        </a>
+        <a class="kita-action-btn" href="https://www.wiesbaden.de/medien/downloads/leben-in-wiesbaden/amt-51.1/Bericht-Tagesbetreuung-fuer-Kinder-2024_25_final.pdf" target="_blank" rel="noopener">
+          📄 <span data-i18n="kita_action_source">Originalbericht (PDF)</span>
+        </a>
+        <a class="kita-action-btn" href="https://opendata.cloud.wiesbaden.de/" target="_blank" rel="noopener">
+          🔓 <span data-i18n="kita_action_open_data">Open Data Wiesbaden</span>
+        </a>
+      </div>
+
+      <div class="modal-buttons" style="margin-top:16px;">
+        <button type="button" class="btn-primary" onclick="document.getElementById('kita-modal').classList.remove('active')" data-i18n="modal_cancel">Schließen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Daten-Story (v2.3) — opens when a story card on the right column is clicked -->
+  <div class="modal-backdrop" id="story-modal" role="dialog" aria-modal="true" aria-labelledby="story-modal-title">
+    <div class="modal story-modal">
+      <button type="button" class="story-modal-close" onclick="closeStoryModal()" aria-label="Close">×</button>
+      <div class="story-modal-eyebrow"><span id="story-modal-num">01</span> · <span data-i18n="stories_title">Daten-Stories</span></div>
+      <h3 id="story-modal-title"></h3>
+      <div class="story-modal-section">
+        <div class="story-modal-section-label" data-i18n="story_finding_label">BEFUND</div>
+        <p id="story-modal-finding" class="story-modal-finding"></p>
+      </div>
+      <div class="story-modal-section">
+        <div class="story-modal-section-label" data-i18n="story_facts_label">EINORDNUNG</div>
+        <div id="story-modal-facts" class="story-modal-facts"></div>
+      </div>
+      <div class="story-modal-section">
+        <div class="story-modal-section-label" data-i18n="story_chart_label">DATEN</div>
+        <div class="story-modal-chart-wrap"><canvas id="story-modal-chart"></canvas></div>
+      </div>
+      <div class="story-modal-source">
+        <div class="story-modal-source-label"><span data-i18n="story_source_label">Datenquelle</span></div>
+        <div class="story-modal-source-value" id="story-modal-source-text"></div>
+        <a id="story-modal-source-link" href="#" target="_blank" rel="noopener" class="story-modal-source-link" data-i18n="story_modal_view_source">Auf opendata.cloud.wiesbaden.de öffnen ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4 data-i18n="footer_sources">DATENQUELLEN</h4>
+        <p>opendata.cloud.wiesbaden.de · ESWE Verkehr (GTFS-RT) · HLNUG Hessen · DWD Open Data · Marktstammdatenregister · Digitaler Zwilling Wiesbaden (VC Suite)</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer_update">AKTUALISIERUNG</h4>
+        <p>Verkehr 60 s · Luftqualität 5 min · Baustellen 24 h · Bevölkerung 30 d · Energie monatlich</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer_privacy">DATENSCHUTZ</h4>
+        <p data-i18n="footer_dsgvo">DSGVO- und HODaG-konform · Keine personenbezogenen Daten · Lizenz: CC BY 4.0</p>
+      </div>
+    </div>
+    <div class="footer-extra-links">
+      <a id="open-ai-register">🤖 <span data-i18n="ai_link">AI-Register</span></a>
+      <a id="open-meta-usage">📊 <span data-i18n="meta_link">Nutzungs-Statistik</span></a>
+      <span style="color: var(--text-tertiary); font-size: 12px;">·</span>
+      <span style="display:inline-flex; align-items:center; gap:8px;">
+        <input type="text" id="address-input" placeholder="Adresse eingeben (z. B. Wilhelmstraße 1)" data-i18n-placeholder="address_placeholder"
+               style="padding:6px 10px; border:1px solid var(--border); border-radius:4px; background:var(--bg-secondary); color:var(--text-primary); font-family:inherit; font-size:12px; width:240px;">
+        <button id="address-search-btn" style="padding:6px 12px; background:var(--accent); color:white; border:none; border-radius:4px; cursor:pointer; font-family:inherit; font-size:12px;" data-i18n="address_button">Suchen</button>
+      </span>
+    </div>
+    <div class="footer-bottom">
+      <span data-i18n="footer_credits">Konzept &amp; Mock-up: Sujin Park</span>
+      <span class="signature">v2.0 · Mock-up · 04/2026 · Citizen-Science-Edition</span>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
