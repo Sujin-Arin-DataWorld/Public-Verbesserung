@@ -1,0 +1,2312 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-05-04T16:51:28Z",
+    "timestamp_areas_base": "2026-05-04T14:21:50Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 29562558,
+  "lat": 50.0266076,
+  "lon": 8.3101626,
+  "tags": {
+    "TMC:cid_58:tabcd_1:Class": "Point",
+    "TMC:cid_58:tabcd_1:Direction": "positive",
+    "TMC:cid_58:tabcd_1:LCLversion": "9.00",
+    "TMC:cid_58:tabcd_1:LocationCode": "59660",
+    "TMC:cid_58:tabcd_1:NextLocationCode": "12239",
+    "TMC:cid_58:tabcd_1:PrevLocationCode": "12238",
+    "amenity": "parking",
+    "hgv": "yes",
+    "name": "Zur alten Römerstraße"
+  }
+},
+{
+  "type": "node",
+  "id": 247274226,
+  "lat": 50.0848099,
+  "lon": 8.2468797,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "fee": "yes",
+    "layer": "-1",
+    "motorcycle": "no",
+    "name": "Kurhaus",
+    "parking": "underground",
+    "trailer": "no",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 274946860,
+  "lat": 50.1306736,
+  "lon": 8.3347824,
+  "tags": {
+    "amenity": "parking",
+    "parking": "street_side"
+  }
+},
+{
+  "type": "node",
+  "id": 279325163,
+  "lat": 50.0479462,
+  "lon": 8.3652914,
+  "tags": {
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 280305099,
+  "lat": 50.0442763,
+  "lon": 8.3664629,
+  "tags": {
+    "amenity": "parking",
+    "parking": "surface",
+    "toilets:wheelchair": "no",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 280309090,
+  "lat": 50.0451462,
+  "lon": 8.3677090,
+  "tags": {
+    "amenity": "parking",
+    "parking": "surface",
+    "toilets:wheelchair": "no",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 283287125,
+  "lat": 50.1020518,
+  "lon": 8.3400520,
+  "tags": {
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 283577423,
+  "lat": 50.1189099,
+  "lon": 8.2424518,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "fee": "no",
+    "name": "Idsteiner Weg",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 289166586,
+  "lat": 50.0968000,
+  "lon": 8.1690257,
+  "tags": {
+    "amenity": "parking",
+    "parking": "surface",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 289336668,
+  "lat": 50.0665647,
+  "lon": 8.2489627,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "capacity": "15",
+    "fee": "no",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 324287643,
+  "lat": 50.0829979,
+  "lon": 8.1545991,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "fee": "no",
+    "parking": "surface",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 332696596,
+  "lat": 50.0033315,
+  "lon": 8.3087623,
+  "tags": {
+    "access": "permissive",
+    "amenity": "parking",
+    "fee": "no",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 333022117,
+  "lat": 50.0476648,
+  "lon": 8.2406889,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 335900534,
+  "lat": 50.0752883,
+  "lon": 8.2536468,
+  "tags": {
+    "access": "permissive",
+    "amenity": "parking",
+    "fee": "yes",
+    "layer": "-1",
+    "name": "St. Josefs-Hospital",
+    "operator": "St. Josefs-Hospital",
+    "operator:type": "religious",
+    "park_ride": "no",
+    "parking": "underground",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 345401808,
+  "lat": 50.0757537,
+  "lon": 8.1838261,
+  "tags": {
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 345401812,
+  "lat": 50.0970125,
+  "lon": 8.1696259,
+  "tags": {
+    "amenity": "parking",
+    "parking": "surface",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 370688198,
+  "lat": 50.0666145,
+  "lon": 8.2496570,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "10",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 416674594,
+  "lat": 50.0717699,
+  "lon": 8.2387579,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "15",
+    "name": "Hotel Landeshaus",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 416674603,
+  "lat": 50.0724464,
+  "lon": 8.2404958,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 418839134,
+  "lat": 50.0895378,
+  "lon": 8.2335574,
+  "tags": {
+    "amenity": "parking",
+    "capacity": "10",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 461818523,
+  "lat": 50.1058238,
+  "lon": 8.2423495,
+  "tags": {
+    "amenity": "parking",
+    "capacity": "40",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 469439264,
+  "lat": 50.1361958,
+  "lon": 8.2803712,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "capacity": "15",
+    "fee": "no",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 528903471,
+  "lat": 50.0668822,
+  "lon": 8.2496377,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "capacity": "15",
+    "fee": "no",
+    "operator": "Wiesbadener Volksbank",
+    "parking": "surface",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 563182132,
+  "lat": 50.0683271,
+  "lon": 8.2458210,
+  "tags": {
+    "access": "permissive",
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 581219134,
+  "lat": 50.0734659,
+  "lon": 8.2284784,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "fee": "no",
+    "parking": "surface",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 603323045,
+  "lat": 50.0689691,
+  "lon": 8.2255806,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "capacity": "5",
+    "fee": "no",
+    "name": "Höco",
+    "park_ride": "no",
+    "parking": "surface",
+    "source": "survey"
+  }
+},
+{
+  "type": "node",
+  "id": 613832027,
+  "lat": 50.0558365,
+  "lon": 8.1939088,
+  "tags": {
+    "amenity": "parking",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 714127403,
+  "lat": 50.0742928,
+  "lon": 8.2286281,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "fee": "no",
+    "maxstay": "no",
+    "maxstay:conditional": "2 hours @ (Mo-Fr 09:00-22:00)",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 764433453,
+  "lat": 50.0592223,
+  "lon": 8.3312059,
+  "tags": {
+    "amenity": "parking",
+    "description": "Freier Parkplatz",
+    "parking": "surface",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 912613138,
+  "lat": 50.0695944,
+  "lon": 8.2347840,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "capacity": "50",
+    "fee": "no",
+    "maxstay": "2 hours",
+    "parking": "surface",
+    "supervised": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 1016787333,
+  "lat": 50.0810316,
+  "lon": 8.2397106,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "capacity": "3",
+    "capacity:disabled": "3",
+    "fee": "no",
+    "parking": "surface",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1017545055,
+  "lat": 50.0749475,
+  "lon": 8.2385538,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "capacity": "3",
+    "capacity:disabled": "1",
+    "fee": "yes",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 1024903065,
+  "lat": 50.0713157,
+  "lon": 8.1482991,
+  "tags": {
+    "access": "private",
+    "amenity": "parking"
+  }
+},
+{
+  "type": "node",
+  "id": 1225712374,
+  "lat": 50.0769830,
+  "lon": 8.2397934,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "fee": "yes",
+    "name": "Naspa",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "node",
+  "id": 1329895957,
+  "lat": 50.0998664,
+  "lon": 8.2154927,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "capacity": "40",
+    "fee": "no",
+    "name": "Parkplatz Luft- und Sonnenbad Wiesbaden",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 1337360703,
+  "lat": 50.0435022,
+  "lon": 8.2042998,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 1451283373,
+  "lat": 50.0564875,
+  "lon": 8.2914122,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 1452237533,
+  "lat": 50.0552735,
+  "lon": 8.2935685,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 1452237566,
+  "lat": 50.0555448,
+  "lon": 8.2914940,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1452237580,
+  "lat": 50.0556935,
+  "lon": 8.2935409,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 1452237585,
+  "lat": 50.0557460,
+  "lon": 8.2931232,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 1482535970,
+  "lat": 50.0706584,
+  "lon": 8.3338394,
+  "tags": {
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 1525512499,
+  "lat": 50.0969975,
+  "lon": 8.2165109,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "6",
+    "name": "Hochschule RheinMain Parkplatz",
+    "operator": "Hochschule RheinMain",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 1525516567,
+  "lat": 50.0968675,
+  "lon": 8.2169597,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "20",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 1596746776,
+  "lat": 50.0380195,
+  "lon": 8.3246885,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "fee": "no",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 1611785386,
+  "lat": 50.0734331,
+  "lon": 8.3344920,
+  "tags": {
+    "amenity": "parking",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1686027995,
+  "lat": 50.0546668,
+  "lon": 8.2938159,
+  "tags": {
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 1726400460,
+  "lat": 50.0887308,
+  "lon": 8.2265620,
+  "tags": {
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 1906700151,
+  "lat": 50.0774595,
+  "lon": 8.2417894,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "8",
+    "name": "Hotel Hansa",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 1964433664,
+  "lat": 50.0747364,
+  "lon": 8.2413655,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "capacity": "10",
+    "fee": "no",
+    "operator": "Aurora",
+    "park_ride": "no",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 1968472527,
+  "lat": 50.0757460,
+  "lon": 8.2410312,
+  "tags": {
+    "access": "private",
+    "amenity": "parking"
+  }
+},
+{
+  "type": "node",
+  "id": 1968485287,
+  "lat": 50.0757795,
+  "lon": 8.2408778,
+  "tags": {
+    "access": "private",
+    "amenity": "parking"
+  }
+},
+{
+  "type": "node",
+  "id": 1969993714,
+  "lat": 50.0765869,
+  "lon": 8.2411800,
+  "tags": {
+    "amenity": "parking"
+  }
+},
+{
+  "type": "node",
+  "id": 1969997037,
+  "lat": 50.0765141,
+  "lon": 8.2415534,
+  "tags": {
+    "amenity": "parking"
+  }
+},
+{
+  "type": "node",
+  "id": 1971843438,
+  "lat": 50.0765468,
+  "lon": 8.2418271,
+  "tags": {
+    "amenity": "parking"
+  }
+},
+{
+  "type": "node",
+  "id": 1975109120,
+  "lat": 50.0762940,
+  "lon": 8.2423048,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "capacity": "5",
+    "check_date:fee": "2023-09-02",
+    "fee": "no",
+    "park_ride": "no",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 1975391600,
+  "lat": 50.0768838,
+  "lon": 8.2419258,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 1975391615,
+  "lat": 50.0770478,
+  "lon": 8.2413168,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 1976838697,
+  "lat": 50.0773842,
+  "lon": 8.2413746,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "capacity": "8",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 1981599536,
+  "lat": 50.0411716,
+  "lon": 8.2158758,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "fee": "no",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 2061579484,
+  "lat": 50.0482951,
+  "lon": 8.2177166,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "fee": "no",
+    "layer": "-1",
+    "operator": "Pflanzen Kölle",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 2061650531,
+  "lat": 50.0409789,
+  "lon": 8.2165283,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "fee": "no",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 2145307325,
+  "lat": 50.0571871,
+  "lon": 8.3289183,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "node",
+  "id": 2151984674,
+  "lat": 50.0482134,
+  "lon": 8.2203318,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "fee": "no",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 2151984677,
+  "lat": 50.0485614,
+  "lon": 8.2203058,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "fee": "no",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 2252713717,
+  "lat": 50.0129416,
+  "lon": 8.2939980,
+  "tags": {
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 2255803145,
+  "lat": 50.0497194,
+  "lon": 8.2100687,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 2271976656,
+  "lat": 50.0672104,
+  "lon": 8.2266421,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "parking": "surface",
+    "wheelchair": "limited",
+    "wheelchair:description": "vor dem Finanzamt sind auf der Strasse 2 Behindertenparkplätze markiert."
+  }
+},
+{
+  "type": "node",
+  "id": 2272446478,
+  "lat": 50.0795270,
+  "lon": 8.2297757,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "fee": "yes",
+    "parking": "surface",
+    "toilets:wheelchair": "no",
+    "wheelchair": "yes",
+    "wheelchair:description": "Behindertenparkplatz"
+  }
+},
+{
+  "type": "node",
+  "id": 2308310687,
+  "lat": 50.0790160,
+  "lon": 8.2464322,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "fee": "no",
+    "layer": "-1",
+    "opening_hours": "Mo-Fr 08:00-19:00",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 2354539631,
+  "lat": 50.0712959,
+  "lon": 8.2417179,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "fee": "yes",
+    "layer": "-1",
+    "name": "Lili",
+    "old_name": "Lilien-Carré",
+    "parking": "underground",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2423810652,
+  "lat": 50.0822704,
+  "lon": 8.2207096,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "name": "Parkplatz Jugendherberge",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 2477422305,
+  "lat": 50.0445372,
+  "lon": 8.3526061,
+  "tags": {
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 2477467068,
+  "lat": 50.0410351,
+  "lon": 8.3528330,
+  "tags": {
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 2477467072,
+  "lat": 50.0412876,
+  "lon": 8.3531029,
+  "tags": {
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 2538015587,
+  "lat": 50.0723192,
+  "lon": 8.2261866,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "8",
+    "fee": "no",
+    "motorbike": "yes",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 2690146336,
+  "lat": 50.0619764,
+  "lon": 8.1787927,
+  "tags": {
+    "access": "permissive",
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 2722424364,
+  "lat": 50.0566046,
+  "lon": 8.2554072,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 2863169120,
+  "lat": 50.0659872,
+  "lon": 8.1916456,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "capacity": "3",
+    "capacity:disabled": "3",
+    "fee": "no",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 2995406095,
+  "lat": 50.0360872,
+  "lon": 8.2595700,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "capacity": "10",
+    "name": "A.T.U Wiesbaden - Amöneburg",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 3226144298,
+  "lat": 50.0677513,
+  "lon": 8.2240600,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "capacity": "20",
+    "fee": "no",
+    "parking": "street_side",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 3227974384,
+  "lat": 50.0733727,
+  "lon": 8.2472699,
+  "tags": {
+    "addr:city": "Wiesbaden",
+    "addr:postcode": "65185",
+    "addr:street": "Lessingstraße",
+    "amenity": "parking",
+    "fee": "yes",
+    "park_ride": "no",
+    "parking": "lane",
+    "supervised": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 3227974385,
+  "lat": 50.0729733,
+  "lon": 8.2478627,
+  "tags": {
+    "amenity": "parking",
+    "fee": "yes",
+    "operator": "Stadt Wiesbaden",
+    "park_ride": "no",
+    "parking": "lane",
+    "supervised": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 3363549696,
+  "lat": 50.0435750,
+  "lon": 8.2240040,
+  "tags": {
+    "amenity": "parking",
+    "name": "Hinterer Schulparkplatz Waldorfschule",
+    "park_ride": "no",
+    "parking": "surface",
+    "surface": "mud"
+  }
+},
+{
+  "type": "node",
+  "id": 3363560393,
+  "lat": 50.0436761,
+  "lon": 8.2244418,
+  "tags": {
+    "amenity": "parking",
+    "name": "Schulparkplatz",
+    "parking": "surface",
+    "website": "https://www.waldorfschule-wiesbaden.de/"
+  }
+},
+{
+  "type": "node",
+  "id": 3408827782,
+  "lat": 50.0489219,
+  "lon": 8.2261874,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "capacity": "9",
+    "fee": "no",
+    "parking": "street_side"
+  }
+},
+{
+  "type": "node",
+  "id": 3408827791,
+  "lat": 50.0489444,
+  "lon": 8.2243685,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "fee": "no",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 3408829406,
+  "lat": 50.0490267,
+  "lon": 8.2234702,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "fee": "no",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 3408829704,
+  "lat": 50.0504993,
+  "lon": 8.2249829,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "parking": "street_side"
+  }
+},
+{
+  "type": "node",
+  "id": 4387242171,
+  "lat": 50.0496426,
+  "lon": 8.1932400,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 4387242172,
+  "lat": 50.0495096,
+  "lon": 8.1934517,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 4387242174,
+  "lat": 50.0495599,
+  "lon": 8.1927364,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 4387244193,
+  "lat": 50.0493270,
+  "lon": 8.1929206,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 4387244243,
+  "lat": 50.0490109,
+  "lon": 8.1931032,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 4844507093,
+  "lat": 50.0875582,
+  "lon": 8.2206745,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "capacity": "40",
+    "covered": "yes",
+    "fee": "no",
+    "layer": "-1",
+    "maxheight": "2",
+    "operator": "Rewe",
+    "operator:type": "business",
+    "park_ride": "no",
+    "parking": "underground",
+    "supervised": "no",
+    "surface": "paving_stones"
+  }
+},
+{
+  "type": "node",
+  "id": 4918670667,
+  "lat": 50.0449841,
+  "lon": 8.1915632,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 4918670679,
+  "lat": 50.0436904,
+  "lon": 8.1911718,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 5028490900,
+  "lat": 50.0868045,
+  "lon": 8.2380698,
+  "tags": {
+    "addr:city": "Wiesbaden",
+    "addr:country": "DE",
+    "addr:housenumber": "28",
+    "addr:postcode": "65183",
+    "addr:street": "Schachtstraße",
+    "amenity": "parking"
+  }
+},
+{
+  "type": "node",
+  "id": 5331783746,
+  "lat": 50.0585302,
+  "lon": 8.2905874,
+  "tags": {
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 5331786638,
+  "lat": 50.0584294,
+  "lon": 8.2911560,
+  "tags": {
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 5876414108,
+  "lat": 50.0652595,
+  "lon": 8.2501575,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 5896945101,
+  "lat": 50.0427557,
+  "lon": 8.2426239,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "charge": "1€/60min;max 7€/day",
+    "fee": "yes",
+    "layer": "-1",
+    "opening_hours": "Mo-Fr 07:00-19:00; Sa 07:00-14:30; Su,PH off",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 6954154550,
+  "lat": 50.0636793,
+  "lon": 8.2583179,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 7342769523,
+  "lat": 50.0617429,
+  "lon": 8.1562043,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 7476954202,
+  "lat": 50.0777739,
+  "lon": 8.2268607,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "capacity": "2",
+    "fee": "yes",
+    "maxstay": "2 minutes",
+    "parking": "lane"
+  }
+},
+{
+  "type": "node",
+  "id": 7556858522,
+  "lat": 50.0624155,
+  "lon": 8.1641827,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "fee": "no",
+    "parking": "surface",
+    "surface": "gravel"
+  }
+},
+{
+  "type": "node",
+  "id": 7794365829,
+  "lat": 50.0363174,
+  "lon": 8.2387072,
+  "tags": {
+    "access": "no",
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 7839100449,
+  "lat": 50.0817518,
+  "lon": 8.2347466,
+  "tags": {
+    "access": "yes",
+    "addr:city": "Wiesbaden",
+    "addr:housenumber": "15-17",
+    "addr:postcode": "65183",
+    "addr:street": "Helenenstraße",
+    "amenity": "parking",
+    "capacity": "300",
+    "description": "Maximale Höhen: 1. Etage bis zu 2,40m; 2. und 3. Etage 1,90m, 4.bis 6. Etage 1,85m, sonst max. 1,80m (Quelle: Außenbeschilderung an Einfahrt). Nachtein- und ausfahrt für Dauermieter gegen zusätzliche Nutzungspauschale buchbar.",
+    "fee": "yes",
+    "name": "Parkhaus Neu",
+    "opening_hours": "Mo-Su 05:00-23:00",
+    "parking": "multi-storey",
+    "payment:cash": "yes",
+    "payment:coins": "yes",
+    "payment:girocard": "yes",
+    "payment:maestro": "yes",
+    "phone": "+49 611 9408844",
+    "surface": "concrete",
+    "website": "https://www.parkhaus-wiesbaden.de/"
+  }
+},
+{
+  "type": "node",
+  "id": 9052343365,
+  "lat": 50.0674988,
+  "lon": 8.2685708,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 9120612581,
+  "lat": 50.0246863,
+  "lon": 8.2792933,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "capacity": "42",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 9120653519,
+  "lat": 50.0251992,
+  "lon": 8.2796073,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 9258229504,
+  "lat": 50.0440432,
+  "lon": 8.2423259,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "capacity": "25",
+    "description": "Parkscheibe Pflicht",
+    "fee": "no",
+    "lit": "yes",
+    "maxstay": "90",
+    "orientation": "perpendicular",
+    "parking": "surface",
+    "smoothness": "good",
+    "surface": "paving_stones"
+  }
+},
+{
+  "type": "node",
+  "id": 9609021610,
+  "lat": 50.0781075,
+  "lon": 8.2340595,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 9663388207,
+  "lat": 50.0674362,
+  "lon": 8.2741411,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 10108226755,
+  "lat": 50.0557103,
+  "lon": 8.2595596,
+  "tags": {
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 10108682708,
+  "lat": 50.0799556,
+  "lon": 8.2543614,
+  "tags": {
+    "amenity": "parking"
+  }
+},
+{
+  "type": "node",
+  "id": 10309597086,
+  "lat": 50.1142092,
+  "lon": 8.3331045,
+  "tags": {
+    "amenity": "parking",
+    "park_ride": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 10616328610,
+  "lat": 50.0513532,
+  "lon": 8.2482860,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "fee": "no",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 11044232714,
+  "lat": 50.0874050,
+  "lon": 8.2616277,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11046705048,
+  "lat": 50.0858761,
+  "lon": 8.2645387,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11144645319,
+  "lat": 50.0687446,
+  "lon": 8.2435218,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "fee": "yes",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11210479295,
+  "lat": 50.0737133,
+  "lon": 8.2406686,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "2",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 11379925293,
+  "lat": 50.0871530,
+  "lon": 8.2369635,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11379930682,
+  "lat": 50.0872487,
+  "lon": 8.2409192,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11379930684,
+  "lat": 50.0873161,
+  "lon": 8.2410172,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11379930685,
+  "lat": 50.0872275,
+  "lon": 8.2409530,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11701019995,
+  "lat": 50.0861989,
+  "lon": 8.2409551,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "operator": "GWW",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11717132191,
+  "lat": 50.0894283,
+  "lon": 8.2386800,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11717132193,
+  "lat": 50.0894199,
+  "lon": 8.2386930,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11717152393,
+  "lat": 50.0884097,
+  "lon": 8.2338378,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11717152398,
+  "lat": 50.0884586,
+  "lon": 8.2339978,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11717152407,
+  "lat": 50.0892321,
+  "lon": 8.2361784,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11959763040,
+  "lat": 50.0730822,
+  "lon": 8.2407148,
+  "tags": {
+    "access": "yes",
+    "access:conditional": "no @ (Mo-Sa 08:00-19:00); yes @ PH",
+    "amenity": "parking",
+    "capacity": "1",
+    "disabled:conditional": "designated @ (Mo-Sa 08:00-19:00); yes @ PH",
+    "fee": "no",
+    "markings": "yes",
+    "orientation": "parallel",
+    "parking": "street_side",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "node",
+  "id": 11978197861,
+  "lat": 50.0470220,
+  "lon": 8.2404737,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11980296367,
+  "lat": 50.0432666,
+  "lon": 8.2391065,
+  "tags": {
+    "amenity": "parking",
+    "parking": "garage_boxes"
+  }
+},
+{
+  "type": "node",
+  "id": 12039293816,
+  "lat": 50.0726264,
+  "lon": 8.2401564,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "1",
+    "parking": "surface",
+    "surface": "paved"
+  }
+},
+{
+  "type": "node",
+  "id": 12039293864,
+  "lat": 50.0753617,
+  "lon": 8.2397995,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "1",
+    "parking": "surface",
+    "surface": "paved"
+  }
+},
+{
+  "type": "node",
+  "id": 12039293865,
+  "lat": 50.0757141,
+  "lon": 8.2397579,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "1",
+    "parking": "surface",
+    "surface": "paved"
+  }
+},
+{
+  "type": "node",
+  "id": 12039319374,
+  "lat": 50.0761932,
+  "lon": 8.2398065,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "4",
+    "parking": "surface",
+    "surface": "paved"
+  }
+},
+{
+  "type": "node",
+  "id": 12046761574,
+  "lat": 50.0727281,
+  "lon": 8.2412208,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "3",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 12046802451,
+  "lat": 50.0717763,
+  "lon": 8.2416043,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 12047715915,
+  "lat": 50.0725607,
+  "lon": 8.2377856,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "4",
+    "parking": "surface",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "node",
+  "id": 12047715930,
+  "lat": 50.0740624,
+  "lon": 8.2376494,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 12047716265,
+  "lat": 50.0718870,
+  "lon": 8.2385357,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity:disabled": "5",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 12047720308,
+  "lat": 50.0724494,
+  "lon": 8.2377956,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 12047720361,
+  "lat": 50.0723491,
+  "lon": 8.2378177,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 12047721765,
+  "lat": 50.0732673,
+  "lon": 8.2376909,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 12047768305,
+  "lat": 50.0738570,
+  "lon": 8.2376150,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "2",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 12047770349,
+  "lat": 50.0737510,
+  "lon": 8.2379262,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "15",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 12047777497,
+  "lat": 50.0736591,
+  "lon": 8.2376581,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "2",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 12047950287,
+  "lat": 50.0725061,
+  "lon": 8.2411887,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "capacity": "19",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 12047975021,
+  "lat": 50.0720137,
+  "lon": 8.2412021,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "8",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 12048026012,
+  "lat": 50.0765153,
+  "lon": 8.2373121,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "3",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 12058805565,
+  "lat": 50.0772635,
+  "lon": 8.2375100,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "1",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 12058820656,
+  "lat": 50.0773762,
+  "lon": 8.2404637,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "4",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 12058826522,
+  "lat": 50.0772469,
+  "lon": 8.2377355,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "3",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 12058936182,
+  "lat": 50.0772943,
+  "lon": 8.2407856,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "5",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 12058936186,
+  "lat": 50.0773731,
+  "lon": 8.2410066,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "7",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 12059001948,
+  "lat": 50.0758284,
+  "lon": 8.2417957,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 12059035228,
+  "lat": 50.0760766,
+  "lon": 8.2422015,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "8",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "node",
+  "id": 12059088771,
+  "lat": 50.0758005,
+  "lon": 8.2413402,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 12059144384,
+  "lat": 50.0757419,
+  "lon": 8.2391835,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "capacity": "2",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 12067614781,
+  "lat": 50.0760630,
+  "lon": 8.2167426,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 12067614783,
+  "lat": 50.0758435,
+  "lon": 8.2174411,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "fee": "no",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 12067616505,
+  "lat": 50.0754984,
+  "lon": 8.2158596,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 12067617251,
+  "lat": 50.0757230,
+  "lon": 8.2178005,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "orientation": "perpendicular",
+    "parking": "street_side",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "node",
+  "id": 12067623782,
+  "lat": 50.0738420,
+  "lon": 8.2188130,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "parking": "garage_boxes"
+  }
+},
+{
+  "type": "node",
+  "id": 12067625094,
+  "lat": 50.0746338,
+  "lon": 8.2184842,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 12067633013,
+  "lat": 50.0730831,
+  "lon": 8.2178150,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 12067635449,
+  "lat": 50.0736444,
+  "lon": 8.2188679,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 12067637057,
+  "lat": 50.0733935,
+  "lon": 8.2171999,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 12067637523,
+  "lat": 50.0722960,
+  "lon": 8.2165590,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 12067639123,
+  "lat": 50.0729634,
+  "lon": 8.2163434,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 12067643259,
+  "lat": 50.0753403,
+  "lon": 8.2159012,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 12067650182,
+  "lat": 50.0758623,
+  "lon": 8.2160337,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 12067661222,
+  "lat": 50.0742253,
+  "lon": 8.2162748,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 12067661490,
+  "lat": 50.0746841,
+  "lon": 8.2163517,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 12067676107,
+  "lat": 50.0747337,
+  "lon": 8.2166750,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 12586026837,
+  "lat": 50.0702442,
+  "lon": 8.2553053,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 12612313548,
+  "lat": 50.0770734,
+  "lon": 8.2503614,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 12817623208,
+  "lat": 50.0415557,
+  "lon": 8.2129915,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "fee": "no",
+    "note": "genaue Parkplatzumgrenzung nicht erkennbar, einfach eine asphaltierte Zufahrt von der Rheingaustraße und eine städtische Pressemeldung",
+    "parking": "surface",
+    "surface": "compacted"
+  }
+},
+{
+  "type": "node",
+  "id": 13029468114,
+  "lat": 50.0736317,
+  "lon": 8.2465674,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "name": "Dorint Hotels & Resorts",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 13043838159,
+  "lat": 50.0925149,
+  "lon": 8.2335306,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "fee": "yes",
+    "layer": "-1",
+    "maxheight": "2",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 13071836834,
+  "lat": 50.0771912,
+  "lon": 8.2207413,
+  "tags": {
+    "amenity": "parking"
+  }
+},
+{
+  "type": "node",
+  "id": 13146113219,
+  "lat": 50.0184515,
+  "lon": 8.2881627,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "fee": "no",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 13186420770,
+  "lat": 50.0748751,
+  "lon": 8.2460848,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 13310635884,
+  "lat": 50.0785683,
+  "lon": 8.2466246,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "capacity": "2",
+    "capacity:disabled": "2",
+    "fee": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 13508550901,
+  "lat": 50.0343577,
+  "lon": 8.2426651,
+  "tags": {
+    "access": "private",
+    "amenity": "parking"
+  }
+}
+
+  ]
+}

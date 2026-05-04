@@ -2265,6 +2265,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // v2.5 Datenassistent (BM25 drawer)
     setupAssistantDrawer();
+    // v2.6 Mein Kiez (citizen-perspective dashboard)
+    setupKiez();
   }
 
   // ===== v2.1 — Demokratie view (turnout choropleth + compare + AI) =====
@@ -2977,6 +2979,331 @@ document.addEventListener('DOMContentLoaded', () => {
       renderCatalogStats();
     }
   });
+
+  // ===== v2.6 — MEIN KIEZ (citizen-perspective dashboard, 6 cards) =====
+  // Kiez = neighbourhood. Each card surfaces an external source we wired
+  // (build-time fetched or manually curated) with a link back to the
+  // authoritative provider. State is shared with Mein Ortsbezirk on home.
+
+  function kiezDistricts() { return D.ORTSBEZIRKE || []; }
+  function getKiezDistrict() {
+    try {
+      const saved = localStorage.getItem('wiesbaden_lagebild_my_ortsbezirk');
+      if (saved) return kiezDistricts().find(o => o.id === saved) || null;
+    } catch (e) {}
+    return null;
+  }
+  function setKiezDistrict(id) {
+    try {
+      if (id) localStorage.setItem('wiesbaden_lagebild_my_ortsbezirk', id);
+      else localStorage.removeItem('wiesbaden_lagebild_my_ortsbezirk');
+    } catch (e) {}
+  }
+
+  function renderKiezHeadlines() {
+    const d = getKiezDistrict();
+
+    // Gastro
+    if (D.OSM_GASTRONOMIE) {
+      const list = D.OSM_GASTRONOMIE.filter(g => !d || g.d === d.name);
+      const cafe = list.filter(x => x.t === 'cafe').length;
+      const rest = list.filter(x => x.t === 'restaurant').length;
+      const ghead = document.getElementById('kiez-gastro-headline');
+      if (ghead) ghead.textContent = `${list.length} · ${cafe} ${t('kiez_cafe_short', 'Cafés')} · ${rest} ${t('kiez_rest_short', 'Restaurants')}`;
+    }
+    // Parking
+    if (D.OSM_PARKING) {
+      const list = D.OSM_PARKING.filter(p => !d || p.d === d.name);
+      const free = list.filter(x => x.f === 'no').length;
+      const paid = list.filter(x => x.f === 'yes').length;
+      const phead = document.getElementById('kiez-parking-headline');
+      if (phead) phead.textContent = `${list.length} · ${free} ${t('kiez_free', 'kostenlos')} · ${paid} ${t('kiez_paid', 'gebührenpflichtig')}`;
+    }
+    // CPI — show YoY for Eier
+    if (D.CPI_TIMELINE) {
+      const eier = D.CPI_TIMELINE.series.find(s => s.id === 'eier');
+      const chead = document.getElementById('kiez-cpi-headline');
+      if (chead && eier) {
+        const first = eier.values[0], last = eier.values[eier.values.length - 1];
+        const pct = ((last - first) / first * 100);
+        const sign = pct >= 0 ? '+' : '';
+        chead.textContent = `${eier.icon} ${t('kiez_cpi_eier_label', 'Eier')} ${sign}${pct.toFixed(1)}% (12 Mon.)`;
+      }
+    }
+    // ELW
+    if (D.ELW_SCHEDULE) {
+      const ehead = document.getElementById('kiez-elw-headline');
+      if (ehead) ehead.textContent = `${D.ELW_SCHEDULE.bins.length} ${t('kiez_elw_bins', 'Tonnen · Rhythmen')}`;
+    }
+    // PKS
+    if (D.PKS_2024) {
+      const total = D.PKS_2024.metrics.find(m => m.id === 'total');
+      const phead2 = document.getElementById('kiez-pks-headline');
+      if (phead2 && total) {
+        const diff = total.value_2024 - total.value_2023;
+        const pct = (diff / total.value_2023 * 100);
+        const sign = pct >= 0 ? '+' : '';
+        phead2.textContent = `${total.value_2024.toLocaleString('de-DE')} · ${sign}${pct.toFixed(1)}% ${t('kiez_pks_yoy', 'ggü. 2023')}`;
+      }
+    }
+    // Events
+    if (D.EVENTS_2026) {
+      const evhead = document.getElementById('kiez-events-headline');
+      if (evhead) evhead.textContent = `${D.EVENTS_2026.events.length} ${t('kiez_events_count', 'Top-Events 2026')}`;
+    }
+    // Picker info
+    const info = document.getElementById('kiez-picker-info');
+    if (info) {
+      info.textContent = d
+        ? `📍 ${d.name} · ${(d.pop || 0).toLocaleString('de-DE')} ${t('kiez_einwohner', 'Einwohner')}`
+        : t('kiez_pick_hint', 'Wählen Sie einen Ortsbezirk für Kiez-spezifische Daten');
+    }
+  }
+
+  // ----- detail builders -----
+  function kiezBuildGastro(district) {
+    const list = (D.OSM_GASTRONOMIE || []).filter(g => !district || g.d === district.name);
+    const types = ['cafe', 'restaurant', 'bar', 'pub', 'biergarten', 'fast_food'];
+    const stats = types.map(tp => `
+      <div class="kiez-stat-cell">
+        <div class="kiez-stat-label">${escapeHtml(t('kiez_amenity_' + tp, tp))}</div>
+        <div class="kiez-stat-value">${list.filter(x => x.t === tp).length}</div>
+      </div>`).join('');
+    const sample = list.filter(x => x.n).slice(0, 8);
+    const cards = sample.map(s => `
+      <div class="kiez-event-item">
+        <div>
+          <div class="kiez-event-title">${escapeHtml(s.n)}</div>
+          <div class="kiez-event-where">${escapeHtml(t('kiez_amenity_' + s.t, s.t))}${s.c ? ' · ' + escapeHtml(s.c) : ''}${s.d ? ' · ' + escapeHtml(s.d) : ''}</div>
+        </div>
+      </div>`).join('');
+    return {
+      title: t('kiez_gastro_title', 'Gastronomie'),
+      body: `
+        <div class="kiez-stat-grid">${stats}</div>
+        ${sample.length ? `
+          <div style="margin-top:6px; font-family: var(--font-mono); font-size:10px; letter-spacing:.06em; color: var(--text-tertiary, var(--text-muted));">${escapeHtml(t('kiez_gastro_sample', 'AUSWAHL'))}</div>
+          <div class="kiez-events-list">${cards}</div>
+        ` : ''}
+        <p style="font-size:11px; color: var(--text-tertiary, var(--text-muted));">${escapeHtml(t('kiez_gastro_note', 'Quelle: OpenStreetMap, Bürger-Editionen. Stand: Build-Zeit, ODbL.'))}</p>
+      `,
+      sourceUrl: 'https://www.openstreetmap.org/',
+      sourceLabel: t('kiez_source_osm', 'OpenStreetMap ↗')
+    };
+  }
+
+  function kiezBuildParking(district) {
+    const list = (D.OSM_PARKING || []).filter(p => !district || p.d === district.name);
+    const cap = list.reduce((s, x) => s + (x.c || 0), 0);
+    const free = list.filter(x => x.f === 'no').length;
+    const paid = list.filter(x => x.f === 'yes').length;
+    const unknown = list.filter(x => x.f === 'unknown').length;
+    return {
+      title: t('kiez_parking_title', 'Parken'),
+      body: `
+        <div class="kiez-stat-grid">
+          <div class="kiez-stat-cell"><div class="kiez-stat-label">${t('kiez_park_total', 'Total')}</div><div class="kiez-stat-value">${list.length}</div></div>
+          <div class="kiez-stat-cell"><div class="kiez-stat-label">${t('kiez_park_free', 'Kostenlos')}</div><div class="kiez-stat-value">${free}</div></div>
+          <div class="kiez-stat-cell"><div class="kiez-stat-label">${t('kiez_park_paid', 'Gebührenpflichtig')}</div><div class="kiez-stat-value">${paid}</div></div>
+          <div class="kiez-stat-cell"><div class="kiez-stat-label">${t('kiez_park_unknown', 'Unbekannt')}</div><div class="kiez-stat-value">${unknown}</div></div>
+        </div>
+        ${cap > 0 ? `<p style="font-size:12px; color: var(--text-secondary, var(--text-muted));">${t('kiez_park_capacity_note', 'Bekannte Stellplätze gesamt:')} <strong>${cap}</strong></p>` : ''}
+        <p style="font-size:11px; color: var(--text-tertiary, var(--text-muted));">${escapeHtml(t('kiez_park_osm_note', 'Quelle: OpenStreetMap. Hoher „Unbekannt"-Anteil = nicht alle Schilder im OSM gepflegt.'))}</p>
+      `,
+      sourceUrl: 'https://www.openstreetmap.org/',
+      sourceLabel: t('kiez_source_osm', 'OpenStreetMap ↗')
+    };
+  }
+
+  function kiezBuildCpi() {
+    const cpi = D.CPI_TIMELINE;
+    if (!cpi) return { title: '', body: '' };
+    const lng = lang();
+    const labelKey = 'label_' + (lng === 'kr' ? 'kr' : lng);
+    const cells = cpi.series.map(s => {
+      const first = s.values[0], last = s.values[s.values.length - 1];
+      const pct = ((last - first) / first * 100);
+      const sign = pct >= 0 ? '+' : '';
+      const klass = pct > 1 ? 'kiez-stat-delta-bad' : pct < -1 ? 'kiez-stat-delta-good' : '';
+      return `
+        <div class="kiez-stat-cell">
+          <div class="kiez-stat-label">${s.icon} ${escapeHtml(s[labelKey] || s.label_de)}</div>
+          <div class="kiez-stat-value">${last.toFixed(1)} <span class="kiez-stat-delta ${klass}">${sign}${pct.toFixed(1)}%</span></div>
+          <div class="kiez-stat-label" style="margin-top:4px; text-transform:none;">${cpi.months[0]} → ${cpi.months[cpi.months.length - 1]}</div>
+        </div>
+      `;
+    }).join('');
+    return {
+      title: t('kiez_cpi_title', 'Lebensmittelpreise'),
+      body: `
+        <div class="kiez-stat-grid">${cells}</div>
+        <p style="font-size:11px; color: var(--text-tertiary, var(--text-muted)); line-height:1.55;">
+          ${escapeHtml(t('kiez_cpi_disclaimer', 'Quelle: destatis VPI 61111-0002. Werte sind nationale Durchschnitte (Deutschland) — keine Stadt-Brechung verfügbar. Index 2020 = 100.'))}
+        </p>
+      `,
+      sourceUrl: cpi.meta.source,
+      sourceLabel: t('kiez_source_destatis', 'destatis Verbraucherpreise ↗')
+    };
+  }
+
+  function kiezBuildElw() {
+    const e = D.ELW_SCHEDULE;
+    if (!e) return { title: '', body: '' };
+    const lng = lang();
+    const labelKey = 'label_' + (lng === 'kr' ? 'kr' : lng);
+    const rhythmKey = 'rhythm_' + (lng === 'kr' ? 'kr' : lng);
+    const rows = e.bins.map(b => `
+      <div class="kiez-bin-row" style="--bin-color: ${b.color};">
+        <span class="kiez-bin-icon">${b.icon}</span>
+        <span class="kiez-bin-label">${escapeHtml(b[labelKey] || b.label_de)}</span>
+        <span class="kiez-bin-rhythm">${escapeHtml(b[rhythmKey] || b.rhythm_de)}</span>
+      </div>
+    `).join('');
+    return {
+      title: t('kiez_elw_title', 'Müllabfuhr'),
+      body: `${rows}<p style="font-size:11px; color: var(--text-tertiary, var(--text-muted)); line-height:1.55;">${escapeHtml(e.meta.note_de)}</p>`,
+      sourceUrl: e.meta.source_url,
+      sourceLabel: e.meta.source_label || 'elw.de/abfallkalender ↗'
+    };
+  }
+
+  function kiezBuildPks() {
+    const p = D.PKS_2024;
+    if (!p) return { title: '', body: '' };
+    const lng = lang();
+    const labelKey = 'label_' + (lng === 'kr' ? 'kr' : lng);
+    const cells = p.metrics.map(m => {
+      const a = m.value_2024, b = m.value_2023;
+      const isPct = m.unit === '%';
+      const diff = a - b;
+      const pct = b ? ((a - b) / b * 100) : 0;
+      const better = m.lower_is_better ? (diff < 0) : (diff > 0);
+      const klass = Math.abs(pct) < 0.5 ? '' : (better ? 'kiez-stat-delta-good' : 'kiez-stat-delta-bad');
+      const sign = diff > 0 ? '+' : '';
+      const valueStr = isPct ? a.toFixed(1) + '%' : a.toLocaleString('de-DE');
+      const deltaStr = isPct ? sign + diff.toFixed(1) + ' pp' : sign + pct.toFixed(1) + '%';
+      return `
+        <div class="kiez-stat-cell">
+          <div class="kiez-stat-label">${escapeHtml(m[labelKey] || m.label_de)}</div>
+          <div class="kiez-stat-value">${valueStr} <span class="kiez-stat-delta ${klass}">${deltaStr}</span></div>
+          <div class="kiez-stat-label" style="text-transform:none; margin-top:4px;">2023 → 2024</div>
+        </div>
+      `;
+    }).join('');
+    return {
+      title: t('kiez_pks_title', 'Sicherheit'),
+      body: `<div class="kiez-stat-grid">${cells}</div><p style="font-size:11px; color: var(--text-tertiary, var(--text-muted)); line-height:1.55;">${escapeHtml(p.meta.note_de)}</p>`,
+      sourceUrl: p.meta.source_url,
+      sourceLabel: p.meta.source_label || 'PKS-Jahrbuch Hessen 2024 (PDF) ↗'
+    };
+  }
+
+  function kiezBuildEvents() {
+    const e = D.EVENTS_2026;
+    if (!e) return { title: '', body: '' };
+    const sorted = e.events.slice().sort((a, b) => a.month.localeCompare(b.month));
+    const monthLabels = {
+      '01':'Jan','02':'Feb','03':'Mär','04':'Apr','05':'Mai','06':'Jun',
+      '07':'Jul','08':'Aug','09':'Sep','10':'Okt','11':'Nov','12':'Dez'
+    };
+    const cards = sorted.map(ev => `
+      <div class="kiez-event-item">
+        <span class="kiez-event-month">${monthLabels[ev.month] || ev.month}</span>
+        <div>
+          <div class="kiez-event-title">${ev.icon} ${escapeHtml(ev.title_de)}</div>
+          <div class="kiez-event-where">${escapeHtml(ev.where || '')}</div>
+        </div>
+      </div>
+    `).join('');
+    return {
+      title: t('kiez_events_title', 'Events'),
+      body: `<div class="kiez-events-list">${cards}</div><p style="font-size:11px; color: var(--text-tertiary, var(--text-muted));">${escapeHtml(e.meta.note_de)}</p>`,
+      sourceUrl: e.meta.source_url,
+      sourceLabel: e.meta.source_label || 'Stadt Wiesbaden Veranstaltungskalender ↗'
+    };
+  }
+
+  const kiezBuilders = {
+    gastro:  (d) => kiezBuildGastro(d),
+    parking: (d) => kiezBuildParking(d),
+    cpi:     ()  => kiezBuildCpi(),
+    elw:     ()  => kiezBuildElw(),
+    pks:     ()  => kiezBuildPks(),
+    events:  ()  => kiezBuildEvents()
+  };
+
+  function showKiezDetail(cardId) {
+    const det = document.getElementById('kiez-detail');
+    const tEl = document.getElementById('kiez-detail-title');
+    const bEl = document.getElementById('kiez-detail-body');
+    const sEl = document.getElementById('kiez-detail-source');
+    if (!det || !tEl || !bEl) return;
+    const builder = kiezBuilders[cardId];
+    if (!builder) return;
+    const district = getKiezDistrict();
+    const result = builder(district);
+    tEl.textContent = result.title;
+    bEl.innerHTML = result.body;
+    if (sEl) {
+      if (result.sourceUrl) {
+        sEl.href = result.sourceUrl;
+        sEl.textContent = result.sourceLabel;
+        sEl.style.display = 'inline-block';
+      } else {
+        sEl.style.display = 'none';
+      }
+    }
+    det.hidden = false;
+    document.querySelectorAll('.kiez-card').forEach(c => {
+      c.classList.toggle('active', c.dataset.kiezCard === cardId);
+    });
+    setTimeout(() => det.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+  }
+
+  function setupKiez() {
+    const sel = document.getElementById('kiez-select');
+    const clear = document.getElementById('kiez-clear');
+    const closeBtn = document.getElementById('kiez-detail-close');
+    const det = document.getElementById('kiez-detail');
+
+    if (sel) {
+      const list = kiezDistricts();
+      sel.innerHTML = `<option value="">— ${t('kiez_pick_placeholder', 'Stadtweit (kein Filter)')} —</option>` +
+        list.map(o => `<option value="${o.id}">${o.name} (Ortsbezirk ${o.id})</option>`).join('');
+      const saved = getKiezDistrict();
+      if (saved) sel.value = saved.id;
+      sel.addEventListener('change', () => {
+        setKiezDistrict(sel.value);
+        renderKiezHeadlines();
+      });
+    }
+    if (clear) {
+      clear.addEventListener('click', () => {
+        setKiezDistrict('');
+        if (sel) sel.value = '';
+        renderKiezHeadlines();
+      });
+    }
+    document.querySelectorAll('.kiez-card').forEach(card => {
+      card.addEventListener('click', () => showKiezDetail(card.dataset.kiezCard));
+    });
+    if (closeBtn && det) {
+      closeBtn.addEventListener('click', () => {
+        det.hidden = true;
+        document.querySelectorAll('.kiez-card').forEach(c => c.classList.remove('active'));
+      });
+    }
+    document.querySelectorAll('.lang-btn').forEach(b => {
+      b.addEventListener('click', () => {
+        setTimeout(() => {
+          renderKiezHeadlines();
+          const open = document.querySelector('.kiez-card.active');
+          if (open) showKiezDetail(open.dataset.kiezCard);
+        }, 200);
+      });
+    });
+    renderKiezHeadlines();
+  }
 
   // ===== v2.5 — Datenassistent (BM25 search drawer, deterministic) =====
   let fuseInstance = null;
