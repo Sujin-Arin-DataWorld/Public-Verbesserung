@@ -641,6 +641,96 @@ const I18N = {
     trend_neutral: "→",
     units_yesterday: "어제 대비",
     units_lastmonth: "지난달 대비"
+  },
+
+  // ==============================================================
+  // v2.1 — LEICHTE SPRACHE (BFSG 2025 / BITV 2.0)
+  // ==============================================================
+  // Simplified German register, mandatory under §3 BFSG since 06/2025
+  // for public-sector digital services. Rules applied (BITV 2.0):
+  //   • short sentences (one fact per line)
+  //   • everyday vocabulary, no jargon
+  //   • compound words split with hyphens (Bürger-Hinweise)
+  //   • active voice, no subordinate clauses
+  // Only ~40 core keys translated; all others fall back to German.
+  ls: {
+    title: "Wiesbaden-Lagebild",
+    subtitle: "Daten von der Stadt Wiesbaden",
+    liveLabel: "LIVE",
+    nav_home: "Start",
+    nav_alltag: "Alltag",
+    nav_wohnen: "Wohnen",
+    nav_demokratie: "Wahlen",
+    nav_mitmachen: "Mit-Machen",
+    nav_daten: "Daten",
+    map_title: "Karte mit Daten",
+    map_subtitle: "26 Orts-Bezirke. Klicken Sie auf einen Bezirk.",
+    layers: "EBENEN",
+    layer_pop: "Wie viele Menschen wohnen hier?",
+    layer_foreign: "Wie viele Menschen kommen aus anderen Ländern?",
+    layer_construction: "Wo wird gebaut?",
+    layer_air: "Wie ist die Luft?",
+    layer_bike: "Wo gibt es Fahrrad-Wege?",
+    layer_charging: "Wo kann ich mein Auto laden?",
+    timeline: "ZEIT",
+    stories_title: "Daten-Geschichten",
+    stories_subtitle: "Vom Amt für Statistik",
+    citizen_title: "Bürger-Hinweise",
+    citizen_subtitle: "Was Sie melden",
+    citizen_open: "offen",
+    citizen_progress: "in Arbeit",
+    citizen_resolved: "erledigt",
+    citizen_send: "Hinweis schicken",
+    detail_district: "ORTSBEZIRK",
+    detail_population: "Menschen",
+    detail_foreign: "Aus anderen Ländern",
+    detail_age: "Alter",
+    detail_rent: "Miete",
+    detail_kita: "Kita-Plätze frei",
+    detail_complaints: "Bearbeitungs-Zeit",
+    detail_action_title: "Was kann ich tun?",
+    detail_action_report: "Mängel melden",
+    detail_action_participate: "Mit-Machen",
+    detail_action_data: "Daten herunter-laden",
+    modal_title: "Hinweis schicken",
+    modal_subtitle: "Sie helfen der Stadt mit guten Daten.",
+    modal_type: "Was ist das Problem?",
+    modal_type_pothole: "Loch in der Straße",
+    modal_type_light: "Lampe geht nicht",
+    modal_type_trash: "Müll am falschen Ort",
+    modal_type_vandal: "Etwas wurde kaputt gemacht",
+    modal_type_green: "Park oder Baum",
+    modal_type_bike: "Fahrrad-Weg",
+    modal_type_data: "Daten sind unklar",
+    modal_type_other: "Etwas anderes",
+    modal_location: "Wo ist das?",
+    modal_use_gps: "Mein Standort",
+    modal_description: "Was ist passiert?",
+    modal_anonymous: "Mein Name wird nicht gespeichert.",
+    modal_send_official: "An Mängelmelder Hessen schicken",
+    modal_send_mail: "Per E-Mail schicken",
+    modal_cancel: "Abbrechen",
+    mm_title: "Mit-Machen — Wiesbaden besser machen",
+    mm_subtitle: "Sie können der Stadt helfen. Hier sehen Sie wie.",
+    mm_melden_title: "Probleme melden",
+    mm_melden_desc: "Loch in der Straße? Lampe kaputt? Sie können das melden. Die Stadt kümmert sich darum.",
+    mm_melden_btn: "Hinweis schicken",
+    mm_data_title: "Daten wünschen",
+    mm_data_desc: "Welche Daten wünschen Sie sich von der Stadt? Sie können abstimmen.",
+    mm_fuel_title: "Sprit-Preis melden",
+    mm_fuel_desc: "Sie sehen einen anderen Preis als hier? Sagen Sie es uns.",
+    mm_cs_title: "Bürger-Forschung",
+    mm_cs_desc: "Bürger messen selbst. Drei Projekte laufen gerade.",
+    dem_title: "Wahlen und Mit-Bestimmung",
+    dem_subtitle: "Wie viele Menschen haben gewählt? Wo wird mehr gewählt?",
+    dem_kpi_city: "So viele in Wiesbaden haben gewählt",
+    dk_title: "Daten und Quellen",
+    dk_subtitle: "Hier sehen Sie, woher alle Zahlen kommen.",
+    fuel_cta_title: "Haben Sie heute einen anderen Preis gesehen?",
+    fuel_cta_desc: "Sagen Sie es uns. Wir zeigen es im Bericht.",
+    fuel_cta_btn: "Preis melden",
+    mo_title: "Mein Orts-Bezirk",
+    mo_subtitle: "Wählen Sie Ihren Bezirk. Sie sehen alle Zahlen für Ihren Bezirk."
   }
 };
 
@@ -1477,6 +1567,13 @@ Object.assign(I18N.en, { mm_data_upvote: "Upvote",       mm_data_downvote: "Down
 Object.assign(I18N.tr, { mm_data_upvote: "Yukarı oy",    mm_data_downvote: "Aşağı oy" });
 Object.assign(I18N.ua, { mm_data_upvote: "Підняти",      mm_data_downvote: "Опустити" });
 Object.assign(I18N.kr, { mm_data_upvote: "지지",          mm_data_downvote: "반대" });
+
+// v2.1 — Mein Ortsbezirk (5 langs)
+Object.assign(I18N.de, { mo_title: "Mein Ortsbezirk", mo_subtitle: "Wähle deinen Ortsbezirk — alle KPIs auf einen Blick, mit Vergleich zum Stadt-Durchschnitt.", mo_pick: "ORTSBEZIRK:", mo_pick_placeholder: "Bitte wählen", mo_clear: "✕ Zurücksetzen", mo_compare_note: "Vergleich mit Stadt-Durchschnitt", mo_vs: "vs Stadt", mo_lbl_pop: "BEVÖLKERUNG", mo_sub_pop: "Einwohner", mo_lbl_foreign: "AUSLÄNDERANTEIL", mo_lbl_age: "Ø ALTER", mo_lbl_rent: "KALTMIETE Ø", mo_lbl_kita: "KITA-PLÄTZE FREI", mo_sub_kita: "Plätze", mo_lbl_turnout: "WAHLBETEILIGUNG 2026", mo_lbl_charging: "E-LADESÄULEN", mo_sub_charging: "Ladepunkte", mo_lbl_baustellen: "BAUSTELLEN", mo_action_demo: "Mehr im Demokratie-Tab", mo_action_wohnen: "Mietspiegel im Wohnen-Tab", mo_action_report: "Mängel hier melden" });
+Object.assign(I18N.en, { mo_title: "My district", mo_subtitle: "Pick your district — all KPIs at a glance, compared to the city average.", mo_pick: "DISTRICT:", mo_pick_placeholder: "Please pick", mo_clear: "✕ Reset", mo_compare_note: "Compared to city average", mo_vs: "vs city", mo_lbl_pop: "POPULATION", mo_sub_pop: "residents", mo_lbl_foreign: "FOREIGN-BORN SHARE", mo_lbl_age: "MEDIAN AGE", mo_lbl_rent: "RENT Ø", mo_lbl_kita: "DAYCARE FREE", mo_sub_kita: "places", mo_lbl_turnout: "TURNOUT 2026", mo_lbl_charging: "EV CHARGERS", mo_sub_charging: "points", mo_lbl_baustellen: "CONSTRUCTION SITES", mo_action_demo: "More in Democracy tab", mo_action_wohnen: "Mietspiegel in Housing tab", mo_action_report: "Report an issue" });
+Object.assign(I18N.tr, { mo_title: "Benim mahallem", mo_subtitle: "Mahalleni seç — tüm KPI'lar bir bakışta, şehir ortalamasıyla karşılaştırmalı.", mo_pick: "MAHALLE:", mo_pick_placeholder: "Lütfen seçiniz", mo_clear: "✕ Sıfırla", mo_compare_note: "Şehir ortalamasıyla karşılaştırma", mo_vs: "şehir ile", mo_lbl_pop: "NÜFUS", mo_sub_pop: "kişi", mo_lbl_foreign: "YABANCI ORANI", mo_lbl_age: "Ort. YAŞ", mo_lbl_rent: "KİRA Ø", mo_lbl_kita: "KREŞ BOŞ", mo_sub_kita: "yer", mo_lbl_turnout: "KATILIM 2026", mo_lbl_charging: "ŞARJ İST.", mo_sub_charging: "nokta", mo_lbl_baustellen: "İNŞAAT", mo_action_demo: "Demokrasi sekmesi", mo_action_wohnen: "Konut sekmesi", mo_action_report: "Sorun bildir" });
+Object.assign(I18N.ua, { mo_title: "Мій округ", mo_subtitle: "Виберіть свій округ — усі KPI на одному екрані, порівняно з містом.", mo_pick: "ОКРУГ:", mo_pick_placeholder: "Будь ласка, виберіть", mo_clear: "✕ Скинути", mo_compare_note: "Порівняння з середнім по місту", mo_vs: "проти міста", mo_lbl_pop: "НАСЕЛЕННЯ", mo_sub_pop: "жителів", mo_lbl_foreign: "ІНОЗЕМЦІВ", mo_lbl_age: "Сер. ВІК", mo_lbl_rent: "ОРЕНДА Ø", mo_lbl_kita: "САДОЧКИ ВІЛЬНІ", mo_sub_kita: "місць", mo_lbl_turnout: "ЯВКА 2026", mo_lbl_charging: "ЗАРЯДКИ", mo_sub_charging: "точок", mo_lbl_baustellen: "БУДМАЙДАНЧИКИ", mo_action_demo: "Демократія", mo_action_wohnen: "Житло", mo_action_report: "Повідомити" });
+Object.assign(I18N.kr, { mo_title: "우리 동네", mo_subtitle: "동네 선택 — 모든 KPI 한눈에, 시 평균 대비 비교.", mo_pick: "동네:", mo_pick_placeholder: "선택하세요", mo_clear: "✕ 초기화", mo_compare_note: "시 평균 대비", mo_vs: "시 대비", mo_lbl_pop: "인구", mo_sub_pop: "명", mo_lbl_foreign: "외국인 비율", mo_lbl_age: "평균 연령", mo_lbl_rent: "임대료 Ø", mo_lbl_kita: "어린이집 빈자리", mo_sub_kita: "자리", mo_lbl_turnout: "투표율 2026", mo_lbl_charging: "전기차 충전소", mo_sub_charging: "지점", mo_lbl_baustellen: "공사 현장", mo_action_demo: "민주주의 탭에서 더보기", mo_action_wohnen: "Mietspiegel 보기", mo_action_report: "문제 신고" });
 
 // v2.1 — Datenwunsch send-CTA (5 langs)
 Object.assign(I18N.de, { mm_data_send_label: "Bereit, deine Stimmen abzuschicken?", mm_data_send_desc: " — Wir bündeln deine Top-Wünsche in eine E-Mail an das Open-Data-Team der Stadt.", mm_data_send_btn: "📧 An opendata@wiesbaden.de senden", mm_data_send_empty: "Bitte erst mindestens einen Datenwunsch hochstimmen.", mm_data_send_ok: "✓ E-Mail vorbereitet · ", mm_data_send_count: "Datenwunsch-Stimmen" });

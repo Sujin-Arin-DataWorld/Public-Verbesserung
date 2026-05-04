@@ -39,11 +39,12 @@
     </div>
     <div class="header-right">
       <div class="lang-toggle">
-        <button class="lang-btn active" data-lang="de">DE</button>
-        <button class="lang-btn" data-lang="en">EN</button>
-        <button class="lang-btn" data-lang="tr">TR</button>
-        <button class="lang-btn" data-lang="ua">UA</button>
-        <button class="lang-btn" data-lang="kr">KR</button>
+        <button class="lang-btn active" data-lang="de" lang="de">DE</button>
+        <button class="lang-btn" data-lang="en" lang="en">EN</button>
+        <button class="lang-btn" data-lang="tr" lang="tr">TR</button>
+        <button class="lang-btn" data-lang="ua" lang="uk">UA</button>
+        <button class="lang-btn" data-lang="kr" lang="ko">KR</button>
+        <button class="lang-btn lang-btn-ls" data-lang="ls" lang="de" title="Leichte Sprache (BFSG 2025)" aria-label="Leichte Sprache">LS</button>
       </div>
       <button class="kpi-curator-btn" id="curator-btn" title="KPI anpassen">
         ⚙ <span data-i18n="curator_button">KPI anpassen</span>
@@ -80,10 +81,35 @@
     </button>
   </nav>
 
+  <!-- v2.1 — Leichte-Sprache info banner (only visible when LS is active) -->
+  <div class="ls-banner" lang="de" role="note">
+    <strong>Sie lesen den Bericht in Leichter Sprache.</strong>
+    <span>Die Texte sind kurz. Die Wörter sind einfach. Die Schrift ist groß.</span>
+    <span>Sie können oben rechts auf <strong>DE</strong> klicken. Dann sehen Sie den normalen Bericht.</span>
+  </div>
+
   <!-- ============================================
        VIEW: HOME (Übersicht)
        ============================================ -->
   <div class="view active" id="view-home" data-view="home">
+
+  <!-- v2.1 — MEIN ORTSBEZIRK (personalized district view) -->
+  <section class="map-section" style="grid-template-columns: 1fr; padding: 20px 48px 0 48px;">
+    <div class="map-container" style="padding:18px 22px;">
+      <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-bottom:6px;">
+        <span style="font-size:22px;" aria-hidden="true">📍</span>
+        <h2 style="font-family: var(--font-display); font-size:20px; margin:0;" data-i18n="mo_title">Mein Ortsbezirk</h2>
+        <p style="margin:0; font-size:12px; color: var(--text-secondary); flex:1; min-width:200px;" data-i18n="mo_subtitle">Wähle deinen Ortsbezirk — alle KPIs auf einen Blick, mit Vergleich zum Stadt-Durchschnitt.</p>
+      </div>
+      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:10px;">
+        <label for="mo-select" style="font-size:11px; color: var(--text-tertiary); font-family: var(--font-mono); letter-spacing:.06em;" data-i18n="mo_pick">ORTSBEZIRK:</label>
+        <select id="mo-select" aria-label="Ortsbezirk wählen" style="padding:7px 12px; background:var(--bg-secondary); color:var(--text-primary); border:1px solid var(--border); border-radius:4px; font-family: inherit; font-size:13px; min-width:240px;"></select>
+        <button id="mo-clear" class="btn-secondary" style="padding:7px 14px; font-size:11px;" data-i18n="mo_clear">✕ Zurücksetzen</button>
+      </div>
+      <div id="mo-cards" style="display:none; margin-top:18px;"></div>
+    </div>
+  </section>
+
   <!-- KPI GRID -->
   <section class="kpi-section" id="kpi-grid"></section>
 
