@@ -1783,6 +1783,291 @@ const STORIES = [
   }
 ];
 
+// =================================================================
+// v2.4 — KPI Detail Modals
+// 5 Tier-A KPIs (full chart+facts) + 2 Mini (no chart, action button)
+// 1 deep-link to Story 3 (population), 3 not clickable (transit/complaints/business)
+// =================================================================
+Object.assign(I18N.de, {
+  kpi_detail_eyebrow: "LIVE-INDIKATOR · STADT WIESBADEN",
+  kpi_disabled_roadmap: "v2 Roadmap · noch nicht im Open-Data-Katalog",
+  kpi_population_hint: "↗ Story",
+  kpi_mini_open_view: "Volle Ansicht im Alltag-Tab öffnen →",
+  kpi_air_title: "Luftqualität · 7-Tage-Verlauf Innenstadt",
+  kpi_air_finding: "Der aktuelle AQI von 42 liegt deutlich unter dem WHO-Schwellenwert (50 = „gut\"). Über die letzten 7 Tage ist der NO2-Wert um 6 Punkte gefallen — kein Überschreitungstag des EU-Grenzwerts (40 µg/m³). Stickstoffdioxid und PM10 bleiben im grünen Bereich.",
+  kpi_air_fact1: "AQI heute", kpi_air_fact2: "Δ 7 Tage", kpi_air_fact3: "PM10 (Tagesmittel)",
+  kpi_air_chart_ds: "AQI Tagesmittel (Innenstadt)", kpi_air_y: "AQI",
+  kpi_construction_title: "Baufertigstellungen Wohnungen 2014–2024",
+  kpi_construction_finding: "2024 wurden in Wiesbaden nur 555 Wohnungen fertiggestellt — der niedrigste Wert seit 2017. Der Spitzenjahrgang war 2021 mit 1.562 Wohnungen. Im Jahr 2024 wurden 23 aktive Baustellen gezählt; die Bauüberhang-Pipeline schrumpft seit 2022.",
+  kpi_construction_fact1: "Wohnungen 2024", kpi_construction_fact2: "Spitze 2021", kpi_construction_fact3: "Aktive Baustellen",
+  kpi_construction_chart_ds: "Fertiggestellte Wohnungen (Stadt gesamt)", kpi_construction_y: "Wohnungen",
+  kpi_rent_title: "Median-Angebotsmiete 2007–2024 · Stadt Wiesbaden",
+  kpi_rent_finding: "Die Median-Angebotsmiete ist von 7,80 €/qm (2007) auf 12,60 €/qm (2024) gestiegen — +62 % in 17 Jahren. Der Mietspiegel 2025 (qualifiziert nach §558d BGB) zeigt eine Spannweite von 8,78 €/qm (Baualter I, einfache Wohnlage) bis 15,68 €/qm (Baualter IV, sehr gute Wohnlage).",
+  kpi_rent_fact1: "Median 2024", kpi_rent_fact2: "ggü. 2007", kpi_rent_fact3: "Mietspiegel-Spanne",
+  kpi_rent_chart_ds: "Median-Angebotsmiete (€/qm)", kpi_rent_y: "€/qm",
+  kpi_unemployment_title: "Arbeitslosenquote nach Ortsbezirk · Dez 2025",
+  kpi_unemployment_finding: "Stadtweit liegt die Arbeitslosenquote bei 8,0 %. Die Spannweite zwischen den 26 Ortsbezirken ist enorm: Breckenheim (2,8 %) und Frauenstein (3,1 %) führen, Westend/Bleichstraße (12,3 %) und Klarenthal (11,7 %) liegen am höchsten. Das ist ein Faktor-4-Unterschied innerhalb derselben Stadt.",
+  kpi_unemployment_fact1: "Stadt-Schnitt", kpi_unemployment_fact2: "Breckenheim ↔ Westend", kpi_unemployment_fact3: "Bürgergeld-Anteil Stadt",
+  kpi_unemployment_chart_ds: "Arbeitslosenquote (%)", kpi_unemployment_y: "%",
+  kpi_energy_title: "Erneuerbare Energien · Anteil 2018–2024",
+  kpi_energy_finding: "Der Anteil erneuerbarer Energien an der installierten Leistung in Wiesbaden ist von 22 % (2018) auf 35 % (2024) gestiegen. Der größte Sprung kam 2020–2022 durch private Photovoltaik-Anlagen (EEG-Förderung 2021). Der Hessen-Schnitt liegt aktuell bei 41 % — Wiesbaden ist Nachzügler im urbanen Vergleich.",
+  kpi_energy_fact1: "Anteil 2024", kpi_energy_fact2: "ggü. 2018", kpi_energy_fact3: "Hessen-Schnitt",
+  kpi_energy_chart_ds: "Anteil Erneuerbare (%)", kpi_energy_y: "%",
+  kpi_fuel_title: "Top 3 günstigste Tankstellen heute (Super E10)",
+  kpi_fuel_finding: "33 öffentliche Tankstellen im Stadtgebiet, Datenstand alle 1–15 Min. Die günstigste liegt heute in Nordost; Total/TotalEnergies in Biebrich sind aktuell am teuersten. Spannweite: 12 Cent/Liter zwischen Top und Tief.",
+  kpi_fuel_top_label: "Günstigste 3", kpi_fuel_avg_label: "Stadt-Schnitt", kpi_fuel_spread_label: "Spannweite",
+  kpi_groceries_title: "Warenkorb-Index · 4 Grundnahrungsmittel",
+  kpi_groceries_finding: "Vergleich von 6 Märkten in Wiesbaden (Stand: bürger-gemeldete Preise). Der Discounter-Aldi-Warenkorb (Milch + 10 Eier + Brot + Butter) ist 14 % günstiger als der Bio-Markt-Warenkorb. VPI-Hessen-Vergleichswert für denselben Korb: 9,76 €.",
+  kpi_groceries_basket_label: "Warenkorb (4 Items)", kpi_groceries_diff_label: "Discounter ↔ Bio", kpi_groceries_vpi_label: "VPI-Hessen-Schnitt"
+});
+Object.assign(I18N.en, {
+  kpi_detail_eyebrow: "LIVE INDICATOR · CITY OF WIESBADEN",
+  kpi_disabled_roadmap: "v2 roadmap · not yet in open-data catalog",
+  kpi_population_hint: "↗ Story",
+  kpi_mini_open_view: "Open full view in Alltag tab →",
+  kpi_air_title: "Air quality · 7-day trend, city center",
+  kpi_air_finding: "Today's AQI of 42 sits well below the WHO threshold (50 = \"good\"). Over the last 7 days NO2 fell by 6 points — no day exceeded the EU limit (40 µg/m³). Both NO2 and PM10 stay in the green band.",
+  kpi_air_fact1: "AQI today", kpi_air_fact2: "Δ 7 days", kpi_air_fact3: "PM10 (daily mean)",
+  kpi_air_chart_ds: "AQI daily mean (city center)", kpi_air_y: "AQI",
+  kpi_construction_title: "Housing completions 2014–2024",
+  kpi_construction_finding: "Only 555 housing units were completed in Wiesbaden in 2024 — the lowest since 2017. The peak year was 2021 with 1,562 units. 23 active construction sites are tracked today; the Bauüberhang pipeline has been shrinking since 2022.",
+  kpi_construction_fact1: "Units 2024", kpi_construction_fact2: "Peak 2021", kpi_construction_fact3: "Active sites",
+  kpi_construction_chart_ds: "Completed housing units (citywide)", kpi_construction_y: "Units",
+  kpi_rent_title: "Median asking rent 2007–2024 · City of Wiesbaden",
+  kpi_rent_finding: "Median asking rent rose from €7.80/m² (2007) to €12.60/m² (2024) — a 62% increase over 17 years. The 2025 Mietspiegel (qualified per §558d BGB) shows a range from €8.78/m² (oldest, simple location) to €15.68/m² (newest, premium location).",
+  kpi_rent_fact1: "Median 2024", kpi_rent_fact2: "vs. 2007", kpi_rent_fact3: "Mietspiegel range",
+  kpi_rent_chart_ds: "Median asking rent (€/m²)", kpi_rent_y: "€/m²",
+  kpi_unemployment_title: "Unemployment rate by district · Dec 2025",
+  kpi_unemployment_finding: "Citywide the unemployment rate is 8.0%. The spread across the 26 districts is striking: Breckenheim (2.8%) and Frauenstein (3.1%) lead, Westend/Bleichstraße (12.3%) and Klarenthal (11.7%) sit highest. That's a four-fold gap inside one city.",
+  kpi_unemployment_fact1: "City average", kpi_unemployment_fact2: "Breckenheim ↔ Westend", kpi_unemployment_fact3: "Bürgergeld share (city)",
+  kpi_unemployment_chart_ds: "Unemployment rate (%)", kpi_unemployment_y: "%",
+  kpi_energy_title: "Renewable energy share · 2018–2024",
+  kpi_energy_finding: "The renewable share of installed capacity in Wiesbaden rose from 22% (2018) to 35% (2024). The biggest jump came in 2020–2022 from private photovoltaic systems (2021 EEG subsidy boost). The Hesse state average is 41% — Wiesbaden lags compared to other urban districts.",
+  kpi_energy_fact1: "Share 2024", kpi_energy_fact2: "vs. 2018", kpi_energy_fact3: "Hesse average",
+  kpi_energy_chart_ds: "Renewable share (%)", kpi_energy_y: "%",
+  kpi_fuel_title: "Top 3 cheapest fuel stations today (Super E10)",
+  kpi_fuel_finding: "33 public fuel stations in the city, refreshed every 1–15 minutes. The cheapest today is in Nordost; Total/TotalEnergies in Biebrich are most expensive right now. Spread: 12 cents/liter between top and bottom.",
+  kpi_fuel_top_label: "Cheapest 3", kpi_fuel_avg_label: "City average", kpi_fuel_spread_label: "Spread",
+  kpi_groceries_title: "Grocery basket index · 4 staples",
+  kpi_groceries_finding: "Comparison across 6 markets in Wiesbaden (citizen-reported prices). The Aldi discounter basket (milk + 10 eggs + bread + butter) is 14% cheaper than the organic-market basket. The VPI Hesse reference for the same basket: €9.76.",
+  kpi_groceries_basket_label: "Basket (4 items)", kpi_groceries_diff_label: "Discount ↔ Organic", kpi_groceries_vpi_label: "VPI Hesse average"
+});
+Object.assign(I18N.tr, {
+  kpi_detail_eyebrow: "CANLI GÖSTERGE · WIESBADEN ŞEHRİ",
+  kpi_disabled_roadmap: "v2 yol haritası · henüz açık veri kataloğunda yok",
+  kpi_population_hint: "↗ Hikaye",
+  kpi_mini_open_view: "Tam görünümü Alltag sekmesinde aç →",
+  kpi_air_title: "Hava kalitesi · 7 günlük trend, şehir merkezi",
+  kpi_air_finding: "Bugünkü AQI 42, DSÖ eşiğinin (50 = \"iyi\") çok altında. Son 7 günde NO2 6 puan düştü — hiçbir gün AB sınırını (40 µg/m³) aşmadı. NO2 ve PM10 yeşil bantta kalıyor.",
+  kpi_air_fact1: "Bugün AQI", kpi_air_fact2: "Δ 7 gün", kpi_air_fact3: "PM10 (günlük ort.)",
+  kpi_air_chart_ds: "AQI günlük ortalama (merkez)", kpi_air_y: "AQI",
+  kpi_construction_title: "Konut tamamlamaları 2014–2024",
+  kpi_construction_finding: "2024'te Wiesbaden'da yalnızca 555 konut tamamlandı — 2017'den bu yana en düşük. Zirve 2021 yılında 1.562 konuttu. Bugün 23 aktif şantiye izleniyor; Bauüberhang boru hattı 2022'den beri küçülüyor.",
+  kpi_construction_fact1: "Konut 2024", kpi_construction_fact2: "Zirve 2021", kpi_construction_fact3: "Aktif şantiye",
+  kpi_construction_chart_ds: "Tamamlanan konutlar (şehir geneli)", kpi_construction_y: "Konut",
+  kpi_rent_title: "Medyan ilan kirası 2007–2024 · Wiesbaden",
+  kpi_rent_finding: "Medyan ilan kirası 7,80 €/m² (2007) → 12,60 €/m² (2024) — 17 yılda %62 artış. 2025 Mietspiegel (§558d BGB nitelikli): 8,78 €/m² (en eski, basit konum) ile 15,68 €/m² (en yeni, premium konum) arasında değişiyor.",
+  kpi_rent_fact1: "Medyan 2024", kpi_rent_fact2: "2007'ye göre", kpi_rent_fact3: "Mietspiegel aralığı",
+  kpi_rent_chart_ds: "Medyan ilan kirası (€/m²)", kpi_rent_y: "€/m²",
+  kpi_unemployment_title: "İşsizlik oranı mahalleye göre · Ara 2025",
+  kpi_unemployment_finding: "Şehir geneli işsizlik oranı %8,0. 26 mahalle arasında uçurum büyük: Breckenheim (%2,8) ve Frauenstein (%3,1) önde, Westend/Bleichstraße (%12,3) ve Klarenthal (%11,7) en yüksek. Aynı şehir içinde 4 kat fark.",
+  kpi_unemployment_fact1: "Şehir ortalaması", kpi_unemployment_fact2: "Breckenheim ↔ Westend", kpi_unemployment_fact3: "Bürgergeld oranı (şehir)",
+  kpi_unemployment_chart_ds: "İşsizlik oranı (%)", kpi_unemployment_y: "%",
+  kpi_energy_title: "Yenilenebilir enerji payı · 2018–2024",
+  kpi_energy_finding: "Wiesbaden'da kurulu kapasitedeki yenilenebilir payı %22 (2018) → %35 (2024). En büyük sıçrama 2020–2022'de özel fotovoltaik sistemlerinden geldi (2021 EEG teşviği). Hessen ortalaması %41 — Wiesbaden, kentsel karşılaştırmada geride.",
+  kpi_energy_fact1: "Pay 2024", kpi_energy_fact2: "2018'e göre", kpi_energy_fact3: "Hessen ortalaması",
+  kpi_energy_chart_ds: "Yenilenebilir pay (%)", kpi_energy_y: "%",
+  kpi_fuel_title: "Bugün en ucuz 3 benzin istasyonu (Süper E10)",
+  kpi_fuel_finding: "Şehirde 33 halka açık istasyon, 1–15 dakikada bir güncellenir. Bugün en ucuz Nordost'ta; Biebrich'teki Total/TotalEnergies şu an en pahalı. Aralık: tepe ile dip arasında 12 cent/litre.",
+  kpi_fuel_top_label: "En ucuz 3", kpi_fuel_avg_label: "Şehir ortalaması", kpi_fuel_spread_label: "Aralık",
+  kpi_groceries_title: "Sepet endeksi · 4 temel ürün",
+  kpi_groceries_finding: "Wiesbaden'daki 6 market karşılaştırması (vatandaş bildirimli fiyatlar). Aldi indirim sepeti (süt + 10 yumurta + ekmek + tereyağı) organik market sepetinden %14 daha ucuz. Aynı sepet için VPI Hessen referansı: 9,76 €.",
+  kpi_groceries_basket_label: "Sepet (4 ürün)", kpi_groceries_diff_label: "İndirim ↔ Organik", kpi_groceries_vpi_label: "VPI Hessen ort."
+});
+Object.assign(I18N.ua, {
+  kpi_detail_eyebrow: "ЖИВИЙ ІНДИКАТОР · МІСТО ВІСБАДЕН",
+  kpi_disabled_roadmap: "v2 roadmap · ще немає у каталозі відкритих даних",
+  kpi_population_hint: "↗ Історія",
+  kpi_mini_open_view: "Відкрити повний вигляд у вкладці Alltag →",
+  kpi_air_title: "Якість повітря · 7-денний тренд, центр міста",
+  kpi_air_finding: "Сьогоднішній AQI 42 значно нижчий за поріг ВООЗ (50 = «добре»). За останні 7 днів NO2 знизився на 6 пунктів — жодного дня не перевищено межу ЄС (40 мкг/м³). NO2 і PM10 у зеленій зоні.",
+  kpi_air_fact1: "AQI сьогодні", kpi_air_fact2: "Δ 7 днів", kpi_air_fact3: "PM10 (середньодобове)",
+  kpi_air_chart_ds: "AQI середньодобове (центр)", kpi_air_y: "AQI",
+  kpi_construction_title: "Завершення житлового будівництва 2014–2024",
+  kpi_construction_finding: "У 2024 у Вісбадені здано лише 555 квартир — мінімум з 2017. Пік припав на 2021 рік — 1 562 квартири. Сьогодні відстежують 23 активні будмайданчики; черга Bauüberhang скорочується з 2022.",
+  kpi_construction_fact1: "Квартири 2024", kpi_construction_fact2: "Пік 2021", kpi_construction_fact3: "Активні будмайданчики",
+  kpi_construction_chart_ds: "Здані квартири (по місту)", kpi_construction_y: "Квартир",
+  kpi_rent_title: "Медіанна орендна ставка 2007–2024 · Вісбаден",
+  kpi_rent_finding: "Медіанна орендна ставка зросла з 7,80 €/м² (2007) до 12,60 €/м² (2024) — +62 % за 17 років. Mietspiegel 2025 (кваліфікований за §558d BGB): від 8,78 €/м² (старі будинки, простий район) до 15,68 €/м² (нові, преміум).",
+  kpi_rent_fact1: "Медіана 2024", kpi_rent_fact2: "до 2007", kpi_rent_fact3: "Діапазон Mietspiegel",
+  kpi_rent_chart_ds: "Медіанна оренда (€/м²)", kpi_rent_y: "€/м²",
+  kpi_unemployment_title: "Рівень безробіття за районом · груд. 2025",
+  kpi_unemployment_finding: "По місту рівень безробіття — 8,0 %. Розкид між 26 районами разючий: Breckenheim (2,8 %) і Frauenstein (3,1 %) лідери, Westend/Bleichstraße (12,3 %) і Klarenthal (11,7 %) — найвищі. У межах одного міста — різниця в 4 рази.",
+  kpi_unemployment_fact1: "Середнє по місту", kpi_unemployment_fact2: "Breckenheim ↔ Westend", kpi_unemployment_fact3: "Частка Bürgergeld (місто)",
+  kpi_unemployment_chart_ds: "Рівень безробіття (%)", kpi_unemployment_y: "%",
+  kpi_energy_title: "Частка відновлюваної енергії · 2018–2024",
+  kpi_energy_finding: "Частка відновлюваних у встановленій потужності зросла з 22 % (2018) до 35 % (2024). Найбільший стрибок — 2020–2022 завдяки приватним фотовольтаїчним установкам (стимул EEG 2021). Середнє Гессену — 41 %. Вісбаден відстає в міському порівнянні.",
+  kpi_energy_fact1: "Частка 2024", kpi_energy_fact2: "до 2018", kpi_energy_fact3: "Середнє Гессену",
+  kpi_energy_chart_ds: "Частка відновлюваних (%)", kpi_energy_y: "%",
+  kpi_fuel_title: "Топ-3 найдешевші АЗС сьогодні (Super E10)",
+  kpi_fuel_finding: "33 громадські АЗС у місті, оновлюються кожні 1–15 хв. Найдешевша зараз у Nordost; Total/TotalEnergies у Biebrich — найдорожчі. Розкид: 12 центів/л між топом і дном.",
+  kpi_fuel_top_label: "Найдешевші 3", kpi_fuel_avg_label: "Середнє по місту", kpi_fuel_spread_label: "Розкид",
+  kpi_groceries_title: "Індекс споживчого кошика · 4 базові продукти",
+  kpi_groceries_finding: "Порівняння 6 магазинів у Вісбадені (ціни від громадян). Кошик Aldi (молоко + 10 яєць + хліб + масло) на 14 % дешевший за кошик біо-маркету. Референс VPI Гессену: 9,76 €.",
+  kpi_groceries_basket_label: "Кошик (4 товари)", kpi_groceries_diff_label: "Дискаунт ↔ Біо", kpi_groceries_vpi_label: "Сер. VPI Гессен"
+});
+Object.assign(I18N.kr, {
+  kpi_detail_eyebrow: "실시간 지표 · 비스바덴",
+  kpi_disabled_roadmap: "v2 로드맵 · 아직 오픈데이터 미공개",
+  kpi_population_hint: "↗ Story",
+  kpi_mini_open_view: "Alltag 탭에서 전체 보기 →",
+  kpi_air_title: "대기질 · 7일 추이 (시 중심)",
+  kpi_air_finding: "오늘 AQI 42 — WHO 기준치(50 = '좋음')보다 한참 낮아. 지난 7일간 NO2가 6포인트 하락했고, EU 한계치(40 µg/m³) 초과일은 0일. NO2/PM10 모두 안전 범위 내.",
+  kpi_air_fact1: "오늘 AQI", kpi_air_fact2: "7일 Δ", kpi_air_fact3: "PM10 (일평균)",
+  kpi_air_chart_ds: "AQI 일평균 (시 중심)", kpi_air_y: "AQI",
+  kpi_construction_title: "주택 준공 2014–2024",
+  kpi_construction_finding: "2024년 비스바덴 신규 주택 준공은 555호로 2017년 이후 최저. 2021년 정점은 1,562호. 현재 활성 공사장 23곳, Bauüberhang 파이프라인은 2022년부터 축소 중.",
+  kpi_construction_fact1: "2024 준공", kpi_construction_fact2: "2021 정점", kpi_construction_fact3: "활성 공사장",
+  kpi_construction_chart_ds: "준공 주택 (시 전체)", kpi_construction_y: "호",
+  kpi_rent_title: "중간 호가 월세 2007–2024 · 비스바덴",
+  kpi_rent_finding: "중간 호가 월세는 €7.80/㎡ (2007) → €12.60/㎡ (2024)로 17년간 62% 상승. 2025 Mietspiegel (§558d BGB 자격 인정): €8.78/㎡ (구축·단순 입지)부터 €15.68/㎡ (신축·프리미엄)까지.",
+  kpi_rent_fact1: "2024 중간값", kpi_rent_fact2: "2007년 대비", kpi_rent_fact3: "Mietspiegel 범위",
+  kpi_rent_chart_ds: "중간 호가 월세 (€/㎡)", kpi_rent_y: "€/㎡",
+  kpi_unemployment_title: "동네별 실업률 · 2025년 12월",
+  kpi_unemployment_finding: "시 평균 실업률 8.0%. 26개 동네 격차가 큼: Breckenheim (2.8%) Frauenstein (3.1%)이 최저, Westend/Bleichstraße (12.3%) Klarenthal (11.7%)이 최고. 같은 도시 안에서 4배 차이.",
+  kpi_unemployment_fact1: "시 평균", kpi_unemployment_fact2: "Breckenheim ↔ Westend", kpi_unemployment_fact3: "Bürgergeld 수급률 (시)",
+  kpi_unemployment_chart_ds: "실업률 (%)", kpi_unemployment_y: "%",
+  kpi_energy_title: "재생에너지 비중 · 2018–2024",
+  kpi_energy_finding: "비스바덴 설치 용량 중 재생에너지 비중은 22% (2018) → 35% (2024). 2020–2022년에 민간 태양광 설치(2021 EEG 보조금)로 큰 도약. 헤센 주 평균은 41% — 비스바덴은 도시권 비교에서 후발주자.",
+  kpi_energy_fact1: "2024 비중", kpi_energy_fact2: "2018년 대비", kpi_energy_fact3: "헤센 평균",
+  kpi_energy_chart_ds: "재생에너지 비중 (%)", kpi_energy_y: "%",
+  kpi_fuel_title: "오늘 가장 싼 주유소 Top 3 (Super E10)",
+  kpi_fuel_finding: "시내 공공 주유소 33곳, 데이터 갱신 1–15분. 오늘 최저가는 Nordost. Biebrich의 Total/TotalEnergies가 현재 최고가. 격차: 12센트/리터 (최고-최저).",
+  kpi_fuel_top_label: "최저가 3", kpi_fuel_avg_label: "시 평균", kpi_fuel_spread_label: "격차",
+  kpi_groceries_title: "장바구니 지수 · 4가지 기본 식료품",
+  kpi_groceries_finding: "비스바덴 6개 마트 비교 (시민 제보 가격). Aldi 디스카운터 장바구니(우유 + 계란 10개 + 빵 + 버터)는 유기농 마트 장바구니보다 14% 저렴. 같은 장바구니의 VPI 헤센 기준값: €9.76.",
+  kpi_groceries_basket_label: "장바구니 (4종)", kpi_groceries_diff_label: "할인점 ↔ 유기농", kpi_groceries_vpi_label: "VPI 헤센 평균"
+});
+
+const KPI_DETAILS = {
+  air: {
+    icon: "🌬️", titleKey: "kpi_air_title", findingKey: "kpi_air_finding",
+    facts: [
+      { labelKey: "kpi_air_fact1", value: "42" },
+      { labelKey: "kpi_air_fact2", value: "−6" },
+      { labelKey: "kpi_air_fact3", value: "18 µg/m³" }
+    ],
+    chart: {
+      type: "line",
+      labels: ["−6 d","−5 d","−4 d","−3 d","−2 d","−1 d","heute"],
+      datasets: [
+        { labelKey: "kpi_air_chart_ds", data: [48, 47, 45, 44, 46, 43, 42], color: "#FF6B47", area: true }
+      ],
+      yLabelKey: "kpi_air_y"
+    },
+    sourceUrl: "https://opendata.cloud.wiesbaden.de/app/dataset/wiesbaden-umweltdaten-statisch",
+    sourceLabelDe: "Wiesbaden Umweltdaten · HLNUG / Mobilithek"
+  },
+  construction: {
+    icon: "🚧", titleKey: "kpi_construction_title", findingKey: "kpi_construction_finding",
+    facts: [
+      { labelKey: "kpi_construction_fact1", value: "555" },
+      { labelKey: "kpi_construction_fact2", value: "1.562" },
+      { labelKey: "kpi_construction_fact3", value: "23" }
+    ],
+    chart: {
+      type: "bar",
+      labels: ["2014","2015","2016","2017","2018","2019","2020","2021","2022","2023","2024"],
+      datasets: [
+        { labelKey: "kpi_construction_chart_ds", data: [550,636,476,402,811,394,746,1562,1405,1375,555], color: "#FF6B47" }
+      ],
+      yLabelKey: "kpi_construction_y"
+    },
+    sourceUrl: "https://opendata.cloud.wiesbaden.de/app/dataset/bautaetigkeit-in-wiesbaden-nach-ortsbezirken-2012-bis-2024",
+    sourceLabelDe: "Bautätigkeit nach Ortsbezirken 2012–2024 · Stadt Wiesbaden"
+  },
+  rent: {
+    icon: "🏠", titleKey: "kpi_rent_title", findingKey: "kpi_rent_finding",
+    facts: [
+      { labelKey: "kpi_rent_fact1", value: "12,60 €/qm" },
+      { labelKey: "kpi_rent_fact2", value: "+62 %" },
+      { labelKey: "kpi_rent_fact3", value: "8,78 – 15,68 €/qm" }
+    ],
+    chart: {
+      type: "line",
+      labels: ["2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022","2023","2024"],
+      datasets: [
+        { labelKey: "kpi_rent_chart_ds", data: [7.8,7.8,7.9,8.0,8.3,8.6,8.9,9.1,9.3,9.6,10.2,10.5,10.8,11.2,11.4,11.5,12.0,12.6], color: "#FF6B47", area: true }
+      ],
+      yLabelKey: "kpi_rent_y"
+    },
+    sourceUrl: "https://opendata.cloud.wiesbaden.de/app/dataset/angebotsmieten-in-wiesbaden-2007-bis-2024",
+    sourceLabelDe: "Angebotsmieten 2007–2024 + Mietspiegel 2025 · Stadt Wiesbaden"
+  },
+  unemployment: {
+    icon: "👔", titleKey: "kpi_unemployment_title", findingKey: "kpi_unemployment_finding",
+    facts: [
+      { labelKey: "kpi_unemployment_fact1", value: "8,0 %" },
+      { labelKey: "kpi_unemployment_fact2", value: "2,8 % ↔ 12,3 %" },
+      { labelKey: "kpi_unemployment_fact3", value: "9,0 %" }
+    ],
+    chart: {
+      type: "bar",
+      labels: ["Breckenheim","Frauenstein","Igstadt","Naurod","Auringen","Heßloch","Kloppenheim","Nordenstadt","Sonnenberg","Medenbach","Nordost","Südost","Bierstadt","Schierstein","Delkenheim","Rambach","Kostheim","Hollerborn","Dotzheim","Erbenheim","Biebrich","Kastel","Mitte","Amöneburg","Klarenthal","Westend"],
+      datasets: [
+        { labelKey: "kpi_unemployment_chart_ds", data: [2.8,3.1,3.3,3.5,4.0,4.3,4.3,4.3,4.6,5.1,5.4,5.6,6.0,6.2,6.7,6.9,7.9,8.5,8.8,9.0,9.5,9.5,9.6,10.1,11.7,12.3], color: "#FF6B47" }
+      ],
+      yLabelKey: "kpi_unemployment_y"
+    },
+    sourceUrl: "https://opendata.cloud.wiesbaden.de/app/dataset/kaufkraft-und-arbeitsmarkt-nach-ortsbezirken-in-wiesbaden-dezember-2025",
+    sourceLabelDe: "Kaufkraft & Arbeitsmarkt nach Ortsbezirken Dez 2025 · Stadt Wiesbaden"
+  },
+  energy: {
+    icon: "⚡", titleKey: "kpi_energy_title", findingKey: "kpi_energy_finding",
+    facts: [
+      { labelKey: "kpi_energy_fact1", value: "35 %" },
+      { labelKey: "kpi_energy_fact2", value: "+13 pp" },
+      { labelKey: "kpi_energy_fact3", value: "41 %" }
+    ],
+    chart: {
+      type: "line",
+      labels: ["2018","2019","2020","2021","2022","2023","2024"],
+      datasets: [
+        { labelKey: "kpi_energy_chart_ds", data: [22,25,28,30,32,33,35], color: "#FF6B47", area: true }
+      ],
+      yLabelKey: "kpi_energy_y"
+    },
+    sourceUrl: "https://www.marktstammdatenregister.de/MaStR",
+    sourceLabelDe: "Marktstammdatenregister (BNetzA) · regionale Auswertung"
+  },
+  fuel: {
+    tier: "mini",
+    icon: "⛽", titleKey: "kpi_fuel_title", findingKey: "kpi_fuel_finding",
+    facts: [
+      { labelKey: "kpi_fuel_top_label", value: "1,642 €" },
+      { labelKey: "kpi_fuel_avg_label", value: "1,693 €" },
+      { labelKey: "kpi_fuel_spread_label", value: "12 ct/L" }
+    ],
+    actionView: "alltag",
+    actionLabelKey: "kpi_mini_open_view",
+    sourceUrl: "https://opendata.cloud.wiesbaden.de/app/datasets",
+    sourceLabelDe: "MTS-K Tankerkönig (BNetzA) · 33 Stationen Wiesbaden"
+  },
+  groceries: {
+    tier: "mini",
+    icon: "🛒", titleKey: "kpi_groceries_title", findingKey: "kpi_groceries_finding",
+    facts: [
+      { labelKey: "kpi_groceries_basket_label", value: "9,46 €" },
+      { labelKey: "kpi_groceries_diff_label", value: "−14 %" },
+      { labelKey: "kpi_groceries_vpi_label", value: "9,76 €" }
+    ],
+    actionView: "alltag",
+    actionLabelKey: "kpi_mini_open_view",
+    sourceUrl: "https://www-genesis.destatis.de/genesis/online?operation=table&code=61111-0001",
+    sourceLabelDe: "VPI Hessen + Bürger·crowdsourced (6 Märkte, 269 Samples)"
+  }
+};
+
 // Export to global scope
 window.LAGEBILD_DATA = {
   ORTSBEZIRKE,
@@ -1816,7 +2101,9 @@ window.LAGEBILD_DATA = {
   // v2.1 Datenwunsch: candidate datasets for citizen vote
   DATENWUNSCH_CANDIDATES,
   // v2.1 Daten view: complete data-source registry for transparency
-  DATA_SOURCES
+  DATA_SOURCES,
+  // v2.4 KPI detail modals (5 Tier-A + 2 mini)
+  KPI_DETAILS
 };
 
 
