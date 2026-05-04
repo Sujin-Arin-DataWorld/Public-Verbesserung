@@ -3051,13 +3051,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const evhead = document.getElementById('kiez-events-headline');
       if (evhead) evhead.textContent = `${D.EVENTS_2026.events.length} ${t('kiez_events_count', 'Top-Events 2026')}`;
     }
-    // Picker info
-    const info = document.getElementById('kiez-picker-info');
-    if (info) {
-      info.textContent = d
-        ? `📍 ${d.name} · ${(d.pop || 0).toLocaleString('de-DE')} ${t('kiez_einwohner', 'Einwohner')}`
-        : t('kiez_pick_hint', 'Wählen Sie einen Ortsbezirk für Kiez-spezifische Daten');
-    }
+    // Picker info element no longer exists — Mein Kiez now uses
+    // the shared #mo-select picker in view-home (no separate UI).
   }
 
   // ----- detail builders -----
@@ -3298,27 +3293,22 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function setupKiez() {
-    const sel = document.getElementById('kiez-select');
-    const clear = document.getElementById('kiez-clear');
+    // v2.6.2 — Mein Kiez is now embedded inside view-home and shares
+    // the existing #mo-select picker (Mein Ortsbezirk). No separate
+    // dropdown; we hook into mo-select's change event so cards refresh
+    // whenever the home picker changes.
+    const moSel = document.getElementById('mo-select');
+    const moClear = document.getElementById('mo-clear');
     const closeBtn = document.getElementById('kiez-detail-close');
     const det = document.getElementById('kiez-detail');
 
-    if (sel) {
-      const list = kiezDistricts();
-      sel.innerHTML = `<option value="">— ${t('kiez_pick_placeholder', 'Stadtweit (kein Filter)')} —</option>` +
-        list.map(o => `<option value="${o.id}">${o.name} (Ortsbezirk ${o.id})</option>`).join('');
-      const saved = getKiezDistrict();
-      if (saved) sel.value = saved.id;
-      sel.addEventListener('change', () => {
-        setKiezDistrict(sel.value);
-        renderKiezHeadlines();
-      });
+    if (moSel) {
+      moSel.addEventListener('change', () => renderKiezHeadlines());
     }
-    if (clear) {
-      clear.addEventListener('click', () => {
-        setKiezDistrict('');
-        if (sel) sel.value = '';
-        renderKiezHeadlines();
+    if (moClear) {
+      moClear.addEventListener('click', () => {
+        // mo-clear runs first; defer headline refresh so MO_KEY is cleared.
+        setTimeout(() => renderKiezHeadlines(), 0);
       });
     }
     document.querySelectorAll('.kiez-card').forEach(card => {
