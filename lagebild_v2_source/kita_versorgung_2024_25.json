@@ -1,0 +1,553 @@
+{
+  "meta": {
+    "source": "Bericht „Tagesbetreuung für Kinder in den ersten Lebensjahren 2024/25“",
+    "publisher": "Stadt Wiesbaden, Amt für Soziale Arbeit, Abt. Kindertagesstätten und Kindertagespflege",
+    "stand": "2024/25 (publ. 09/2025)",
+    "url": "https://www.wiesbaden.de/medien/downloads/leben-in-wiesbaden/amt-51.1/Bericht-Tagesbetreuung-fuer-Kinder-2024_25_final.pdf",
+    "tabellen": [
+      "Tabelle 7 (u3)",
+      "Tabelle 11 (Elementar)"
+    ],
+    "license": "Cite source per Stadt Wiesbaden Open-Data-Praxis"
+  },
+  "stadtweit": {
+    "u3": {
+      "basiszahl": 7838,
+      "bedarf": 3705,
+      "angebot": 2876,
+      "bilanz": -829,
+      "quote": 36.7,
+      "delta_pp": 1.5
+    },
+    "elem": {
+      "basiszahl": 10912,
+      "bedarf": 9821,
+      "angebot": 10308,
+      "bilanz": 487,
+      "quote": 94.5,
+      "delta_pp": 1.2
+    }
+  },
+  "ortsbezirke": [
+    {
+      "name": "Mitte",
+      "pdf_id": "01",
+      "u3": {
+        "basiszahl": 553,
+        "bedarf": 252,
+        "angebot": 223,
+        "bilanz": -29,
+        "quote": 40.3,
+        "delta_pp": -4.6
+      },
+      "elem": {
+        "basiszahl": 639,
+        "bedarf": 575,
+        "angebot": 661,
+        "bilanz": 86,
+        "quote": 103.4,
+        "delta_pp": -0.7
+      }
+    },
+    {
+      "name": "Rheingauviertel/Hollerborn",
+      "pdf_id": "06",
+      "u3": {
+        "basiszahl": 659,
+        "bedarf": 313,
+        "angebot": 209,
+        "bilanz": -104,
+        "quote": 31.7,
+        "delta_pp": 1.0
+      },
+      "elem": {
+        "basiszahl": 913,
+        "bedarf": 822,
+        "angebot": 1153,
+        "bilanz": 331,
+        "quote": 126.3,
+        "delta_pp": 4.4
+      }
+    },
+    {
+      "name": "Westend/Bleichstraße",
+      "pdf_id": "08",
+      "u3": {
+        "basiszahl": 445,
+        "bedarf": 207,
+        "angebot": 50,
+        "bilanz": -157,
+        "quote": 11.2,
+        "delta_pp": 1.2
+      },
+      "elem": {
+        "basiszahl": 685,
+        "bedarf": 617,
+        "angebot": 311,
+        "bilanz": -306,
+        "quote": 45.4,
+        "delta_pp": 3.3
+      }
+    },
+    {
+      "name": "Nordost",
+      "pdf_id": "02",
+      "u3": {
+        "basiszahl": 479,
+        "bedarf": 229,
+        "angebot": 242,
+        "bilanz": 13,
+        "quote": 50.5,
+        "delta_pp": 3.3
+      },
+      "elem": {
+        "basiszahl": 671,
+        "bedarf": 604,
+        "angebot": 878,
+        "bilanz": 274,
+        "quote": 130.8,
+        "delta_pp": 7.8
+      }
+    },
+    {
+      "name": "Südost",
+      "pdf_id": "03",
+      "u3": {
+        "basiszahl": 583,
+        "bedarf": 280,
+        "angebot": 550,
+        "bilanz": 270,
+        "quote": 94.3,
+        "delta_pp": 9.6
+      },
+      "elem": {
+        "basiszahl": 844,
+        "bedarf": 760,
+        "angebot": 907,
+        "bilanz": 147,
+        "quote": 107.5,
+        "delta_pp": -4.5
+      }
+    },
+    {
+      "name": "Biebrich",
+      "pdf_id": "14",
+      "u3": {
+        "basiszahl": 1087,
+        "bedarf": 504,
+        "angebot": 355,
+        "bilanz": -149,
+        "quote": 32.7,
+        "delta_pp": 2.6
+      },
+      "elem": {
+        "basiszahl": 1398,
+        "bedarf": 1258,
+        "angebot": 1348,
+        "bilanz": 90,
+        "quote": 96.4,
+        "delta_pp": 5.9
+      }
+    },
+    {
+      "name": "Schierstein",
+      "pdf_id": "27",
+      "u3": {
+        "basiszahl": 270,
+        "bedarf": 132,
+        "angebot": 82,
+        "bilanz": -50,
+        "quote": 30.4,
+        "delta_pp": 7.6
+      },
+      "elem": {
+        "basiszahl": 389,
+        "bedarf": 350,
+        "angebot": 338,
+        "bilanz": -12,
+        "quote": 86.9,
+        "delta_pp": -6.2
+      }
+    },
+    {
+      "name": "Frauenstein",
+      "pdf_id": "28",
+      "u3": {
+        "basiszahl": 47,
+        "bedarf": 23,
+        "angebot": 0,
+        "bilanz": -23,
+        "quote": 0.0,
+        "delta_pp": 0.0
+      },
+      "elem": {
+        "basiszahl": 51,
+        "bedarf": 46,
+        "angebot": 40,
+        "bilanz": -6,
+        "quote": 78.4,
+        "delta_pp": 1.5
+      }
+    },
+    {
+      "name": "Dotzheim",
+      "pdf_id": "16",
+      "u3": {
+        "basiszahl": 838,
+        "bedarf": 403,
+        "angebot": 262,
+        "bilanz": -141,
+        "quote": 31.3,
+        "delta_pp": -0.7
+      },
+      "elem": {
+        "basiszahl": 1067,
+        "bedarf": 960,
+        "angebot": 955,
+        "bilanz": -5,
+        "quote": 89.5,
+        "delta_pp": -0.7
+      }
+    },
+    {
+      "name": "Klarenthal",
+      "pdf_id": "07",
+      "u3": {
+        "basiszahl": 293,
+        "bedarf": 136,
+        "angebot": 114,
+        "bilanz": -22,
+        "quote": 38.9,
+        "delta_pp": -1.0
+      },
+      "elem": {
+        "basiszahl": 463,
+        "bedarf": 417,
+        "angebot": 464,
+        "bilanz": 47,
+        "quote": 100.2,
+        "delta_pp": 1.1
+      }
+    },
+    {
+      "name": "Sonnenberg",
+      "pdf_id": "11",
+      "u3": {
+        "basiszahl": 122,
+        "bedarf": 55,
+        "angebot": 58,
+        "bilanz": 3,
+        "quote": 47.5,
+        "delta_pp": 0.4
+      },
+      "elem": {
+        "basiszahl": 191,
+        "bedarf": 172,
+        "angebot": 208,
+        "bilanz": 36,
+        "quote": 108.9,
+        "delta_pp": 2.8
+      }
+    },
+    {
+      "name": "Rambach",
+      "pdf_id": "21",
+      "u3": {
+        "basiszahl": 54,
+        "bedarf": 25,
+        "angebot": 0,
+        "bilanz": -25,
+        "quote": 0.0,
+        "delta_pp": 0.0
+      },
+      "elem": {
+        "basiszahl": 50,
+        "bedarf": 45,
+        "angebot": 46,
+        "bilanz": 1,
+        "quote": 92.0,
+        "delta_pp": 3.5
+      }
+    },
+    {
+      "name": "Heßloch",
+      "pdf_id": "22",
+      "u3": {
+        "basiszahl": 21,
+        "bedarf": 10,
+        "angebot": 0,
+        "bilanz": -10,
+        "quote": 0.0,
+        "delta_pp": 0.0
+      },
+      "elem": {
+        "basiszahl": 21,
+        "bedarf": 19,
+        "angebot": 22,
+        "bilanz": 3,
+        "quote": 104.8,
+        "delta_pp": -32.7
+      }
+    },
+    {
+      "name": "Kloppenheim",
+      "pdf_id": "23",
+      "u3": {
+        "basiszahl": 54,
+        "bedarf": 27,
+        "angebot": 20,
+        "bilanz": -7,
+        "quote": 37.0,
+        "delta_pp": -2.2
+      },
+      "elem": {
+        "basiszahl": 85,
+        "bedarf": 77,
+        "angebot": 65,
+        "bilanz": -12,
+        "quote": 76.5,
+        "delta_pp": -3.8
+      }
+    },
+    {
+      "name": "Igstadt",
+      "pdf_id": "24",
+      "u3": {
+        "basiszahl": 53,
+        "bedarf": 25,
+        "angebot": 0,
+        "bilanz": -25,
+        "quote": 0.0,
+        "delta_pp": 0.0
+      },
+      "elem": {
+        "basiszahl": 75,
+        "bedarf": 68,
+        "angebot": 66,
+        "bilanz": -2,
+        "quote": 88.0,
+        "delta_pp": -1.2
+      }
+    },
+    {
+      "name": "Bierstadt",
+      "pdf_id": "12",
+      "u3": {
+        "basiszahl": 307,
+        "bedarf": 147,
+        "angebot": 80,
+        "bilanz": -67,
+        "quote": 26.1,
+        "delta_pp": 0.3
+      },
+      "elem": {
+        "basiszahl": 445,
+        "bedarf": 401,
+        "angebot": 330,
+        "bilanz": -71,
+        "quote": 74.2,
+        "delta_pp": -1.4
+      }
+    },
+    {
+      "name": "Erbenheim",
+      "pdf_id": "13",
+      "u3": {
+        "basiszahl": 321,
+        "bedarf": 159,
+        "angebot": 108,
+        "bilanz": -51,
+        "quote": 33.6,
+        "delta_pp": 3.0
+      },
+      "elem": {
+        "basiszahl": 465,
+        "bedarf": 419,
+        "angebot": 394,
+        "bilanz": -25,
+        "quote": 84.7,
+        "delta_pp": 1.8
+      }
+    },
+    {
+      "name": "Nordenstadt",
+      "pdf_id": "25",
+      "u3": {
+        "basiszahl": 297,
+        "bedarf": 132,
+        "angebot": 110,
+        "bilanz": -22,
+        "quote": 37.0,
+        "delta_pp": -0.8
+      },
+      "elem": {
+        "basiszahl": 455,
+        "bedarf": 410,
+        "angebot": 384,
+        "bilanz": -26,
+        "quote": 84.4,
+        "delta_pp": -2.5
+      }
+    },
+    {
+      "name": "Delkenheim",
+      "pdf_id": "26",
+      "u3": {
+        "basiszahl": 126,
+        "bedarf": 65,
+        "angebot": 50,
+        "bilanz": -15,
+        "quote": 39.7,
+        "delta_pp": 8.0
+      },
+      "elem": {
+        "basiszahl": 228,
+        "bedarf": 205,
+        "angebot": 180,
+        "bilanz": -25,
+        "quote": 78.9,
+        "delta_pp": -0.3
+      }
+    },
+    {
+      "name": "Medenbach",
+      "pdf_id": "33",
+      "u3": {
+        "basiszahl": 72,
+        "bedarf": 32,
+        "angebot": 20,
+        "bilanz": -12,
+        "quote": 27.8,
+        "delta_pp": 1.5
+      },
+      "elem": {
+        "basiszahl": 106,
+        "bedarf": 95,
+        "angebot": 60,
+        "bilanz": -35,
+        "quote": 56.6,
+        "delta_pp": -4.0
+      }
+    },
+    {
+      "name": "Breckenheim",
+      "pdf_id": "34",
+      "u3": {
+        "basiszahl": 76,
+        "bedarf": 35,
+        "angebot": 10,
+        "bilanz": -25,
+        "quote": 13.2,
+        "delta_pp": -0.7
+      },
+      "elem": {
+        "basiszahl": 118,
+        "bedarf": 106,
+        "angebot": 130,
+        "bilanz": 24,
+        "quote": 110.2,
+        "delta_pp": 0.0
+      }
+    },
+    {
+      "name": "Naurod",
+      "pdf_id": "31",
+      "u3": {
+        "basiszahl": 81,
+        "bedarf": 43,
+        "angebot": 30,
+        "bilanz": -13,
+        "quote": 37.0,
+        "delta_pp": 6.4
+      },
+      "elem": {
+        "basiszahl": 154,
+        "bedarf": 139,
+        "angebot": 126,
+        "bilanz": -13,
+        "quote": 81.8,
+        "delta_pp": 0.0
+      }
+    },
+    {
+      "name": "Auringen",
+      "pdf_id": "32",
+      "u3": {
+        "basiszahl": 70,
+        "bedarf": 35,
+        "angebot": 27,
+        "bilanz": -8,
+        "quote": 38.6,
+        "delta_pp": 3.0
+      },
+      "elem": {
+        "basiszahl": 114,
+        "bedarf": 103,
+        "angebot": 140,
+        "bilanz": 37,
+        "quote": 122.8,
+        "delta_pp": -3.3
+      }
+    },
+    {
+      "name": "Mainz-Kostheim",
+      "pdf_id": "53",
+      "u3": {
+        "basiszahl": 427,
+        "bedarf": 199,
+        "angebot": 120,
+        "bilanz": -79,
+        "quote": 28.1,
+        "delta_pp": -0.7
+      },
+      "elem": {
+        "basiszahl": 601,
+        "bedarf": 541,
+        "angebot": 468,
+        "bilanz": -73,
+        "quote": 77.9,
+        "delta_pp": -0.5
+      }
+    },
+    {
+      "name": "Mainz-Kastel",
+      "pdf_id": "52",
+      "u3": {
+        "basiszahl": 435,
+        "bedarf": 203,
+        "angebot": 126,
+        "bilanz": -77,
+        "quote": 29.0,
+        "delta_pp": 1.3
+      },
+      "elem": {
+        "basiszahl": 575,
+        "bedarf": 518,
+        "angebot": 484,
+        "bilanz": -34,
+        "quote": 84.2,
+        "delta_pp": 3.2
+      }
+    },
+    {
+      "name": "Mainz-Amöneburg",
+      "pdf_id": "51",
+      "u3": {
+        "basiszahl": 68,
+        "bedarf": 34,
+        "angebot": 30,
+        "bilanz": -4,
+        "quote": 44.1,
+        "delta_pp": 1.3
+      },
+      "elem": {
+        "basiszahl": 109,
+        "bedarf": 98,
+        "angebot": 150,
+        "bilanz": 52,
+        "quote": 137.6,
+        "delta_pp": 1.3
+      }
+    }
+  ]
+}
