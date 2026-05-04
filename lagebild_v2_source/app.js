@@ -2,7 +2,7 @@
 // WIESBADEN-LAGEBILD — Main Application
 // =================================================================
 
-const { ORTSBEZIRKE, POPULATION_TIMELINE, LIVE_KPI, ORIGIN_COUNTRIES, CITIZEN_REPORTS, I18N, WIESBADEN_CITY_GEOJSON, CHARGING_STATIONS, STORIES } = window.LAGEBILD_DATA;
+const { ORTSBEZIRKE, POPULATION_TIMELINE, LIVE_KPI, ORIGIN_COUNTRIES, CITIZEN_REPORTS, I18N, WIESBADEN_CITY_GEOJSON, CHARGING_STATIONS, STORIES, KPI_DETAILS } = window.LAGEBILD_DATA;
 
 let currentLang = 'de';
 let currentLayer = 'pop';
@@ -581,7 +581,10 @@ function openStoryModal(index) {
 
   // Build the chart (must wait for the modal to be visible so canvas has dimensions)
   modal.classList.add('active');
-  setTimeout(() => buildStoryChart(s), 50);
+  setTimeout(() => {
+    if (storyChart) { storyChart.destroy(); storyChart = null; }
+    storyChart = buildDetailChart(s.chart, 'story-modal-chart');
+  }, 50);
 
   // Close on backdrop click + Esc
   modal.onclick = (e) => { if (e.target === modal) closeStoryModal(); };
@@ -599,12 +602,11 @@ function closeStoryModal() {
   }
 }
 
-function buildStoryChart(story) {
-  const canvas = document.getElementById('story-modal-chart');
-  if (!canvas || typeof Chart === 'undefined') return;
-  if (storyChart) { storyChart.destroy(); storyChart = null; }
-
-  const c = story.chart;
+// Generic Chart.js builder shared by story-modal and kpi-detail-modal.
+// Caller is responsible for destroying any previous chart on the same canvas.
+function buildDetailChart(c, canvasId) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas || typeof Chart === 'undefined' || !c) return null;
   const isDark = document.body.classList.contains('dark') ||
                  !document.body.classList.contains('light');
   const tickColor = isDark ? 'rgba(168,178,209,0.7)' : 'rgba(70,80,110,0.7)';
@@ -651,7 +653,7 @@ function buildStoryChart(story) {
     };
   }
 
-  storyChart = new Chart(canvas.getContext('2d'), {
+  return new Chart(canvas.getContext('2d'), {
     type: c.type,
     data: { labels: c.labels, datasets },
     options: {
@@ -674,6 +676,87 @@ function buildStoryChart(story) {
       },
       scales
     }
+  });
+}
+
+// ============ KPI DETAIL MODAL (v2.4) ============
+let kpiDetailChart = null;
+let kpiDetailKeyHandler = null;
+
+function openKpiDetail(id) {
+  // Population deep-links to Story 3 (no duplicate content)
+  if (id === 'population') { openStoryModal(2); return; }
+
+  const detail = KPI_DETAILS && KPI_DETAILS[id];
+  if (!detail) return;
+  const modal = document.getElementById('kpi-detail-modal');
+  if (!modal) return;
+
+  document.getElementById('kpi-detail-icon').textContent = detail.icon || '';
+  document.getElementById('kpi-detail-title').textContent = t(detail.titleKey);
+  document.getElementById('kpi-detail-finding').textContent = t(detail.findingKey);
+
+  const factsEl = document.getElementById('kpi-detail-facts');
+  factsEl.innerHTML = (detail.facts || []).map(f => `
+    <div class="story-fact">
+      <div class="story-fact-value">${f.value}</div>
+      <div class="story-fact-label">${t(f.labelKey)}</div>
+    </div>
+  `).join('');
+
+  // Tier-B mini-modal: hide chart, show action button instead.
+  const chartSection = document.getElementById('kpi-detail-chart-section');
+  const actionWrap = document.getElementById('kpi-detail-action');
+  const actionBtn = document.getElementById('kpi-detail-action-btn');
+  const isMini = detail.tier === 'mini';
+  if (chartSection) chartSection.style.display = isMini ? 'none' : '';
+  if (actionWrap) actionWrap.style.display = isMini && detail.actionView ? 'flex' : 'none';
+  if (isMini && detail.actionView && actionBtn) {
+    actionBtn.textContent = t(detail.actionLabelKey || 'kpi_mini_open_view');
+    actionBtn.onclick = () => {
+      closeKpiDetail();
+      if (typeof showView === 'function') {
+        location.hash = detail.actionView === 'home' ? '' : detail.actionView;
+      }
+    };
+  }
+
+  document.getElementById('kpi-detail-source-text').textContent = detail.sourceLabelDe || '';
+  const link = document.getElementById('kpi-detail-source-link');
+  if (link) {
+    link.href = detail.sourceUrl || '#';
+    link.textContent = t('story_modal_view_source');
+  }
+
+  modal.classList.add('active');
+  if (!isMini) {
+    setTimeout(() => {
+      if (kpiDetailChart) { kpiDetailChart.destroy(); kpiDetailChart = null; }
+      kpiDetailChart = buildDetailChart(detail.chart, 'kpi-detail-chart');
+    }, 50);
+  }
+
+  modal.onclick = (e) => { if (e.target === modal) closeKpiDetail(); };
+  kpiDetailKeyHandler = (e) => { if (e.key === 'Escape') closeKpiDetail(); };
+  document.addEventListener('keydown', kpiDetailKeyHandler);
+}
+
+function closeKpiDetail() {
+  const modal = document.getElementById('kpi-detail-modal');
+  if (modal) modal.classList.remove('active');
+  if (kpiDetailChart) { kpiDetailChart.destroy(); kpiDetailChart = null; }
+  if (kpiDetailKeyHandler) {
+    document.removeEventListener('keydown', kpiDetailKeyHandler);
+    kpiDetailKeyHandler = null;
+  }
+}
+
+// Single delegated listener for all clickable KPI cards (Kita keeps its own handler).
+function setupKpiDetailModal() {
+  document.addEventListener('click', (e) => {
+    const card = e.target.closest('[data-kpi-clickable="1"]:not([data-kpi="kita"])');
+    if (!card) return;
+    openKpiDetail(card.dataset.kpi);
   });
 }
 
@@ -1056,7 +1139,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // KPIs that open a citizen-facing details modal when clicked.
-  const KPI_CLICKABLE = new Set(['kita']);
+  // v2.4: kita keeps its bespoke tabbed modal; the others use #kpi-detail-modal;
+  // population deep-links to Story 3.
+  const KPI_CLICKABLE = new Set(['kita','air','construction','rent','unemployment','energy','fuel','groceries','population']);
+  const KPI_DISABLED  = new Set(['transit','complaints','business']);
 
   function renderKpiGrid() {
     const grid = document.getElementById('kpi-grid');
@@ -1070,6 +1156,14 @@ document.addEventListener('DOMContentLoaded', () => {
       card.className = 'kpi-card';
       card.dataset.kpi = opt.id;
       if (KPI_CLICKABLE.has(opt.id)) card.dataset.kpiClickable = '1';
+      if (KPI_DISABLED.has(opt.id)) {
+        card.dataset.kpiDisabled = '1';
+        card.dataset.disabledLabel = (D.I18N[document.querySelector('.lang-btn.active')?.dataset.lang || 'de'] || D.I18N.de).kpi_disabled_roadmap || 'v2 roadmap';
+      }
+      const isPop = opt.id === 'population';
+      const popHint = isPop
+        ? `<span class="kpi-population-hint">${(D.I18N[document.querySelector('.lang-btn.active')?.dataset.lang || 'de'] || D.I18N.de).kpi_population_hint || '↗ Story'}</span>`
+        : '';
       card.innerHTML = `
         <div class="kpi-card-header">
           <span class="kpi-icon">${opt.icon}</span>
@@ -1080,6 +1174,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="kpi-change">${opt.change}</span>
           <span class="kpi-source">${opt.source}</span>
         </div>
+        ${popHint}
       `;
       grid.appendChild(card);
     });
@@ -2151,6 +2246,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupMitmachen();
     renderMitmachenHistory();
     setupKitaModal();
+    if (typeof setupKpiDetailModal === 'function') setupKpiDetailModal();
     renderDemokratie();
     setupDemoTabs();
     renderDatenkatalog();
