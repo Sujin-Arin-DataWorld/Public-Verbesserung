@@ -268,6 +268,259 @@ body::before {
   color: var(--accent);
 }
 
+/* ============== v2.6 — MEIN KIEZ (Seoul-style card grid) ============== */
+.kiez-picker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 16px 18px;
+  background: var(--bg-secondary, var(--bg-elevated));
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-top: 14px;
+  margin-bottom: 18px;
+}
+.kiez-picker-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary, var(--text-muted));
+  font-weight: 600;
+}
+#kiez-select {
+  padding: 8px 12px;
+  background: var(--bg-primary, var(--bg));
+  color: var(--text-primary, var(--text));
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 13px;
+  min-width: 240px;
+}
+#kiez-select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.kiez-clear-btn {
+  padding: 7px 12px;
+  font-size: 12px;
+}
+.kiez-picker-info {
+  font-size: 12px;
+  color: var(--text-secondary, var(--text-muted));
+  margin-left: auto;
+  font-family: var(--font-mono);
+}
+
+/* 6-card grid (Seoul Data Hub layout) */
+.kiez-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.kiez-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 22px 20px;
+  background: var(--bg-card, var(--bg-elevated));
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  font-family: inherit;
+  color: inherit;
+}
+.kiez-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+.kiez-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.kiez-card.active {
+  border-color: var(--accent);
+  background: rgba(255, 107, 71, 0.06);
+}
+.kiez-card-icon {
+  font-size: 32px;
+  line-height: 1;
+}
+.kiez-card-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+}
+.kiez-card-headline {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text-primary, var(--text));
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-top: 2px;
+  min-height: 1.4em;
+}
+.kiez-card-sub {
+  font-size: 11px;
+  color: var(--text-tertiary, var(--text-muted));
+  letter-spacing: 0.04em;
+  font-family: var(--font-mono);
+}
+.kiez-card-cta {
+  margin-top: auto;
+  font-size: 11px;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* Detail panel (slides in below the grid when a card is clicked) */
+.kiez-detail {
+  margin-top: 12px;
+  padding: 22px;
+  background: var(--bg-card, var(--bg-elevated));
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  animation: kiezSlide 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes kiezSlide {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.kiez-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.kiez-detail-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0;
+}
+.kiez-detail-close {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary, var(--text-muted));
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.kiez-detail-close:hover { color: var(--accent); border-color: var(--accent); }
+.kiez-detail-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.kiez-detail-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.kiez-detail-footer {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+}
+.kiez-detail-source-link {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  text-decoration: none;
+}
+.kiez-detail-source-link:hover { text-decoration: underline; }
+
+/* PKS / CPI / Events sub-blocks */
+.kiez-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+.kiez-stat-cell {
+  padding: 12px;
+  background: var(--bg-secondary, var(--bg));
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.kiez-stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary, var(--text-muted));
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.kiez-stat-value {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 600;
+}
+.kiez-stat-delta { font-size: 11px; margin-left: 6px; }
+.kiez-stat-delta-good { color: #16a34a; }
+.kiez-stat-delta-bad  { color: #ef4444; }
+.kiez-honesty-note {
+  margin-top: 24px;
+  padding: 14px 18px;
+  background: rgba(74, 111, 165, 0.06);
+  border-left: 3px solid var(--wiesbaden-blue-light, #4A6FA5);
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-secondary, var(--text-muted));
+}
+.kiez-events-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+.kiez-event-item {
+  padding: 10px 12px;
+  background: var(--bg-secondary, var(--bg));
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.kiez-event-month {
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  background: rgba(255, 107, 71, 0.1);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.kiez-event-title { font-size: 12px; line-height: 1.4; }
+.kiez-event-where { font-size: 10px; color: var(--text-tertiary, var(--text-muted)); margin-top: 2px; }
+.kiez-bin-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--bg-secondary, var(--bg));
+  border-left: 4px solid var(--bin-color, var(--border));
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+.kiez-bin-icon { font-size: 20px; }
+.kiez-bin-label { font-weight: 600; font-size: 13px; flex: 1; }
+.kiez-bin-rhythm { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary, var(--text-muted)); }
+
+@media (max-width: 600px) {
+  .kiez-grid { grid-template-columns: 1fr; }
+}
+
 /* ============== v2.5 — DATENASSISTENT (Floating BM25 drawer) ============== */
 /* Floating button — bottom-right, always reachable */
 .assist-btn {
