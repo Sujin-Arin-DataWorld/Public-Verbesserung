@@ -2274,10 +2274,10 @@ const OSM_PARKING = [{id:29562558,lat:50.0266,lng:8.31016,n:"Zur alten Römerstr
 // the card discloses this in its footnote. License: dl-de-by-2.0.
 // To switch to live API once a Genesis key arrives, replace this
 // const with a fetch in app.js (see _emit_cpi.py header).
-// destatis Verbraucherpreisindex 5-Steller — fetched live via
-// Genesis REST API (table 61111-0006). Build-time only; the
-// browser never calls destatis directly. License: dl-de-by-2.0.
-const CPI_TIMELINE = {"meta":{"code":"61111-0006","title_de":"Verbraucherpreisindex Deutschland · ausgewählte Lebensmittel (5-Steller)","publisher":"Statistisches Bundesamt (destatis)","source":"https://www-genesis.destatis.de/genesis/online?operation=table&code=61111-0006","license":"Datenlizenz Deutschland — Namensnennung 2.0","base":"2020 = 100","geo":"Deutschland (national; no Wiesbaden-level breakdown — destatis publishes city-level CPI only for major Bundesländer-aggregates, not individual cities).","fetched_via":"Genesis-Online REST API (token-auth, build-time)"},"months":["2025-04","2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03"],"series":[{"id":"eier","icon":"🥚","label_de":"Eier","label_en":"Eggs","label_kr":"계란","label_tr":"Yumurta","label_ua":"Яйця","label_ls":"Eier","values":[142.2,142.8,143.2,143.2,143.0,143.0,143.1,143.6,144.1,157.7,161.1,162.5]},{"id":"milch","icon":"🥛","label_de":"Vollmilch","label_en":"Whole milk","label_kr":"우유","label_tr":"Tam yağlı süt","label_ua":"Молоко","label_ls":"Vollmilch","values":[137.5,138.2,138.4,140.0,139.8,139.8,140.2,138.9,131.6,130.9,130.0,129.7]},{"id":"brot","icon":"🍞","label_de":"Brot","label_en":"Bread","label_kr":"빵","label_tr":"Ekmek","label_ua":"Хліб","label_ls":"Brot","values":[137.7,138.2,137.6,138.3,138.4,138.6,138.9,138.8,139.0,139.8,139.8,140.2]},{"id":"butter","icon":"🧈","label_de":"Butter","label_en":"Butter","label_kr":"버터","label_tr":"Tereyağı","label_ua":"Масло","label_ls":"Butter","values":[149.8,152.6,151.7,150.3,151.0,150.7,135.7,129.4,113.2,111.0,107.7,109.8]},{"id":"kartoffeln","icon":"🥔","label_de":"Kartoffeln","label_en":"Potatoes","label_kr":"감자","label_tr":"Patates","label_ua":"Картопля","label_ls":"Kartoffeln","values":[135.8,138.8,143.2,137.9,124.6,116.3,111.9,109.3,108.8,108.9,108.7,112.6]}]};
+// destatis Verbraucherpreisindex — Lebensmittel (5-Steller, DE)
+// + Gesamtindex Hessen vs. Deutschland. Live via Genesis REST API,
+// build-time only. License: dl-de-by-2.0.
+const CPI_TIMELINE = {"meta":{"title_de":"Verbraucherpreisindex · ausgewählte Lebensmittel + Gesamtindex Hessen vs. Deutschland","publisher":"Statistisches Bundesamt (destatis)","tables":{"items_5steller":"61111-0006","hessen_overall":"61111-0011","de_overall":"61111-0002"},"source":"https://www-genesis.destatis.de/genesis/online?operation=table&code=61111-0006","license":"Datenlizenz Deutschland — Namensnennung 2.0","base":"2020 = 100","geo":"Lebensmittel-Einzelindizes sind nur bundesweit verfügbar (zu kleine Stichprobe je Bundesland). Der Gesamtindex liegt für Hessen separat vor — als Kontext für Wiesbaden.","fetched_via":"Genesis-Online REST API (token-auth, build-time)"},"months":["2025-04","2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03"],"series":[{"id":"eier","icon":"🥚","label_de":"Eier","label_en":"Eggs","label_kr":"계란","label_tr":"Yumurta","label_ua":"Яйця","label_ls":"Eier","values":[142.2,142.8,143.2,143.2,143.0,143.0,143.1,143.6,144.1,157.7,161.1,162.5]},{"id":"milch","icon":"🥛","label_de":"Vollmilch","label_en":"Whole milk","label_kr":"우유","label_tr":"Tam yağlı süt","label_ua":"Молоко","label_ls":"Vollmilch","values":[137.5,138.2,138.4,140.0,139.8,139.8,140.2,138.9,131.6,130.9,130.0,129.7]},{"id":"brot","icon":"🍞","label_de":"Brot","label_en":"Bread","label_kr":"빵","label_tr":"Ekmek","label_ua":"Хліб","label_ls":"Brot","values":[137.7,138.2,137.6,138.3,138.4,138.6,138.9,138.8,139.0,139.8,139.8,140.2]},{"id":"butter","icon":"🧈","label_de":"Butter","label_en":"Butter","label_kr":"버터","label_tr":"Tereyağı","label_ua":"Масло","label_ls":"Butter","values":[149.8,152.6,151.7,150.3,151.0,150.7,135.7,129.4,113.2,111.0,107.7,109.8]},{"id":"kartoffeln","icon":"🥔","label_de":"Kartoffeln","label_en":"Potatoes","label_kr":"감자","label_tr":"Patates","label_ua":"Картопля","label_ls":"Kartoffeln","values":[135.8,138.8,143.2,137.9,124.6,116.3,111.9,109.3,108.8,108.9,108.7,112.6]}],"overall":{"id":"overall","icon":"📊","label_de":"Gesamtindex","label_en":"Overall index","label_kr":"전체 지수","label_tr":"Genel endeks","label_ua":"Загальний індекс","label_ls":"Gesamt-Preise","hessen":[121.0,121.0,121.1,121.5,121.5,121.7,122.1,121.9,122.0,122.0,122.5,123.9],"germany":[121.7,121.8,121.8,122.2,122.3,122.6,123.0,122.7,122.7,122.8,123.1,124.5]}};
 
 // Mein Kiez — static-curation cards (ELW, PKS, Events).
 // Each card carries an authoritative source_url and stand date so
@@ -2592,6 +2592,70 @@ Object.assign(I18N.ls, {
   kiez_events_sub: "Wichtige Termine 2026 in Wiesbaden",
   kiez_events_count: "Wichtige Termine",
   kiez_honesty: "Wir sind ehrlich: 3 von 6 Daten kommen von alleine in das Programm. 3 von 6 Daten haben wir mit der Hand abgeschrieben. Bei jedem Kasten steht: woher die Daten sind und wann sie aktualisiert wurden. Wir machen keine Live-Anfrage an Behörden. Wenn Sie aktuelle Daten brauchen, klicken Sie auf den Quell-Link."
+});
+
+// =================================================================
+// v2.6.1 — CPI Hessen-vs-Deutschland Vergleich (i18n, 5+1 langs)
+// =================================================================
+Object.assign(I18N.de, {
+  kiez_cpi_items_title: "5 Lebensmittel · Deutschland",
+  kiez_cpi_overall_title: "Gesamtindex · Hessen im Vergleich",
+  kiez_cpi_hessen: "Hessen",
+  kiez_cpi_germany: "Deutschland",
+  kiez_cpi_overall_note_geo: "Bundesland-Wert (näher an Wiesbaden)",
+  kiez_cpi_overall_note_de: "Bundes-Durchschnitt",
+  kiez_cpi_overall_caveat: "Lebensmittel-Einzelindizes (oben) gibt es nur bundesweit — die Stichprobe je Bundesland ist zu klein. Der Gesamtindex Hessen ist der nähere verfügbare Wert für Wiesbaden.",
+  kiez_cpi_disclaimer: "Quelle: destatis VPI Tabellen 61111-0006 (5-Steller), 61111-0011 (Bundesländer), 61111-0002 (Deutschland). Live über Genesis-API beim Build geladen. Index 2020 = 100."
+});
+Object.assign(I18N.en, {
+  kiez_cpi_items_title: "5 staple foods · Germany",
+  kiez_cpi_overall_title: "Overall index · Hesse compared",
+  kiez_cpi_hessen: "Hesse",
+  kiez_cpi_germany: "Germany",
+  kiez_cpi_overall_note_geo: "State-level value (closer to Wiesbaden)",
+  kiez_cpi_overall_note_de: "Federal average",
+  kiez_cpi_overall_caveat: "Per-item food indices (above) are published only at federal level — Bundesland samples are too small. The overall Hesse index is the closest available figure for Wiesbaden.",
+  kiez_cpi_disclaimer: "Source: destatis CPI tables 61111-0006 (5-digit COICOP), 61111-0011 (Bundesländer), 61111-0002 (Germany). Fetched live via Genesis API at build time. Base 2020 = 100."
+});
+Object.assign(I18N.tr, {
+  kiez_cpi_items_title: "5 temel gıda · Almanya",
+  kiez_cpi_overall_title: "Genel endeks · Hessen karşılaştırması",
+  kiez_cpi_hessen: "Hessen",
+  kiez_cpi_germany: "Almanya",
+  kiez_cpi_overall_note_geo: "Eyalet değeri (Wiesbaden'a daha yakın)",
+  kiez_cpi_overall_note_de: "Federal ortalama",
+  kiez_cpi_overall_caveat: "Tek tek gıda endeksleri (üstte) yalnızca federal düzeyde yayımlanır — eyalet örneklemi çok küçük. Genel Hessen endeksi Wiesbaden için en yakın değerdir.",
+  kiez_cpi_disclaimer: "Kaynak: destatis TÜFE tabloları 61111-0006, 61111-0011, 61111-0002. Genesis API üzerinden derleme sırasında yüklendi. Baz 2020 = 100."
+});
+Object.assign(I18N.ua, {
+  kiez_cpi_items_title: "5 базових продуктів · Німеччина",
+  kiez_cpi_overall_title: "Загальний індекс · Гессен у порівнянні",
+  kiez_cpi_hessen: "Гессен",
+  kiez_cpi_germany: "Німеччина",
+  kiez_cpi_overall_note_geo: "Значення землі (ближче до Вісбадена)",
+  kiez_cpi_overall_note_de: "Федеральне середнє",
+  kiez_cpi_overall_caveat: "Індекси окремих продуктів (вище) публікуються лише на федеральному рівні — вибірка по землях замала. Загальний індекс Гессену — найближче доступне значення для Вісбадена.",
+  kiez_cpi_disclaimer: "Джерело: destatis ІСЦ таблиці 61111-0006, 61111-0011, 61111-0002. Завантажено через Genesis API під час збірки. База 2020 = 100."
+});
+Object.assign(I18N.kr, {
+  kiez_cpi_items_title: "기본 식품 5종 · 독일",
+  kiez_cpi_overall_title: "전체 지수 · 헤센 비교",
+  kiez_cpi_hessen: "헤센",
+  kiez_cpi_germany: "독일",
+  kiez_cpi_overall_note_geo: "주(Land) 단위 값 (비스바덴에 더 가까움)",
+  kiez_cpi_overall_note_de: "전국 평균",
+  kiez_cpi_overall_caveat: "식품 개별 지수(위)는 전국 단위로만 발표됨 — Bundesland 샘플이 작아서 분리 못함. 헤센 전체 지수가 비스바덴에 가장 근접한 공식 값.",
+  kiez_cpi_disclaimer: "출처: destatis CPI 테이블 61111-0006(5-Steller), 61111-0011(주별), 61111-0002(전국). 빌드 시 Genesis API 라이브 호출. 2020 = 100 기준."
+});
+Object.assign(I18N.ls, {
+  kiez_cpi_items_title: "5 Lebensmittel · ganz Deutschland",
+  kiez_cpi_overall_title: "Alle Preise zusammen · Hessen im Vergleich",
+  kiez_cpi_hessen: "Hessen",
+  kiez_cpi_germany: "Deutschland",
+  kiez_cpi_overall_note_geo: "Wert für das Bundes-Land Hessen. Das ist näher bei Wiesbaden.",
+  kiez_cpi_overall_note_de: "Durchschnitt für ganz Deutschland.",
+  kiez_cpi_overall_caveat: "Wichtig: Die Preise für Eier, Milch, Brot, Butter und Kartoffeln gibt es nur für ganz Deutschland. Für Hessen alleine gibt es keine eigene Liste. Aber der Gesamt-Wert für Hessen ist da. Das ist näher bei Wiesbaden.",
+  kiez_cpi_disclaimer: "Quelle: destatis. Das ist das Statistische Bundes-Amt. Die Daten kommen automatisch beim Bauen der Webseite. Wert 2020 = 100."
 });
 
 // =================================================================

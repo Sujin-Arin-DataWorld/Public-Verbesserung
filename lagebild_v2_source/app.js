@@ -3120,6 +3120,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!cpi) return { title: '', body: '' };
     const lng = lang();
     const labelKey = 'label_' + (lng === 'kr' ? 'kr' : lng);
+
+    // Lebensmittel cells (5-Steller, Deutschland)
     const cells = cpi.series.map(s => {
       const first = s.values[0], last = s.values[s.values.length - 1];
       const pct = ((last - first) / first * 100);
@@ -3133,12 +3135,47 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `;
     }).join('');
+
+    // Gesamtindex Hessen vs Deutschland — Wiesbaden context
+    let overallBlock = '';
+    const ov = cpi.overall;
+    if (ov && ov.hessen && ov.germany) {
+      const hVals = ov.hessen.filter(v => v != null);
+      const dVals = ov.germany.filter(v => v != null);
+      if (hVals.length >= 2 && dVals.length >= 2) {
+        const hPct = (hVals[hVals.length-1] - hVals[0]) / hVals[0] * 100;
+        const dPct = (dVals[dVals.length-1] - dVals[0]) / dVals[0] * 100;
+        const sgn = v => (v >= 0 ? '+' : '') + v.toFixed(1) + '%';
+        const klass = v => v > 1 ? 'kiez-stat-delta-bad' : v < -1 ? 'kiez-stat-delta-good' : '';
+        overallBlock = `
+          <h4 style="font-family:var(--font-display, Fraunces, serif); margin:18px 0 10px; font-size:15px;">${escapeHtml(t('kiez_cpi_overall_title', 'Gesamtindex · Hessen im Vergleich'))}</h4>
+          <div class="kiez-stat-grid">
+            <div class="kiez-stat-cell">
+              <div class="kiez-stat-label">🏴 ${escapeHtml(t('kiez_cpi_hessen', 'Hessen'))}</div>
+              <div class="kiez-stat-value">${hVals[hVals.length-1].toFixed(1)} <span class="kiez-stat-delta ${klass(hPct)}">${sgn(hPct)}</span></div>
+              <div class="kiez-stat-label" style="margin-top:4px; text-transform:none;">${escapeHtml(t('kiez_cpi_overall_note_geo', 'Bundesland-Wert (näher an Wiesbaden)'))}</div>
+            </div>
+            <div class="kiez-stat-cell">
+              <div class="kiez-stat-label">🇩🇪 ${escapeHtml(t('kiez_cpi_germany', 'Deutschland'))}</div>
+              <div class="kiez-stat-value">${dVals[dVals.length-1].toFixed(1)} <span class="kiez-stat-delta ${klass(dPct)}">${sgn(dPct)}</span></div>
+              <div class="kiez-stat-label" style="margin-top:4px; text-transform:none;">${escapeHtml(t('kiez_cpi_overall_note_de', 'Bundes-Durchschnitt'))}</div>
+            </div>
+          </div>
+          <p style="font-size:11px; color: var(--text-tertiary, var(--text-muted)); line-height:1.55; margin-top:8px;">
+            ${escapeHtml(t('kiez_cpi_overall_caveat', 'Lebensmittel-Einzelindizes (oben) gibt es nur bundesweit — die Stichprobe je Bundesland ist zu klein. Der Gesamtindex Hessen ist der nähere verfügbare Wert für Wiesbaden.'))}
+          </p>
+        `;
+      }
+    }
+
     return {
       title: t('kiez_cpi_title', 'Lebensmittelpreise'),
       body: `
+        <h4 style="font-family:var(--font-display, Fraunces, serif); margin:0 0 10px; font-size:15px;">${escapeHtml(t('kiez_cpi_items_title', '5 Lebensmittel · Deutschland'))}</h4>
         <div class="kiez-stat-grid">${cells}</div>
-        <p style="font-size:11px; color: var(--text-tertiary, var(--text-muted)); line-height:1.55;">
-          ${escapeHtml(t('kiez_cpi_disclaimer', 'Quelle: destatis VPI 61111-0002. Werte sind nationale Durchschnitte (Deutschland) — keine Stadt-Brechung verfügbar. Index 2020 = 100.'))}
+        ${overallBlock}
+        <p style="font-size:11px; color: var(--text-tertiary, var(--text-muted)); line-height:1.55; margin-top:10px;">
+          ${escapeHtml(t('kiez_cpi_disclaimer', 'Quelle: destatis VPI Tabellen 61111-0006 (5-Steller), 61111-0011 (Bundesländer), 61111-0002 (Deutschland). Live über Genesis-API beim Build geladen. Index 2020 = 100.'))}
         </p>
       `,
       sourceUrl: cpi.meta.source,
