@@ -273,6 +273,113 @@ body::before {
    picker. The .kiez-picker / #kiez-select / .kiez-picker-info styles
    were removed; the home view's own dropdown now drives the cards. */
 
+/* v2.6.3 — Venue list (Top 10 gastronomy / free parking) */
+.kiez-section-h4 {
+  font-family: var(--font-display, Fraunces, serif);
+  font-size: 15px;
+  margin: 22px 0 6px;
+  color: var(--text);
+}
+.kiez-section-note {
+  font-size: 11px;
+  color: var(--text-tertiary, var(--text-muted));
+  line-height: 1.55;
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  background: var(--bg-secondary, var(--bg-elevated));
+  border-radius: 6px;
+  border-left: 3px solid var(--accent, #b08850);
+}
+.kiez-source-note {
+  font-size: 11px;
+  color: var(--text-tertiary, var(--text-muted));
+  margin-top: 14px;
+}
+.kiez-venues-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 6px 0 0;
+}
+.kiez-venue-item {
+  padding: 10px 12px;
+  background: var(--bg-secondary, var(--bg-elevated));
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  font-size: 13px;
+}
+.kiez-venue-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+}
+.kiez-venue-name {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 14px;
+}
+.kiez-venue-score {
+  font-size: 12px;
+  color: var(--accent, #b08850);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.kiez-venue-sub {
+  font-size: 12px;
+  color: var(--text-secondary, var(--text-muted));
+  margin-top: 2px;
+}
+.kiez-venue-meta {
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.kiez-venue-links {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--text-tertiary, var(--text-muted));
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.kiez-tag,
+.kiez-tag-good,
+.kiez-tag-warn {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  background: var(--bg-card, var(--bg-elevated));
+  border: 1px solid var(--border);
+  color: var(--text-secondary, var(--text-muted));
+}
+.kiez-tag-good {
+  background: rgba(45, 134, 89, 0.12);
+  border-color: rgba(45, 134, 89, 0.4);
+  color: #2d8659;
+  font-weight: 600;
+}
+.kiez-tag-warn {
+  background: rgba(176, 136, 80, 0.12);
+  border-color: rgba(176, 136, 80, 0.4);
+  color: var(--accent, #b08850);
+  font-weight: 600;
+}
+.kiez-link {
+  color: var(--accent, #b08850);
+  text-decoration: none;
+  font-weight: 500;
+}
+.kiez-link:hover { text-decoration: underline; }
+.kiez-hours {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-tertiary, var(--text-muted));
+}
+
 /* 6-card grid (Seoul Data Hub layout) */
 .kiez-grid {
   display: grid;
@@ -2586,12 +2693,54 @@ html[data-lang="ls"] .ls-banner { display: block; }
   font-family: var(--font-display);
   font-size: 36px;
   font-weight: 600;
-  line-height: 1;
+  line-height: 1.05;
   color: var(--text);
   letter-spacing: -0.02em;
   font-variation-settings: "opsz" 144;
-  margin-bottom: 6px;
+  margin: 4px 0 12px;
   font-feature-settings: "tnum";
+  word-break: break-word;
+}
+
+/* v2.6.3 — KPI tile structure (header/meta) for breathing room */
+.kpi-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  min-height: 18px;
+}
+.kpi-card-header .kpi-icon {
+  font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.kpi-card-header .kpi-label {
+  margin-bottom: 0;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.kpi-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 6px;
+  line-height: 1.45;
+}
+.kpi-change {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary, var(--text));
+  letter-spacing: 0.01em;
+}
+.kpi-source {
+  font-size: 11px;
+  color: var(--text-tertiary, var(--text-muted));
+  font-weight: 400;
+  line-height: 1.4;
 }
 
 /* ========== KPI clickability hint (e.g. Kita) ========== */
