@@ -382,7 +382,11 @@ function formatLayerValue(value, layerKey) {
   return value;
 }
 
-// v2.1 — charging station point markers, shown only when charging layer active
+// v2.1 — charging station point markers, shown only when charging layer active.
+// Points whose coordinate doesn't fall inside any Ortsbezirk polygon (s.d == "")
+// are operated by ESWE/MSW outside the Wiesbaden city limits (e.g. Hochheim am
+// Main). We still show them — the city catalog publishes them — but dimmed and
+// smaller, so the visualisation isn't visually misleading.
 let chargingMarkerGroup = null;
 function drawChargingMarkers(active) {
   if (!map) return;
@@ -394,19 +398,22 @@ function drawChargingMarkers(active) {
   chargingMarkerGroup = L.layerGroup();
   CHARGING_STATIONS.forEach(s => {
     const isFast = s.art === 'fast';
+    const inCity = !!s.d;  // matched to an Ortsbezirk polygon
     const m = L.circleMarker([s.lat, s.lng], {
-      radius: isFast ? 6 : 4,
-      color: isFast ? '#fff' : '#fff',
-      weight: 1.5,
-      fillColor: isFast ? '#fbbf24' : '#a78bfa',  // amber for fast, violet for normal
-      fillOpacity: 0.95,
+      radius: inCity ? (isFast ? 6 : 4) : 2.5,
+      color: '#fff',
+      weight: inCity ? 1.5 : 0.8,
+      opacity: inCity ? 1 : 0.55,
+      fillColor: inCity ? (isFast ? '#fbbf24' : '#a78bfa') : '#64748b',  // grey for outside-city
+      fillOpacity: inCity ? 0.95 : 0.5,
       interactive: true
     });
     const kw = s.kw != null ? `${s.kw} kW` : '—';
     const artLabel = isFast ? t('charging_fast', 'Schnellladen') : t('charging_normal', 'Normalladen');
+    const districtLabel = inCity ? s.d : t('charging_outside', 'außerhalb Wiesbadens');
     m.bindTooltip(
       `<div class="tooltip-name">${s.op || '?'}</div>` +
-      `<div class="tooltip-label">${s.addr}</div>` +
+      `<div class="tooltip-label">${s.addr} · ${districtLabel}</div>` +
       `<div class="tooltip-value">${artLabel} · ${kw} · ${s.n}× ${t('charging_plugs', 'Stecker')}</div>`,
       { sticky: true, direction: 'top' }
     );
