@@ -2251,6 +2251,17 @@ document.addEventListener('DOMContentLoaded', () => {
     setupDemoTabs();
     renderDatenkatalog();
     setupMeinOrtsbezirk();
+    // v2.5 Datenkatalog Browser
+    renderCatalogChips();
+    renderCatalog();
+    renderCatalogStats();
+    setupCatalogFilters();
+    // Apply deep-anchor on first load if hash already targets daten
+    if ((location.hash || '').startsWith('#daten')) {
+      setTimeout(applyDatenAnchor, 100);
+    }
+    // v2.5 Datenassistent (BM25 drawer)
+    setupAssistantDrawer();
   }
 
   // ===== v2.1 — Demokratie view (turnout choropleth + compare + AI) =====
@@ -2613,6 +2624,561 @@ document.addEventListener('DOMContentLoaded', () => {
       sel.value = saved;
       pick(saved);
     }
+  }
+
+  // ===== v2.5 — Datenkatalog Browser (232 Piveau-API datasets) =====
+  // Citizen-facing browser of every dataset on opendata.cloud.wiesbaden.de.
+  // Pure DOM filtering — deterministic, no LLM, no remote calls. The same
+  // catalog feeds the Datenassistent drawer in Day 2 (BM25 search).
+
+  const CAT_PAGE_SIZE = 50;
+  const CAT_QUERY_LOG_KEY = 'wiesbaden_search_log';
+
+  // Theme labels (DCAT-AP codes → human label, 5+1 langs)
+  const THEME_LABELS = {
+    SOCI: { de: 'Bevölkerung & Gesellschaft', en: 'Population & society',  tr: 'Nüfus & toplum',     ua: 'Населення', kr: '인구·사회',     ls: 'Menschen' },
+    REGI: { de: 'Regionen & Städte',          en: 'Regions & cities',      tr: 'Bölgeler & şehirler', ua: 'Регіони',  kr: '지역·도시',     ls: 'Stadt-Teile' },
+    TRAN: { de: 'Verkehr',                    en: 'Transport',             tr: 'Ulaşım',              ua: 'Транспорт', kr: '교통',          ls: 'Verkehr' },
+    GOVE: { de: 'Verwaltung',                 en: 'Government',            tr: 'Yönetim',             ua: 'Уряд',     kr: '행정',          ls: 'Stadt-Verwaltung' },
+    EDUC: { de: 'Bildung & Kultur',           en: 'Education & culture',   tr: 'Eğitim & kültür',     ua: 'Освіта',   kr: '교육·문화',     ls: 'Bildung' },
+    ECON: { de: 'Wirtschaft',                 en: 'Economy',               tr: 'Ekonomi',             ua: 'Економіка', kr: '경제',          ls: 'Wirtschaft' },
+    ENVI: { de: 'Umwelt',                     en: 'Environment',           tr: 'Çevre',               ua: 'Довкілля', kr: '환경',          ls: 'Umwelt' },
+    HEAL: { de: 'Gesundheit',                 en: 'Health',                tr: 'Sağlık',              ua: 'Здоров’я', kr: '보건',          ls: 'Gesundheit' },
+    TECH: { de: 'Technologie',                en: 'Technology',            tr: 'Teknoloji',           ua: 'Технології', kr: '기술',          ls: 'Technik' },
+    AGRI: { de: 'Landwirtschaft',             en: 'Agriculture',           tr: 'Tarım',               ua: 'Сільське госп.', kr: '농업',     ls: 'Landwirtschaft' },
+    JUST: { de: 'Justiz',                     en: 'Justice',               tr: 'Adalet',              ua: 'Юстиція',  kr: '사법',          ls: 'Recht' },
+    INTR: { de: 'Internationales',            en: 'International',         tr: 'Uluslararası',        ua: 'Міжнародне', kr: '국제',         ls: 'International' },
+    ENER: { de: 'Energie',                    en: 'Energy',                tr: 'Enerji',              ua: 'Енергетика', kr: '에너지',       ls: 'Energie' }
+  };
+
+  function themeLabel(code) {
+    const langKey = (lang() === 'kr') ? 'kr' : lang();
+    return (THEME_LABELS[code] && (THEME_LABELS[code][langKey] || THEME_LABELS[code].de)) || code;
+  }
+
+  // ----- search-stats log (정교화 2) -----
+  function logSearchQuery(q) {
+    if (!q || q.length < 2) return;
+    try {
+      const raw = localStorage.getItem(CAT_QUERY_LOG_KEY);
+      const log = raw ? JSON.parse(raw) : [];
+      log.push({ q: q.toLowerCase().trim(), ts: Date.now() });
+      // Cap at 200 entries, keep most recent
+      const capped = log.slice(-200);
+      localStorage.setItem(CAT_QUERY_LOG_KEY, JSON.stringify(capped));
+    } catch (e) {}
+  }
+  function loadRecentSearches(daysBack = 30) {
+    try {
+      const raw = localStorage.getItem(CAT_QUERY_LOG_KEY);
+      if (!raw) return [];
+      const log = JSON.parse(raw);
+      const cutoff = Date.now() - daysBack * 86400 * 1000;
+      return log.filter(e => e.ts >= cutoff);
+    } catch (e) { return []; }
+  }
+  function topQueries(daysBack = 30, n = 8) {
+    const recent = loadRecentSearches(daysBack);
+    const counts = {};
+    recent.forEach(e => { counts[e.q] = (counts[e.q] || 0) + 1; });
+    return Object.entries(counts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, n)
+      .map(([q, c]) => ({ q, c }));
+  }
+
+  // ----- catalog state -----
+  const catalogState = {
+    activeThemes: new Set(),
+    activeFormats: new Set(),
+    sort: 'modified',
+    query: '',
+    visibleCount: CAT_PAGE_SIZE,
+    highlightId: null  // for deep-anchor (정교화 1)
+  };
+
+  function getCatalog() {
+    return D.OPEN_DATA_CATALOG || [];
+  }
+
+  function uniqueThemes() {
+    const counts = {};
+    getCatalog().forEach(r => (r.th || []).forEach(t => { counts[t] = (counts[t] || 0) + 1; }));
+    return Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  }
+  function uniqueFormats() {
+    const counts = {};
+    getCatalog().forEach(r => (r.f || []).forEach(f => { counts[f] = (counts[f] || 0) + 1; }));
+    return Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  }
+
+  function filterCatalog() {
+    const q = (catalogState.query || '').toLowerCase().trim();
+    const themes = catalogState.activeThemes;
+    const formats = catalogState.activeFormats;
+    let list = getCatalog().filter(r => {
+      if (q) {
+        const hay = (r.t + ' ' + r.d + ' ' + (r.th || []).join(' ')).toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      if (themes.size && !(r.th || []).some(t => themes.has(t))) return false;
+      if (formats.size && !(r.f || []).some(f => formats.has(f))) return false;
+      return true;
+    });
+    if (catalogState.sort === 'title') {
+      list.sort((a, b) => a.t.localeCompare(b.t, 'de'));
+    } else {
+      list.sort((a, b) => (b.m || '').localeCompare(a.m || ''));
+    }
+    return list;
+  }
+
+  function escapeHtml(s) {
+    return (s || '').replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+
+  function renderCatalogChips() {
+    const themeBox = document.getElementById('cat-theme-chips');
+    const fmtBox = document.getElementById('cat-format-chips');
+    if (themeBox) {
+      themeBox.innerHTML = uniqueThemes().map(([code, n]) => `
+        <button type="button" class="catalog-chip${catalogState.activeThemes.has(code) ? ' active' : ''}"
+          data-theme="${code}" aria-pressed="${catalogState.activeThemes.has(code)}">
+          ${escapeHtml(themeLabel(code))} <span style="opacity:.55;">· ${n}</span>
+        </button>
+      `).join('');
+      themeBox.querySelectorAll('[data-theme]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const c = btn.dataset.theme;
+          catalogState.activeThemes.has(c) ? catalogState.activeThemes.delete(c) : catalogState.activeThemes.add(c);
+          catalogState.visibleCount = CAT_PAGE_SIZE;
+          renderCatalogChips();
+          renderCatalog();
+        });
+      });
+    }
+    if (fmtBox) {
+      fmtBox.innerHTML = uniqueFormats().map(([code, n]) => `
+        <button type="button" class="catalog-chip${catalogState.activeFormats.has(code) ? ' active' : ''}"
+          data-format="${code}" aria-pressed="${catalogState.activeFormats.has(code)}">
+          ${escapeHtml(code)} <span style="opacity:.55;">· ${n}</span>
+        </button>
+      `).join('');
+      fmtBox.querySelectorAll('[data-format]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const c = btn.dataset.format;
+          catalogState.activeFormats.has(c) ? catalogState.activeFormats.delete(c) : catalogState.activeFormats.add(c);
+          catalogState.visibleCount = CAT_PAGE_SIZE;
+          renderCatalogChips();
+          renderCatalog();
+        });
+      });
+    }
+  }
+
+  function renderCatalog() {
+    const grid = document.getElementById('cat-grid');
+    const empty = document.getElementById('cat-empty');
+    const pagBtn = document.getElementById('cat-show-more');
+    const pagInfo = document.getElementById('cat-pagination-info');
+    const counter = document.getElementById('cat-result-count');
+    if (!grid) return;
+
+    const filtered = filterCatalog();
+    const total = filtered.length;
+    const allTotal = getCatalog().length;
+    const slice = filtered.slice(0, catalogState.visibleCount);
+
+    if (counter) {
+      counter.textContent = `${total} / ${allTotal}`;
+    }
+
+    if (!total) {
+      grid.innerHTML = '';
+      if (empty) empty.hidden = false;
+      if (pagBtn) pagBtn.hidden = true;
+      if (pagInfo) pagInfo.textContent = '';
+      return;
+    }
+    if (empty) empty.hidden = true;
+
+    grid.innerHTML = slice.map(r => {
+      const isHighlight = catalogState.highlightId === r.i;
+      const themeBadges = (r.th || []).slice(0, 3).map(t =>
+        `<span class="catalog-theme-badge" title="${escapeHtml(themeLabel(t))}">${escapeHtml(t)}</span>`
+      ).join('');
+      const fmtBadges = (r.f || []).slice(0, 3).map(f =>
+        `<span class="catalog-format-badge">${escapeHtml(f)}</span>`
+      ).join('');
+      return `
+        <a href="${r.l ? escapeHtml(r.l) : '#'}" target="_blank" rel="noopener"
+           class="catalog-card${isHighlight ? ' highlight' : ''}"
+           data-cat-id="${escapeHtml(r.i)}">
+          <div class="catalog-card-title">${escapeHtml(r.t)}</div>
+          <div class="catalog-card-desc">${escapeHtml(r.d || '')}</div>
+          <div class="catalog-card-meta">
+            ${themeBadges}
+            ${fmtBadges}
+          </div>
+          <div class="catalog-card-footer">
+            <span>${r.m ? 'Stand: ' + r.m : ''}</span>
+            <span class="catalog-card-link">opendata.cloud ↗</span>
+          </div>
+        </a>
+      `;
+    }).join('');
+
+    if (pagBtn) {
+      pagBtn.hidden = catalogState.visibleCount >= total;
+    }
+    if (pagInfo) {
+      pagInfo.textContent = total > 0
+        ? `${Math.min(catalogState.visibleCount, total)} / ${total}`
+        : '';
+    }
+
+    // Highlight scroll-to (for deep-anchor URL)
+    if (catalogState.highlightId) {
+      const card = grid.querySelector(`[data-cat-id="${CSS.escape(catalogState.highlightId)}"]`);
+      if (card) {
+        setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'center' }), 80);
+      }
+      catalogState.highlightId = null;
+    }
+  }
+
+  function renderCatalogStats() {
+    const wrap = document.getElementById('cat-stats');
+    const list = document.getElementById('cat-stats-list');
+    if (!wrap || !list) return;
+    const top = topQueries(30, 8);
+    if (!top.length) { wrap.hidden = true; return; }
+    wrap.hidden = false;
+    list.innerHTML = top.map(({ q, c }) => `
+      <button type="button" class="catalog-stats-pill" data-q="${escapeHtml(q)}">
+        ${escapeHtml(q)} <span class="catalog-stats-count">${c}×</span>
+      </button>
+    `).join('');
+    list.querySelectorAll('[data-q]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const input = document.getElementById('cat-search');
+        if (input) {
+          input.value = btn.dataset.q;
+          input.dispatchEvent(new Event('input'));
+          input.focus();
+        }
+      });
+    });
+  }
+
+  function setupCatalogFilters() {
+    const search = document.getElementById('cat-search');
+    const sort = document.getElementById('cat-sort');
+    const reset = document.getElementById('cat-reset');
+    const showMore = document.getElementById('cat-show-more');
+    const emptyCta = document.getElementById('cat-empty-cta');
+
+    if (search) {
+      let debounceTimer = null;
+      search.addEventListener('input', () => {
+        catalogState.query = search.value;
+        catalogState.visibleCount = CAT_PAGE_SIZE;
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          renderCatalog();
+          if (search.value && search.value.length >= 3) {
+            logSearchQuery(search.value);
+            renderCatalogStats();
+          }
+        }, 180);
+      });
+    }
+    if (sort) {
+      sort.addEventListener('change', () => {
+        catalogState.sort = sort.value;
+        renderCatalog();
+      });
+    }
+    if (reset) {
+      reset.addEventListener('click', () => {
+        catalogState.activeThemes.clear();
+        catalogState.activeFormats.clear();
+        catalogState.query = '';
+        catalogState.visibleCount = CAT_PAGE_SIZE;
+        if (search) search.value = '';
+        if (sort) sort.value = 'modified';
+        catalogState.sort = 'modified';
+        renderCatalogChips();
+        renderCatalog();
+      });
+    }
+    if (showMore) {
+      showMore.addEventListener('click', () => {
+        catalogState.visibleCount += CAT_PAGE_SIZE;
+        renderCatalog();
+      });
+    }
+    if (emptyCta) {
+      emptyCta.addEventListener('click', () => {
+        location.hash = 'mitmachen';
+        // Open the Datenwunsch panel after navigation
+        setTimeout(() => {
+          const panel = document.getElementById('mm-data-panel');
+          if (panel) panel.style.display = 'block';
+          if (typeof renderDatenwunsch === 'function') renderDatenwunsch();
+        }, 200);
+      });
+    }
+  }
+
+  // ----- 정교화 1: deep-anchor URL parsing (#daten?id=foo&q=bar) -----
+  function parseHashQuery() {
+    const hash = location.hash || '';
+    const qmark = hash.indexOf('?');
+    if (qmark < 0) return {};
+    const queryStr = hash.substring(qmark + 1);
+    const params = {};
+    queryStr.split('&').forEach(p => {
+      const [k, v] = p.split('=');
+      if (k) params[decodeURIComponent(k)] = v != null ? decodeURIComponent(v) : '';
+    });
+    return params;
+  }
+
+  function applyDatenAnchor() {
+    const params = parseHashQuery();
+    if (params.q) {
+      catalogState.query = params.q;
+      const search = document.getElementById('cat-search');
+      if (search) search.value = params.q;
+    }
+    if (params.id) {
+      catalogState.highlightId = params.id;
+      // Make sure the matching card is in the visible page
+      const list = filterCatalog();
+      const idx = list.findIndex(r => r.i === params.id);
+      if (idx >= 0 && idx >= catalogState.visibleCount) {
+        catalogState.visibleCount = Math.ceil((idx + 1) / CAT_PAGE_SIZE) * CAT_PAGE_SIZE;
+      }
+    }
+    renderCatalog();
+  }
+
+  // Wire view-router → datenkatalog: when the daten view becomes visible,
+  // apply any anchor params and refresh stats.
+  window.addEventListener('view-changed-late', (e) => {
+    if (e.detail.view === 'daten') {
+      applyDatenAnchor();
+      renderCatalogStats();
+    }
+  });
+
+  // ===== v2.5 — Datenassistent (BM25 search drawer, deterministic) =====
+  let fuseInstance = null;
+  let assistOpen = false;
+  let assistSearchCache = {};  // 30-second cache by query
+  let lastFocusedBeforeDrawer = null;
+
+  function getFuse() {
+    if (fuseInstance) return fuseInstance;
+    if (typeof Fuse === 'undefined') return null;
+    fuseInstance = new Fuse(getCatalog(), {
+      keys: [
+        { name: 't',  weight: 0.55 },
+        { name: 'd',  weight: 0.30 },
+        { name: 'th', weight: 0.15 }
+      ],
+      includeScore: true,
+      threshold: 0.4,
+      ignoreLocation: true,
+      minMatchCharLength: 2,
+      distance: 200
+    });
+    return fuseInstance;
+  }
+
+  function runBM25Search(query) {
+    const q = (query || '').trim();
+    if (!q) return [];
+    const cached = assistSearchCache[q.toLowerCase()];
+    if (cached && (Date.now() - cached.ts) < 30000) return cached.results;
+    const fuse = getFuse();
+    if (!fuse) return [];
+    const hits = fuse.search(q).slice(0, 5);
+    const results = hits.map(h => ({ ...h.item, score: h.score }));
+    assistSearchCache[q.toLowerCase()] = { results, ts: Date.now() };
+    return results;
+  }
+
+  function suggestionsForLang() {
+    return [
+      { de: 'Wahlbeteiligung 2026',          en: 'Voter turnout 2026',          tr: 'Seçim katılımı 2026',     ua: 'Явка 2026',          kr: '2026 투표율',            ls: 'Wahl 2026' },
+      { de: 'Mietspiegel Wiesbaden',         en: 'Wiesbaden rent index',        tr: 'Wiesbaden kira',           ua: 'Орендна плата',      kr: '비스바덴 임대료',         ls: 'Mieten' },
+      { de: 'Ladestationen Elektroauto',     en: 'EV charging stations',        tr: 'Elektrikli şarj',          ua: 'Заряджання',         kr: '전기차 충전소',           ls: 'Auto laden' },
+      { de: 'Bevölkerung Ortsbezirke',       en: 'Population per district',     tr: 'Mahalle nüfusu',           ua: 'Населення округів',  kr: '동네별 인구',             ls: 'Menschen pro Stadt-Teil' },
+      { de: 'Baugenehmigungen',              en: 'Building permits',            tr: 'Yapı izinleri',            ua: 'Дозволи на будівництво', kr: '건축 허가',           ls: 'Bauen' }
+    ];
+  }
+
+  function pickByLang(obj) {
+    const l = lang();
+    return obj[l] || obj.de || '';
+  }
+
+  function renderAssistSuggestions() {
+    const el = document.getElementById('assist-results');
+    if (!el) return;
+    const sug = suggestionsForLang();
+    el.innerHTML = `
+      <div class="assist-hint">
+        <strong data-i18n="assist_hint_title">${t('assist_hint_title', 'Beispielfragen')}</strong>
+        <div class="assist-hint-list">
+          ${sug.map(s => `<button type="button" class="assist-suggestion" data-q="${escapeHtml(pickByLang(s))}">${escapeHtml(pickByLang(s))}</button>`).join('')}
+        </div>
+      </div>
+    `;
+    el.querySelectorAll('[data-q]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const input = document.getElementById('assist-input');
+        if (!input) return;
+        input.value = btn.dataset.q;
+        triggerAssistSearch(btn.dataset.q);
+      });
+    });
+  }
+
+  function renderAssistResults(query) {
+    const el = document.getElementById('assist-results');
+    if (!el) return;
+    const results = runBM25Search(query);
+    if (!results.length) {
+      el.innerHTML = `
+        <div class="assist-empty">
+          <div data-i18n="assist_no_results_title">${t('assist_no_results_title', 'Keine Treffer für: ') + escapeHtml(query)}</div>
+          <p style="margin-top:6px;" data-i18n="assist_no_results_desc">${t('assist_no_results_desc', 'Diese Daten sind möglicherweise nicht im Katalog. Möchten Sie die Stadt darum bitten?')}</p>
+          <button type="button" id="assist-empty-cta" class="assist-empty-cta" data-i18n="assist_no_results_cta">${t('assist_no_results_cta', '→ Datenwunsch eintragen')}</button>
+        </div>
+      `;
+      const cta = document.getElementById('assist-empty-cta');
+      if (cta) {
+        cta.addEventListener('click', () => {
+          closeAssistDrawer();
+          location.hash = 'mitmachen';
+          setTimeout(() => {
+            const panel = document.getElementById('mm-data-panel');
+            if (panel) panel.style.display = 'block';
+            renderDatenwunsch();
+          }, 200);
+        });
+      }
+      return;
+    }
+    el.innerHTML = results.map((r, idx) => {
+      const themeBadges = (r.th || []).slice(0, 3).map(th =>
+        `<span class="catalog-theme-badge">${escapeHtml(th)}</span>`).join('');
+      const fmtBadges = (r.f || []).slice(0, 3).map(f =>
+        `<span class="catalog-format-badge">${escapeHtml(f)}</span>`).join('');
+      const matchPct = Math.round((1 - (r.score || 0)) * 100);
+      return `
+        <a href="${r.l ? escapeHtml(r.l) : '#'}" target="_blank" rel="noopener"
+           class="assist-result-card" data-cat-id="${escapeHtml(r.i)}">
+          <div class="assist-result-rank">#${idx + 1} · ${matchPct}% ${t('assist_match', 'Übereinstimmung')}</div>
+          <div class="assist-result-title">${escapeHtml(r.t)}</div>
+          <div class="assist-result-desc">${escapeHtml(r.d || '')}</div>
+          <div class="assist-result-meta">${themeBadges}${fmtBadges}</div>
+          <div class="assist-result-link">${r.m ? 'Stand: ' + r.m + ' · ' : ''}opendata.cloud ↗</div>
+        </a>
+      `;
+    }).join('');
+  }
+
+  function triggerAssistSearch(query) {
+    const q = (query || '').trim();
+    if (!q) {
+      renderAssistSuggestions();
+      return;
+    }
+    logSearchQuery(q);
+    renderAssistResults(q);
+    renderCatalogStats();
+  }
+
+  function openAssistDrawer() {
+    const drawer = document.getElementById('assist-drawer');
+    if (!drawer) return;
+    lastFocusedBeforeDrawer = document.activeElement;
+    drawer.classList.add('open');
+    drawer.setAttribute('aria-hidden', 'false');
+    assistOpen = true;
+    setTimeout(() => {
+      const input = document.getElementById('assist-input');
+      if (input) input.focus();
+    }, 250);
+  }
+
+  function closeAssistDrawer() {
+    const drawer = document.getElementById('assist-drawer');
+    if (!drawer) return;
+    drawer.classList.remove('open');
+    drawer.setAttribute('aria-hidden', 'true');
+    assistOpen = false;
+    if (lastFocusedBeforeDrawer && lastFocusedBeforeDrawer.focus) {
+      lastFocusedBeforeDrawer.focus();
+    }
+  }
+
+  function setupAssistantDrawer() {
+    const btn = document.getElementById('assist-btn');
+    const closeBtn = document.getElementById('assist-close');
+    const input = document.getElementById('assist-input');
+    const submit = document.getElementById('assist-submit');
+    const infoBtn = document.getElementById('assist-info-toggle');
+    const card = document.getElementById('assist-algorithm-card');
+
+    if (btn) btn.addEventListener('click', () => {
+      assistOpen ? closeAssistDrawer() : (openAssistDrawer(), renderAssistSuggestions());
+    });
+    if (closeBtn) closeBtn.addEventListener('click', closeAssistDrawer);
+
+    let debounceTimer = null;
+    if (input) {
+      input.addEventListener('input', () => {
+        clearTimeout(debounceTimer);
+        const v = input.value;
+        debounceTimer = setTimeout(() => triggerAssistSearch(v), 220);
+      });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          triggerAssistSearch(input.value);
+        }
+      });
+    }
+    if (submit) submit.addEventListener('click', () => triggerAssistSearch(input ? input.value : ''));
+
+    if (infoBtn && card) {
+      infoBtn.addEventListener('click', () => {
+        const isHidden = card.hidden;
+        card.hidden = !isHidden;
+        infoBtn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && assistOpen) closeAssistDrawer();
+    });
+
+    // Re-render suggestions when language changes (assistOpen check)
+    document.querySelectorAll('.lang-btn').forEach(b => {
+      b.addEventListener('click', () => {
+        if (assistOpen) {
+          const v = input ? input.value : '';
+          v ? renderAssistResults(v) : renderAssistSuggestions();
+        }
+      });
+    });
   }
 
   // ===== v2.1 — Daten view (data-source transparency) =====
