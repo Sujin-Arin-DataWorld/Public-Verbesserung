@@ -23,7 +23,9 @@ Usage:
 import csv, io, json, os, sys, urllib.parse, urllib.request, zipfile
 from pathlib import Path
 
-TABLE = "61111-0006"
+TABLE_5STELLER = "61111-0006"        # Deutschland, COICOP 5-Steller (food items)
+TABLE_HESSEN  = "61111-0011"         # Bundesländer, Monate (overall index — no COICOP)
+TABLE_DE_OVERALL = "61111-0002"      # Deutschland, Monate (overall index)
 BASE = "https://www-genesis.destatis.de/genesisWS/rest/2020"
 
 # 5-Steller COICOP labels exactly as destatis publishes them.
@@ -51,30 +53,22 @@ def load_token() -> str:
     sys.exit("ERROR: DESTATIS_API_TOKEN not set and no .env.local found.")
 
 
-def fetch_table(token: str) -> bytes:
-    url = f"{BASE}/data/tablefile"
-    params = {
-        "name": TABLE,
-        "area": "all",
-        "classifyingvariable1": "CC13A5",
-        "format": "ffcsv",
-        "compress": "false",
-        "language": "de",
-    }
+def post(token: str, endpoint: str, params: dict) -> bytes:
     body = urllib.parse.urlencode(params).encode()
-    req = urllib.request.Request(url, data=body, method="POST", headers={
-        "username": token,
-        "password": "",
+    req = urllib.request.Request(f"{BASE}/{endpoint}", data=body, method="POST", headers={
+        "username": token, "password": "",
     })
     with urllib.request.urlopen(req, timeout=120) as r:
         return r.read()
 
 
-def extract(blob: bytes) -> dict:
-    # Response is a ZIP containing one CSV.
+def unzip_csv(blob: bytes) -> str:
     with zipfile.ZipFile(io.BytesIO(blob)) as z:
         name = next(n for n in z.namelist() if n.endswith(".csv"))
-        raw = z.read(name).decode("utf-8-sig")
+        return z.read(name).decode("utf-8-sig")
+
+
+def extract_5steller(raw: str) -> dict:
     data = {info["id"]: {} for info in TRACKED.values()}
     rdr = csv.DictReader(io.StringIO(raw), delimiter=";")
     for row in rdr:
@@ -86,11 +80,10 @@ def extract(blob: bytes) -> dict:
         v = row["value"].replace(",", ".")
         if v in ("...", "-", ""): continue
         data[TRACKED[item]["id"]][ym] = float(v)
-    # Pick the last 12 months where ALL series have a value.
     all_months = sorted(set().union(*[set(s.keys()) for s in data.values()]))
     complete = [m for m in all_months if all(m in data[k] for k in data)]
     if len(complete) < 12:
-        sys.exit(f"ERROR: only {len(complete)} complete months available — need 12.")
+        sys.exit(f"ERROR: only {len(complete)} complete 5-Steller months available — need 12.")
     months = complete[-12:]
     series = []
     for item, info in TRACKED.items():
@@ -100,43 +93,117 @@ def extract(blob: bytes) -> dict:
     return {"months": months, "series": series}
 
 
+def extract_overall_index(raw: str, region_filter=None) -> dict:
+    """Extract monthly overall CPI index. region_filter='Hessen' or None for Germany."""
+    out = {}
+    rdr = csv.DictReader(io.StringIO(raw), delimiter=";")
+    for row in rdr:
+        # 61111-0002 has DG=Deutschland; 61111-0011 has DLAND with Bundesland names.
+        if region_filter is not None:
+            if row.get("2_variable_attribute_label") != region_filter:
+                continue
+        # Only keep the index series (Verbraucherpreisindex), not the % change rows.
+        if row.get("value_variable_label") != "Verbraucherpreisindex":
+            continue
+        month_label = row["1_variable_attribute_label"]
+        if month_label not in MONTH_DE: continue
+        ym = f'{row["time"]}-{MONTH_DE[month_label]}'
+        v = row["value"].replace(",", ".")
+        if v in ("...", "-", ""): continue
+        out[ym] = float(v)
+    return out
+
+
 def main():
     token = load_token()
-    print(f"Fetching destatis table {TABLE} (5-Steller COICOP)…")
-    blob = fetch_table(token)
-    print(f"  {len(blob):,} bytes received")
-    parsed = extract(blob)
+
+    # 1) Federal-level food items (5-Steller COICOP)
+    print(f"Fetching destatis {TABLE_5STELLER} (5-Steller COICOP, Deutschland)…")
+    blob = post(token, "data/tablefile", {
+        "name": TABLE_5STELLER, "area": "all", "classifyingvariable1": "CC13A5",
+        "format": "ffcsv", "compress": "false", "language": "de",
+    })
+    print(f"  {len(blob):,} bytes")
+    items = extract_5steller(unzip_csv(blob))
+    months_5s = items["months"]
+    startyear = int(months_5s[0].split("-")[0])
+
+    # 2) Hessen overall CPI (all months covered by 5-Steller window)
+    print(f"Fetching destatis {TABLE_HESSEN} (Bundesländer overall index)…")
+    blob = post(token, "data/tablefile", {
+        "name": TABLE_HESSEN, "startyear": startyear,
+        "format": "ffcsv", "compress": "true", "language": "de",
+    })
+    print(f"  {len(blob):,} bytes")
+    hessen = extract_overall_index(unzip_csv(blob), region_filter="Hessen")
+
+    # 3) Germany overall CPI for direct comparison
+    print(f"Fetching destatis {TABLE_DE_OVERALL} (Deutschland overall index)…")
+    blob = post(token, "data/tablefile", {
+        "name": TABLE_DE_OVERALL, "startyear": startyear,
+        "format": "ffcsv", "compress": "true", "language": "de",
+    })
+    print(f"  {len(blob):,} bytes")
+    germany = extract_overall_index(unzip_csv(blob), region_filter=None)
+
+    # Align all three on the 5-Steller month window
+    overall = {
+        "id": "overall",
+        "icon": "📊",
+        "label_de": "Gesamtindex",
+        "label_en": "Overall index",
+        "label_kr": "전체 지수",
+        "label_tr": "Genel endeks",
+        "label_ua": "Загальний індекс",
+        "label_ls": "Gesamt-Preise",
+        "hessen":  [hessen.get(m)  for m in months_5s],
+        "germany": [germany.get(m) for m in months_5s],
+    }
+    missing = [m for m, v in zip(months_5s, overall["hessen"]) if v is None]
+    if missing:
+        print(f"  WARN: Hessen overall missing for {missing}", file=sys.stderr)
 
     payload = {
         "meta": {
-            "code": TABLE,
-            "title_de": "Verbraucherpreisindex Deutschland · ausgewählte Lebensmittel (5-Steller)",
+            "title_de": "Verbraucherpreisindex · ausgewählte Lebensmittel + Gesamtindex Hessen vs. Deutschland",
             "publisher": "Statistisches Bundesamt (destatis)",
-            "source": "https://www-genesis.destatis.de/genesis/online?operation=table&code=" + TABLE,
+            "tables": {
+                "items_5steller": TABLE_5STELLER,   # Deutschland · 5-Steller (food)
+                "hessen_overall": TABLE_HESSEN,     # Bundesländer · overall
+                "de_overall":     TABLE_DE_OVERALL, # Deutschland · overall
+            },
+            "source": f"https://www-genesis.destatis.de/genesis/online?operation=table&code={TABLE_5STELLER}",
             "license": "Datenlizenz Deutschland — Namensnennung 2.0",
             "base": "2020 = 100",
-            "geo": "Deutschland (national; no Wiesbaden-level breakdown — destatis publishes city-level CPI only for major Bundesländer-aggregates, not individual cities).",
+            "geo": "Lebensmittel-Einzelindizes sind nur bundesweit verfügbar (zu kleine Stichprobe je Bundesland). Der Gesamtindex liegt für Hessen separat vor — als Kontext für Wiesbaden.",
             "fetched_via": "Genesis-Online REST API (token-auth, build-time)",
         },
-        "months": parsed["months"],
-        "series": parsed["series"],
+        "months": months_5s,
+        "series": items["series"],
+        "overall": overall,
     }
     out = (
-        "// destatis Verbraucherpreisindex 5-Steller — fetched live via\n"
-        "// Genesis REST API (table 61111-0006). Build-time only; the\n"
-        "// browser never calls destatis directly. License: dl-de-by-2.0.\n"
+        "// destatis Verbraucherpreisindex — Lebensmittel (5-Steller, DE)\n"
+        "// + Gesamtindex Hessen vs. Deutschland. Live via Genesis REST API,\n"
+        "// build-time only. License: dl-de-by-2.0.\n"
         "const CPI_TIMELINE = " + json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + ";\n"
     )
     Path(__file__).parent.joinpath("_cpi.js.snippet").write_text(out)
 
     print(f"\nSnippet written: _cpi.js.snippet ({len(out):,} bytes)")
-    print(f"Months: {parsed['months'][0]} → {parsed['months'][-1]} (n={len(parsed['months'])})")
-    print(f"\nYoY change (last vs first month):")
-    for s in parsed["series"]:
+    print(f"Months: {months_5s[0]} → {months_5s[-1]} (n={len(months_5s)})")
+    print(f"\nLebensmittel YoY (last vs first):")
+    for s in items["series"]:
         first, last = s["values"][0], s["values"][-1]
         pct = (last - first) / first * 100
         sign = "+" if pct >= 0 else ""
         print(f"  {s['icon']} {s['label_de']:12s}  {first:6.1f} → {last:6.1f}  ({sign}{pct:.1f}%)")
+    if overall["hessen"][0] and overall["hessen"][-1]:
+        h0, h1 = overall["hessen"][0], overall["hessen"][-1]
+        d0, d1 = overall["germany"][0], overall["germany"][-1]
+        print(f"\nGesamtindex YoY:")
+        print(f"  🇩🇪 Deutschland   {d0:6.1f} → {d1:6.1f}  ({(d1-d0)/d0*100:+.1f}%)")
+        print(f"  🏴 Hessen        {h0:6.1f} → {h1:6.1f}  ({(h1-h0)/h0*100:+.1f}%)")
 
 
 if __name__ == "__main__":
