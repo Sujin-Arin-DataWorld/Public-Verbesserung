@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
 """Convert raw_gastro.osm.json (Wiesbaden 724 amenities) → JS:
-  OSM_GASTRONOMIE: array of { lat, lng, name, type, cuisine, district }
+  OSM_GASTRONOMIE: { meta: {...}, items: [...] }
+  - items: { lat, lng, n, t, c, d, h, w, wc, os, s }
+  - meta:  { fetched (date), source (Overpass), license (ODbL) }
 
 Pattern matches _emit_charging.py / _emit_fuel.py — point-in-polygon over
-the 26 Ortsbezirke rings already in wiesbaden_ortsbezirke.geojson.
+the 26 Ortsbezirke rings in wiesbaden_ortsbezirke.geojson.
+
+To refresh raw_gastro.osm.json from live OSM:
+  curl -sS "https://overpass-api.de/api/interpreter" \\
+    --data-urlencode 'data=[out:json][timeout:60];area(3600062496)->.wb;(node["amenity"~"^(cafe|restaurant|bar|pub|biergarten|fast_food)$"](area.wb););out tags geom;' \\
+    -o raw_gastro.osm.json
 """
-import json, re
+import datetime as _dt, json, re
 from pathlib import Path
 
 
@@ -131,12 +138,27 @@ def main():
             )
         )
     arr = "[" + ",".join(js_obj(o) for o in out) + "]"
+    # v2.6.4: emit { meta, items } so the drawer can show "Stand: <date>"
+    # — OSM is community-curated; new venues lag a few days/weeks.
+    fetched = _dt.datetime.utcfromtimestamp(
+        Path("raw_gastro.osm.json").stat().st_mtime
+    ).strftime("%Y-%m-%d")
+    meta = {
+        "fetched": fetched,
+        "source": "Overpass API · OSM relation 62496 (Wiesbaden)",
+        "source_url": "https://www.openstreetmap.org/relation/62496",
+        "license": "Open Data Commons Open Database License (ODbL)",
+        "note": (
+            "OSM ist Community-gepflegt. Neue Lokale brauchen oft Tage bis "
+            "Wochen, bis sie eingetragen werden. Diese Liste ist die letzte "
+            "Build-Zeit-Aufnahme."
+        ),
+    }
     snippet = (
         "// OSM Gastronomie — Wiesbaden Cafés / Restaurants / Bars / Pubs /\n"
-        "// Biergärten / Fast food. Source: Overpass API (amenity=cafe|restaurant|\n"
-        "// bar|pub|biergarten|fast_food, area Wiesbaden = OSM relation 62496).\n"
-        "// Build-time fetch + point-in-polygon over our 26 Ortsbezirke. ODbL.\n"
-        f"const OSM_GASTRONOMIE = {arr};\n"
+        "// Biergärten / Fast food. Source: Overpass API (relation 62496).\n"
+        "// Build-time fetch + point-in-polygon. ODbL.\n"
+        f"const OSM_GASTRONOMIE = {{meta:{json.dumps(meta, ensure_ascii=False)},items:{arr}}};\n"
     )
     Path("_gastro.js.snippet").write_text(snippet)
 

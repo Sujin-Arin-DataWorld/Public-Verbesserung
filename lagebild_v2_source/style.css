@@ -380,6 +380,87 @@ body::before {
   color: var(--text-tertiary, var(--text-muted));
 }
 
+/* v2.6.4 — Gastronomie category tabs */
+.kiez-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0 14px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0;
+}
+.kiez-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-bottom: 2px solid transparent;
+  border-radius: 6px 6px 0 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text-secondary, var(--text-muted));
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  margin-bottom: -1px;
+}
+.kiez-tab:hover:not(.kiez-tab-disabled) {
+  color: var(--text);
+  background: var(--bg-secondary, var(--bg-elevated));
+}
+.kiez-tab.active {
+  color: var(--text);
+  font-weight: 600;
+  border-bottom-color: var(--accent, #b08850);
+  background: var(--bg-secondary, var(--bg-elevated));
+}
+.kiez-tab-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.kiez-tab-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-tertiary, var(--text-muted));
+  background: var(--bg-card, var(--bg));
+  border: 1px solid var(--border);
+  padding: 1px 7px;
+  border-radius: 999px;
+  min-width: 22px;
+  text-align: center;
+}
+.kiez-tab.active .kiez-tab-count {
+  color: var(--accent, #b08850);
+  border-color: var(--accent, #b08850);
+}
+.kiez-tab-panels {
+  position: relative;
+}
+.kiez-tab-panel { display: none; }
+.kiez-tab-panel.active { display: block; }
+.kiez-tab-empty {
+  font-size: 12px;
+  color: var(--text-tertiary, var(--text-muted));
+  font-style: italic;
+  padding: 14px;
+  text-align: center;
+  background: var(--bg-secondary, var(--bg-elevated));
+  border-radius: 6px;
+}
+.kiez-stand {
+  display: inline-block;
+  margin-right: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-tertiary, var(--text-muted));
+  background: var(--bg-secondary, var(--bg-elevated));
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+}
+
 /* 6-card grid (Seoul Data Hub layout) */
 .kiez-grid {
   display: grid;
