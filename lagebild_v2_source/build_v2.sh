@@ -7,6 +7,7 @@ cd "$(dirname "$0")"
 LEAFLET_CSS=$(cat /tmp/libs/node_modules/leaflet/dist/leaflet.css 2>/dev/null || curl -fsSL https://unpkg.com/leaflet@1.9.4/dist/leaflet.css)
 LEAFLET_JS=$(cat /tmp/libs/node_modules/leaflet/dist/leaflet.js 2>/dev/null || curl -fsSL https://unpkg.com/leaflet@1.9.4/dist/leaflet.js)
 CHART_JS=$(cat /tmp/libs/node_modules/chart.js/dist/chart.umd.js 2>/dev/null || curl -fsSL https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js)
+FUSE_JS=$(cat /tmp/libs/node_modules/fuse.js/dist/fuse.min.js 2>/dev/null || curl -fsSL https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js)
 
 # Read pieces
 INDEX=$(cat index.html)
@@ -29,6 +30,10 @@ APP=$(cat app.js)
   # Inline chart.js
   echo "<script>"
   echo "$CHART_JS"
+  echo "</script>"
+  # Inline Fuse.js (BM25 / fuzzy for Datenassistent)
+  echo "<script>"
+  echo "$FUSE_JS"
   echo "</script>"
   # Inline our style
   echo "<style>"

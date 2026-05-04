@@ -17,6 +17,9 @@
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
+  <!-- Fuse.js (BM25 / fuzzy search for Datenassistent — ~10KB gzipped) -->
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -606,6 +609,59 @@
       </div>
     </section>
 
+    <!-- v2.5 — Datenkatalog Browser (232 Piveau-API datasets) -->
+    <section class="map-section" style="grid-template-columns: 1fr; padding-top: 0;" id="daten-catalog">
+      <div class="map-container" style="padding: 28px;">
+        <div class="section-major">
+          <h2 class="section-major-title">📚 <span data-i18n="cat_title">Datenkatalog Browser</span></h2>
+          <p class="section-major-subtitle" data-i18n="cat_subtitle">Alle 232 öffentlichen Datensätze von opendata.cloud.wiesbaden.de — durchsuchen, filtern, direkt zur Quelle.</p>
+        </div>
+
+        <!-- Filters -->
+        <div class="catalog-filters" role="search" aria-label="Datenkatalog filter">
+          <div class="catalog-filter-row">
+            <label for="cat-search" class="catalog-filter-label" data-i18n="cat_filter_search">Suche</label>
+            <input id="cat-search" type="search" placeholder="Bevölkerung, Wahl, Verkehr…" data-i18n-placeholder="cat_search_ph" autocomplete="off" />
+            <span id="cat-result-count" class="catalog-result-count" aria-live="polite"></span>
+          </div>
+
+          <div class="catalog-filter-row">
+            <span class="catalog-filter-label" data-i18n="cat_filter_themes">Themen</span>
+            <div id="cat-theme-chips" class="catalog-chip-group" role="group" aria-label="Themen-Filter"></div>
+          </div>
+
+          <div class="catalog-filter-row">
+            <span class="catalog-filter-label" data-i18n="cat_filter_formats">Formate</span>
+            <div id="cat-format-chips" class="catalog-chip-group" role="group" aria-label="Format-Filter"></div>
+            <label for="cat-sort" class="catalog-filter-label catalog-sort-label" data-i18n="cat_filter_sort">Sortierung</label>
+            <select id="cat-sort">
+              <option value="modified" data-i18n="cat_sort_modified">Neueste zuerst</option>
+              <option value="title" data-i18n="cat_sort_title">Alphabetisch</option>
+            </select>
+            <button type="button" id="cat-reset" class="catalog-reset-btn" data-i18n="cat_reset">Filter zurücksetzen</button>
+          </div>
+        </div>
+
+        <!-- Catalog grid -->
+        <div id="cat-grid" class="catalog-grid" aria-live="polite"></div>
+        <div id="cat-empty" class="catalog-empty" hidden>
+          <p data-i18n="cat_no_results">Keine Datensätze gefunden.</p>
+          <button type="button" id="cat-empty-cta" class="btn-primary" data-i18n="cat_empty_cta">→ Als Datenwunsch eintragen</button>
+        </div>
+        <div class="catalog-pagination">
+          <button type="button" id="cat-show-more" class="catalog-pagination-btn" data-i18n="cat_show_more">Weitere 50 anzeigen</button>
+          <span id="cat-pagination-info" class="catalog-pagination-info"></span>
+        </div>
+
+        <!-- Search-stat block (정교화 2): top queries last 30 days -->
+        <div id="cat-stats" class="catalog-stats" hidden>
+          <div class="catalog-stats-label" data-i18n="cat_stats_label">TOP-SUCHBEGRIFFE (30 TAGE)</div>
+          <div id="cat-stats-list" class="catalog-stats-list"></div>
+          <div class="catalog-stats-note" data-i18n="cat_stats_note">Anonym, lokal in Ihrem Browser. Aggregat zeigt, welche Daten Bürger:innen suchen — Signal an das Open-Data-Team.</div>
+        </div>
+      </div>
+    </section>
+
   </div><!-- /view-daten -->
 
   <!-- =======================================================
@@ -854,6 +910,78 @@
       </div>
     </div>
   </div>
+
+  <!-- =======================================================
+       v2.5 — DATENASSISTENT (Floating BM25 search)
+       Helsinki AI Register-style Algorithmus-Karte
+       ======================================================= -->
+  <button id="assist-btn" class="assist-btn" type="button"
+          aria-label="Datenassistent öffnen" data-i18n-aria="assist_btn_label">
+    <span aria-hidden="true">🔎</span>
+    <span class="assist-btn-label" data-i18n="assist_btn_label">Datenassistent</span>
+  </button>
+
+  <aside id="assist-drawer" class="assist-drawer" role="dialog" aria-modal="true"
+         aria-labelledby="assist-drawer-title" aria-hidden="true">
+    <div class="assist-drawer-inner">
+      <header class="assist-drawer-header">
+        <h2 id="assist-drawer-title" class="assist-drawer-title" data-i18n="assist_drawer_title">
+          Datenassistent
+        </h2>
+        <button id="assist-info-toggle" type="button" class="assist-info-btn"
+                aria-label="Algorithmus-Karte anzeigen" data-i18n-aria="assist_info_aria">
+          ⓘ <span data-i18n="assist_info_short">Wie funktioniert das?</span>
+        </button>
+        <button id="assist-close" type="button" class="assist-close-btn"
+                aria-label="Schließen" data-i18n-aria="assist_close_aria">✕</button>
+      </header>
+
+      <div class="assist-search-row">
+        <input id="assist-input" type="search"
+               placeholder="Was suchen Sie? z. B. „Wahlbeteiligung 2026"
+               data-i18n-placeholder="assist_input_ph"
+               aria-label="Frage zum Datenkatalog"
+               data-i18n-aria="assist_input_aria"
+               autocomplete="off" />
+        <button id="assist-submit" type="button" class="assist-submit-btn"
+                aria-label="Suchen" data-i18n-aria="assist_submit_aria">→</button>
+      </div>
+
+      <div id="assist-results" class="assist-results" aria-live="polite"></div>
+
+      <!-- Algorithmus-Karte (Helsinki AI Register pattern) -->
+      <section id="assist-algorithm-card" class="algorithm-card" hidden
+               aria-labelledby="algorithm-card-title">
+        <h3 id="algorithm-card-title" class="algorithm-card-title">
+          📐 <span data-i18n="algorithm_card_title">Algorithmus-Karte</span>
+        </h3>
+        <dl class="algorithm-card-list">
+          <dt data-i18n="algorithm_card_method_label">Methode</dt>
+          <dd data-i18n="algorithm_card_method">BM25-Score (Fuse.js) über Titel, Beschreibung, Themen-Tags. Threshold 0.3 (fuzzy).</dd>
+
+          <dt data-i18n="algorithm_card_no_llm_label">Keine KI / kein LLM</dt>
+          <dd data-i18n="algorithm_card_no_llm">Deterministisch und reproduzierbar. Keine Halluzination, keine Trainingsdaten, keine Personalisierung. Audit-fähig.</dd>
+
+          <dt data-i18n="algorithm_card_data_label">Datenbasis</dt>
+          <dd data-i18n="algorithm_card_data">Piveau-API von opendata.cloud.wiesbaden.de · 232 Datensätze · Lokal-Cache vom 04.05.2026.</dd>
+
+          <dt data-i18n="algorithm_card_privacy_label">Privacy</dt>
+          <dd data-i18n="algorithm_card_privacy">Suche läuft komplett lokal in Ihrem Browser. Keine Server, keine Cookies, keine externen Anfragen. DSGVO-konform.</dd>
+
+          <dt data-i18n="algorithm_card_a11y_label">Barrierefreiheit</dt>
+          <dd data-i18n="algorithm_card_a11y">BITV 2.0 / WCAG 2.1 AA. Vollständig keyboard-navigierbar (Tab, Enter, ESC). Screen-Reader-Labels (ARIA).</dd>
+
+          <dt data-i18n="algorithm_card_lang_label">Sprachen</dt>
+          <dd data-i18n="algorithm_card_lang">Suchindex: Deutsch + Englisch. UI-Anzeige: 6 Sprachen (DE/EN/TR/UA/KR/LS). Datensatztitel bleiben in der Originalsprache der Stadt Wiesbaden.</dd>
+        </dl>
+        <p class="algorithm-card-source">
+          <a href="https://ai.hel.fi/de/ai-register/" target="_blank" rel="noopener" data-i18n="algorithm_card_inspired">
+            Vorbild: Helsinki AI Register ↗
+          </a>
+        </p>
+      </section>
+    </div>
+  </aside>
 
   <!-- FOOTER -->
   <footer class="footer">
