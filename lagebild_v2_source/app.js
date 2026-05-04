@@ -53,15 +53,12 @@ function setLanguage(lang) {
 
 // ============ THEME TOGGLE ============
 function setupThemeToggle() {
+  // v2.2 GSM dialect: light-only.
+  // Government Statistical Modernism dialect ships light-only (BMWK,
+  // Destatis, Eurostat). Toggle button removed from header. Function kept
+  // as a safe no-op so any legacy caller still resolves without throwing.
   const btn = document.getElementById('theme-toggle');
-  btn.addEventListener('click', () => {
-    const current = document.documentElement.dataset.theme || 'dark';
-    const next = current === 'dark' ? 'light' : 'dark';
-    document.documentElement.dataset.theme = next;
-    btn.textContent = next === 'dark' ? '☀' : '☾';
-    // Re-render map with new colors
-    if (map) updateMapColors();
-  });
+  if (!btn) return;
 }
 
 // ============ TICKER ============
@@ -503,13 +500,13 @@ function renderDetailChart(o) {
       datasets: [{
         label: 'Bevölkerung',
         data: baseTrend,
-        borderColor: '#FF6B47',
-        backgroundColor: 'rgba(255, 107, 71, 0.1)',
+        borderColor: '#1B2B4C',
+        backgroundColor: 'rgba(27, 43, 76, 0.1)',
         borderWidth: 2,
         fill: true,
         tension: 0.3,
         pointRadius: 3,
-        pointBackgroundColor: '#FF6B47'
+        pointBackgroundColor: '#1B2B4C'
       }]
     },
     options: {
@@ -1301,7 +1298,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (fuelUserLoc) {
       const userIcon = L.divIcon({
         className: 'fuel-user-pin',
-        html: '<div style="width:14px; height:14px; background:#FF6B47; border:2px solid #fff; border-radius:50%; box-shadow:0 0 0 3px rgba(255,107,71,0.3);"></div>',
+        html: '<div style="width:14px; height:14px; background:#1B2B4C; border:2px solid #fff; border-radius:50%; box-shadow:0 0 0 3px rgba(27, 43, 76, 0.3);"></div>',
         iconSize: null,
         iconAnchor: [9, 9]
       });
@@ -1810,8 +1807,8 @@ document.addEventListener('DOMContentLoaded', () => {
         labels,
         datasets: [
           { label: t('wm_chart_median', 'Median (alle Größen)'),
-            data: median, borderColor: '#FF6B47',
-            backgroundColor: 'rgba(255,107,71,0.12)', borderWidth: 2.5, tension: 0.25, pointRadius: 2, fill: true },
+            data: median, borderColor: '#1B2B4C',
+            backgroundColor: 'rgba(27, 43, 76, 0.12)', borderWidth: 2.5, tension: 0.25, pointRadius: 2, fill: true },
           { label: t('wm_chart_small', '<40 m² (klein)'),
             data: small, borderColor: '#9e9ac8', borderWidth: 1.5, tension: 0.25, pointRadius: 0, borderDash: [4,4], fill: false },
           { label: t('wm_chart_large', '>100 m² (groß)'),
@@ -2007,7 +2004,7 @@ document.addEventListener('DOMContentLoaded', () => {
             borderColor: '#41b6c4', borderWidth: 1.5, tension: 0.25, pointRadius: 0, borderDash: [4,4], fill: false },
           { label: t('wm_boden_new', 'Neubau'),
             data: series.map(r => r.durchschnittspreise_eur_pro_qm_neubauwohnungen),
-            borderColor: '#FF6B47', borderWidth: 2.5, tension: 0.25, pointRadius: 2, fill: false },
+            borderColor: '#1B2B4C', borderWidth: 2.5, tension: 0.25, pointRadius: 2, fill: false },
         ]
       },
       options: {
@@ -2529,7 +2526,7 @@ document.addEventListener('DOMContentLoaded', () => {
       static_real: { bg: '#0ea5e9', label: 'STATIC' },
       mock:        { bg: '#f59e0b', label: 'MOCK' },
       mock_demo:   { bg: '#a78bfa', label: 'DEMO-MOCK' },
-      citizen:     { bg: '#FF6B47', label: 'BÜRGER' }
+      citizen:     { bg: '#1B2B4C', label: 'BÜRGER' }
     };
     const c = map[s] || { bg: '#475569', label: s.toUpperCase() };
     return `<span style="background:${c.bg}; color:#fff; padding:2px 8px; border-radius:3px; font-family: var(--font-mono); font-size:9px; letter-spacing:.06em; font-weight:600;">${c.label}</span>`;
@@ -2548,7 +2545,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="grocery-stat-item"><span class="grocery-stat-value">${D.DATA_SOURCES.length}</span><span class="grocery-stat-label">${t('dk_kpi_total', 'Datenquellen insgesamt')}</span></div>
         <div class="grocery-stat-item"><span class="grocery-stat-value" style="color:#16a34a;">${counts.live + counts.static_real}</span><span class="grocery-stat-label">${t('dk_kpi_live', 'Echte Daten (live + static)')}</span></div>
         <div class="grocery-stat-item"><span class="grocery-stat-value" style="color:#f59e0b;">${counts.mock + counts.mock_demo}</span><span class="grocery-stat-label">${t('dk_kpi_mock', 'Mock (transparent ausgewiesen)')}</span></div>
-        <div class="grocery-stat-item"><span class="grocery-stat-value" style="color:#FF6B47;">${counts.citizen}</span><span class="grocery-stat-label">${t('dk_kpi_citizen', 'Bürger-Beiträge')}</span></div>
+        <div class="grocery-stat-item"><span class="grocery-stat-value" style="color:#1B2B4C;">${counts.citizen}</span><span class="grocery-stat-label">${t('dk_kpi_citizen', 'Bürger-Beiträge')}</span></div>
       `;
     }
 

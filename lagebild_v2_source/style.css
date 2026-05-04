@@ -1,29 +1,37 @@
 /* =================================================================
-   WIESBADEN-LAGEBILD — Editorial Statistical Aesthetic
-   Dark mode default, Fraunces serif + JetBrains Mono data
+   WIESBADEN-LAGEBILD — Government Statistical Modernism (GSM)
+   Light-only, Fraunces serif (display) + Inter (body) + JetBrains Mono (data)
+   Calibrated against dashboard-konjunktur.de (BMWK), Destatis Atlas.
    ================================================================= */
 
 :root {
-  /* Dark theme (default) */
-  --bg: #0A0E1A;
-  --bg-elevated: #11172A;
-  --bg-card: #161D33;
-  --border: #1F2940;
-  --border-subtle: #1A2238;
-  --text: #E8EAF0;
-  --text-muted: #8C95B0;
-  --text-faint: #4A5170;
+  /* GSM (Government Statistical Modernism) — light only.
+     Calibrated against dashboard-konjunktur.de (BMWK), Destatis Atlas,
+     Eurostat Regional Yearbook. Wiesbaden Stadtwappen palette: navy + gold. */
+  --bg: #FAFAF7;              /* off-white, paper feel */
+  --bg-elevated: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-secondary: #F4F4F0;
+  --border: #E2E5EB;
+  --border-subtle: #EEF0F4;
+  --text: #1A1F2E;
+  --text-primary: #1A1F2E;
+  --text-secondary: #5C6580;
+  --text-muted: #5C6580;
+  --text-tertiary: #8892A8;
+  --text-faint: #B6BCC9;
 
-  /* Brand */
-  --accent: #FF6B47;          /* Hot coral */
-  --accent-glow: rgba(255, 107, 71, 0.15);
-  --wiesbaden-blue: #1F3A5F;
+  /* Brand — Wiesbaden Stadtwappen-derived */
+  --accent: #1B2B4C;          /* Wiesbaden navy (primary) */
+  --accent-glow: rgba(27, 43, 76, 0.10);
+  --accent-warm: #B7873E;     /* Wappen-gold (secondary highlight) */
+  --wiesbaden-blue: #1B2B4C;
   --wiesbaden-blue-light: #4A6FA5;
 
-  /* Status colors (subtle) */
-  --good: #4ADE80;
-  --warn: #FBBF24;
-  --bad: #F87171;
+  /* Status colors — desaturated for statistical context */
+  --good: #2F855A;
+  --warn: #B7873E;
+  --bad: #B63D3D;
 
   /* Typography */
   --font-display: 'Fraunces', 'Times New Roman', serif;
@@ -31,16 +39,24 @@
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 }
 
-[data-theme="light"] {
-  --bg: #FAF9F6;
+/* Backwards-compat — older code references both [data-theme="light"] and
+   [data-theme="dark"] selectors; GSM dialect is light-only, so map both
+   to the same tokens to keep any stray rule resolving correctly. */
+[data-theme="light"],
+[data-theme="dark"] {
+  --bg: #FAFAF7;
   --bg-elevated: #FFFFFF;
   --bg-card: #FFFFFF;
-  --border: #E5E2DA;
-  --border-subtle: #F0EDE5;
+  --bg-secondary: #F4F4F0;
+  --border: #E2E5EB;
+  --border-subtle: #EEF0F4;
   --text: #1A1F2E;
-  --text-muted: #5A6378;
-  --text-faint: #B0B4C0;
-  --accent-glow: rgba(255, 107, 71, 0.08);
+  --text-primary: #1A1F2E;
+  --text-secondary: #5C6580;
+  --text-muted: #5C6580;
+  --text-tertiary: #8892A8;
+  --accent: #1B2B4C;
+  --accent-glow: rgba(27, 43, 76, 0.10);
 }
 
 * {
@@ -2160,4 +2176,113 @@ html[data-lang="ls"] .ls-banner { display: block; }
   .story-modal { padding: 28px 22px 24px; }
   .story-modal-facts { grid-template-columns: 1fr; }
   .story-modal-chart-wrap { height: 240px; }
+}
+
+
+/* =================================================================
+   v2.2 GSM DIALECT — Reading Column + Editorial Polish
+   Calibrated against dashboard-konjunktur.de (BMWK), Destatis Atlas,
+   Eurostat Regional Yearbook. Government dashboards use a constrained
+   reading column rather than full-bleed grids — this signals lineage
+   from the printed Statistisches Jahrbuch.
+   ================================================================= */
+.ticker-bar > .ticker-content,
+.header,
+.view-nav,
+.ls-banner,
+.kpi-section,
+.map-section,
+.bottom-grid,
+.footer {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Map / heat-map style viz can break out to wider reading width;
+   true full-bleed should opt in via .breakout-fullbleed. */
+.map-section.breakout-wide,
+.bottom-grid.breakout-wide {
+  max-width: 1320px;
+}
+
+/* Section H2 — GSM editorial label, no emoji prefix */
+.section-major-title {
+  font-family: var(--font-display);
+  letter-spacing: -0.005em;
+  font-weight: 600;
+}
+
+/* Source-stamp micro-component for GSM compliance.
+   Use under every chart: <div class="chart-source"><strong>Quelle:</strong> ... · Stand: ... · Methodik: ...</div> */
+.chart-source {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.02em;
+  line-height: 1.55;
+}
+.chart-source strong {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Stand / Aktualisierung header micro-stamp.
+   Mirrors the dashboard-konjunktur.de "Letzte / Nächste Aktualisierung" pattern. */
+.stand-stamp {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--text-tertiary);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  margin-top: 6px;
+}
+.stand-stamp .stand-row { display: inline-flex; gap: 6px; }
+.stand-stamp .stand-label { color: var(--text-tertiary); }
+.stand-stamp .stand-value { color: var(--text-secondary); font-weight: 500; }
+
+/* GSM footer extension blocks: Zitierhinweis · Barrierefreiheit · Impressum */
+.footer-gsm {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 48px 0;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 32px;
+  border-top: 1px solid var(--border-subtle);
+}
+.footer-gsm h4 {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.footer-gsm p,
+.footer-gsm cite {
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  font-style: normal;
+}
+.footer-gsm cite {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: var(--bg-secondary);
+  padding: 10px 12px;
+  border-left: 2px solid var(--accent);
+  border-radius: 2px;
+  margin-top: 6px;
+}
+@media (max-width: 880px) {
+  .footer-gsm { grid-template-columns: 1fr; padding: 28px 24px 0; }
 }

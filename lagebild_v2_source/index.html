@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de" data-theme="dark">
+<html lang="de" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,10 +46,16 @@
         <button class="lang-btn" data-lang="kr" lang="ko">KR</button>
         <button class="lang-btn lang-btn-ls" data-lang="ls" lang="de" title="Leichte Sprache (BFSG 2025)" aria-label="Leichte Sprache">LS</button>
       </div>
+      <div class="stand-stamp" aria-label="Aktualisierungsstand">
+        <span class="stand-row"><span class="stand-label">LETZTE AKTUALISIERUNG</span><span class="stand-value" id="stand-last">02.05.2026</span></span>
+        <span class="stand-row"><span class="stand-label">NÄCHSTE AKTUALISIERUNG</span><span class="stand-value" id="stand-next">30.06.2026</span></span>
+      </div>
       <button class="kpi-curator-btn" id="curator-btn" title="KPI anpassen">
-        ⚙ <span data-i18n="curator_button">KPI anpassen</span>
+        <span data-i18n="curator_button">KPI anpassen</span>
       </button>
-      <button class="theme-toggle" id="theme-toggle" title="Theme">☀</button>
+      <!-- v2.2 GSM dialect: light-only, no dark toggle.
+           Government dashboards (BMWK Konjunktur, Destatis Atlas, Eurostat)
+           ship light-only; toggle removed for visual-language consistency. -->
     </div>
   </header>
 
@@ -161,11 +167,11 @@
         <div class="legend">
           <span>min</span>
           <div class="legend-bar">
-            <div style="background: rgba(255, 107, 71, 0.2)"></div>
-            <div style="background: rgba(255, 107, 71, 0.4)"></div>
-            <div style="background: rgba(255, 107, 71, 0.6)"></div>
-            <div style="background: rgba(255, 107, 71, 0.8)"></div>
-            <div style="background: rgba(255, 107, 71, 1)"></div>
+            <div style="background: rgba(27, 43, 76, 0.2)"></div>
+            <div style="background: rgba(27, 43, 76, 0.4)"></div>
+            <div style="background: rgba(27, 43, 76, 0.6)"></div>
+            <div style="background: rgba(27, 43, 76, 0.8)"></div>
+            <div style="background: rgba(27, 43, 76, 1)"></div>
           </div>
           <span>max</span>
         </div>
@@ -271,7 +277,7 @@
   <section class="map-section" style="grid-template-columns: 1fr; padding-top: 0;">
     <div class="map-container" style="padding: 24px 28px;">
       <div class="section-major">
-        <h2 class="section-major-title">🛒 <span data-i18n="alltag_title">Wiesbaden Alltag</span></h2>
+        <h2 class="section-major-title"><span data-i18n="alltag_title">Wiesbaden Alltag</span></h2>
         <p class="section-major-subtitle" data-i18n="alltag_subtitle">Daten, die deine Woche betreffen — Tankstellen, Supermarkt, Wirtschaft</p>
       </div>
 
@@ -309,7 +315,7 @@
         </div>
 
         <!-- Citizen CTA -->
-        <div id="fuel-cta" style="margin-bottom:14px; padding:14px; background:linear-gradient(135deg, rgba(255,107,71,0.08), rgba(74,111,165,0.08)); border:1px dashed var(--accent); border-radius:6px;">
+        <div id="fuel-cta" style="margin-bottom:14px; padding:14px; background:linear-gradient(135deg, rgba(27, 43, 76, 0.08), rgba(74,111,165,0.08)); border:1px dashed var(--accent); border-radius:6px;">
           <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
             <span style="font-size:24px;">👀</span>
             <div style="flex:1; min-width:200px;">
@@ -355,7 +361,7 @@
   <section class="map-section" style="grid-template-columns: 1fr; padding-top: 0;">
     <div class="map-container" style="padding: 24px 28px;">
       <div class="section-major">
-        <h2 class="section-major-title">🏠 <span data-i18n="wm_title">Wohnungsmarkt</span></h2>
+        <h2 class="section-major-title"><span data-i18n="wm_title">Wohnungsmarkt</span></h2>
         <p class="section-major-subtitle" data-i18n="wm_subtitle">Mietspiegel §558d (Bestand) vs. Angebotsmieten (Markt) — beide aus städtischen Quellen</p>
       </div>
 
@@ -441,7 +447,7 @@
   <section class="map-section" style="grid-template-columns: 1fr; padding-top: 24px;">
     <div class="map-container" style="padding: 28px 28px 8px 28px;">
       <div class="section-major">
-        <h2 class="section-major-title">👥 <span data-i18n="mm_title">Mitmachen — Wiesbaden gestalten</span></h2>
+        <h2 class="section-major-title"><span data-i18n="mm_title">Mitmachen — Wiesbaden gestalten</span></h2>
         <p class="section-major-subtitle" data-i18n="mm_subtitle">6 konkrete Wege, wie deine Beobachtung in städtische Daten und Entscheidungen einfließt.</p>
       </div>
     </div>
@@ -510,7 +516,7 @@
   <section class="map-section" style="grid-template-columns: 1fr; padding-top: 0;">
     <div class="map-container" style="padding: 24px 28px;">
       <div class="section-major">
-        <h2 class="section-major-title">🔬 <span data-i18n="cs_title">Citizen Science Wiesbaden</span></h2>
+        <h2 class="section-major-title"><span data-i18n="cs_title">Citizen Science Wiesbaden</span></h2>
         <p class="section-major-subtitle" data-i18n="cs_subtitle">Bürger:innen messen, melden, gestalten mit</p>
       </div>
 
@@ -534,7 +540,7 @@
     <section class="map-section" style="grid-template-columns: 1fr; padding-top: 24px;">
       <div class="map-container" style="padding: 28px;">
         <div class="section-major">
-          <h2 class="section-major-title">🗳 <span data-i18n="dem_title">Demokratie & Beteiligung</span></h2>
+          <h2 class="section-major-title"><span data-i18n="dem_title">Demokratie & Beteiligung</span></h2>
           <p class="section-major-subtitle" data-i18n="dem_subtitle">Kommunalwahl 2026 vs 2021 — wer geht in welchem Ortsbezirk wählen, und wie hat sich das verändert?</p>
         </div>
 
@@ -588,7 +594,7 @@
     <section class="map-section" style="grid-template-columns: 1fr; padding-top: 24px;">
       <div class="map-container" style="padding: 28px;">
         <div class="section-major">
-          <h2 class="section-major-title">🔍 <span data-i18n="dk_title">Datenkatalog & Transparenz</span></h2>
+          <h2 class="section-major-title"><span data-i18n="dk_title">Datenkatalog & Transparenz</span></h2>
           <p class="section-major-subtitle" data-i18n="dk_subtitle">Jede Zahl im Dashboard hat eine Quelle. Hier siehst du alle: live oder mock, Lizenz, Aktualisierungsfrequenz.</p>
         </div>
 
@@ -834,8 +840,8 @@
       </div>
     </div>
     <div class="footer-extra-links">
-      <a id="open-ai-register">🤖 <span data-i18n="ai_link">AI-Register</span></a>
-      <a id="open-meta-usage">📊 <span data-i18n="meta_link">Nutzungs-Statistik</span></a>
+      <a id="open-ai-register"><span data-i18n="ai_link">AI-Register</span></a>
+      <a id="open-meta-usage"><span data-i18n="meta_link">Nutzungs-Statistik</span></a>
       <span style="color: var(--text-tertiary); font-size: 12px;">·</span>
       <span style="display:inline-flex; align-items:center; gap:8px;">
         <input type="text" id="address-input" placeholder="Adresse eingeben (z. B. Wilhelmstraße 1)" data-i18n-placeholder="address_placeholder"
@@ -843,11 +849,38 @@
         <button id="address-search-btn" style="padding:6px 12px; background:var(--accent); color:white; border:none; border-radius:4px; cursor:pointer; font-family:inherit; font-size:12px;" data-i18n="address_button">Suchen</button>
       </span>
     </div>
+    <!-- v2.2 GSM dialect — Daten & Methodik block.
+         Mirrors the disclosure pattern used by dashboard-konjunktur.de (BMWK),
+         Destatis Atlas and Eurostat: every dashboard ships a citation form,
+         a Barrierefreiheit declaration, and an Impressum-style author block. -->
+    <div class="footer-gsm" role="complementary" aria-label="Daten und Methodik">
+      <div>
+        <h4>Zitierhinweis</h4>
+        <p>Bitte zitieren Sie diese Anwendung wie folgt:</p>
+        <cite>Park, S. (2026). <em>Wiesbaden-Lagebild v2.2 — Datenbild der Landeshauptstadt</em> [Online-Anwendung]. Stand: 02.05.2026. Abgerufen von&nbsp;<span id="cite-url">[URL]</span>.</cite>
+      </div>
+      <div>
+        <h4>Barrierefreiheit</h4>
+        <p>Diese Anwendung orientiert sich an den Vorgaben der BITV&nbsp;2.0 sowie WCAG&nbsp;2.1 Stufe&nbsp;AA. Hinweise zu Barrieren oder Verbesserungsvorschläge nehmen wir per E-Mail entgegen: <span style="font-family:var(--font-mono); font-size:11px;">barrierefreiheit@&#8203;lagebild.example</span>. Eine Fassung in Leichter Sprache ist über die LS-Schaltfläche oben rechts verfügbar.</p>
+      </div>
+      <div>
+        <h4>Impressum &amp; Verantwortung</h4>
+        <p>Konzept, Datenkuratierung und Umsetzung: <strong>Sujin Park</strong>. Diese Anwendung ist eine eigenständige Arbeitsprobe und steht in keinem dienstlichen Verhältnis zur Landeshauptstadt Wiesbaden. Datenquellen werden je Indikator ausgewiesen; Lizenz: CC&nbsp;BY&nbsp;4.0.</p>
+      </div>
+    </div>
+
     <div class="footer-bottom">
-      <span data-i18n="footer_credits">Konzept &amp; Mock-up: Sujin Park</span>
-      <span class="signature">v2.0 · Mock-up · 04/2026 · Citizen-Science-Edition</span>
+      <span data-i18n="footer_credits">Konzept &amp; Datenaufbereitung: Sujin Park</span>
+      <span class="signature">v2.2 · GSM-Dialekt · Stand 02.05.2026 · Initiativ-Arbeitsprobe</span>
     </div>
   </footer>
+  <script>
+    // v2.2 GSM — populate citation URL with current location at runtime
+    document.addEventListener('DOMContentLoaded', function () {
+      var citeEl = document.getElementById('cite-url');
+      if (citeEl) citeEl.textContent = window.location.href;
+    });
+  </script>
 
   <script src="data.js"></script>
   <script src="app.js"></script>

@@ -1714,7 +1714,7 @@ const STORIES = [
       type: "line",
       labels: ["1972","1977","1981","1985","1989","1993","1997","2001","2006","2011","2016","2021","2026"],
       datasets: [
-        { labelKey: "story1_chart_ds", data: [73.4,70.1,65.1,66.6,70.5,64.7,59.4,47.2,39.6,41.2,43.4,41.8,48.1], color: "#FF6B47", area: true }
+        { labelKey: "story1_chart_ds", data: [73.4,70.1,65.1,66.6,70.5,64.7,59.4,47.2,39.6,41.2,43.4,41.8,48.1], color: "#1B2B4C", area: true }
       ],
       yLabelKey: "story1_chart_y"
     }
@@ -1734,7 +1734,7 @@ const STORIES = [
       type: "line",
       labels: ["2014","2015","2016","2017","2018","2019","2020","2021","2022","2023","2024"],
       datasets: [
-        { labelKey: "story2_chart_ds1", data: [9.1,9.3,9.6,10.2,10.5,10.8,11.2,11.4,11.5,12.0,12.6], color: "#FF6B47", yAxis: "y" },
+        { labelKey: "story2_chart_ds1", data: [9.1,9.3,9.6,10.2,10.5,10.8,11.2,11.4,11.5,12.0,12.6], color: "#1B2B4C", yAxis: "y" },
         { labelKey: "story2_chart_ds2", data: [11255,10929,10696,10140,9810,9167,8738,8561,8737,8705,8513], color: "#4A6FA5", yAxis: "y2" }
       ],
       yLabelKey: "story2_chart_y1",
@@ -1756,7 +1756,7 @@ const STORIES = [
       type: "bar",
       labels: ["Westend","Amöneburg","Mitte","Hollerborn","Kastel","Erbenheim","Dotzheim","Klarenthal","Kostheim","Biebrich","Südost","Delkenheim","Nordenstadt","Medenbach","Schierstein","Igstadt","Bierstadt","Kloppenheim","Auringen","Breckenheim","Rambach","Naurod","Frauenstein","Nordost","Sonnenberg","Heßloch"],
       datasets: [
-        { labelKey: "story3_chart_ds", data: [37.0,37.2,39.3,40.0,40.1,40.8,42.4,42.9,43.1,43.2,43.3,43.8,43.9,44.0,44.6,45.2,45.4,45.6,46.5,47.0,47.0,47.6,47.7,48.0,49.6,50.3], color: "#FF6B47" }
+        { labelKey: "story3_chart_ds", data: [37.0,37.2,39.3,40.0,40.1,40.8,42.4,42.9,43.1,43.2,43.3,43.8,43.9,44.0,44.6,45.2,45.4,45.6,46.5,47.0,47.0,47.6,47.7,48.0,49.6,50.3], color: "#1B2B4C" }
       ],
       yLabelKey: "story3_chart_y"
     }
@@ -1776,7 +1776,7 @@ const STORIES = [
       type: "bar",
       labels: ["Sonnenberg","Rambach","Heßloch","Südost","Mitte","Breckenheim","Auringen","Bierstadt","Naurod","Igstadt","Nordenstadt","Kloppenheim","Medenbach","Nordost","Delkenheim","Erbenheim","Schierstein","Westend","Kastel","Frauenstein","Dotzheim","Kostheim","Biebrich","Hollerborn","Klarenthal","Amöneburg"],
       datasets: [
-        { labelKey: "story4_chart_ds", data: [42177,39346,38887,37789,35775,34960,34954,34747,34729,34655,34132,34101,33456,33373,33323,31712,31475,31159,30977,30670,30051,30028,29478,29050,28326,27095], color: "#FF6B47" }
+        { labelKey: "story4_chart_ds", data: [42177,39346,38887,37789,35775,34960,34954,34747,34729,34655,34132,34101,33456,33373,33323,31712,31475,31159,30977,30670,30051,30028,29478,29050,28326,27095], color: "#1B2B4C" }
       ],
       yLabelKey: "story4_chart_y"
     }
