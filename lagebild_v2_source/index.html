@@ -88,10 +88,6 @@
       <span class="view-nav-icon" aria-hidden="true">🔍</span>
       <span data-i18n="nav_daten">Daten</span>
     </button>
-    <button class="view-nav-btn" data-view="kiez">
-      <span class="view-nav-icon" aria-hidden="true">🏘</span>
-      <span data-i18n="nav_kiez">Mein Kiez</span>
-    </button>
   </nav>
 
   <!-- v2.1 — Leichte-Sprache info banner (only visible when LS is active) -->
@@ -120,6 +116,87 @@
         <button id="mo-clear" class="btn-secondary" style="padding:7px 14px; font-size:11px;" data-i18n="mo_clear">✕ Zurücksetzen</button>
       </div>
       <div id="mo-cards" style="display:none; margin-top:18px;"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       MEIN KIEZ — citizen-life external sources, integrated into
+       home view. Reads district from #mo-select (shared state).
+       ============================================================ -->
+  <section class="map-section" style="grid-template-columns: 1fr; padding: 8px 48px 0 48px;">
+    <div class="map-container" style="padding: 24px 28px;">
+      <div class="section-major" style="margin-bottom: 16px;">
+        <h2 class="section-major-title">🏘 <span data-i18n="kiez_title">Mein Kiez — Was ist hier los?</span></h2>
+        <p class="section-major-subtitle" data-i18n="kiez_subtitle">Daten, die Bürger:innen wirklich fragen — Cafés, Parken, Preise, Müllabfuhr, Sicherheit, Events. 6 Quellen, transparent verlinkt.</p>
+      </div>
+
+      <!-- 6-card category grid (Seoul-style) -->
+      <div class="kiez-grid" role="list">
+        <button type="button" class="kiez-card" data-kiez-card="gastro" role="listitem" aria-labelledby="kiez-gastro-title">
+          <div class="kiez-card-icon" aria-hidden="true">☕</div>
+          <h3 id="kiez-gastro-title" class="kiez-card-title" data-i18n="kiez_gastro_title">Gastronomie</h3>
+          <div class="kiez-card-headline" id="kiez-gastro-headline">—</div>
+          <div class="kiez-card-sub" data-i18n="kiez_gastro_sub">Restaurants, Cafés, Bars, Pubs · OSM</div>
+          <div class="kiez-card-cta" data-i18n="kiez_card_open">▾ Details ansehen</div>
+        </button>
+
+        <button type="button" class="kiez-card" data-kiez-card="parking" role="listitem" aria-labelledby="kiez-parking-title">
+          <div class="kiez-card-icon" aria-hidden="true">🚗</div>
+          <h3 id="kiez-parking-title" class="kiez-card-title" data-i18n="kiez_parking_title">Parken</h3>
+          <div class="kiez-card-headline" id="kiez-parking-headline">—</div>
+          <div class="kiez-card-sub" data-i18n="kiez_parking_sub">Parkplätze · OSM</div>
+          <div class="kiez-card-cta" data-i18n="kiez_card_open">▾ Details ansehen</div>
+        </button>
+
+        <button type="button" class="kiez-card" data-kiez-card="cpi" role="listitem" aria-labelledby="kiez-cpi-title">
+          <div class="kiez-card-icon" aria-hidden="true">💶</div>
+          <h3 id="kiez-cpi-title" class="kiez-card-title" data-i18n="kiez_cpi_title">Lebensmittelpreise</h3>
+          <div class="kiez-card-headline" id="kiez-cpi-headline">—</div>
+          <div class="kiez-card-sub" data-i18n="kiez_cpi_sub">VPI Deutschland · destatis</div>
+          <div class="kiez-card-cta" data-i18n="kiez_card_open">▾ Details ansehen</div>
+        </button>
+
+        <button type="button" class="kiez-card" data-kiez-card="elw" role="listitem" aria-labelledby="kiez-elw-title">
+          <div class="kiez-card-icon" aria-hidden="true">🚮</div>
+          <h3 id="kiez-elw-title" class="kiez-card-title" data-i18n="kiez_elw_title">Müllabfuhr</h3>
+          <div class="kiez-card-headline" id="kiez-elw-headline">—</div>
+          <div class="kiez-card-sub" data-i18n="kiez_elw_sub">Stadtweite Rhythmen · ELW</div>
+          <div class="kiez-card-cta" data-i18n="kiez_card_open">▾ Details ansehen</div>
+        </button>
+
+        <button type="button" class="kiez-card" data-kiez-card="pks" role="listitem" aria-labelledby="kiez-pks-title">
+          <div class="kiez-card-icon" aria-hidden="true">🚨</div>
+          <h3 id="kiez-pks-title" class="kiez-card-title" data-i18n="kiez_pks_title">Sicherheit</h3>
+          <div class="kiez-card-headline" id="kiez-pks-headline">—</div>
+          <div class="kiez-card-sub" data-i18n="kiez_pks_sub">PKS 2024 · Polizei Hessen</div>
+          <div class="kiez-card-cta" data-i18n="kiez_card_open">▾ Details ansehen</div>
+        </button>
+
+        <button type="button" class="kiez-card" data-kiez-card="events" role="listitem" aria-labelledby="kiez-events-title">
+          <div class="kiez-card-icon" aria-hidden="true">🎉</div>
+          <h3 id="kiez-events-title" class="kiez-card-title" data-i18n="kiez_events_title">Events</h3>
+          <div class="kiez-card-headline" id="kiez-events-headline">—</div>
+          <div class="kiez-card-sub" data-i18n="kiez_events_sub">Top 2026 · Stadt Wiesbaden</div>
+          <div class="kiez-card-cta" data-i18n="kiez_card_open">▾ Details ansehen</div>
+        </button>
+      </div>
+
+      <!-- Detail drawer panel — shows when a card is clicked -->
+      <section id="kiez-detail" class="kiez-detail" hidden aria-live="polite">
+        <header class="kiez-detail-header">
+          <h3 id="kiez-detail-title" class="kiez-detail-title">—</h3>
+          <button type="button" id="kiez-detail-close" class="kiez-detail-close" aria-label="Schließen" data-i18n-aria="kiez_detail_close">✕</button>
+        </header>
+        <div id="kiez-detail-body" class="kiez-detail-body"></div>
+        <footer class="kiez-detail-footer">
+          <a id="kiez-detail-source" target="_blank" rel="noopener" class="kiez-detail-source-link"></a>
+        </footer>
+      </section>
+
+      <!-- Honesty footer -->
+      <p class="kiez-honesty-note" data-i18n="kiez_honesty">
+        Diese Seite zeigt Daten aus 6 verschiedenen Quellen. 3 sind automatisch (OSM, destatis), 3 manuell gepflegt mit Quellverlink (ELW, PKS, Stadt-Veranstaltungskalender). Lücken im 232-Datensätze-Katalog der Stadt sind hier sichtbar gemacht — kein Ersatz für die jeweilige Originalquelle.
+      </p>
     </div>
   </section>
 
@@ -667,96 +744,6 @@
     </section>
 
   </div><!-- /view-daten -->
-
-  <!-- ============================================
-       VIEW: KIEZ (Mein Kiez — citizen-perspective dashboard)
-       ============================================ -->
-  <div class="view" id="view-kiez" data-view="kiez">
-    <section class="map-section" style="grid-template-columns: 1fr; padding-top: 24px;">
-      <div class="map-container" style="padding: 28px;">
-        <div class="section-major">
-          <h2 class="section-major-title">🏘 <span data-i18n="kiez_title">Mein Kiez — Was ist hier los?</span></h2>
-          <p class="section-major-subtitle" data-i18n="kiez_subtitle">Daten, die Bürger:innen wirklich fragen — Cafés, Parken, Preise, Müllabfuhr, Sicherheit, Events. 6 Quellen, transparent verlinkt.</p>
-        </div>
-
-        <!-- District picker (shares state with Mein Ortsbezirk on home) -->
-        <div class="kiez-picker">
-          <label for="kiez-select" class="kiez-picker-label" data-i18n="kiez_pick">ORTSBEZIRK:</label>
-          <select id="kiez-select" aria-label="Ortsbezirk wählen"></select>
-          <button id="kiez-clear" class="btn-secondary kiez-clear-btn" data-i18n="kiez_clear">✕</button>
-          <span id="kiez-picker-info" class="kiez-picker-info"></span>
-        </div>
-
-        <!-- 6-card category grid (Seoul-style) -->
-        <div class="kiez-grid" role="list">
-          <button type="button" class="kiez-card" data-kiez-card="gastro" role="listitem" aria-labelledby="kiez-gastro-title">
-            <div class="kiez-card-icon" aria-hidden="true">☕</div>
-            <h3 id="kiez-gastro-title" class="kiez-card-title" data-i18n="kiez_gastro_title">Gastronomie</h3>
-            <div class="kiez-card-headline" id="kiez-gastro-headline">—</div>
-            <div class="kiez-card-sub" data-i18n="kiez_gastro_sub">Restaurants, Cafés, Bars, Pubs · OSM</div>
-            <div class="kiez-card-cta" data-i18n="kiez_card_open">▾ Details ansehen</div>
-          </button>
-
-          <button type="button" class="kiez-card" data-kiez-card="parking" role="listitem" aria-labelledby="kiez-parking-title">
-            <div class="kiez-card-icon" aria-hidden="true">🚗</div>
-            <h3 id="kiez-parking-title" class="kiez-card-title" data-i18n="kiez_parking_title">Parken</h3>
-            <div class="kiez-card-headline" id="kiez-parking-headline">—</div>
-            <div class="kiez-card-sub" data-i18n="kiez_parking_sub">Parkplätze · OSM</div>
-            <div class="kiez-card-cta" data-i18n="kiez_card_open">▾ Details ansehen</div>
-          </button>
-
-          <button type="button" class="kiez-card" data-kiez-card="cpi" role="listitem" aria-labelledby="kiez-cpi-title">
-            <div class="kiez-card-icon" aria-hidden="true">💶</div>
-            <h3 id="kiez-cpi-title" class="kiez-card-title" data-i18n="kiez_cpi_title">Lebensmittelpreise</h3>
-            <div class="kiez-card-headline" id="kiez-cpi-headline">—</div>
-            <div class="kiez-card-sub" data-i18n="kiez_cpi_sub">VPI Deutschland · destatis</div>
-            <div class="kiez-card-cta" data-i18n="kiez_card_open">▾ Details ansehen</div>
-          </button>
-
-          <button type="button" class="kiez-card" data-kiez-card="elw" role="listitem" aria-labelledby="kiez-elw-title">
-            <div class="kiez-card-icon" aria-hidden="true">🚮</div>
-            <h3 id="kiez-elw-title" class="kiez-card-title" data-i18n="kiez_elw_title">Müllabfuhr</h3>
-            <div class="kiez-card-headline" id="kiez-elw-headline">—</div>
-            <div class="kiez-card-sub" data-i18n="kiez_elw_sub">Stadtweite Rhythmen · ELW</div>
-            <div class="kiez-card-cta" data-i18n="kiez_card_open">▾ Details ansehen</div>
-          </button>
-
-          <button type="button" class="kiez-card" data-kiez-card="pks" role="listitem" aria-labelledby="kiez-pks-title">
-            <div class="kiez-card-icon" aria-hidden="true">🚨</div>
-            <h3 id="kiez-pks-title" class="kiez-card-title" data-i18n="kiez_pks_title">Sicherheit</h3>
-            <div class="kiez-card-headline" id="kiez-pks-headline">—</div>
-            <div class="kiez-card-sub" data-i18n="kiez_pks_sub">PKS 2024 · Polizei Hessen</div>
-            <div class="kiez-card-cta" data-i18n="kiez_card_open">▾ Details ansehen</div>
-          </button>
-
-          <button type="button" class="kiez-card" data-kiez-card="events" role="listitem" aria-labelledby="kiez-events-title">
-            <div class="kiez-card-icon" aria-hidden="true">🎉</div>
-            <h3 id="kiez-events-title" class="kiez-card-title" data-i18n="kiez_events_title">Events</h3>
-            <div class="kiez-card-headline" id="kiez-events-headline">—</div>
-            <div class="kiez-card-sub" data-i18n="kiez_events_sub">Top 2026 · Stadt Wiesbaden</div>
-            <div class="kiez-card-cta" data-i18n="kiez_card_open">▾ Details ansehen</div>
-          </button>
-        </div>
-
-        <!-- Detail drawer panel — shows when a card is clicked -->
-        <section id="kiez-detail" class="kiez-detail" hidden aria-live="polite">
-          <header class="kiez-detail-header">
-            <h3 id="kiez-detail-title" class="kiez-detail-title">—</h3>
-            <button type="button" id="kiez-detail-close" class="kiez-detail-close" aria-label="Schließen" data-i18n-aria="kiez_detail_close">✕</button>
-          </header>
-          <div id="kiez-detail-body" class="kiez-detail-body"></div>
-          <footer class="kiez-detail-footer">
-            <a id="kiez-detail-source" target="_blank" rel="noopener" class="kiez-detail-source-link"></a>
-          </footer>
-        </section>
-
-        <!-- Honesty footer -->
-        <p class="kiez-honesty-note" data-i18n="kiez_honesty">
-          Diese Seite zeigt Daten aus 6 verschiedenen Quellen. 3 sind automatisch (OSM, destatis), 3 manuell gepflegt mit Quellverlink (ELW, PKS, Stadt-Veranstaltungskalender). Lücken im 232-Datensätze-Katalog der Stadt sind hier sichtbar gemacht — kein Ersatz für die jeweilige Originalquelle.
-        </p>
-      </div>
-    </section>
-  </div><!-- /view-kiez -->
 
   <!-- =======================================================
        MODALS — kept OUTSIDE all view containers so they stay
