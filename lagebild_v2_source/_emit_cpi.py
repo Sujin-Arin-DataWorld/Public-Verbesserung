@@ -1,74 +1,142 @@
 #!/usr/bin/env python3
 """Build CPI_TIMELINE for the Mein Kiez "Preise" card.
 
-destatis Genesis API requires authenticated access (free registration).
-Until the key arrives, we use values transcribed from destatis monthly
-press releases — Verbraucherpreisindex (VPI) Tabelle 61111-0002, "Eier",
-"Milch", "Brot", "Butter", "Kartoffeln".
+Fetches Verbraucherpreisindex (table 61111-0006, COICOP 5-Steller)
+from destatis Genesis API. Token-based auth via DESTATIS_API_TOKEN
+env var (or .env.local in repo root). Token is NEVER committed.
 
-Index base: 2020 = 100. Values are NATIONAL averages (Deutschland) —
-the city-level breakdown does not exist; the dashboard discloses this in
-the card's footnote.
+Tracked items (5-Steller COICOP):
+  CC13-01147  Eier
+  CC13-01141  Vollmilch
+  CC13-01113  Brot und Brötchen
+  CC13-01151  Butter
+  CC13-01173  Kartoffeln, frisch, gekühlt und verarbeitet
 
-Sources cross-checked against destatis press releases for each month
-through May 2026; copy of values pinned here so the build is reproducible
-without an API key.
+Index base 2020 = 100. Values are NATIONAL averages — no Wiesbaden
+breakdown (destatis only publishes city-level CPI for ~10 large
+Bundesländer-aggregates, not individual cities). Card discloses this.
+
+Usage:
+  export DESTATIS_API_TOKEN=$(grep DESTATIS .env.local | cut -d= -f2)
+  python3 _emit_cpi.py
 """
-import json
+import csv, io, json, os, sys, urllib.parse, urllib.request, zipfile
 from pathlib import Path
 
-# 12 months: Mai 2025 → April 2026 (monthly index, base 2020 = 100)
-# Numbers cross-checked against destatis Pressemitteilungen "Verbraucherpreise".
-# These are nationwide averages — not city-level. Dashboard discloses this.
-CPI_TIMELINE = {
-    "meta": {
-        "code": "61111-0002",
-        "title_de": "Verbraucherpreisindex Deutschland · ausgewählte Lebensmittel",
-        "publisher": "Statistisches Bundesamt (destatis)",
-        "source": "https://www.destatis.de/DE/Themen/Wirtschaft/Preise/Verbraucherpreisindex/_inhalt.html",
-        "license": "Datenlizenz Deutschland — Namensnennung 2.0",
-        "base": "2020 = 100",
-        "geo": "Deutschland (nationwide; no Wiesbaden-level breakdown)",
-        "updated": "2026-05-01",
-    },
-    "months": [
-        "2025-05","2025-06","2025-07","2025-08","2025-09","2025-10",
-        "2025-11","2025-12","2026-01","2026-02","2026-03","2026-04",
-    ],
-    "series": [
-        {"id":"eier",       "icon":"🥚", "label_de":"Eier",       "label_en":"Eggs",     "label_kr":"계란",   "label_tr":"Yumurta",  "label_ua":"Яйця",     "label_ls":"Eier",
-         "values":[121.4, 122.0, 122.7, 123.1, 123.8, 124.2, 124.5, 125.1, 125.6, 125.9, 126.0, 126.3]},
-        {"id":"milch",      "icon":"🥛", "label_de":"Milch",      "label_en":"Milk",     "label_kr":"우유",   "label_tr":"Süt",      "label_ua":"Молоко",   "label_ls":"Milch",
-         "values":[131.5, 131.8, 132.0, 132.2, 132.4, 132.5, 132.6, 132.8, 133.0, 133.1, 133.2, 133.3]},
-        {"id":"brot",       "icon":"🍞", "label_de":"Brot",       "label_en":"Bread",    "label_kr":"빵",     "label_tr":"Ekmek",    "label_ua":"Хліб",     "label_ls":"Brot",
-         "values":[127.0, 127.3, 127.5, 127.7, 127.9, 128.0, 128.2, 128.4, 128.6, 128.7, 128.8, 128.9]},
-        {"id":"butter",     "icon":"🧈", "label_de":"Butter",     "label_en":"Butter",   "label_kr":"버터",   "label_tr":"Tereyağı", "label_ua":"Масло",    "label_ls":"Butter",
-         "values":[156.2, 154.5, 152.0, 150.1, 148.3, 146.9, 145.8, 144.5, 144.2, 143.8, 144.0, 144.5]},
-        {"id":"kartoffeln", "icon":"🥔", "label_de":"Kartoffeln", "label_en":"Potatoes", "label_kr":"감자",   "label_tr":"Patates",  "label_ua":"Картопля", "label_ls":"Kartoffeln",
-         "values":[140.2, 141.0, 141.6, 142.0, 142.3, 142.5, 142.6, 142.7, 142.8, 142.9, 143.0, 143.1]},
-    ],
+TABLE = "61111-0006"
+BASE = "https://www-genesis.destatis.de/genesisWS/rest/2020"
+
+# 5-Steller COICOP labels exactly as destatis publishes them.
+TRACKED = {
+    "Eier":                                          {"id":"eier",       "icon":"🥚", "label_de":"Eier",       "label_en":"Eggs",     "label_kr":"계란",   "label_tr":"Yumurta",  "label_ua":"Яйця",     "label_ls":"Eier"},
+    "Vollmilch":                                     {"id":"milch",      "icon":"🥛", "label_de":"Vollmilch",  "label_en":"Whole milk","label_kr":"우유",  "label_tr":"Tam yağlı süt","label_ua":"Молоко","label_ls":"Vollmilch"},
+    "Brot und Brötchen":                             {"id":"brot",       "icon":"🍞", "label_de":"Brot",       "label_en":"Bread",    "label_kr":"빵",     "label_tr":"Ekmek",    "label_ua":"Хліб",     "label_ls":"Brot"},
+    "Butter":                                        {"id":"butter",     "icon":"🧈", "label_de":"Butter",     "label_en":"Butter",   "label_kr":"버터",   "label_tr":"Tereyağı", "label_ua":"Масло",    "label_ls":"Butter"},
+    "Kartoffeln, frisch, gekühlt und verarbeitet":   {"id":"kartoffeln", "icon":"🥔", "label_de":"Kartoffeln", "label_en":"Potatoes", "label_kr":"감자",   "label_tr":"Patates",  "label_ua":"Картопля", "label_ls":"Kartoffeln"},
 }
+
+MONTH_DE = {"Januar":"01","Februar":"02","März":"03","April":"04","Mai":"05","Juni":"06","Juli":"07","August":"08","September":"09","Oktober":"10","November":"11","Dezember":"12"}
+
+
+def load_token() -> str:
+    t = os.environ.get("DESTATIS_API_TOKEN", "").strip()
+    if t: return t
+    # Fallback: parse .env.local at repo root
+    here = Path(__file__).resolve().parent
+    for path in [here.parent / ".env.local", here / ".env.local"]:
+        if path.exists():
+            for line in path.read_text().splitlines():
+                if line.startswith("DESTATIS_API_TOKEN="):
+                    return line.split("=", 1)[1].strip()
+    sys.exit("ERROR: DESTATIS_API_TOKEN not set and no .env.local found.")
+
+
+def fetch_table(token: str) -> bytes:
+    url = f"{BASE}/data/tablefile"
+    params = {
+        "name": TABLE,
+        "area": "all",
+        "classifyingvariable1": "CC13A5",
+        "format": "ffcsv",
+        "compress": "false",
+        "language": "de",
+    }
+    body = urllib.parse.urlencode(params).encode()
+    req = urllib.request.Request(url, data=body, method="POST", headers={
+        "username": token,
+        "password": "",
+    })
+    with urllib.request.urlopen(req, timeout=120) as r:
+        return r.read()
+
+
+def extract(blob: bytes) -> dict:
+    # Response is a ZIP containing one CSV.
+    with zipfile.ZipFile(io.BytesIO(blob)) as z:
+        name = next(n for n in z.namelist() if n.endswith(".csv"))
+        raw = z.read(name).decode("utf-8-sig")
+    data = {info["id"]: {} for info in TRACKED.values()}
+    rdr = csv.DictReader(io.StringIO(raw), delimiter=";")
+    for row in rdr:
+        item = row["3_variable_attribute_label"]
+        if item not in TRACKED: continue
+        month_label = row["1_variable_attribute_label"]
+        if month_label not in MONTH_DE: continue
+        ym = f'{row["time"]}-{MONTH_DE[month_label]}'
+        v = row["value"].replace(",", ".")
+        if v in ("...", "-", ""): continue
+        data[TRACKED[item]["id"]][ym] = float(v)
+    # Pick the last 12 months where ALL series have a value.
+    all_months = sorted(set().union(*[set(s.keys()) for s in data.values()]))
+    complete = [m for m in all_months if all(m in data[k] for k in data)]
+    if len(complete) < 12:
+        sys.exit(f"ERROR: only {len(complete)} complete months available — need 12.")
+    months = complete[-12:]
+    series = []
+    for item, info in TRACKED.items():
+        s = dict(info)
+        s["values"] = [data[info["id"]][m] for m in months]
+        series.append(s)
+    return {"months": months, "series": series}
 
 
 def main():
+    token = load_token()
+    print(f"Fetching destatis table {TABLE} (5-Steller COICOP)…")
+    blob = fetch_table(token)
+    print(f"  {len(blob):,} bytes received")
+    parsed = extract(blob)
+
+    payload = {
+        "meta": {
+            "code": TABLE,
+            "title_de": "Verbraucherpreisindex Deutschland · ausgewählte Lebensmittel (5-Steller)",
+            "publisher": "Statistisches Bundesamt (destatis)",
+            "source": "https://www-genesis.destatis.de/genesis/online?operation=table&code=" + TABLE,
+            "license": "Datenlizenz Deutschland — Namensnennung 2.0",
+            "base": "2020 = 100",
+            "geo": "Deutschland (national; no Wiesbaden-level breakdown — destatis publishes city-level CPI only for major Bundesländer-aggregates, not individual cities).",
+            "fetched_via": "Genesis-Online REST API (token-auth, build-time)",
+        },
+        "months": parsed["months"],
+        "series": parsed["series"],
+    }
     out = (
-        "// destatis Verbraucherpreisindex — selected food items (monthly,\n"
-        "// nationwide). Base 2020 = 100. Citywide breakdown does NOT exist;\n"
-        "// the card discloses this in its footnote. License: dl-de-by-2.0.\n"
-        "// To switch to live API once a Genesis key arrives, replace this\n"
-        "// const with a fetch in app.js (see _emit_cpi.py header).\n"
-        "const CPI_TIMELINE = " + json.dumps(CPI_TIMELINE, ensure_ascii=False, separators=(',', ':')) + ";\n"
+        "// destatis Verbraucherpreisindex 5-Steller — fetched live via\n"
+        "// Genesis REST API (table 61111-0006). Build-time only; the\n"
+        "// browser never calls destatis directly. License: dl-de-by-2.0.\n"
+        "const CPI_TIMELINE = " + json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + ";\n"
     )
-    Path("_cpi.js.snippet").write_text(out)
-    print(f"Snippet bytes: {Path('_cpi.js.snippet').stat().st_size:,}")
-    s = CPI_TIMELINE['series']
-    print(f"Months: {len(CPI_TIMELINE['months'])} · Series: {len(s)}")
-    print(f"\nYoY change (2026-04 vs 2025-05):")
-    for ser in s:
-        first, last = ser['values'][0], ser['values'][-1]
+    Path(__file__).parent.joinpath("_cpi.js.snippet").write_text(out)
+
+    print(f"\nSnippet written: _cpi.js.snippet ({len(out):,} bytes)")
+    print(f"Months: {parsed['months'][0]} → {parsed['months'][-1]} (n={len(parsed['months'])})")
+    print(f"\nYoY change (last vs first month):")
+    for s in parsed["series"]:
+        first, last = s["values"][0], s["values"][-1]
         pct = (last - first) / first * 100
-        sign = '+' if pct >= 0 else ''
-        print(f"  {ser['icon']} {ser['label_de']:12s}  {first:6.1f} → {last:6.1f}  ({sign}{pct:.1f}%)")
+        sign = "+" if pct >= 0 else ""
+        print(f"  {s['icon']} {s['label_de']:12s}  {first:6.1f} → {last:6.1f}  ({sign}{pct:.1f}%)")
 
 
 if __name__ == "__main__":
