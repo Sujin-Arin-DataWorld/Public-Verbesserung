@@ -3006,9 +3006,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderKiezHeadlines() {
     const d = getKiezDistrict();
 
-    // Gastro
+    // Gastro — v2.6.4 shape: { meta, items }
     if (D.OSM_GASTRONOMIE) {
-      const list = D.OSM_GASTRONOMIE.filter(g => !d || g.d === d.name);
+      const all = D.OSM_GASTRONOMIE.items || D.OSM_GASTRONOMIE;
+      const list = all.filter(g => !d || g.d === d.name);
       const cafe = list.filter(x => x.t === 'cafe').length;
       const rest = list.filter(x => x.t === 'restaurant').length;
       const ghead = document.getElementById('kiez-gastro-headline');
@@ -3059,27 +3060,39 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ----- detail builders -----
-  // v2.6.3: Gastronomie drawer ranks venues by OSM-tag completeness (s 0..5)
-  // — a public, ToS-clean proxy for "well-curated, currently-operating" places.
-  // Google reviews would be more direct but the Places API ToS forbids
-  // displaying ratings outside Google Maps + caching beyond 30 days.
+  // v2.6.4: Gastronomie drawer with per-category tabs (Top 10 each).
+  // OSM-tag completeness (score 0..5) used as a public, ToS-clean proxy
+  // for "well-curated, currently-operating" places. Google Places ToS
+  // forbids displaying external ratings outside Google Maps + 30-day
+  // cache limit, so we explain in-line and rank by data completeness.
   function kiezBuildGastro(district) {
-    const list = (D.OSM_GASTRONOMIE || []).filter(g => !district || g.d === district.name);
+    const all = (D.OSM_GASTRONOMIE && D.OSM_GASTRONOMIE.items) || [];
+    const meta = (D.OSM_GASTRONOMIE && D.OSM_GASTRONOMIE.meta) || {};
+    const list = all.filter(g => !district || g.d === district.name);
     const types = ['cafe', 'restaurant', 'bar', 'pub', 'biergarten', 'fast_food'];
-    const stats = types.map(tp => `
-      <div class="kiez-stat-cell">
-        <div class="kiez-stat-label">${escapeHtml(t('kiez_amenity_' + tp, tp))}</div>
-        <div class="kiez-stat-value">${list.filter(x => x.t === tp).length}</div>
-      </div>`).join('');
-    // Top 10 by tag-richness — proxy for "well-maintained spots".
-    const top = list.filter(x => x.n).sort((a, b) =>
-      (b.s || 0) - (a.s || 0) || a.n.localeCompare(b.n, 'de')
-    ).slice(0, 10);
-    const cards = top.map(s => {
-      const meta = [];
-      if (s.c) meta.push(`<span class="kiez-tag">${escapeHtml(s.c)}</span>`);
-      if (s.os === 'yes') meta.push(`<span class="kiez-tag">${t('kiez_gastro_outdoor', '🌤 Terrasse')}</span>`);
-      if (s.wc === 'yes') meta.push(`<span class="kiez-tag">${t('kiez_gastro_wheelchair', '♿ barrierefrei')}</span>`);
+
+    // Pick a default tab: most-populated category in the current selection.
+    // Fall back to 'restaurant' if no items.
+    const counts = Object.fromEntries(types.map(tp => [tp, list.filter(x => x.t === tp).length]));
+    const defaultTab = types
+      .filter(tp => counts[tp] > 0)
+      .sort((a, b) => counts[b] - counts[a])[0] || 'restaurant';
+
+    const tabs = types.map(tp => {
+      const c = counts[tp];
+      const disabled = c === 0;
+      return `<button type="button" class="kiez-tab${tp === defaultTab ? ' active' : ''}${disabled ? ' kiez-tab-disabled' : ''}" data-kiez-tab="${tp}"${disabled ? ' disabled' : ''}>
+        <span class="kiez-tab-label">${escapeHtml(t('kiez_amenity_' + tp, tp))}</span>
+        <span class="kiez-tab-count">${c}</span>
+      </button>`;
+    }).join('');
+
+    // Pre-render Top-10 panels for each type (cheap; max 60 venues).
+    const renderVenue = (s) => {
+      const tags = [];
+      if (s.c) tags.push(`<span class="kiez-tag">${escapeHtml(s.c)}</span>`);
+      if (s.os === 'yes') tags.push(`<span class="kiez-tag">${t('kiez_gastro_outdoor', '🌤 Terrasse')}</span>`);
+      if (s.wc === 'yes') tags.push(`<span class="kiez-tag">${t('kiez_gastro_wheelchair', '♿ barrierefrei')}</span>`);
       const links = [];
       if (s.w) links.push(`<a href="${escapeHtml(s.w)}" target="_blank" rel="noopener" class="kiez-link">${t('kiez_gastro_website', 'Website ↗')}</a>`);
       if (s.h) links.push(`<span class="kiez-hours" title="${escapeHtml(s.h)}">🕐 ${escapeHtml(s.h.length > 30 ? s.h.slice(0,28)+'…' : s.h)}</span>`);
@@ -3088,26 +3101,58 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="kiez-venue-item">
           <div class="kiez-venue-row">
             <div class="kiez-venue-name">${escapeHtml(s.n)}</div>
-            <div class="kiez-venue-score" title="${t('kiez_gastro_score_hint', 'OSM-Datenvollständigkeit (Name, Küche, Öffnungszeiten, Website, Barrierefreiheit)')}">${score}</div>
+            <div class="kiez-venue-score" title="${t('kiez_gastro_score_hint', 'OSM-Datenvollständigkeit')}">${score}</div>
           </div>
           <div class="kiez-venue-sub">${escapeHtml(t('kiez_amenity_' + s.t, s.t))}${s.d ? ' · ' + escapeHtml(s.d) : ''}</div>
-          ${meta.length ? `<div class="kiez-venue-meta">${meta.join(' ')}</div>` : ''}
+          ${tags.length ? `<div class="kiez-venue-meta">${tags.join(' ')}</div>` : ''}
           ${links.length ? `<div class="kiez-venue-links">${links.join(' · ')}</div>` : ''}
         </div>`;
+    };
+
+    const panels = types.map(tp => {
+      const top = list
+        .filter(x => x.t === tp && x.n)
+        .sort((a, b) => (b.s || 0) - (a.s || 0) || a.n.localeCompare(b.n, 'de'))
+        .slice(0, 10);
+      const empty = `<p class="kiez-tab-empty">${escapeHtml(t('kiez_gastro_tab_empty', 'Keine Einträge in dieser Kategorie für die aktuelle Auswahl.'))}</p>`;
+      return `<div class="kiez-tab-panel${tp === defaultTab ? ' active' : ''}" data-kiez-panel="${tp}">${
+        top.length ? `<div class="kiez-venues-list">${top.map(renderVenue).join('')}</div>` : empty
+      }</div>`;
     }).join('');
+
+    const fetched = meta.fetched
+      ? `<span class="kiez-stand">${escapeHtml(t('kiez_stand', 'Stand:'))} ${escapeHtml(meta.fetched)}</span>`
+      : '';
+
     return {
       title: t('kiez_gastro_title', 'Gastronomie'),
       body: `
-        <div class="kiez-stat-grid">${stats}</div>
-        ${top.length ? `
-          <h4 class="kiez-section-h4">${escapeHtml(t('kiez_gastro_top_title', 'Top 10 · vollständigste Einträge'))}</h4>
-          <p class="kiez-section-note">${escapeHtml(t('kiez_gastro_top_note', 'Sortiert nach OSM-Tag-Vollständigkeit (Name · Küche · Öffnungszeiten · Website · Barrierefreiheit). Kein Bewertungs-Score — die Google-Places-API verbietet das Anzeigen externer Sterne. Vollständig gepflegte Einträge sind aber ein guter Proxy für „wirklich offene, gut betreute" Orte.'))}</p>
-          <div class="kiez-venues-list">${cards}</div>
-        ` : ''}
-        <p class="kiez-source-note">${escapeHtml(t('kiez_gastro_note', 'Quelle: OpenStreetMap, Bürger-Editionen. Stand: Build-Zeit, ODbL.'))}</p>
+        <h4 class="kiez-section-h4">${escapeHtml(t('kiez_gastro_top_title', 'Top 10 pro Kategorie'))}</h4>
+        <p class="kiez-section-note">${escapeHtml(t('kiez_gastro_top_note', 'Sortiert nach OSM-Tag-Vollständigkeit (Name · Küche · Öffnungszeiten · Website · Barrierefreiheit). Kein Bewertungs-Score — die Google-Places-API verbietet das Anzeigen externer Sterne. Vollständig gepflegte Einträge sind aber ein guter Proxy für „wirklich offene, gut betreute" Orte.'))}</p>
+        <div class="kiez-tabs" role="tablist">${tabs}</div>
+        <div class="kiez-tab-panels">${panels}</div>
+        <p class="kiez-source-note">
+          ${fetched}
+          ${escapeHtml(t('kiez_gastro_note', 'Quelle: OpenStreetMap, Community-gepflegt. Neue Lokale brauchen Tage bis Wochen, bis sie eingetragen werden. ODbL.'))}
+        </p>
       `,
-      sourceUrl: 'https://www.openstreetmap.org/',
-      sourceLabel: t('kiez_source_osm', 'OpenStreetMap ↗')
+      sourceUrl: meta.source_url || 'https://www.openstreetmap.org/relation/62496',
+      sourceLabel: t('kiez_source_osm', 'OpenStreetMap ↗'),
+      onMount: function() {
+        // Tab click handler (scoped to the drawer instance).
+        const det = document.getElementById('kiez-detail');
+        if (!det) return;
+        det.querySelectorAll('.kiez-tab').forEach(btn => {
+          btn.addEventListener('click', () => {
+            if (btn.disabled) return;
+            const tp = btn.dataset.kiezTab;
+            det.querySelectorAll('.kiez-tab').forEach(b => b.classList.toggle('active', b === btn));
+            det.querySelectorAll('.kiez-tab-panel').forEach(p =>
+              p.classList.toggle('active', p.dataset.kiezPanel === tp)
+            );
+          });
+        });
+      }
     };
   }
 
@@ -3345,6 +3390,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.kiez-card').forEach(c => {
       c.classList.toggle('active', c.dataset.kiezCard === cardId);
     });
+    // v2.6.4: builders may attach interactive handlers (e.g. tab clicks)
+    if (typeof result.onMount === 'function') {
+      try { result.onMount(); } catch (e) { console.error('kiez onMount failed:', e); }
+    }
     setTimeout(() => det.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
   }
 
