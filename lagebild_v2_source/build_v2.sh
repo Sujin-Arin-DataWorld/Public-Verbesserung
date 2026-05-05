@@ -40,8 +40,14 @@ APP=$(cat app.js)
   echo "$STYLE"
   echo "</style>"
   echo "</head>"
-  # Body section (after </head> through </footer>)
-  echo "$INDEX" | sed -n '/<body>/,/<\/footer>/p'
+  # Body section (after </head> through MAIN </footer>).
+  # The Kiez-Detail panel has a nested <footer class="kiez-detail-footer">,
+  # so we cannot stop at the first </footer> — that would cut off everything
+  # past line ~195 (Alltag/Wohnen/Demokratie/Mitmachen/Daten + main footer).
+  # Resolve the LAST </footer> line number first, then range to it.
+  LAST_FOOTER_LINE=$(grep -n '</footer>' index.html | tail -n1 | cut -d: -f1)
+  BODY_START_LINE=$(grep -n '<body>' index.html | head -n1 | cut -d: -f1)
+  echo "$INDEX" | sed -n "${BODY_START_LINE},${LAST_FOOTER_LINE}p"
   # Inline our scripts
   echo "<script>"
   echo "$DATA"
