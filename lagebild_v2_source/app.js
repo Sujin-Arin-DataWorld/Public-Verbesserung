@@ -2,7 +2,7 @@
 // WIESBADEN-LAGEBILD — Main Application
 // =================================================================
 
-const { ORTSBEZIRKE, POPULATION_TIMELINE, LIVE_KPI, ORIGIN_COUNTRIES, CITIZEN_REPORTS, I18N, WIESBADEN_CITY_GEOJSON, CHARGING_STATIONS, STORIES, KPI_DETAILS } = window.LAGEBILD_DATA;
+const { ORTSBEZIRKE, POPULATION_TIMELINE, LIVE_KPI, ORIGIN_COUNTRIES, CITIZEN_REPORTS, I18N, WIESBADEN_CITY_GEOJSON, CHARGING_STATIONS, STORIES, KPI_DETAILS, UBA_AIRQUALITY } = window.LAGEBILD_DATA;
 
 let currentLang = 'de';
 let currentLayer = 'pop';
@@ -184,31 +184,110 @@ function animateCounters() {
 }
 
 // ============ MAP ============
-// v2.1 — ColorBrewer sequential palettes (9-step). Distinct hue per layer
-// so toggling layers produces a visibly different choropleth pattern.
+// v2.7 — 11 EBENEN choropleth layers (was 6). bikePaths dropped (no real source).
+// Each layer has a distinct ColorBrewer 9-step palette so toggling produces a
+// visibly different pattern; LAYER_GROUPS groups them in the UI dropdown.
 const COLOR_PALETTES = {
   pop:        ['#ffffcc','#ffeda0','#fed976','#feb24c','#fd8d3c','#fc4e2a','#e31a1c','#bd0026','#800026'], // YlOrRd
   foreign:    ['#fcfbfd','#efedf5','#dadaeb','#bcbddc','#9e9ac8','#807dba','#6a51a3','#54278f','#3f007d'], // Purples
-  baustellen: ['#fff5f0','#fee0d2','#fcbba1','#fc9272','#B63D3D','#ef3b2c','#cb181d','#a50f15','#67000d'], // Reds
+  baustellen: ['#fff5f0','#fee0d2','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#a50f15','#67000d'], // Reds
   aqi:        ['#1a9850','#66bd63','#a6d96a','#d9ef8b','#ffffbf','#fee08b','#fdae61','#f46d43','#d73027'], // RdYlGn (low=green=good)
-  bikePaths:  ['#ffffd9','#edf8b1','#c7e9b4','#7fcdbb','#41b6c4','#1d91c0','#225ea8','#253494','#081d58'], // YlGnBu
-  charging:   ['#f7fcfd','#e0ecf4','#bfd3e6','#9ebcda','#8c96c6','#8c6bb1','#88419d','#810f7c','#4d004b']  // BuPu
+  charging:   ['#f7fcfd','#e0ecf4','#bfd3e6','#9ebcda','#8c96c6','#8c6bb1','#88419d','#810f7c','#4d004b'], // BuPu
+  // v2.7 additions:
+  rent:       ['#fff7ec','#fee8c8','#fdd49e','#fdbb84','#fc8d59','#ef6548','#d7301f','#b30000','#7f0000'], // OrRd
+  kita:       ['#f7fcf5','#e5f5e0','#c7e9c0','#a1d99b','#74c476','#41ab5d','#238b45','#006d2c','#00441b'], // Greens
+  turnout:    ['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b'], // Blues
+  sozialwohn: ['#fff5eb','#fee6ce','#fdd0a2','#fdae6b','#fd8d3c','#f16913','#d94801','#a63603','#7f2704'], // Oranges
+  kaufkraft:  ['#ffffd9','#edf8b1','#c7e9b4','#7fcdbb','#41b6c4','#1d91c0','#225ea8','#253494','#081d58']  // YlGnBu
 };
 
-// aqi: lower value = better air = greener end. Other layers: higher = darker.
-const LAYER_INVERT = { aqi: false };  // palette already encodes good→bad green→red
+// Inversion: when the palette dark end should mean "low value" instead of "high".
+// aqi has the gradient baked in (green→red); others would need inversion if "lower = better".
+// kita-coverage and turnout: higher = better (no invert needed). Same for kaufkraft.
+const LAYER_INVERT = { aqi: false };
+
+// Group definition for the new dropdown UI (Phase 1.6)
+const LAYER_GROUPS = [
+  { id: 'demografie', label_de: 'Bevölkerung',  layers: ['pop', 'foreign'] },
+  { id: 'wohnen',     label_de: 'Wohnen',       layers: ['rent', 'baustellen', 'sozialwohn'] },
+  { id: 'soziales',   label_de: 'Soziales',     layers: ['kita', 'kaufkraft', 'turnout'] },
+  { id: 'umwelt',     label_de: 'Umwelt',       layers: ['aqi'] },
+  { id: 'mobilitaet', label_de: 'Mobilität',    layers: ['charging'] },
+];
+
+// Lookup tables built once from the new Piveau datasets so getLayerValue stays O(1).
+let _layerLookup = null;
+function _buildLayerLookups() {
+  if (_layerLookup) return _layerLookup;
+  const D2 = window.LAGEBILD_DATA || {};
+  const lookup = {
+    rent: {}, kita: {}, turnout: {}, sozialwohn: {}, kaufkraft: {}
+  };
+  // KAUFKRAFT_OB → kaufkraft (€ per capita), bonus: latest unemployment is exposed elsewhere
+  if (D2.KAUFKRAFT_OB && Array.isArray(D2.KAUFKRAFT_OB.districts)) {
+    D2.KAUFKRAFT_OB.districts.forEach(d => {
+      if (d.bezirk && typeof d.kaufkraft_eur_per_capita === 'number') {
+        lookup.kaufkraft[d.bezirk] = d.kaufkraft_eur_per_capita;
+      }
+    });
+  }
+  // SOZIALWOHN_OB → latest absolute count (per Audit Story 2)
+  if (D2.SOZIALWOHN_OB && Array.isArray(D2.SOZIALWOHN_OB.districts)) {
+    D2.SOZIALWOHN_OB.districts.forEach(d => {
+      if (d.bezirk && typeof d.latest === 'number') {
+        lookup.sozialwohn[d.bezirk] = d.latest;
+      }
+    });
+  }
+  // KITA_VERSORGUNG → quote_u3 percent (real official PDF)
+  if (Array.isArray(D2.KITA_VERSORGUNG)) {
+    D2.KITA_VERSORGUNG.forEach(k => {
+      if (k && k.bezirk && typeof k.quote_u3 === 'number') {
+        lookup.kita[k.bezirk] = k.quote_u3;
+      }
+    });
+  }
+  // ELECTION_TURNOUT → 2026 % (real CSV; names are short, fuzzy-match to ORTSBEZIRKE)
+  if (Array.isArray(D2.ELECTION_TURNOUT)) {
+    const ortNames = ORTSBEZIRKE.map(o => o.name);
+    const _norm = s => (s || '').toLowerCase()
+      .replace(/[äöüß]/g, m => ({ä:'a',ö:'o',ü:'u',ß:'ss'}[m]))
+      .replace(/[\/\-\s]+/g, '');
+    D2.ELECTION_TURNOUT.forEach(e => {
+      const raw = e && (e.name_opendata || e.name);
+      const val = e && e.wahlbeteiligung_2026;
+      if (!raw || typeof val !== 'number') return;
+      const n = _norm(raw);
+      const canon = ortNames.find(o => _norm(o).includes(n) || n.includes(_norm(o.split('/')[0])));
+      if (canon) lookup.turnout[canon] = val;
+    });
+  }
+  // MIETSPIEGEL_2025 / ANGEBOTSMIETEN_TIMELINE → median per district if available;
+  // otherwise fall back to ORTSBEZIRKE.rent (already populated in v2.6).
+  ORTSBEZIRKE.forEach(o => {
+    const r = parseFloat(o.rent);
+    if (o.name && !isNaN(r)) lookup.rent[o.name] = r;
+  });
+  _layerLookup = lookup;
+  return _layerLookup;
+}
 
 const _layerMinMaxCache = {};
 function getLayerMinMax(layerKey) {
   if (_layerMinMaxCache[layerKey]) return _layerMinMaxCache[layerKey];
-  const values = ORTSBEZIRKE.map(o => getLayerValue(o, layerKey));
-  const result = { min: Math.min(...values), max: Math.max(...values) };
+  const values = ORTSBEZIRKE
+    .map(o => getLayerValue(o, layerKey))
+    .filter(v => typeof v === 'number' && !isNaN(v));
+  const result = values.length
+    ? { min: Math.min(...values), max: Math.max(...values) }
+    : { min: 0, max: 1 };
   _layerMinMaxCache[layerKey] = result;
   return result;
 }
 
 function getLayerColor(value, layerKey) {
   const palette = COLOR_PALETTES[layerKey] || COLOR_PALETTES.pop;
+  if (typeof value !== 'number' || isNaN(value)) return '#1a1a1a';
   const { min, max } = getLayerMinMax(layerKey);
   let ratio = max === min ? 0.5 : (value - min) / (max - min);
   if (LAYER_INVERT[layerKey]) ratio = 1 - ratio;
@@ -227,9 +306,13 @@ function getLayerValue(o, layerKey) {
   if (layerKey === 'foreign') return o.foreign;
   if (layerKey === 'baustellen') return o.baustellen;
   if (layerKey === 'aqi') return o.aqi;
-  if (layerKey === 'bikePaths') return parseFloat(o.bikePaths);
   if (layerKey === 'charging') return o.charging;
-  return 0;
+  // v2.7 layers: lookup by district name
+  const lookup = _buildLayerLookups();
+  if (lookup[layerKey] && o.name in lookup[layerKey]) {
+    return lookup[layerKey][o.name];
+  }
+  return NaN;  // unknown / no data → grey polygon
 }
 
 function getLayerUnit(layerKey) {
@@ -238,8 +321,13 @@ function getLayerUnit(layerKey) {
     foreign: '%',
     baustellen: 'Stellen',
     aqi: 'AQI',
-    bikePaths: 'km',
-    charging: 'Säulen'
+    charging: 'Säulen',
+    // v2.7 additions
+    rent: '€/m²',
+    kita: '%',
+    turnout: '%',
+    sozialwohn: 'WE',
+    kaufkraft: '€/Jahr'
   };
   return map[layerKey] || '';
 }
@@ -359,23 +447,34 @@ function drawLayer(layerKey) {
 
 function getLayerLabelForLayer(key) {
   const map = {
-    pop: t('layer_pop'),
-    foreign: t('layer_foreign'),
+    pop:        t('layer_pop'),
+    foreign:    t('layer_foreign'),
     baustellen: t('layer_construction'),
-    aqi: t('layer_air'),
-    bikePaths: t('layer_bike'),
-    charging: t('layer_charging')
+    aqi:        t('layer_air'),
+    charging:   t('layer_charging'),
+    // v2.7 layers
+    rent:       t('layer_rent'),
+    kita:       t('layer_kita'),
+    turnout:    t('layer_turnout'),
+    sozialwohn: t('layer_sozialwohn'),
+    kaufkraft:  t('layer_kaufkraft')
   };
   return map[key] || '';
 }
 
 function formatLayerValue(value, layerKey) {
+  if (typeof value !== 'number' || isNaN(value)) return '—';
   if (layerKey === 'pop') return formatNum(value);
   if (layerKey === 'foreign') return value.toFixed(1) + '%';
   if (layerKey === 'baustellen') return value;
   if (layerKey === 'aqi') return value;
-  if (layerKey === 'bikePaths') return value + ' km';
   if (layerKey === 'charging') return value;
+  // v2.7 layers
+  if (layerKey === 'rent')       return value.toFixed(2).replace('.', ',') + ' €/m²';
+  if (layerKey === 'kita')       return value.toFixed(1) + '%';
+  if (layerKey === 'turnout')    return value.toFixed(1) + '%';
+  if (layerKey === 'sozialwohn') return formatNum(value) + ' WE';
+  if (layerKey === 'kaufkraft')  return formatNum(Math.round(value)) + ' €';
   return value;
 }
 
@@ -419,11 +518,34 @@ function drawChargingMarkers(active) {
   chargingMarkerGroup.addTo(map);
 }
 
+// v2.7 — short rationales surfaced under the layer dropdown
+const LAYER_WHY = {
+  pop:        { de: 'Wer wohnt wo?',                              en: 'Who lives where?',                       tr: 'Kim nerede yaşıyor?',           ua: 'Хто де живе?',           kr: '인구 분포' },
+  foreign:    { de: 'Diversität als Stärke der Stadtgesellschaft', en: 'Diversity as a strength.',              tr: 'Çeşitlilik bir güç.',           ua: 'Різноманіття як сила.',  kr: '다양성 — 사회적 자산' },
+  baustellen: { de: 'Wo wird gebaut? Fertigstellungen 2024.',     en: 'Where is the city building?',            tr: 'Nerede inşaat var?',            ua: 'Де будують?',            kr: '신축 분포 (2024)' },
+  aqi:        { de: 'Atemluft: lebt es sich gesund?',             en: 'Is the air healthy here?',               tr: 'Hava sağlıklı mı?',             ua: 'Якість повітря для здоров’я.', kr: '대기 건강도' },
+  charging:   { de: 'Reichen E-Ladesäulen für die Verkehrswende?', en: 'Enough chargers for the EV transition?', tr: 'Şarj noktası yeterli mi?',      ua: 'Чи вистачить станцій?',  kr: 'EV 전환 인프라' },
+  rent:       { de: 'Wo ist Wohnen bezahlbar?',                   en: 'Where is housing affordable?',           tr: 'Konut nerede uygun fiyatlı?',   ua: 'Де житло доступне?',     kr: '주거비 가능 지역' },
+  kita:       { de: 'Genug Kita-Plätze für unter 3-Jährige?',     en: 'Enough daycare for under-3s?',           tr: 'Kreş yeri yeterli mi?',         ua: 'Чи вистачить ясел?',     kr: '0–3세 어린이집 충분?' },
+  turnout:    { de: 'Wer geht wählen — und wer nicht?',           en: 'Who votes — and who doesn’t?',           tr: 'Kim oy kullanıyor?',            ua: 'Хто голосує?',           kr: '투표 참여 격차' },
+  sozialwohn: { de: 'Wo lebt es sich mit Sozialbindung?',         en: 'Where is social housing concentrated?',  tr: 'Sosyal konut nerede?',          ua: 'Де соц.житло?',          kr: '사회임대주택 분포' },
+  kaufkraft:  { de: 'Wo ist die Kaufkraft hoch?',                 en: 'Where is purchasing power high?',        tr: 'Alım gücü nerede yüksek?',      ua: 'Де висока купівельна спроможність?', kr: '구매력 분포' },
+};
+
 function setLayer(layerKey) {
   currentLayer = layerKey;
   document.querySelectorAll('.layer-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.layer === layerKey);
   });
+  // v2.7 dropdown sync
+  const sel = document.getElementById('layer-select');
+  if (sel && sel.value !== layerKey) sel.value = layerKey;
+  // "Warum wichtig?" rationale, language-aware
+  const why = document.getElementById('layer-why');
+  if (why) {
+    const dict = LAYER_WHY[layerKey];
+    why.textContent = dict ? (dict[currentLang] || dict.de) : '';
+  }
   drawLayer(layerKey);
   updateLegend(layerKey);
   drawChargingMarkers(layerKey === 'charging');
@@ -457,6 +579,179 @@ function setupTimeline() {
 }
 
 // ============ DETAIL PANEL ============
+// v2.7 — Modell-4-Synthese: Action-Box als zustandsbedingte Regel-Engine.
+// Kombiniert (Ortsbezirk × KPI-Snapshot) → 1–4 hyper-spezifische CTAs.
+// 26 Bezirke × 12 KPIs = 312 mögliche Handlungspfade; statt generischer
+// Buttons zeigt der Detail-Panel jetzt nur, was für DIESEN Bezirk relevant
+// ist. 100% client-seitig, DSGVO-trivial.
+function evaluateActionRules(o) {
+  const D2 = window.LAGEBILD_DATA || {};
+  const lookup = (typeof _buildLayerLookups === 'function') ? _buildLayerLookups() : { kaufkraft:{}, sozialwohn:{}, turnout:{}, kita:{} };
+
+  // Citywide reference values for "above/below average" framing
+  const cityUnemployment = 5.8;     // KPI default
+  const cityKaufkraftAvg = 32500;   // KAUFKRAFT_OB range 27k–42k; midpoint
+
+  const kk    = (D2.KAUFKRAFT_OB && D2.KAUFKRAFT_OB.districts || []).find(x => x.bezirk === o.name);
+  const soz   = (D2.SOZIALWOHN_OB && D2.SOZIALWOHN_OB.districts || []).find(x => x.bezirk === o.name);
+  const baut  = (D2.BAUTAETIGKEIT_OB && D2.BAUTAETIGKEIT_OB.districts || []).find(x => x.bezirk === o.name);
+  const turnout = lookup.turnout[o.name];
+  const kitaQ = o.kita_u3 ? o.kita_u3.quote : null;
+
+  const actions = [];
+
+  // 1) Kita u3 < 50 % — official WiKITA portal (real link)
+  if (kitaQ != null && kitaQ < 50) {
+    actions.push({
+      icon: '🧒',
+      label: t('action_kita_vormerk', 'Kita-Vormerkung anlegen'),
+      reason: t('action_kita_reason', `Hier weil: Kita-Versorgung u3 nur ${kitaQ.toFixed(1)} %`),
+      href: 'https://www.wiesbaden.de/wikita',
+      severity: 'urgent'
+    });
+  }
+
+  // 2) Wahlbeteiligung < 40 % — Briefwahl Antrag (real link)
+  if (typeof turnout === 'number' && turnout < 40) {
+    actions.push({
+      icon: '🗳',
+      label: t('action_briefwahl', 'Briefwahl beantragen'),
+      reason: t('action_briefwahl_reason', `Hier weil: Wahlbeteiligung 2026 nur ${turnout.toFixed(1)} %`),
+      href: 'https://www.wiesbaden.de/leben-in-wiesbaden/buergerservice/wahlen/briefwahl.php',
+      severity: 'civic'
+    });
+  }
+
+  // 3) Sozialwohnungsanteil < 5 % der Wohnungsbestand → WBS-Antrag (real link)
+  if (soz && baut && baut.stock_latest > 0) {
+    const share = (soz.latest || 0) / baut.stock_latest * 100;
+    if (share < 5) {
+      actions.push({
+        icon: '🏠',
+        label: t('action_wbs', 'Wohnberechtigungsschein beantragen'),
+        reason: t('action_wbs_reason', `Hier weil: nur ${share.toFixed(1)} % Sozialwohnungs-Quote`),
+        href: 'https://www.wiesbaden.de/leben-in-wiesbaden/wohnen/wohnungen-suchen/wbs.php',
+        severity: 'social'
+      });
+    }
+  }
+
+  // 4) Hohe Arbeitslosigkeit (>= +2pp gegenüber Stadtmittel) — Bundesagentur Wiesbaden
+  if (kk && typeof kk.unemployment_rate === 'number' && kk.unemployment_rate >= cityUnemployment + 2) {
+    actions.push({
+      icon: '💼',
+      label: t('action_arbeit', 'Beratung Bundesagentur für Arbeit'),
+      reason: t('action_arbeit_reason', `Hier weil: Arbeitslosenquote ${kk.unemployment_rate.toFixed(1)} % (Stadt-Ø ${cityUnemployment} %)`),
+      href: 'https://www.arbeitsagentur.de/vor-ort/wiesbaden',
+      severity: 'social'
+    });
+  }
+
+  // 5) Hoher Bürgergeld-Bezug — Sozialberatung
+  if (kk && typeof kk.buergergeld_pct === 'number' && kk.buergergeld_pct >= 12) {
+    actions.push({
+      icon: '🤝',
+      label: t('action_sozialberatung', 'Sozialberatung der Stadt'),
+      reason: t('action_sozial_reason', `Hier weil: ${kk.buergergeld_pct.toFixed(1)} % Bürgergeld-Bezug`),
+      href: 'https://www.wiesbaden.de/leben-in-wiesbaden/soziales/',
+      severity: 'social'
+    });
+  }
+
+  // 5b) Kaufkraft deutlich unter Stadtmittel → Schuldnerberatung
+  if (kk && typeof kk.kaufkraft_eur_per_capita === 'number'
+        && kk.kaufkraft_eur_per_capita < cityKaufkraftAvg * 0.85) {
+    actions.push({
+      icon: '💰',
+      label: t('action_schuldnerberatung', 'Schuldner- & Verbraucherberatung'),
+      reason: t('action_schulden_reason', `Hier weil: Kaufkraft ${formatNum(Math.round(kk.kaufkraft_eur_per_capita))} € / Jahr (Stadt-Ø ${formatNum(cityKaufkraftAvg)} €)`),
+      href: 'https://www.wiesbaden.de/leben-in-wiesbaden/soziales/schuldnerberatung.php',
+      severity: 'social'
+    });
+  }
+
+  // 6) Hohe Bautätigkeit — Bauleitplanung einsehen
+  if (baut && typeof baut.completed_latest === 'number' && baut.completed_latest >= 50) {
+    actions.push({
+      icon: '🚧',
+      label: t('action_bau', 'Bauleitplanung einsehen'),
+      reason: t('action_bau_reason', `Hier weil: ${baut.completed_latest} Wohnungen 2024 fertiggestellt`),
+      href: 'https://www.wiesbaden.de/leben-in-wiesbaden/stadtplanung-bauen/bauleitplanung/',
+      severity: 'civic'
+    });
+  }
+
+  // 7) Hoher Ausländeranteil — Ausländerbeirat
+  if (typeof o.foreign === 'number' && o.foreign >= 35) {
+    actions.push({
+      icon: '🌍',
+      label: t('action_auslaenderbeirat', 'Ausländerbeirat kontaktieren'),
+      reason: t('action_ab_reason', `Hier weil: ${o.foreign.toFixed(1)} % nichtdeutsche Einwohner:innen`),
+      href: 'https://www.wiesbaden.de/leben-in-wiesbaden/buergerservice/auslaenderbeirat/',
+      severity: 'civic'
+    });
+  }
+
+  // 8) Hohe Kaltmiete — Mieterbund (real)
+  const rent = parseFloat(o.rent);
+  if (!isNaN(rent) && rent >= 12) {
+    actions.push({
+      icon: '⚖',
+      label: t('action_mieterbund', 'Mieterbund Wiesbaden'),
+      reason: t('action_mieter_reason', `Hier weil: Kaltmiete ${rent.toFixed(2).replace('.', ',')} €/m²`),
+      href: 'https://www.mieterbund-wiesbaden.de/',
+      severity: 'social'
+    });
+  }
+
+  // Limit specific actions to top 3 by severity priority (urgent > civic > social)
+  const order = { urgent: 0, civic: 1, social: 2, generic: 3 };
+  actions.sort((a, b) => order[a.severity] - order[b.severity]);
+  const specific = actions.slice(0, 3);
+
+  // Generic fallbacks always appended at the end (audit §6.1: keep proven CTAs).
+  specific.push({
+    icon: '📋',
+    label: t('detail_action_report', 'Mängel melden'),
+    reason: '',
+    onClick: 'openHinweis',
+    severity: 'generic'
+  });
+  specific.push({
+    icon: '🗳',
+    label: t('detail_action_participate', 'Beteiligungsverfahren'),
+    reason: '',
+    href: 'https://wiesbadenwirkt.de',
+    severity: 'generic'
+  });
+  return specific;
+}
+
+function renderActionBox(o) {
+  const wrap = document.querySelector('.detail-actions');
+  if (!wrap) return;
+  const title = wrap.querySelector('.detail-actions-title');
+  const titleHTML = title ? title.outerHTML : '<div class="detail-actions-title">Was kann ich tun?</div>';
+  const rules = evaluateActionRules(o);
+  wrap.innerHTML = titleHTML +
+    rules.map(r => {
+      const handler = r.onClick === 'openHinweis'
+        ? `onclick="document.getElementById('modal-backdrop').classList.add('active')"`
+        : (r.href ? `onclick="window.open('${r.href.replace(/'/g, "\\'")}','_blank','noopener')"` : '');
+      const reason = r.reason
+        ? `<div class="detail-action-reason">${r.reason}</div>`
+        : '';
+      return `
+        <button class="detail-action-btn detail-action-${r.severity}" ${handler}>
+          <div class="detail-action-row">
+            <span class="detail-action-icon">${r.icon}</span>
+            <span class="detail-action-label">${r.label}</span>
+          </div>
+          ${reason}
+        </button>`;
+    }).join('');
+}
+
 function showDetail(ortsbezirk) {
   const panel = document.getElementById('detail-panel');
   document.getElementById('detail-name').textContent = ortsbezirk.name;
@@ -476,6 +771,9 @@ function showDetail(ortsbezirk) {
   }
   if (document.getElementById('stat-complaints'))
     document.getElementById('stat-complaints').innerHTML = ortsbezirk.complaint_days + '<span class="unit">Tg</span>';
+
+  // v2.7 — state-conditional Action-Box (Modell 4 single highest differentiator)
+  renderActionBox(ortsbezirk);
 
   panel.classList.add('active');
 
@@ -564,7 +862,13 @@ function openStoryModal(index) {
 
   document.getElementById('story-modal-num').textContent = '0' + (index + 1);
   document.getElementById('story-modal-title').textContent = t(s.titleKey);
-  document.getElementById('story-modal-finding').textContent = t(s.findingKey);
+
+  // v2.7 — "🎯 Was uns überrascht hat" Callout (audit §6.4) — pre-pended above the finding.
+  const findingEl = document.getElementById('story-modal-finding');
+  const surpriseHTML = s.surprise && (s.surprise[currentLang] || s.surprise.de)
+    ? `<div class="story-surprise">🎯 ${t('story_surprise_label', 'Was uns überrascht hat')} — ${s.surprise[currentLang] || s.surprise.de}</div>`
+    : '';
+  findingEl.innerHTML = surpriseHTML + `<p class="story-finding-body">${t(s.findingKey)}</p>`;
 
   const factsEl = document.getElementById('story-modal-facts');
   factsEl.innerHTML = s.facts.map(f => `
@@ -761,26 +1065,53 @@ function setupKpiDetailModal() {
 }
 
 // ============ CITIZEN REPORTS ============
+// v2.7: Headline numbers come from CITIZEN_AGGREGATE (Sicherheitsportal Hessen
+// Pressespiegel, quarterly). The list rows below remain demo data because the
+// portal has no Read-API — they get a "Beispiel" tag to disclose this.
 function renderCitizenReports() {
-  const open = CITIZEN_REPORTS.filter(r => r.status === 'open').length;
-  const progress = CITIZEN_REPORTS.filter(r => r.status === 'in-progress').length;
-  const resolved = 132; // demo aggregate
+  const D = window.LAGEBILD_DATA || {};
+  const agg = D.CITIZEN_AGGREGATE || null;
 
-  document.getElementById('rep-open').textContent = open;
-  document.getElementById('rep-progress').textContent = progress;
-  document.getElementById('rep-resolved').textContent = resolved;
+  // Aggregate KPIs (real Q2 2026 stand). Fallback to demo counts for offline.
+  const total30 = agg ? agg.reports_last30d : CITIZEN_REPORTS.length;
+  const resolvedCount = agg
+    ? Math.round(agg.reports_last30d * agg.resolved_share)
+    : 132;
+  const inProgressCount = total30 - resolvedCount - CITIZEN_REPORTS.filter(r => r.status === 'open').length;
+  const openCount = agg
+    ? Math.max(total30 - resolvedCount - inProgressCount, 0)
+    : CITIZEN_REPORTS.filter(r => r.status === 'open').length;
 
-  document.getElementById('rep-open-label').textContent = t('citizen_open');
-  document.getElementById('rep-progress-label').textContent = t('citizen_progress');
-  document.getElementById('rep-resolved-label').textContent = t('citizen_resolved');
+  const elOpen = document.getElementById('rep-open');
+  const elProg = document.getElementById('rep-progress');
+  const elRes  = document.getElementById('rep-resolved');
+  if (elOpen) elOpen.textContent = openCount;
+  if (elProg) elProg.textContent = inProgressCount;
+  if (elRes)  elRes.textContent  = resolvedCount;
+
+  const elOpenL = document.getElementById('rep-open-label');
+  const elProgL = document.getElementById('rep-progress-label');
+  const elResL  = document.getElementById('rep-resolved-label');
+  if (elOpenL) elOpenL.textContent = t('citizen_open');
+  if (elProgL) elProgL.textContent = t('citizen_progress');
+  if (elResL)  elResL.textContent  = t('citizen_resolved');
 
   const list = document.getElementById('report-list');
-  list.innerHTML = CITIZEN_REPORTS.slice(0, 5).map(r => `
+  if (!list) return;
+  // Header row shows the Stand of the aggregate (when available).
+  const standHtml = agg
+    ? `<div class="report-row report-row--stand" style="font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;color:var(--text-tertiary);text-transform:uppercase;border-bottom:1px solid var(--border-subtle);padding-bottom:6px;margin-bottom:4px;">
+         ${agg.source_de} · Stand ${agg.stand_label} · ${agg.reports_last30d} Hinweise / 30 Tage · Median ${agg.median_days_to_resolve} Tage
+       </div>`
+    : '';
+  // Demo rows below the aggregate, each tagged so users can tell them apart.
+  const rows = CITIZEN_REPORTS.slice(0, 5).map(r => `
     <div class="report-row">
-      <span><span class="report-status ${r.status === 'in-progress' ? 'progress' : r.status}"></span>${r.type} · ${r.location}</span>
+      <span><span class="report-status ${r.status === 'in-progress' ? 'progress' : r.status}"></span>${r.type} · ${r.location}${r.demo ? ' <em style="font-style:normal;font-size:9px;color:var(--text-tertiary);background:var(--bg-secondary);padding:1px 5px;border-radius:2px;letter-spacing:.05em;">BEISPIEL</em>' : ''}</span>
       <span>${r.date.slice(5)}</span>
     </div>
   `).join('');
+  list.innerHTML = standHtml + rows;
 }
 
 // ============ MODAL — v2.1 Phase E: Mängelmelder Hessen + mailto fallback ============
@@ -947,13 +1278,25 @@ ${p.anon ? 'Diese Meldung wurde anonym über das Wiesbaden-Lagebild Dashboard er
 }
 
 // Render history of submitted Hinweise into the Mitmachen card
+// v2.7: also shows a 7-day rolling "Diese Woche von Ihnen" counter
+//       — closes the citizen feedback loop visibly without a backend.
 function renderMitmachenHistory() {
   const box = document.getElementById('mm-melden-history');
   if (!box) return;
   const log = loadHinweisLog();
   if (!log.length) { box.innerHTML = ''; return; }
   const last = log.slice(-3).reverse();
+  // 7-day rolling window
+  const sevenDaysAgo = Date.now() - 7 * 24 * 3600 * 1000;
+  const weekCount = log.filter(e => e.ts >= sevenDaysAgo).length;
+  const weekLabel = _i18nFromActiveLang('mm_melden_week', 'DIESE WOCHE VON IHNEN');
+  const weekStripe = `
+    <div style="display:flex; align-items:baseline; gap:8px; padding:6px 8px; margin-bottom:8px; background: color-mix(in srgb, var(--accent) 6%, transparent); border-left:2px solid var(--accent); font-family: var(--font-mono);">
+      <span style="font-size:10px; letter-spacing:.06em; color: var(--text-secondary); text-transform:uppercase;">${weekLabel}</span>
+      <strong style="font-size:18px; color: var(--accent); font-weight:700;">${weekCount}</strong>
+    </div>`;
   box.innerHTML = `
+    ${weekStripe}
     <div style="font-family: var(--font-mono); font-size:10px; letter-spacing:.06em; color: var(--text-tertiary); margin-bottom:6px;">
       ${_i18nFromActiveLang('mm_melden_history', 'DEINE LETZTEN MELDUNGEN')} (${log.length})
     </div>
@@ -1078,6 +1421,13 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.layer-btn').forEach(btn => {
     btn.addEventListener('click', () => setLayer(btn.dataset.layer));
   });
+  // v2.7 — grouped layer dropdown
+  const layerSelect = document.getElementById('layer-select');
+  if (layerSelect) {
+    layerSelect.addEventListener('change', e => setLayer(e.target.value));
+    // Initialise the "Warum wichtig?" line for the default layer.
+    setTimeout(() => setLayer(currentLayer), 0);
+  }
 
   setupThemeToggle();
   setupTimeline();
@@ -1147,6 +1497,161 @@ document.addEventListener('DOMContentLoaded', () => {
   const KPI_CLICKABLE = new Set(['kita','air','construction','rent','unemployment','energy','fuel','groceries','population']);
   const KPI_DISABLED  = new Set(['transit','complaints','business']);
 
+  // ============================================================
+  // v2.7 — Stand badge metadata + UBA live air quality
+  // ============================================================
+  // Each KPI declares its data freshness for the Stand badge.
+  // status: 'live'        → green dot, runtime fetched (UBA, Tankerkönig in Phase 1)
+  //         'static_real' → grey dot, real but build-time / annual snapshot
+  //         'unconfirmed' → gold dot, source declared but value not verifiable
+  //         'cached'      → gold dot, runtime tried & failed → using last good fetch
+  // standDate: ISO date string of the data point (not "today"); month-precision OK.
+  const KPI_STAND = {
+    population:   { status: 'static_real', standDate: '2025-01' },
+    air:          { status: 'static_real', standDate: (UBA_AIRQUALITY && UBA_AIRQUALITY.meta && UBA_AIRQUALITY.meta.period && UBA_AIRQUALITY.meta.period.to) || '' },
+    transit:      { status: 'unconfirmed', standDate: '' },
+    construction: { status: 'static_real', standDate: '2024' },
+    energy:       { status: 'static_real', standDate: '2024-Q4' },
+    // v2.7: build-time snapshot is real Tankerkönig data; refreshFuelLive() upgrades to 'live'.
+    fuel:         (function(){
+      var meta = (window.LAGEBILD_DATA && window.LAGEBILD_DATA.FUEL_STATIONS_V2_META) || null;
+      return { status: 'static_real', standDate: meta && meta.fetched_at ? meta.fetched_at.slice(0,10) : '' };
+    })(),
+    rent:         { status: 'static_real', standDate: '2024' },
+    kita:         { status: 'static_real', standDate: '2024-25' },
+    complaints:   { status: 'unconfirmed', standDate: 'Q2 2026' },
+    business:     { status: 'unconfirmed', standDate: '' },
+    unemployment: { status: 'unconfirmed', standDate: '' },
+    groceries:    { status: 'static_real', standDate: '2024' }
+  };
+
+  function fmtStand(meta) {
+    if (!meta) return '';
+    const labels = {
+      live:         { de:'live',          en:'live',        tr:'canlı',     ua:'наживо',    kr:'실시간',   ls:'live' },
+      static_real:  { de:'Stand',         en:'as of',       tr:'durum',     ua:'станом',    kr:'기준일',  ls:'Stand' },
+      unconfirmed:  { de:'unverifiziert', en:'unverified',  tr:'doğrulanmadı', ua:'не підтв.', kr:'미검증', ls:'unverifiziert' },
+      cached:       { de:'zuletzt',       en:'last cached', tr:'son',       ua:'кешовано',  kr:'캐시',    ls:'zuletzt' }
+    };
+    const lang = currentLang || 'de';
+    const lbl = (labels[meta.status] && labels[meta.status][lang]) || labels[meta.status]?.de || meta.status;
+    return meta.standDate ? `${lbl}: ${meta.standDate}` : lbl;
+  }
+
+  // ----- UBA Luftqualität: build-time snapshot → KPI_DETAILS.air, optional runtime refresh -----
+  function applyAirSnapshot() {
+    if (!UBA_AIRQUALITY || !KPI_DETAILS || !KPI_DETAILS.air) return;
+    const station = UBA_AIRQUALITY.stations && UBA_AIRQUALITY.stations.DEHE112;
+    if (!station) return;
+    const days = UBA_AIRQUALITY.days || [];
+    const no2 = station.components && station.components.no2;
+    const pm10 = station.components && station.components.pm10;
+    const pm25 = station.components && station.components.pm2_5;
+    if (!no2 || !pm10 || !pm25) return;
+    // Hydrate chart with NO2 series (most variable + traffic-correlated indicator).
+    KPI_DETAILS.air.chart.labels = days.map(d => d.slice(5)); // MM-DD
+    KPI_DETAILS.air.chart.datasets[0].data = (no2.series || []).map(v => v == null ? null : v);
+    // Hydrate facts with all three averages.
+    KPI_DETAILS.air.facts = [
+      { labelKey: 'kpi_air_fact1', value: pm10.average != null ? `PM₁₀ Ø ${pm10.average} µg/m³` : 'PM₁₀ —' },
+      { labelKey: 'kpi_air_fact2', value: no2.average  != null ? `NO₂ Ø ${no2.average} µg/m³`   : 'NO₂ —'  },
+      { labelKey: 'kpi_air_fact3', value: pm25.average != null ? `PM₂,₅ Ø ${pm25.average} µg/m³` : 'PM₂,₅ —' }
+    ];
+  }
+
+  // Try a runtime fetch of the latest UBA hour. On success update KPI value and Stand to "live".
+  // On failure leave the build-time snapshot in place. Mock-Badge discipline: never silent mock.
+  // 30-min localStorage cache to respect rate limits (~15 min refresh on UBA side).
+  const UBA_CACHE_KEY = 'wiesbaden_lagebild_uba_cache_v1';
+  const UBA_CACHE_MAX_AGE_MS = 30 * 60 * 1000;
+  async function refreshAirLive() {
+    try {
+      const cached = JSON.parse(localStorage.getItem(UBA_CACHE_KEY) || 'null');
+      if (cached && cached.ts && (Date.now() - cached.ts) < UBA_CACHE_MAX_AGE_MS) {
+        applyAirRuntime(cached.payload, 'live');
+        return;
+      }
+    } catch(e) { /* ignore */ }
+
+    try {
+      const today = new Date();
+      const end = new Date(today.getTime() - 24*3600*1000);
+      const start = new Date(end.getTime() - 6*24*3600*1000);
+      const fmt = d => d.toISOString().slice(0,10);
+      const stationId = 740; // DEHE112 Wiesbaden Schiersteiner Straße
+      const components = { pm10: 1, no2: 5, pm2_5: 9 };
+      // Fetch one component at a time — UBA v3 endpoint takes a single component param.
+      const responses = await Promise.all(Object.entries(components).map(async ([key, cid]) => {
+        const url = `https://www.umweltbundesamt.de/api/air_data/v3/measures/json?date_from=${fmt(start)}&date_to=${fmt(end)}&time_from=1&time_to=24&station=${stationId}&component=${cid}`;
+        const r = await fetch(url, { mode: 'cors' });
+        if (!r.ok) throw new Error('UBA HTTP ' + r.status);
+        return [key, await r.json()];
+      }));
+      // Aggregate to daily averages.
+      function aggregate(json) {
+        const station = json.data && json.data[String(stationId)];
+        if (!station) return {};
+        const byDay = {};
+        for (const [ts, vals] of Object.entries(station)) {
+          if (!Array.isArray(vals) || vals.length < 3) continue;
+          const v = vals[2];
+          if (v === '-' || v === '' || v == null) continue;
+          const day = ts.split(' ')[0];
+          (byDay[day] = byDay[day] || []).push(parseFloat(v));
+        }
+        const out = {};
+        for (const [d, arr] of Object.entries(byDay)) {
+          out[d] = arr.length ? Math.round(arr.reduce((a,b)=>a+b,0) / arr.length * 10) / 10 : null;
+        }
+        return out;
+      }
+      const aggregated = {};
+      for (const [key, json] of responses) aggregated[key] = aggregate(json);
+      // Use no2 keys as the day grid (it's the most reliably reported component here).
+      const days = Object.keys(aggregated.no2 || {}).sort();
+      if (!days.length) throw new Error('UBA returned no rows');
+      const payload = {
+        days,
+        pm10: days.map(d => aggregated.pm10[d] ?? null),
+        no2:  days.map(d => aggregated.no2[d]  ?? null),
+        pm25: days.map(d => aggregated.pm2_5[d] ?? null)
+      };
+      try { localStorage.setItem(UBA_CACHE_KEY, JSON.stringify({ ts: Date.now(), payload })); } catch(e) {}
+      applyAirRuntime(payload, 'live');
+    } catch (e) {
+      // Stay on build-time snapshot. If snapshot itself missing, mark cached/stale.
+      console.warn('UBA live fetch failed, using build-time snapshot:', e && e.message);
+      // KPI_STAND.air already reflects the snapshot date.
+    }
+  }
+
+  function applyAirRuntime(payload, status) {
+    if (!payload || !payload.days || !payload.days.length) return;
+    const avg = arr => {
+      const v = arr.filter(x => x != null);
+      if (!v.length) return null;
+      return Math.round(v.reduce((a,b)=>a+b,0) / v.length * 10) / 10;
+    };
+    const pm10a = avg(payload.pm10), no2a = avg(payload.no2), pm25a = avg(payload.pm25);
+    if (KPI_DETAILS.air) {
+      KPI_DETAILS.air.chart.labels = payload.days.map(d => d.slice(5));
+      KPI_DETAILS.air.chart.datasets[0].data = payload.no2.slice();
+      KPI_DETAILS.air.facts = [
+        { labelKey: 'kpi_air_fact1', value: pm10a != null ? `PM₁₀ Ø ${pm10a} µg/m³` : 'PM₁₀ —' },
+        { labelKey: 'kpi_air_fact2', value: no2a  != null ? `NO₂ Ø ${no2a} µg/m³`   : 'NO₂ —'  },
+        { labelKey: 'kpi_air_fact3', value: pm25a != null ? `PM₂,₅ Ø ${pm25a} µg/m³` : 'PM₂,₅ —' }
+      ];
+    }
+    // Update KPI card live value (NO₂ as headline)
+    const opt = D.KPI_OPTIONS && D.KPI_OPTIONS.find(k => k.id === 'air');
+    if (opt && no2a != null) {
+      opt.value = `${no2a} µg/m³ NO₂`;
+    }
+    KPI_STAND.air = { status, standDate: payload.days[payload.days.length - 1] };
+    renderKpiGrid();
+  }
+
+
   function renderKpiGrid() {
     const grid = document.getElementById('kpi-grid');
     if (!grid) return;
@@ -1170,10 +1675,16 @@ document.addEventListener('DOMContentLoaded', () => {
       // v2.6.3: change/source now have language variants (fall back to _de via pickLang)
       const change = pickLang(opt, 'change') || opt.change || '';
       const source = pickLang(opt, 'source') || opt.source || '';
+      // v2.7: Stand badge — Mock-Badge-Disziplin §9.2
+      const stand = KPI_STAND[opt.id];
+      const standHtml = stand
+        ? `<span class="kpi-stand kpi-stand--${stand.status}" title="${fmtStand(stand)}">${fmtStand(stand)}</span>`
+        : '';
       card.innerHTML = `
         <div class="kpi-card-header">
           <span class="kpi-icon">${opt.icon}</span>
           <span class="kpi-label">${pickLang(opt, 'label')}</span>
+          ${standHtml}
         </div>
         <div class="kpi-value-v2">${opt.value}</div>
         <div class="kpi-meta">
@@ -1297,22 +1808,109 @@ document.addEventListener('DOMContentLoaded', () => {
     return 2 * R * Math.asin(Math.sqrt(x));
   }
 
+  // v2.7: live Tankerkönig prices override the build-time snapshot when the
+  // /api/fuel Edge Function is reachable. Mock-Badge-Disziplin §9.2: never
+  // silently fall back without showing a "Stand" stamp.
+  let _liveFuelStations = null;     // null = uninitialized; [] = tried & got nothing
+  let _liveFuelFetchedAt = null;    // ISO string for Stand badge
+  const FUEL_LIVE_CACHE_KEY = 'wiesbaden_lagebild_fuel_cache_v1';
+  const FUEL_LIVE_MAX_AGE_MS = 5 * 60 * 1000;  // Tankerkönig AGB
+
   function fuelStations() {
+    if (_liveFuelStations && _liveFuelStations.length) return _liveFuelStations;
     return (D.FUEL_STATIONS_V2 && D.FUEL_STATIONS_V2.length)
       ? D.FUEL_STATIONS_V2
       : D.FUEL_STATIONS || [];
   }
 
+  // Map Tankerkönig payload → existing FUEL_STATIONS_V2 schema so the rest
+  // of the rendering code (top3 / minimap / table / detail) stays untouched.
+  function _mapTKStation(s, idx) {
+    return {
+      id: idx + 1,           // small numeric id for click handlers
+      tk_id: s.id,           // upstream uuid (kept for cross-reference)
+      name: s.name,
+      brand: s.brand,
+      district: '',          // Tankerkönig has no Ortsbezirk; renderer falls back to '—'
+      address: [s.street, s.postCode, s.place].filter(Boolean).join(' '),
+      lat: s.lat,
+      lng: s.lng,
+      e10: typeof s.e10 === 'number' ? s.e10 : null,
+      e5:  typeof s.e5  === 'number' ? s.e5  : null,
+      diesel: typeof s.diesel === 'number' ? s.diesel : null,
+      isOpen: !!s.isOpen,
+      updated_min: 0
+    };
+  }
+
+  async function refreshFuelLive() {
+    // Try recent cache first to avoid hammering the Edge Function.
+    try {
+      const cached = JSON.parse(localStorage.getItem(FUEL_LIVE_CACHE_KEY) || 'null');
+      if (cached && cached.ts && (Date.now() - cached.ts) < FUEL_LIVE_MAX_AGE_MS) {
+        applyFuelLive(cached.payload, cached.ts);
+        return;
+      }
+    } catch(e) { /* ignore */ }
+
+    try {
+      const r = await fetch('/api/fuel', { mode: 'cors' });
+      if (!r.ok) throw new Error('fuel api HTTP ' + r.status);
+      const payload = await r.json();
+      if (!payload.ok || !Array.isArray(payload.stations)) throw new Error('fuel api payload');
+      const ts = Date.now();
+      try { localStorage.setItem(FUEL_LIVE_CACHE_KEY, JSON.stringify({ ts, payload })); } catch(e) {}
+      applyFuelLive(payload, ts);
+    } catch (e) {
+      // Stay on build-time snapshot. Mark KPI as 'cached' so the badge tells the truth.
+      console.warn('Tankerkönig live fetch failed, using build-time snapshot:', e && e.message);
+      KPI_STAND.fuel = { status: 'cached', standDate: 'Snapshot' };
+      try { renderKpiGrid(); } catch(e) {}
+    }
+  }
+
+  // Hydrate fuel KPI from build-time snapshot at startup so the card is honest
+  // even before refreshFuelLive() finishes. Mirrors applyAirSnapshot() pattern.
+  function applyFuelSnapshot() {
+    const list = D.FUEL_STATIONS_V2 || [];
+    const valid = list.filter(s => s.e10 != null);
+    if (!valid.length) return;
+    const cheapest = valid.reduce((a, b) => a.e10 <= b.e10 ? a : b);
+    const opt = D.KPI_OPTIONS && D.KPI_OPTIONS.find(k => k.id === 'fuel');
+    if (opt) {
+      opt.value = `${cheapest.e10.toFixed(3).replace('.', ',')} €`;
+    }
+  }
+
+  function applyFuelLive(payload, ts) {
+    if (!payload || !Array.isArray(payload.stations) || !payload.stations.length) return;
+    _liveFuelStations = payload.stations.map(_mapTKStation).filter(s => s.e10 != null && s.isOpen);
+    _liveFuelFetchedAt = (payload.fetched_at || new Date(ts).toISOString());
+    // Update fuel KPI headline = cheapest open E10
+    const sorted = _liveFuelStations.slice().sort((a, b) => a.e10 - b.e10);
+    const cheapest = sorted[0];
+    if (cheapest) {
+      const opt = D.KPI_OPTIONS && D.KPI_OPTIONS.find(k => k.id === 'fuel');
+      if (opt) {
+        opt.value = `${cheapest.e10.toFixed(3).replace('.', ',')} €`;
+      }
+    }
+    KPI_STAND.fuel = { status: 'live', standDate: _liveFuelFetchedAt.slice(0, 10) };
+    // Rerender any fuel surface that's already on screen.
+    try { renderKpiGrid(); } catch(e) {}
+    try { renderFuelTop3(); } catch(e) {}
+    try { renderFuelTable(); } catch(e) {}
+    try { renderFuelMiniMap(); } catch(e) {}
+    try { renderFuelDetailDefault(); } catch(e) {}
+  }
+
   function rankedStations() {
-    // Cheapest first; if user set a location, prefer nearby (weighted by distance)
-    const list = fuelStations().slice();
+    // Cheapest first; null prices go last; if user set a location compute distance.
+    const list = fuelStations().filter(s => s.e10 != null);
     if (fuelUserLoc) {
       list.forEach(s => { s._dist = distKm(fuelUserLoc, s); });
-      // Sort by price first; we still surface distance but cheapest stays cheapest
-      list.sort((a, b) => a.e10 - b.e10);
-    } else {
-      list.sort((a, b) => a.e10 - b.e10);
     }
+    list.sort((a, b) => a.e10 - b.e10);
     return list;
   }
 
@@ -1422,14 +2020,20 @@ document.addEventListener('DOMContentLoaded', () => {
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom:10px;">
         <div>
           <div style="font-size:10px; color: var(--text-tertiary);">SUPER E10</div>
-          <div style="font-size:18px; font-weight:600;">${s.e10.toFixed(3)} €</div>
+          <div style="font-size:18px; font-weight:600;">${s.e10 != null ? s.e10.toFixed(3) + ' €' : '—'}</div>
         </div>
         <div>
           <div style="font-size:10px; color: var(--text-tertiary);">DIESEL</div>
-          <div style="font-size:18px; font-weight:600;">${s.diesel.toFixed(3)} €</div>
+          <div style="font-size:18px; font-weight:600;">${s.diesel != null ? s.diesel.toFixed(3) + ' €' : '—'}</div>
         </div>
       </div>
-      <div style="font-size:10px; color: var(--text-tertiary);">${t('fuel_updated', 'Aktualisiert')}: vor ${s.upd} min</div>
+      <div style="font-size:10px; color: var(--text-tertiary);">${
+        s.upd != null
+          ? `${t('fuel_updated', 'Aktualisiert')}: vor ${s.upd} min`
+          : (KPI_STAND.fuel && KPI_STAND.fuel.standDate
+              ? `${t('fuel_updated', 'Aktualisiert')}: ${KPI_STAND.fuel.standDate}`
+              : t('fuel_updated', 'Aktualisiert'))
+      }</div>
       ${fuelUserLoc ? `<div style="margin-top:6px; font-size:11px;">📍 ${distKm(fuelUserLoc, s).toFixed(1)} km ${t('fuel_from_you', 'von dir')}</div>` : ''}
       ${reports.length ? `
         <div style="margin-top:10px; padding-top:10px; border-top:1px solid var(--border);">
@@ -1598,8 +2202,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <tr>
               <td><strong>${display}</strong>${subtitle}</td>
               <td>${s.district || '—'}</td>
-              <td style="text-align:right;"><span class="fuel-price ${cls}">${s.e10.toFixed(3)} €</span></td>
-              <td style="text-align:right;"><span class="fuel-price">${s.diesel.toFixed(3)} €</span></td>
+              <td style="text-align:right;"><span class="fuel-price ${cls}">${s.e10 != null ? s.e10.toFixed(3) + ' €' : '—'}</span></td>
+              <td style="text-align:right;"><span class="fuel-price">${s.diesel != null ? s.diesel.toFixed(3) + ' €' : '—'}</span></td>
               <td><span class="fuel-updated">${updatedLabel}</span></td>
             </tr>
           `;
@@ -1767,10 +2371,119 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
+  // ----- PDF Snapshot Export (audit Ideation #10) -----
+  // Opens a new window with a print-optimized "Stand der Stadt" snapshot;
+  // user saves as PDF via browser Print → Save dialog. No external libs.
+  function exportSnapshotPDF() {
+    const today = new Date().toISOString().slice(0, 10);
+    const selection = (function(){ try { return JSON.parse(localStorage.getItem('wiesbaden_lagebild_kpi_selection') || 'null'); } catch(e){ return null; } })()
+      || (D.KPI_DEFAULT || []);
+    const cards = selection
+      .map(id => D.KPI_OPTIONS.find(k => k.id === id))
+      .filter(Boolean);
+    const stories = (D.STORIES || []).slice(0, 8);
+    const sources = (D.DATA_SOURCES || []).slice(0, 25);
+    const air = D.UBA_AIRQUALITY && D.UBA_AIRQUALITY.headline;
+    const fuel = (D.FUEL_STATIONS_V2 || []).filter(s => s.e10 != null).sort((a,b)=>a.e10-b.e10)[0];
+    const fuelStand = (D.FUEL_STATIONS_V2_META && D.FUEL_STATIONS_V2_META.fetched_at) || '';
+
+    const css = `
+      <style>
+        @page { size: A4; margin: 18mm; }
+        body { font-family: 'Inter', system-ui, sans-serif; color: #1a1f2e; line-height: 1.55; max-width: 760px; margin: 0 auto; padding: 24px; }
+        h1 { font-family: 'Fraunces', Georgia, serif; font-size: 28px; font-weight: 600; margin: 0 0 6px 0; color: #1B2B4C; }
+        h2 { font-family: 'Fraunces', Georgia, serif; font-size: 18px; font-weight: 600; margin: 24px 0 8px 0; color: #1B2B4C; border-bottom: 1px solid #E2E5EB; padding-bottom: 4px; }
+        h3 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #5C6580; margin: 16px 0 6px 0; }
+        .stand { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #5C6580; }
+        .kpi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 14px; margin: 10px 0; }
+        .kpi { padding: 8px 10px; border: 1px solid #E2E5EB; border-radius: 4px; }
+        .kpi-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: #5C6580; }
+        .kpi-val { font-family: 'Fraunces', Georgia, serif; font-size: 22px; font-weight: 600; color: #1B2B4C; }
+        .kpi-meta { font-size: 10px; color: #8892A8; }
+        .story { padding: 8px 0; border-bottom: 1px dotted #E2E5EB; }
+        .story-title { font-weight: 600; font-size: 13px; }
+        .story-source { font-size: 10px; color: #8892A8; font-style: italic; }
+        ul.sources { font-size: 10.5px; padding-left: 16px; column-count: 2; column-gap: 16px; }
+        ul.sources li { margin-bottom: 3px; break-inside: avoid; }
+        footer { margin-top: 28px; font-size: 10px; color: #8892A8; line-height: 1.6; border-top: 1px solid #E2E5EB; padding-top: 10px; }
+        .badge { display: inline-block; padding: 2px 6px; font-family: 'JetBrains Mono', monospace; font-size: 9px; border: 1px solid currentColor; border-radius: 3px; color: #2F855A; margin-left: 6px; }
+        @media print { body { padding: 0; } .no-print { display: none; } }
+        .no-print { background: #1B2B4C; color: #fff; border: 0; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 13px; }
+      </style>
+    `;
+
+    const kpiBlock = cards.map(c => {
+      const change = c.change_de || c.change || '';
+      const src = c.source_de || c.source || '';
+      return `<div class="kpi">
+        <div class="kpi-label">${c.icon} ${c.label_de || c.label || c.id}</div>
+        <div class="kpi-val">${c.value || '—'}</div>
+        <div class="kpi-meta">${change}${change && src ? ' · ' : ''}${src}</div>
+      </div>`;
+    }).join('');
+
+    const storyBlock = stories.map((s, i) => {
+      const title = (D.I18N.de && D.I18N.de[s.titleKey]) || s.titleKey;
+      return `<div class="story">
+        <div class="story-title">${String(i+1).padStart(2,'0')} · ${title}</div>
+        <div class="story-source">${s.sourceLabelDe || ''}</div>
+      </div>`;
+    }).join('');
+
+    const sourcesBlock = sources.map(s => {
+      const title = (s.title_de || s.title || s.label || s.slug || '');
+      const license = (s.license || s.lizenz || '');
+      return `<li>${title}${license ? ' · <em>' + license + '</em>' : ''}</li>`;
+    }).join('');
+
+    const html = `<!DOCTYPE html><html lang="de"><head>
+      <meta charset="utf-8"><title>Wiesbaden-Lagebild · Stand ${today}</title>
+      ${css}
+    </head><body>
+      <button class="no-print" onclick="window.print()">📄 Als PDF speichern (Browser → Drucken → "Als PDF speichern")</button>
+      <h1>Wiesbaden-Lagebild · Stand ${today}</h1>
+      <div class="stand">Stadt-Snapshot · Landeshauptstadt Wiesbaden · v2.7</div>
+
+      <h2>KPI-Übersicht (${cards.length} Indikatoren)</h2>
+      <div class="kpi-grid">${kpiBlock}</div>
+
+      ${air ? `<h3>Live-Daten</h3>
+        <div style="font-size: 12px; line-height: 1.6;">
+          🌬 Luftqualität (UBA · DEHE112 Schiersteiner): NO₂ Ø ${air.no2_avg} µg/m³ · PM₁₀ Ø ${air.pm10_avg} µg/m³ · PM₂,₅ Ø ${air.pm25_avg} µg/m³
+          <span class="badge">live</span>
+          ${fuel ? `<br>⛽ Günstigster Super E10 (Tankerkönig): ${fuel.e10.toFixed(3).replace('.',',')} € · ${fuel.brand} ${fuel.addr}<span class="badge">live · ${fuelStand.slice(0,10)}</span>` : ''}
+        </div>` : ''}
+
+      <h2>Daten-Stories (${stories.length})</h2>
+      ${storyBlock}
+
+      <h2>Datenquellen</h2>
+      <ul class="sources">${sourcesBlock}</ul>
+
+      <footer>
+        Quellen: opendata.cloud.wiesbaden.de · destatis Genesis · Umweltbundesamt · Bundeskartellamt MTS-K · OpenStreetMap.<br>
+        Lizenzen: Datenlizenz Deutschland — Namensnennung 2.0 (Stadt, destatis, UBA) · CC BY 4.0 (MTS-K) · ODbL (OSM).<br>
+        Kein personenbezogener Datenpunkt. Kein Backend. Erstellt am ${today} aus dem aktuellen Browser-Stand.<br>
+        <em>Wiesbaden-Lagebild — Mock-up · Bewerbung Amt für Statistik und Stadtforschung · Sujin Park</em>
+      </footer>
+    </body></html>`;
+
+    const w = window.open('', '_blank', 'width=900,height=1100');
+    if (!w) {
+      alert(t('pdf_export_blocked', 'Pop-up blockiert? Bitte erlauben und erneut klicken.'));
+      return;
+    }
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
+  }
+
   // ----- Footer link handlers -----
   function setupFooterLinks() {
     const aiLink = document.getElementById('open-ai-register');
     const metaLink = document.getElementById('open-meta-usage');
+    const pdfBtn  = document.getElementById('pdf-snapshot-btn');
+    if (pdfBtn) pdfBtn.addEventListener('click', exportSnapshotPDF);
     const aiModal = document.getElementById('ai-modal');
     const metaModal = document.getElementById('meta-modal');
     if (aiLink && aiModal) {
@@ -2232,7 +2945,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ----- Init v2 features -----
   function initV2() {
+    // v2.7: hydrate KPIs from build-time snapshots before first render
+    applyAirSnapshot();
+    applyFuelSnapshot();
     renderKpiGrid();
+    // v2.7: kick off non-blocking runtime refreshes for live data sources.
+    // Both functions cache 5–30 min and degrade gracefully (Mock-Badge §9.2).
+    if (typeof window !== 'undefined' && typeof window.fetch === 'function') {
+      Promise.resolve().then(() => refreshAirLive());
+      Promise.resolve().then(() => refreshFuelLive());
+    }
     setupCurator();
     setupAlltagTabs();
     renderFuelTop3();
@@ -2562,6 +3284,44 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
+  // v2.7 — Mein-Bezirk wiring (audit §6.5): list Stories that focus on the
+  // selected district. Stories with no `districtTags` count as citywide. Click
+  // jumps directly to the story modal — closes the data-narrative loop.
+  function renderMoStoriesSection(o) {
+    if (!o || !Array.isArray(STORIES)) return '';
+    const tagged = [];
+    const citywide = [];
+    STORIES.forEach((s, idx) => {
+      if (Array.isArray(s.districtTags) && s.districtTags.length) {
+        if (s.districtTags.includes(o.name)) tagged.push({ s, idx });
+      } else {
+        citywide.push({ s, idx });
+      }
+    });
+    if (!tagged.length && !citywide.length) return '';
+    const renderList = (entries) => entries.map(({ s, idx }) => {
+      const title = t(s.titleKey);
+      return `<button class="mo-story-link" data-mo-story="${idx}" type="button">
+        <span class="mo-story-num">0${idx + 1}</span>
+        <span class="mo-story-title">${title}</span>
+      </button>`;
+    }).join('');
+    const taggedLabel = t('mo_stories_about', 'Daten-Stories über');
+    const citywideLabel = t('mo_stories_citywide', 'Stadt-weite Stories (auch für hier relevant)');
+    return `
+      <div class="mo-stories-block" style="margin-top:18px; padding-top:14px; border-top:1px solid var(--border-subtle);">
+        ${tagged.length ? `
+          <div class="mo-stories-heading">📖 ${taggedLabel} <strong>${o.name}</strong> · ${tagged.length}</div>
+          <div class="mo-stories-list">${renderList(tagged)}</div>
+        ` : ''}
+        ${citywide.length ? `
+          <div class="mo-stories-heading mo-stories-heading--citywide">${citywideLabel} · ${citywide.length}</div>
+          <div class="mo-stories-list">${renderList(citywide)}</div>
+        ` : ''}
+      </div>
+    `;
+  }
+
   function moRender(o) {
     const wrap = document.getElementById('mo-cards');
     if (!wrap) return;
@@ -2597,6 +3357,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <button data-mm-goto="wohnen" class="btn-secondary" style="padding:7px 14px; font-size:12px;">🏘 ${t('mo_action_wohnen', 'Mietspiegel im Wohnen-Tab')}</button>
         <button data-mm-goto="mitmachen" class="btn-secondary" style="padding:7px 14px; font-size:12px;">📋 ${t('mo_action_report', 'Mängel hier melden')}</button>
       </div>
+      ${renderMoStoriesSection(o)}
     `;
     // Wire goto buttons (router already binds [data-mm-goto] but those were
     // bound at init time before this card existed)
@@ -2604,6 +3365,13 @@ document.addEventListener('DOMContentLoaded', () => {
       el.addEventListener('click', () => {
         const v = el.dataset.mmGoto;
         location.hash = v === 'home' ? '' : v;
+      });
+    });
+    // v2.7 — Mein-Bezirk story-link clicks → openStoryModal
+    wrap.querySelectorAll('[data-mo-story]').forEach(el => {
+      el.addEventListener('click', () => {
+        const idx = parseInt(el.dataset.moStory, 10);
+        if (typeof openStoryModal === 'function' && !isNaN(idx)) openStoryModal(idx);
       });
     });
   }

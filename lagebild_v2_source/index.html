@@ -207,31 +207,31 @@
   <section class="map-section">
     <aside class="map-controls">
       <h3 data-i18n="layers">EBENEN</h3>
-      <div class="layer-list">
-        <button class="layer-btn active" data-layer="pop">
-          <span class="layer-dot"></span>
-          <span data-i18n="layer_pop">Bevölkerung</span>
-        </button>
-        <button class="layer-btn" data-layer="foreign">
-          <span class="layer-dot"></span>
-          <span data-i18n="layer_foreign">Ausländeranteil</span>
-        </button>
-        <button class="layer-btn" data-layer="baustellen">
-          <span class="layer-dot"></span>
-          <span data-i18n="layer_construction">Baustellen</span>
-        </button>
-        <button class="layer-btn" data-layer="aqi">
-          <span class="layer-dot"></span>
-          <span data-i18n="layer_air">Luftqualität</span>
-        </button>
-        <button class="layer-btn" data-layer="bikePaths">
-          <span class="layer-dot"></span>
-          <span data-i18n="layer_bike">Radwege (km)</span>
-        </button>
-        <button class="layer-btn" data-layer="charging">
-          <span class="layer-dot"></span>
-          <span data-i18n="layer_charging">E-Ladesäulen</span>
-        </button>
+      <!-- v2.7: 11 layers grouped into 5 themes for clarity. Default = Bevölkerung. -->
+      <div class="layer-dropdown">
+        <select id="layer-select" class="layer-select" aria-label="Choose map layer">
+          <optgroup label="Bevölkerung" data-i18n-group="bevoelkerung">
+            <option value="pop"        data-i18n="layer_pop"        selected>Bevölkerung</option>
+            <option value="foreign"    data-i18n="layer_foreign">Ausländeranteil</option>
+          </optgroup>
+          <optgroup label="Wohnen" data-i18n-group="wohnen">
+            <option value="rent"       data-i18n="layer_rent">Mietspiegel · €/m²</option>
+            <option value="baustellen" data-i18n="layer_construction">Bautätigkeit</option>
+            <option value="sozialwohn" data-i18n="layer_sozialwohn">Sozialwohnungen</option>
+          </optgroup>
+          <optgroup label="Soziales" data-i18n-group="soziales">
+            <option value="kita"       data-i18n="layer_kita">Kita-Versorgung u3</option>
+            <option value="kaufkraft"  data-i18n="layer_kaufkraft">Kaufkraft / Einw.</option>
+            <option value="turnout"    data-i18n="layer_turnout">Wahlbeteiligung 2026</option>
+          </optgroup>
+          <optgroup label="Umwelt" data-i18n-group="umwelt">
+            <option value="aqi"        data-i18n="layer_air">Luftqualität (AQI)</option>
+          </optgroup>
+          <optgroup label="Mobilität" data-i18n-group="mobilitaet">
+            <option value="charging"   data-i18n="layer_charging">E-Ladesäulen</option>
+          </optgroup>
+        </select>
+        <div id="layer-why" class="layer-why" aria-live="polite"></div>
       </div>
 
       <div class="timeline-block">
@@ -1083,6 +1083,11 @@
     <div class="footer-extra-links">
       <a id="open-ai-register"><span data-i18n="ai_link">AI-Register</span></a>
       <a id="open-meta-usage"><span data-i18n="meta_link">Nutzungs-Statistik</span></a>
+      <span style="color: var(--text-tertiary); font-size: 12px;">·</span>
+      <button id="pdf-snapshot-btn" type="button"
+              style="padding:6px 12px; background:transparent; color:var(--accent); border:1px solid var(--accent); border-radius:4px; cursor:pointer; font-family:inherit; font-size:12px;"
+              data-i18n="pdf_export_btn"
+              title="Stand der Stadt als PDF exportieren">📄 PDF-Export</button>
       <span style="color: var(--text-tertiary); font-size: 12px;">·</span>
       <span style="display:inline-flex; align-items:center; gap:8px;">
         <input type="text" id="address-input" placeholder="Adresse eingeben (z. B. Wilhelmstraße 1)" data-i18n-placeholder="address_placeholder"
