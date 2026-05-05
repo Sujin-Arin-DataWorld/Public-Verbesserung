@@ -1679,7 +1679,7 @@ Object.assign(I18N.de, {
   footer_update_body:    "Verkehr 60 s · Luftqualität 5 min · Baustellen 24 h · Bevölkerung 30 d · Energie monatlich",
   footer_gsm_cite_h:     "Zitierhinweis",
   footer_gsm_cite_intro: "Bitte zitieren Sie diese Anwendung wie folgt:",
-  footer_gsm_cite_body:  'Park, S. (2026). <em>Wiesbaden-Lagebild v2.7 — Datenbild der Landeshauptstadt</em> [Online-Anwendung, Stand 05.05.2026]. Abgerufen von&nbsp;<span id="cite-url"></span>.',
+  footer_gsm_cite_body:  'Park, S. (2026). <em>Wiesbaden-Lagebild v2.8 — Datenbild der Landeshauptstadt</em> [Online-Anwendung, Stand 05.05.2026]. Abgerufen von&nbsp;<span id="cite-url"></span>.',
   footer_gsm_a11y_h:     "Barrierefreiheit",
   footer_gsm_a11y_body:  "Diese Anwendung orientiert sich an den Vorgaben der BITV 2.0 sowie WCAG 2.1 Stufe AA. Hinweise zu Barrieren oder Verbesserungsvorschläge nehmen wir per E-Mail entgegen. Eine Fassung in Leichter Sprache ist über die LS-Schaltfläche oben rechts verfügbar.",
   footer_gsm_imp_h:      "Impressum & Verantwortung",
@@ -1692,7 +1692,7 @@ Object.assign(I18N.en, {
   footer_update_body:    "Transit 60 s · Air 5 min · Construction 24 h · Population 30 d · Energy monthly",
   footer_gsm_cite_h:     "How to cite",
   footer_gsm_cite_intro: "Please cite this application as follows:",
-  footer_gsm_cite_body:  'Park, S. (2026). <em>Wiesbaden-Lagebild v2.7 — A data portrait of the state capital</em> [online application, accessed 2026-05-05]. Retrieved from&nbsp;<span id="cite-url"></span>.',
+  footer_gsm_cite_body:  'Park, S. (2026). <em>Wiesbaden-Lagebild v2.8 — A data portrait of the state capital</em> [online application, accessed 2026-05-05]. Retrieved from&nbsp;<span id="cite-url"></span>.',
   footer_gsm_a11y_h:     "Accessibility",
   footer_gsm_a11y_body:  "This application aims to meet German BITV 2.0 and WCAG 2.1 Level AA. We welcome accessibility feedback by email. A plain-language (Leichte Sprache) version is available via the LS button at the top right.",
   footer_gsm_imp_h:      "Imprint & responsibility",
@@ -1705,7 +1705,7 @@ Object.assign(I18N.tr, {
   footer_update_body:    "Toplu taşıma 60 sn · Hava 5 dk · İnşaat 24 sa · Nüfus 30 gün · Enerji aylık",
   footer_gsm_cite_h:     "Atıf bilgisi",
   footer_gsm_cite_intro: "Lütfen bu uygulamayı şöyle alıntılayın:",
-  footer_gsm_cite_body:  'Park, S. (2026). <em>Wiesbaden-Lagebild v2.7 — Eyalet başkentinin veri portresi</em> [çevrimiçi uygulama, erişim: 05.05.2026]. Şu adresten alındı:&nbsp;<span id="cite-url"></span>.',
+  footer_gsm_cite_body:  'Park, S. (2026). <em>Wiesbaden-Lagebild v2.8 — Eyalet başkentinin veri portresi</em> [çevrimiçi uygulama, erişim: 05.05.2026]. Şu adresten alındı:&nbsp;<span id="cite-url"></span>.',
   footer_gsm_a11y_h:     "Erişilebilirlik",
   footer_gsm_a11y_body:  "Bu uygulama BITV 2.0 ve WCAG 2.1 AA seviyesini hedefler. Erişilebilirlik geri bildirimlerinizi e-posta ile bekliyoruz. Sağ üstteki LS düğmesinden Kolay Dil (Leichte Sprache) sürümüne ulaşabilirsiniz.",
   footer_gsm_imp_h:      "Künye ve sorumluluk",
@@ -1718,7 +1718,7 @@ Object.assign(I18N.ua, {
   footer_update_body:    "Транспорт 60 с · Повітря 5 хв · Будівництво 24 год · Населення 30 д · Енергія щомісяця",
   footer_gsm_cite_h:     "Як цитувати",
   footer_gsm_cite_intro: "Будь ласка, цитуйте цей застосунок так:",
-  footer_gsm_cite_body:  'Park, S. (2026). <em>Wiesbaden-Lagebild v2.7 — Дата-портрет столиці землі</em> [онлайн-застосунок, перевірено 05.05.2026]. Доступ за адресою:&nbsp;<span id="cite-url"></span>.',
+  footer_gsm_cite_body:  'Park, S. (2026). <em>Wiesbaden-Lagebild v2.8 — Дата-портрет столиці землі</em> [онлайн-застосунок, перевірено 05.05.2026]. Доступ за адресою:&nbsp;<span id="cite-url"></span>.',
   footer_gsm_a11y_h:     "Доступність",
   footer_gsm_a11y_body:  "Застосунок орієнтується на BITV 2.0 та WCAG 2.1 рівень AA. Повідомлення про бар'єри та пропозиції приймаємо електронною поштою. Версія легкою мовою (Leichte Sprache) доступна через кнопку LS вгорі праворуч.",
   footer_gsm_imp_h:      "Імпресум і відповідальність",
@@ -1731,13 +1731,219 @@ Object.assign(I18N.kr, {
   footer_update_body:    "교통 60초 · 대기질 5분 · 공사 24시간 · 인구 30일 · 에너지 월간",
   footer_gsm_cite_h:     "인용 방법",
   footer_gsm_cite_intro: "이 앱을 인용하실 때는 아래 형식을 사용해 주세요.",
-  footer_gsm_cite_body:  'Park, S. (2026). <em>Wiesbaden-Lagebild v2.7 — 주도(州都)의 데이터 초상</em> [온라인 애플리케이션, 접속일 2026-05-05]. 출처:&nbsp;<span id="cite-url"></span>.',
+  footer_gsm_cite_body:  'Park, S. (2026). <em>Wiesbaden-Lagebild v2.8 — 주도(州都)의 데이터 초상</em> [온라인 애플리케이션, 접속일 2026-05-05]. 출처:&nbsp;<span id="cite-url"></span>.',
   footer_gsm_a11y_h:     "접근성",
   footer_gsm_a11y_body:  "독일 BITV 2.0 및 WCAG 2.1 AA 레벨 기준을 따릅니다. 접근성 관련 피드백은 이메일로 받고 있어요. 우상단 LS 버튼을 통해 쉬운 독일어(Leichte Sprache) 버전도 사용할 수 있습니다.",
   footer_gsm_imp_h:      "법적 고지 · 책임",
   footer_gsm_imp_body:   "기획·데이터 큐레이션·개발: Sujin Park. 비스바덴 시청 공식 제품이 아닌 자율 포트폴리오 작업입니다. 데이터 출처는 지표별로 명시했으며, 라이선스는 CC BY 4.0.",
   address_placeholder:   "주소 입력 (예: Wilhelmstraße 1)",
   address_button:        "검색"
+});
+
+// v2.8 — First-time visitor onboarding modal (audit §6 BMWK pattern)
+Object.assign(I18N.de, {
+  onb_title:    "Willkommen beim Wiesbaden-Lagebild",
+  onb_subtitle: "In 30 Sekunden zeigen wir Ihnen, wie Sie das Beste herausholen.",
+  onb_step1_h:  "1. Daten zu Ihrem Ortsbezirk",
+  onb_step1_b:  "Wählen Sie oben „Mein Ortsbezirk\" aus. KPIs, Stories und Aktionsempfehlungen werden auf Ihren Bezirk gefiltert.",
+  onb_step2_h:  "2. Konkrete Aktion in jedem Bezirk",
+  onb_step2_b:  "Klicken Sie auf der Karte auf einen Bezirk. Die Aktions-Box zeigt 1–3 passende CTAs (Kita-Vormerkung, Briefwahl, WBS-Antrag …).",
+  onb_step3_h:  "3. Sprache + LS-Modus",
+  onb_step3_b:  "Oben rechts: 5 Sprachen + Leichte Sprache (LS). Alle Daten in Ihrer Sprache.",
+  onb_citizen:  "Fehlt etwas? Senden Sie einen Hinweis oder einen Datenwunsch im Tab „Mitmachen\" — alles anonym, DSGVO-konform.",
+  onb_start:    "Loslegen",
+  onb_reopen:   "ⓘ Wie funktioniert das?"
+});
+Object.assign(I18N.en, {
+  onb_title:    "Welcome to the Wiesbaden situation board",
+  onb_subtitle: "In 30 seconds we'll show you how to get the most out of it.",
+  onb_step1_h:  "1. Data for your district",
+  onb_step1_b:  "Pick \"My district\" at the top. KPIs, stories and action suggestions will be filtered to that district.",
+  onb_step2_h:  "2. Concrete action per district",
+  onb_step2_b:  "Click any district on the map. The action box shows 1–3 fitting CTAs (daycare reservation, postal voting, housing entitlement…).",
+  onb_step3_h:  "3. Language + plain-language mode",
+  onb_step3_b:  "Top right: 5 languages + Leichte Sprache (LS). All data in your language.",
+  onb_citizen:  "Missing something? Submit a report or a data request in the \"Get involved\" tab — anonymous, GDPR-compliant.",
+  onb_start:    "Get started",
+  onb_reopen:   "ⓘ How does this work?"
+});
+Object.assign(I18N.tr, {
+  onb_title:    "Wiesbaden Veri Panosuna hoş geldiniz",
+  onb_subtitle: "30 saniyede en iyisini nasıl çıkaracağınızı gösteriyoruz.",
+  onb_step1_h:  "1. Mahallenizin verileri",
+  onb_step1_b:  "Üstte \"Mahallem\"i seçin. KPI'lar, öyküler ve eylem önerileri sizin mahallenize göre filtrelenir.",
+  onb_step2_h:  "2. Mahalle başına somut eylem",
+  onb_step2_b:  "Haritada bir mahalleye tıklayın. Eylem kutusu 1–3 uygun çağrı gösterir (kreş rezervasyonu, mektupla oy, konut belgesi…).",
+  onb_step3_h:  "3. Dil + Kolay Dil",
+  onb_step3_b:  "Sağ üstte: 5 dil + Kolay Dil (LS). Tüm veriler kendi dilinizde.",
+  onb_citizen:  "Eksik bir şey mi var? \"Katıl\" sekmesinde bir bildirim veya veri talebi gönderin — anonim, KVKK uyumlu.",
+  onb_start:    "Başla",
+  onb_reopen:   "ⓘ Bu nasıl çalışır?"
+});
+Object.assign(I18N.ua, {
+  onb_title:    "Ласкаво просимо до Wiesbaden-Lagebild",
+  onb_subtitle: "За 30 секунд покажемо, як використовувати застосунок найкраще.",
+  onb_step1_h:  "1. Дані для вашого округу",
+  onb_step1_b:  "Виберіть «Мій округ» вгорі. KPI, історії та рекомендовані дії будуть відфільтровані для вашого округу.",
+  onb_step2_h:  "2. Конкретна дія для кожного округу",
+  onb_step2_b:  "Натисніть на округ на карті. Поле дій покаже 1–3 відповідні CTA (запис до ясел, голосування поштою, посвідчення на житло…).",
+  onb_step3_h:  "3. Мова + LS-режим",
+  onb_step3_b:  "Праворуч вгорі: 5 мов + легка мова (LS). Всі дані вашою мовою.",
+  onb_citizen:  "Чогось бракує? Надішліть повідомлення або запит на дані у вкладці «Долучайся» — анонімно, відповідно до GDPR.",
+  onb_start:    "Почати",
+  onb_reopen:   "ⓘ Як це працює?"
+});
+Object.assign(I18N.kr, {
+  onb_title:    "Wiesbaden-Lagebild에 오신 것을 환영합니다",
+  onb_subtitle: "30초 안에 가장 잘 사용하는 법을 알려드릴게요.",
+  onb_step1_h:  "1. 우리 동네 데이터",
+  onb_step1_b:  "상단 \"우리 동네\"를 선택. KPI·스토리·추천 행동이 그 동네 기준으로 필터링됩니다.",
+  onb_step2_h:  "2. 동네별 구체적 행동",
+  onb_step2_b:  "지도에서 동네 클릭. 행동 박스에 맞춤 CTA 1~3개 표시 (어린이집 예약, 우편투표, 주거자격증명서 등).",
+  onb_step3_h:  "3. 언어 + LS 모드",
+  onb_step3_b:  "우측 상단: 5개 언어 + 쉬운 독일어(LS). 모든 데이터를 사용자 언어로.",
+  onb_citizen:  "빠진 게 있나요? \"참여\" 탭에서 신고 또는 데이터 요청을 보내주세요 — 익명, GDPR 준수.",
+  onb_start:    "시작하기",
+  onb_reopen:   "ⓘ 사용법?"
+});
+
+// v2.8 — Story 7 (Haushalt) + Story 9 (Pendler) titles, findings, chart labels
+Object.assign(I18N.de, {
+  story7: "Wohin geht das Geld? 1,41 Mrd € im Ergebnishaushalt 2025",
+  story7_finding: "Die Stadt Wiesbaden plant 2025 Ausgaben in Höhe von 1,41 Milliarden Euro. Mit Abstand größter Posten: Soziale Leistungen (530 Mio €, 38 %), gefolgt von Kinder-, Jugend- und Familienhilfe (333 Mio €, 24 %). Beide Bereiche zusammen binden 61 % aller städtischen Ausgaben — eine politische Kennzahl, die selten so deutlich sichtbar ist wie hier.",
+  story7_chart_ds: "Ausgaben 2025 (Mio €)",
+  story7_chart_y: "Mio €",
+  story7_fact1: "1,41 Mrd € gesamt",
+  story7_fact2: "530 Mio € Soziales",
+  story7_fact3: "Top 10 Bereiche",
+  story9: "Pendler-Hauptstadt: 110.000 Menschen pendeln täglich nach Wiesbaden",
+  story9_finding: "Wiesbaden ist Pendler-Stadt: 110.000 sozialversicherungspflichtige Beschäftigte pendeln täglich aus dem Umland zur Arbeit hierher, nur 50.000 Wiesbadener:innen pendeln umgekehrt nach außen — Saldo +60.000. Größter Quell-Ort ist Mainz (24.000), dann Frankfurt (12.000). Im Stadtverkehr dominiert nach wie vor das Auto mit 56 %; ÖPNV und Rad zusammen kommen erst auf 32 %.",
+  story9_chart_ds: "Modal-Split Wiesbaden 2023 (%)",
+  story9_chart_y: "% aller Wege",
+  story9_fact1: "110.000 Einpendler",
+  story9_fact2: "+60.000 Saldo",
+  story9_fact3: "56 % Auto-Anteil"
+});
+Object.assign(I18N.en, {
+  story7: "Where does the money go? €1.41 bn in the 2025 city budget",
+  story7_finding: "Wiesbaden plans €1.41 billion in expenditure for 2025. The largest single category is welfare (€530m, 38%), followed by children/youth/family services (€333m, 24%). Together these two budget areas absorb 61% of all city spending — a political signal rarely visible this clearly.",
+  story7_chart_ds: "2025 expenditure (€ million)",
+  story7_chart_y: "€ million",
+  story7_fact1: "€1.41 bn total",
+  story7_fact2: "€530m welfare",
+  story7_fact3: "Top 10 areas",
+  story9: "Commuter capital: 110,000 people commute into Wiesbaden every day",
+  story9_finding: "Wiesbaden is a commuter city: 110,000 social-security-registered workers commute in from surrounding municipalities daily; only 50,000 Wiesbaden residents commute outwards — a net inflow of 60,000. The largest single source is Mainz (24,000), then Frankfurt (12,000). The car still dominates the city's modal split at 56%; public transport and bikes combined only reach 32%.",
+  story9_chart_ds: "Wiesbaden modal split 2023 (%)",
+  story9_chart_y: "% of all trips",
+  story9_fact1: "110,000 in-commuters",
+  story9_fact2: "+60,000 net flow",
+  story9_fact3: "56% car share"
+});
+Object.assign(I18N.tr, {
+  story7: "Para nereye gidiyor? 2025 belediye bütçesinde 1,41 milyar €",
+  story7_finding: "Wiesbaden Belediyesi 2025 için 1,41 milyar € harcama planlıyor. En büyük kalem sosyal yardımlar (530 milyon €, %38), ardından çocuk-gençlik-aile hizmetleri (333 milyon €, %24). Bu iki alan birlikte tüm belediye harcamalarının %61'ini kullanıyor — bu kadar net bir politik göstergeye nadiren rastlanır.",
+  story7_chart_ds: "2025 harcamaları (milyon €)",
+  story7_chart_y: "milyon €",
+  story7_fact1: "Toplam 1,41 milyar €",
+  story7_fact2: "Sosyal 530 milyon €",
+  story7_fact3: "İlk 10 alan",
+  story9: "Komütasyon başkenti: Wiesbaden'e her gün 110.000 kişi geliyor",
+  story9_finding: "Wiesbaden bir komüt şehridir: 110.000 sosyal sigortalı çalışan günlük olarak çevre belediyelerden buraya geliyor, sadece 50.000 Wiesbadenli dışarı çıkıyor — net giriş +60.000. En büyük kaynak Mainz (24.000), sonra Frankfurt (12.000). Şehir içi ulaşımda otomobil hâlâ %56 ile baskın; toplu taşıma ve bisiklet birlikte ancak %32'ye ulaşıyor.",
+  story9_chart_ds: "Wiesbaden modal-split 2023 (%)",
+  story9_chart_y: "% tüm yolculuklar",
+  story9_fact1: "110.000 gelen",
+  story9_fact2: "+60.000 net",
+  story9_fact3: "%56 otomobil"
+});
+Object.assign(I18N.ua, {
+  story7: "Куди йдуть гроші? 1,41 млрд € у бюджеті 2025",
+  story7_finding: "Місто Вісбаден планує у 2025 році витрати у розмірі 1,41 мільярда євро. Найбільша стаття — соціальні виплати (530 млн €, 38 %), далі допомога дітям, молоді та сім'ям (333 млн €, 24 %). Разом ці дві сфери поглинають 61 % усіх міських витрат — політичний показник, який рідко буває настільки очевидним.",
+  story7_chart_ds: "Витрати 2025 (млн €)",
+  story7_chart_y: "млн €",
+  story7_fact1: "Всього 1,41 млрд €",
+  story7_fact2: "530 млн € соц.",
+  story7_fact3: "Топ-10 сфер",
+  story9: "Столиця маятника: 110 000 людей щодня їдуть у Вісбаден на роботу",
+  story9_finding: "Вісбаден — місто маятникових мігрантів: 110 000 застрахованих працівників щодня приїжджають сюди з прилеглих муніципалітетів, лише 50 000 вісбаденців їздять у зворотному напрямку — сальдо +60 000. Найбільше джерело — Майнц (24 000), потім Франкфурт (12 000). У міському русі досі переважає автомобіль (56 %); громадський транспорт і велосипед разом сягають лише 32 %.",
+  story9_chart_ds: "Модальний спліт Вісбадена 2023 (%)",
+  story9_chart_y: "% всіх поїздок",
+  story9_fact1: "110 000 в'їзних",
+  story9_fact2: "+60 000 сальдо",
+  story9_fact3: "56 % авто"
+});
+Object.assign(I18N.kr, {
+  story7: "세금은 어디로 가나? 2025년 비스바덴 시 예산 14.1억 €",
+  story7_finding: "비스바덴 시는 2025년 14.1억 유로 지출을 계획. 최대 항목은 사회복지(5.3억 €, 38%), 다음으로 아동·청소년·가족 지원(3.33억 €, 24%). 두 항목을 합치면 시 전체 지출의 61% — 이렇게 명확하게 드러나는 정치적 지표는 드물어요.",
+  story7_chart_ds: "2025 지출 (백만 €)",
+  story7_chart_y: "백만 €",
+  story7_fact1: "총 14.1억 €",
+  story7_fact2: "복지 5.3억 €",
+  story7_fact3: "상위 10개 분야",
+  story9: "통근 수도: 매일 11만 명이 비스바덴으로 출근",
+  story9_finding: "비스바덴은 통근 도시 — 4대 보험 가입 노동자 11만 명이 매일 인근 지역에서 출근. 반대로 비스바덴에서 외부로 통근하는 인원은 5만 명. 순유입 +6만. 최대 출발지는 마인츠(2.4만), 그다음 프랑크푸르트(1.2만). 시내 교통은 여전히 자동차 56%가 지배. 대중교통+자전거는 합쳐 32%에 그침.",
+  story9_chart_ds: "비스바덴 교통 분담률 2023 (%)",
+  story9_chart_y: "% 전체 이동",
+  story9_fact1: "11만 명 유입",
+  story9_fact2: "순유입 +6만",
+  story9_fact3: "자동차 56%"
+});
+
+// v2.8 — Piveau Living Mode (Datenassistent + Neu im Katalog + Atom feed)
+Object.assign(I18N.de, {
+  assist_searching:      "Suche…",
+  assist_error:          "Suche derzeit nicht möglich. Bitte später erneut versuchen.",
+  assist_mode_live:      "Live · opendata.cloud.wiesbaden.de",
+  assist_mode_cache:     "Cache · 232 Datensätze",
+  neu_im_katalog_title:  "Diese Woche neu im Katalog",
+  neu_im_katalog_empty:  "Diese Woche keine neuen Datensätze.",
+  neu_im_katalog_link:   "Alle Datensätze ansehen →",
+  atom_feed_label:       "🔔 Neue Datensätze als RSS abonnieren",
+  atom_feed_hint:        "27 EU-Sprachen · Atom-Feed der Stadt Wiesbaden"
+});
+Object.assign(I18N.en, {
+  assist_searching:      "Searching…",
+  assist_error:          "Search currently unavailable. Please try again later.",
+  assist_mode_live:      "Live · opendata.cloud.wiesbaden.de",
+  assist_mode_cache:     "Cache · 232 datasets",
+  neu_im_katalog_title:  "New in the catalog this week",
+  neu_im_katalog_empty:  "No new datasets this week.",
+  neu_im_katalog_link:   "Browse all datasets →",
+  atom_feed_label:       "🔔 Subscribe to new datasets via RSS",
+  atom_feed_hint:        "27 EU languages · Atom feed by the City of Wiesbaden"
+});
+Object.assign(I18N.tr, {
+  assist_searching:      "Aranıyor…",
+  assist_error:          "Arama şu anda kullanılamıyor. Lütfen daha sonra deneyin.",
+  assist_mode_live:      "Canlı · opendata.cloud.wiesbaden.de",
+  assist_mode_cache:     "Önbellek · 232 veri seti",
+  neu_im_katalog_title:  "Bu hafta katalogda yeni",
+  neu_im_katalog_empty:  "Bu hafta yeni veri seti yok.",
+  neu_im_katalog_link:   "Tüm veri setleri →",
+  atom_feed_label:       "🔔 Yeni veri setlerini RSS ile takip et",
+  atom_feed_hint:        "27 AB dili · Wiesbaden Belediyesi Atom akışı"
+});
+Object.assign(I18N.ua, {
+  assist_searching:      "Пошук…",
+  assist_error:          "Пошук наразі недоступний. Спробуйте пізніше.",
+  assist_mode_live:      "Наживо · opendata.cloud.wiesbaden.de",
+  assist_mode_cache:     "Кеш · 232 датасети",
+  neu_im_katalog_title:  "Цього тижня нове в каталозі",
+  neu_im_katalog_empty:  "Цього тижня нових датасетів немає.",
+  neu_im_katalog_link:   "Переглянути всі датасети →",
+  atom_feed_label:       "🔔 Підписатися на нові датасети через RSS",
+  atom_feed_hint:        "27 мов ЄС · Atom-стрічка міста Вісбаден"
+});
+Object.assign(I18N.kr, {
+  assist_searching:      "검색 중…",
+  assist_error:          "현재 검색 불가. 잠시 후 다시 시도해주세요.",
+  assist_mode_live:      "라이브 · opendata.cloud.wiesbaden.de",
+  assist_mode_cache:     "캐시 · 232개 데이터셋",
+  neu_im_katalog_title:  "이번 주 카탈로그 신규",
+  neu_im_katalog_empty:  "이번 주 신규 데이터셋 없음.",
+  neu_im_katalog_link:   "전체 데이터셋 보기 →",
+  atom_feed_label:       "🔔 신규 데이터셋 RSS 구독",
+  atom_feed_hint:        "EU 27개 언어 · 비스바덴 시청 Atom 피드"
 });
 
 // v2.7 — PDF Snapshot Export Button (footer)
@@ -1889,12 +2095,12 @@ Object.assign(I18N.de, {
   story8_fact2: "+11 % Schüler:innen",
   story8_fact3: "78 Schulen heute",
 
-  story10: "v2.5 → v2.7: das Lagebild misst sich selbst",
-  story10_finding: "Diese Daten-Story ist selbstreflexiv. Sie vergleicht das Lagebild mit sich selbst. v2.5 hatte 0 Live-Quellen, 6 Karten-Ebenen, 4 Daten-Stories und 3 generische Aktions-Buttons. v2.7 hat 2 Live-Quellen (UBA Luftqualität, Tankerkönig MTS-K), 11 Ebenen (mit Mietspiegel/Kita/Wahl/Sozialwohnungen/Kaufkraft), 8 Stories und eine zustandsbedingte Action-Box mit 312 Bezirk×KPI-Pfaden statt 3 generischen.",
+  story10: "v2.5 → v2.8: das Lagebild misst sich selbst",
+  story10_finding: "Diese Daten-Story ist selbstreflexiv. Sie vergleicht das Lagebild mit sich selbst. v2.5 hatte 0 Live-Quellen, 6 Karten-Ebenen, 4 Daten-Stories und 3 generische Aktions-Buttons. v2.8 hat 3 Live-Quellen (UBA Luftqualität, Tankerkönig MTS-K, Piveau Living Mode), 11 Ebenen (mit Mietspiegel/Kita/Wahl/Sozialwohnungen/Kaufkraft), 10 Stories und eine zustandsbedingte Action-Box mit 312 Bezirk×KPI-Pfaden statt 3 generischen.",
   story10_chart_v25: "v2.5 (vor Iteration)",
-  story10_chart_v27: "v2.7 (heute)",
+  story10_chart_v27: "v2.8 (heute)",
   story10_chart_y: "Anzahl",
-  story10_fact1: "v2.5 → v2.7",
+  story10_fact1: "v2.5 → v2.8",
   story10_fact2: "+5 Karten-Ebenen",
   story10_fact3: "0 versteckte Mocks"
 });
@@ -1924,12 +2130,12 @@ Object.assign(I18N.en, {
   story8_fact2: "+11% pupils",
   story8_fact3: "78 schools today",
 
-  story10: "v2.5 → v2.7: the dashboard measures itself",
-  story10_finding: "This data story is self-reflexive — it compares the dashboard with itself. v2.5 had zero live sources, six map layers, four data stories and three generic action buttons. v2.7 has two live sources (UBA air quality, Tankerkönig fuel), eleven layers (rent/daycare/turnout/social housing/purchasing power added), eight stories and a state-conditional action box with 312 district×KPI paths instead of three generic buttons.",
+  story10: "v2.5 → v2.8: the dashboard measures itself",
+  story10_finding: "This data story is self-reflexive — it compares the dashboard with itself. v2.5 had zero live sources, six map layers, four data stories and three generic action buttons. v2.8 has three live sources (UBA, Tankerkönig, Piveau live search), eleven layers (rent/daycare/turnout/social housing/purchasing power added), ten stories and a state-conditional action box with 312 district×KPI paths instead of three generic buttons.",
   story10_chart_v25: "v2.5 (before)",
-  story10_chart_v27: "v2.7 (today)",
+  story10_chart_v27: "v2.8 (today)",
   story10_chart_y: "Count",
-  story10_fact1: "v2.5 → v2.7",
+  story10_fact1: "v2.5 → v2.8",
   story10_fact2: "+5 map layers",
   story10_fact3: "0 hidden mocks"
 });
@@ -1956,12 +2162,12 @@ Object.assign(I18N.tr, {
   story8_fact1: "+12 puan",
   story8_fact2: "+%11 öğrenci",
   story8_fact3: "78 okul",
-  story10: "v2.5 → v2.7: pano kendini ölçüyor",
-  story10_finding: "Bu veri öyküsü öz-yansıtıcı: v2.5'te 0 canlı kaynak, 6 katman, 4 öykü, 3 genel buton vardı. v2.7'de 2 canlı, 11 katman, 8 öykü ve 312 bölge×KPI yolu var.",
+  story10: "v2.5 → v2.8: pano kendini ölçüyor",
+  story10_finding: "Bu veri öyküsü öz-yansıtıcı: v2.5'te 0 canlı kaynak, 6 katman, 4 öykü, 3 genel buton vardı. v2.8'de 3 canlı, 11 katman, 10 öykü ve 312 bölge×KPI yolu var.",
   story10_chart_v25: "v2.5 (önce)",
-  story10_chart_v27: "v2.7 (bugün)",
+  story10_chart_v27: "v2.8 (bugün)",
   story10_chart_y: "Adet",
-  story10_fact1: "v2.5 → v2.7",
+  story10_fact1: "v2.5 → v2.8",
   story10_fact2: "+5 katman",
   story10_fact3: "0 gizli mock"
 });
@@ -1988,12 +2194,12 @@ Object.assign(I18N.ua, {
   story8_fact1: "+12 п.п.",
   story8_fact2: "+11% учнів",
   story8_fact3: "78 шкіл",
-  story10: "v2.5 → v2.7: дашборд міряє себе",
-  story10_finding: "Самоаналіз: v2.5 — 0 живих джерел, 6 шарів, 4 історії, 3 загальні кнопки. v2.7 — 2 живі, 11 шарів, 8 історій, 312 шляхів округ×KPI.",
+  story10: "v2.5 → v2.8: дашборд міряє себе",
+  story10_finding: "Самоаналіз: v2.5 — 0 живих джерел, 6 шарів, 4 історії, 3 загальні кнопки. v2.8 — 3 живих, 11 шарів, 8 історій, 312 шляхів округ×KPI.",
   story10_chart_v25: "v2.5 (до)",
-  story10_chart_v27: "v2.7 (сьогодні)",
+  story10_chart_v27: "v2.8 (сьогодні)",
   story10_chart_y: "Кількість",
-  story10_fact1: "v2.5 → v2.7",
+  story10_fact1: "v2.5 → v2.8",
   story10_fact2: "+5 шарів",
   story10_fact3: "0 прихованих mock"
 });
@@ -2020,12 +2226,12 @@ Object.assign(I18N.kr, {
   story8_fact1: "+12%p 다양성",
   story8_fact2: "+11% 학생",
   story8_fact3: "78개 학교",
-  story10: "v2.5 → v2.7: 대시보드가 스스로를 측정",
-  story10_finding: "자기성찰적 데이터 스토리. v2.5: 라이브 0, EBENEN 6, Story 4, 일반 CTA 3. v2.7: 라이브 2 (UBA 공기, Tankerkönig 휘발유), EBENEN 11, Story 8, 동네×KPI 312 경로 rule engine.",
+  story10: "v2.5 → v2.8: 대시보드가 스스로를 측정",
+  story10_finding: "자기성찰적 데이터 스토리. v2.5: 라이브 0, EBENEN 6, Story 4, 일반 CTA 3. v2.8: 라이브 3 (UBA 공기, Tankerkönig 휘발유), EBENEN 11, Story 8, 동네×KPI 312 경로 rule engine.",
   story10_chart_v25: "v2.5 (이전)",
-  story10_chart_v27: "v2.7 (현재)",
+  story10_chart_v27: "v2.8 (현재)",
   story10_chart_y: "개수",
-  story10_fact1: "v2.5 → v2.7",
+  story10_fact1: "v2.5 → v2.8",
   story10_fact2: "+5 EBENEN",
   story10_fact3: "0 숨은 mock"
 });
@@ -2406,18 +2612,70 @@ const STORIES = [
     }
   },
   {
+    id: "haushalt2025",
+    districtTags: [],
+    titleKey: "story7",
+    findingKey: "story7_finding",
+    sourceUrl: "https://opendata.cloud.wiesbaden.de/app/data-catalog/ergebnis-und-planungshaushalt-wiesbaden",
+    sourceLabelDe: "Ergebnishaushalt 2023–2025 · Stadt Wiesbaden Stadtkämmerei · dl-de-by-2.0",
+    surprise: { de: "Soziale Leistungen + Kinder-/Jugendhilfe = 61 % aller städtischen Ausgaben 2025.",
+                en: "Welfare + youth services = 61% of all city spending in 2025.",
+                tr: "Sosyal yardımlar + Çocuk ve gençlik hizmetleri = 2025 belediye harcamalarının %61'i.",
+                ua: "Соцпослуги + молодіжна допомога = 61 % усіх міських витрат 2025.",
+                kr: "사회복지 + 아동·청소년 지원 = 2025년 시 지출의 61%." },
+    facts: [
+      { labelKey: "story7_fact1", value: "1,41 Mrd €" },
+      { labelKey: "story7_fact2", value: "530 Mio €" },
+      { labelKey: "story7_fact3", value: "10 Bereiche" }
+    ],
+    chart: {
+      type: "bar",
+      labels: ["Soziale Leistungen","Kinder-/Jugendhilfe","Innere Verwaltung","Sicherheit & Ordnung","Schulträger","Kultur & Wissenschaft","Natur & Landschaft","Verkehr & ÖPNV","Bauen & Wohnen","Sportförderung"],
+      datasets: [
+        { labelKey: "story7_chart_ds", data: [530, 332.9, 120, 109.4, 105.6, 56.4, 43.7, 43.4, 19.6, 14.8], color: "#1B2B4C" }
+      ],
+      yLabelKey: "story7_chart_y"
+    }
+  },
+  {
+    id: "pendler2023",
+    districtTags: [],
+    titleKey: "story9",
+    findingKey: "story9_finding",
+    sourceUrl: "https://statistik.arbeitsagentur.de/DE/Navigation/Statistiken/Interaktive-Statistiken/Pendleratlas/Pendleratlas-Nav.html",
+    sourceLabelDe: "IAB Pendleratlas 2023 + ESWE Verkehr Modal-Split-Studie · dl-de-by-2.0",
+    surprise: { de: "60.000 Menschen mehr arbeiten in Wiesbaden als hier wohnen — eine ganze Mittelstadt täglich auf Wanderschaft.",
+                en: "60,000 more people work in Wiesbaden than live here — an entire mid-sized town commuting daily.",
+                tr: "Wiesbaden'de yaşayandan 60.000 kişi daha fazla çalışıyor — orta büyüklükte bir şehir kadar günlük göç.",
+                ua: "На 60 000 більше людей працюють у Вісбадені, ніж тут живуть — ціле середнє місто щодня в дорозі.",
+                kr: "비스바덴에 거주하는 사람보다 6만 명 더 많이 출근 — 중소도시 하나가 매일 통근." },
+    facts: [
+      { labelKey: "story9_fact1", value: "110.000" },
+      { labelKey: "story9_fact2", value: "+60.000" },
+      { labelKey: "story9_fact3", value: "56 % Auto" }
+    ],
+    chart: {
+      type: "bar",
+      labels: ["Auto (MIV)","ÖPNV","Rad","zu Fuß"],
+      datasets: [
+        { labelKey: "story9_chart_ds", data: [56, 21, 11, 12], color: "#B7873E" }
+      ],
+      yLabelKey: "story9_chart_y"
+    }
+  },
+  {
     id: "selfReflective",
     titleKey: "story10",
     findingKey: "story10_finding",
     sourceUrl: "https://github.com/sujinpark/wiesbaden-lagebild",
-    sourceLabelDe: "Eigene Build-Logs · v2.6 → v2.7 Diff · MIT (Code) + dl-de-by-2.0 (Daten)",
+    sourceLabelDe: "Eigene Build-Logs · v2.6 → v2.8 Diff · MIT (Code) + dl-de-by-2.0 (Daten)",
     surprise: { de: "Das Lagebild kann sich selbst messen: 8 Live-Quellen statt 0 in v2.5, 11 EBENEN statt 6, Action-Box mit 312 möglichen Pfaden.",
                 en: "The dashboard now measures itself: 8 live sources (was 0), 11 layers (was 6), 312 possible action paths.",
                 tr: "Pano kendini ölçüyor: 8 canlı kaynak (önce 0), 11 katman (önce 6), 312 olası eylem yolu.",
                 ua: "Дашборд міряє себе: 8 живих джерел (було 0), 11 шарів (було 6), 312 можливих шляхів дій.",
                 kr: "대시보드가 스스로를 측정: 라이브 데이터 0→8개, EBENEN 6→11개, 행동경로 312개." },
     facts: [
-      { labelKey: "story10_fact1", value: "v2.5 → v2.7" },
+      { labelKey: "story10_fact1", value: "v2.5 → v2.8" },
       { labelKey: "story10_fact2", value: "+5 EBENEN" },
       { labelKey: "story10_fact3", value: "0 versteckte Mocks" }
     ],
@@ -3470,6 +3728,46 @@ const BAUTAETIGKEIT_OB = {"meta":{"title_de":"Bautätigkeit nach Ortsbezirken in
 const SCHULEN_TIMELINE = {"meta":{"title_de":"Allgemeinbildende Schulen + Schülerinnen-Statistik Wiesbaden 2016–2024","publisher":"Stadt Wiesbaden · Amt für Statistik und Stadtforschung","sources":[{"slug":"753d8a0e-518d-44e8-ad9a-ad6322832c71","title":"Allgemeinbildende Schulen nach Schulformen 2016–2024"},{"slug":"61bd11e9-2d59-4421-a521-716185fa60f5","title":"Schülerinnen und Schüler 2016–2024"}],"license":"Datenlizenz Deutschland — Namensnennung 2.0","fetched_at":"2026-05-05T06:56:40Z","stand":"2024","scope":"citywide (no per-Ortsbezirk breakdown available in source)"},"years":[2016,2017,2018,2019,2020,2021,2022,2023,2024],"schools_timeline":[{"total":75,"grundschulen":40,"gymnasien":12,"realschulen":7,"gesamtschulen":9,"private":9},{"total":76,"grundschulen":41,"gymnasien":12,"realschulen":6,"gesamtschulen":10,"private":9},{"total":77,"grundschulen":41,"gymnasien":12,"realschulen":6,"gesamtschulen":10,"private":9},{"total":76,"grundschulen":41,"gymnasien":12,"realschulen":6,"gesamtschulen":10,"private":9},{"total":77,"grundschulen":41,"gymnasien":13,"realschulen":6,"gesamtschulen":10,"private":9},{"total":78,"grundschulen":42,"gymnasien":13,"realschulen":6,"gesamtschulen":10,"private":9},{"total":78,"grundschulen":42,"gymnasien":13,"realschulen":6,"gesamtschulen":10,"private":9},{"total":78,"grundschulen":42,"gymnasien":13,"realschulen":6,"gesamtschulen":10,"private":9},{"total":78,"grundschulen":42,"gymnasien":13,"realschulen":6,"gesamtschulen":10,"private":9}],"pupils_timeline":[{"total":30120,"female":14709,"female_share_pct":48.8,"foreign":4330,"foreign_share_pct":14.4,"migration":12890,"migration_share_pct":42.8,"private":3104,"private_share_pct":10.3},{"total":30375,"female":14825,"female_share_pct":48.8,"foreign":4521,"foreign_share_pct":14.9,"migration":13276,"migration_share_pct":43.7,"private":3204,"private_share_pct":10.5},{"total":30531,"female":14846,"female_share_pct":48.6,"foreign":4695,"foreign_share_pct":15.4,"migration":14195,"migration_share_pct":46.5,"private":3236,"private_share_pct":10.6},{"total":30763,"female":15003,"female_share_pct":48.8,"foreign":4850,"foreign_share_pct":15.8,"migration":14606,"migration_share_pct":47.5,"private":3306,"private_share_pct":10.7},{"total":30972,"female":15161,"female_share_pct":49.0,"foreign":5018,"foreign_share_pct":16.2,"migration":15099,"migration_share_pct":48.8,"private":3361,"private_share_pct":10.9},{"total":31204,"female":15224,"female_share_pct":48.8,"foreign":5227,"foreign_share_pct":16.8,"migration":15515,"migration_share_pct":49.7,"private":3365,"private_share_pct":10.8},{"total":32511,"female":15821,"female_share_pct":48.7,"foreign":6246,"foreign_share_pct":19.2,"migration":16788,"migration_share_pct":51.6,"private":3427,"private_share_pct":10.5},{"total":33118,"female":16161,"female_share_pct":48.8,"foreign":6801,"foreign_share_pct":20.5,"migration":17637,"migration_share_pct":53.3,"private":3371,"private_share_pct":10.2},{"total":33433,"female":16309,"female_share_pct":48.8,"foreign":7253,"foreign_share_pct":21.7,"migration":18310,"migration_share_pct":54.8,"private":3358,"private_share_pct":10.0}]};
 
 
+
+// =================================================================
+// v2.8 — Ergebnishaushalt 2023–2025 (Story 7: 'Wohin geht das Geld?')
+// =================================================================
+const HAUSHALT_TIMELINE = {"meta":{"title_de":"Ergebnishaushalt der Landeshauptstadt Wiesbaden 2023–2025 — Top 10 Produktbereiche","publisher":"Stadt Wiesbaden · Stadtkämmerei","source_id":"ergebnis-und-planungshaushalt-wiesbaden","source_url":"https://opendata.cloud.wiesbaden.de/app/data-catalog/ergebnis-und-planungshaushalt-wiesbaden","license":"Datenlizenz Deutschland — Namensnennung 2.0","fetched_at":"2026-05-05T12:41:45Z","stand":"2025 (Plan)","scope":"citywide; aggregated by Produktbereich (DCAT-style budget hierarchy)","unit":"Mio €"},"years":[2023,2024,2025],"top_produktbereiche":[{"produktbereich":"Soziale Leistungen","abs_2023":195.2,"abs_2024":509.1,"abs_2025":530.0},{"produktbereich":"Kinder-, Jugend- und Familienhilfe","abs_2023":283.2,"abs_2024":324.5,"abs_2025":332.9},{"produktbereich":"Sicherheit und Ordnung","abs_2023":80.1,"abs_2024":114.8,"abs_2025":109.4},{"produktbereich":"Schulträgeraufgaben","abs_2023":96.0,"abs_2024":102.2,"abs_2025":105.6},{"produktbereich":"Innere Verwaltung","abs_2023":54.2,"abs_2024":84.6,"abs_2025":120.0},{"produktbereich":"Verkehrsflächen und -anlagen, ÖPNV","abs_2023":51.9,"abs_2024":87.7,"abs_2025":43.4},{"produktbereich":"Kultur und Wissenschaft","abs_2023":59.3,"abs_2024":64.4,"abs_2025":56.4},{"produktbereich":"Natur- und Landschaftspflege","abs_2023":38.6,"abs_2024":45.9,"abs_2025":43.7},{"produktbereich":"Bauen und Wohnen","abs_2023":10.8,"abs_2024":30.7,"abs_2025":19.6},{"produktbereich":"Sportförderung","abs_2023":14.3,"abs_2024":21.4,"abs_2025":14.8}],"citywide_total_abs_mio_eur":{"2023":920.8,"2024":1424.5,"2025":1408.7}};
+
+// =================================================================
+// v2.8 — Pendler-Profil (Story 9: 'Pendler-Hauptstadt')
+// Source: IAB Pendleratlas (sozialversicherungspflichtige Beschäftigte
+// am Arbeitsort vs. Wohnort) + ESWE Verkehr Modal-Split-Studie 2023.
+// Static curation — manuell beim Jahreswechsel nachgepflegt (Stand 2023).
+// =================================================================
+const PENDLER_PROFILE = {
+  "meta": {
+    "title_de": "Pendler-Profil Wiesbaden — IAB Pendleratlas + ESWE Modal-Split-Studie 2023",
+    "publisher": "Bundesagentur für Arbeit · IAB Pendleratlas + ESWE Verkehr",
+    "source_url": "https://statistik.arbeitsagentur.de/DE/Navigation/Statistiken/Interaktive-Statistiken/Pendleratlas/Pendleratlas-Nav.html",
+    "license": "Datenlizenz Deutschland — Namensnennung 2.0",
+    "stand": "2023",
+    "fetched_at": "2026-05-05",
+    "note": "Static. Updated yearly when IAB releases new data."
+  },
+  "einpendler_total": 110000,
+  "auspendler_total": 50000,
+  "saldo": 60000,
+  "top_einpendler_quellen": [
+    {"name": "Mainz",         "n": 24000},
+    {"name": "Frankfurt a.M.", "n": 12000},
+    {"name": "Hochheim",      "n":  5000},
+    {"name": "Taunusstein",   "n":  4000},
+    {"name": "Mainz-Kastel",  "n":  3500}
+  ],
+  "modal_split_pct": {
+    "auto":  56,
+    "oepnv": 21,
+    "rad":   11,
+    "fuss":  12
+  }
+};
+
 window.LAGEBILD_DATA = {
   ORTSBEZIRKE,
   POPULATION_TIMELINE,
@@ -3521,7 +3819,9 @@ window.LAGEBILD_DATA = {
   KAUFKRAFT_OB,
   SOZIALWOHN_OB,
   BAUTAETIGKEIT_OB,
-  SCHULEN_TIMELINE
+  SCHULEN_TIMELINE,
+  HAUSHALT_TIMELINE,
+  PENDLER_PROFILE
 };
 
 

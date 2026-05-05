@@ -681,6 +681,10 @@
        ============================================ -->
   <div class="view" id="view-daten" data-view="daten">
 
+    <!-- v2.8 Living Mode — "Neu im Katalog" banner. Hidden until fetchNeuImKatalog
+         resolves; fetched once on first daten-view activation. -->
+    <section id="neu-im-katalog" class="neu-im-katalog" style="display:none;" aria-live="polite"></section>
+
     <section class="map-section" style="grid-template-columns: 1fr; padding-top: 24px;">
       <div class="map-container" style="padding: 28px;">
         <div class="section-major">
@@ -746,6 +750,16 @@
           <div id="cat-stats-list" class="catalog-stats-list"></div>
           <div class="catalog-stats-note" data-i18n="cat_stats_note">Anonym, lokal in Ihrem Browser. Aggregat zeigt, welche Daten Bürger:innen suchen — Signal an das Open-Data-Team.</div>
         </div>
+
+        <!-- v2.8 — Atom feed (RSS) link. Audit §11.2 — citizens can subscribe
+             to new datasets in their feed reader; rare among DACH city portals. -->
+        <a class="atom-feed-link"
+           href="https://opendata.cloud.wiesbaden.de/api/hub/search/de/feeds/datasets.atom?q=wiesbaden"
+           target="_blank" rel="noopener"
+           title="Atom-Feed der Stadt Wiesbaden">
+          <strong data-i18n="atom_feed_label">🔔 Neue Datensätze als RSS abonnieren</strong>
+          <span class="atom-feed-hint" data-i18n="atom_feed_hint">27 EU-Sprachen · Atom-Feed der Stadt Wiesbaden</span>
+        </a>
       </div>
     </section>
 
@@ -862,6 +876,37 @@
           <button class="btn-secondary" id="curator-cancel" data-i18n="modal_cancel">Abbrechen</button>
           <button class="btn-primary" id="curator-save" data-i18n="curator_save">Speichern</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- v2.8 — MODAL: First-time-visitor Onboarding (audit §6.1 → 친숙해지는 3-step).
+       Auto-opens once when localStorage 'wiesbaden_lagebild_seen_onboarding' is unset;
+       user can re-open via footer "ⓘ Wie funktioniert das?" link. -->
+  <div class="modal-backdrop" id="onboarding-modal" role="dialog" aria-modal="true" aria-labelledby="onb-title">
+    <div class="modal" style="max-width: 600px;">
+      <h3 id="onb-title" data-i18n="onb_title">Willkommen beim Wiesbaden-Lagebild</h3>
+      <p class="modal-sub" data-i18n="onb_subtitle">In 30 Sekunden zeigen wir Ihnen, wie Sie das Beste herausholen.</p>
+
+      <ol class="onboarding-steps">
+        <li>
+          <strong data-i18n="onb_step1_h">1. Daten zu Ihrem Ortsbezirk</strong>
+          <p data-i18n="onb_step1_b">Wählen Sie oben „Mein Ortsbezirk" aus. KPIs, Stories und Aktionsempfehlungen werden auf Ihren Bezirk gefiltert.</p>
+        </li>
+        <li>
+          <strong data-i18n="onb_step2_h">2. Konkrete Aktion in jedem Bezirk</strong>
+          <p data-i18n="onb_step2_b">Klicken Sie auf der Karte auf einen Bezirk. Die Aktions-Box zeigt 1–3 passende CTAs (Kita-Vormerkung, Briefwahl, WBS-Antrag …).</p>
+        </li>
+        <li>
+          <strong data-i18n="onb_step3_h">3. Sprache + LS-Modus</strong>
+          <p data-i18n="onb_step3_b">Oben rechts: 5 Sprachen + Leichte Sprache (LS). Alle Daten in Ihrer Sprache.</p>
+        </li>
+      </ol>
+
+      <p class="onboarding-citizen-cta" data-i18n="onb_citizen">Fehlt etwas? Senden Sie einen Hinweis oder einen Datenwunsch im Tab „Mitmachen" — alles anonym, DSGVO-konform.</p>
+
+      <div class="modal-buttons" style="margin-top:16px;">
+        <button type="button" class="btn-primary" id="onb-close" data-i18n="onb_start">Loslegen</button>
       </div>
     </div>
   </div>
@@ -1108,7 +1153,7 @@
       <div>
         <h4 data-i18n="footer_gsm_cite_h">Zitierhinweis</h4>
         <p data-i18n="footer_gsm_cite_intro">Bitte zitieren Sie diese Anwendung wie folgt:</p>
-        <cite data-i18n-html="footer_gsm_cite_body">Park, S. (2026). <em>Wiesbaden-Lagebild v2.7 — Datenbild der Landeshauptstadt</em> [Online-Anwendung, Stand 05.05.2026]. Abgerufen von&nbsp;<span id="cite-url"></span>.</cite>
+        <cite data-i18n-html="footer_gsm_cite_body">Park, S. (2026). <em>Wiesbaden-Lagebild v2.8 — Datenbild der Landeshauptstadt</em> [Online-Anwendung, Stand 05.05.2026]. Abgerufen von&nbsp;<span id="cite-url"></span>.</cite>
       </div>
       <div>
         <h4 data-i18n="footer_gsm_a11y_h">Barrierefreiheit</h4>
@@ -1122,7 +1167,7 @@
 
     <div class="footer-bottom">
       <span data-i18n="footer_credits">Konzept &amp; Datenaufbereitung: Sujin Park</span>
-      <span class="signature">v2.7 · Stand 05.05.2026 · Initiativ-Arbeitsprobe</span>
+      <span class="signature">v2.8 · Stand 05.05.2026 · Initiativ-Arbeitsprobe</span>
     </div>
   </footer>
   <!-- v2.7: cite-url is now populated inside applyTranslations() so it survives

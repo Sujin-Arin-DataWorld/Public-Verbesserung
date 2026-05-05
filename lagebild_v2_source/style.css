@@ -1562,6 +1562,170 @@ html[data-lang="ls"] .ls-banner { display: block; }
   padding: 0 2px;
 }
 
+/* v2.8 — First-time visitor onboarding modal */
+.onboarding-steps {
+  list-style: none;
+  padding: 0;
+  margin: 18px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.onboarding-steps > li {
+  padding: 12px 14px;
+  background: var(--bg-secondary, rgba(0,0,0,0.025));
+  border-left: 3px solid var(--accent);
+  border-radius: 0 4px 4px 0;
+}
+.onboarding-steps strong {
+  display: block;
+  font-family: var(--font-display, 'Lora', Georgia, serif);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.onboarding-steps p {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text);
+  margin: 0;
+}
+.onboarding-citizen-cta {
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: color-mix(in srgb, var(--warn, #B7873E) 6%, transparent);
+  border-left: 3px solid var(--warn, #B7873E);
+  border-radius: 0 3px 3px 0;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--text);
+}
+
+/* v2.8 — Piveau Living Mode UI (audit §11) */
+.assist-mode-badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.assist-mode-badge--live {
+  color: var(--good, #2F855A);
+  background: color-mix(in srgb, var(--good, #2F855A) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--good, #2F855A) 35%, transparent);
+}
+.assist-mode-badge--cache {
+  color: var(--text-secondary, #5C6580);
+  background: color-mix(in srgb, var(--text-secondary, #5C6580) 8%, transparent);
+  border: 1px solid var(--border, #E2E5EB);
+}
+
+/* "Neu im Katalog" banner — Daten view section */
+.neu-im-katalog {
+  margin: 18px 28px 0;
+}
+.neu-im-katalog-inner {
+  padding: 16px 20px;
+  background: color-mix(in srgb, var(--accent) 5%, var(--bg-elevated, #fff));
+  border-left: 3px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+}
+.neu-im-katalog-title {
+  font-family: var(--font-display, 'Lora', Georgia, serif);
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  color: var(--accent);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.neu-im-katalog-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+.neu-im-katalog-mode {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--good, #2F855A);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.neu-im-katalog-empty {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+  margin: 0;
+}
+.neu-im-katalog-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+.neu-im-katalog-item {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  padding: 6px 8px;
+  border-radius: 3px;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 13px;
+  transition: background 0.15s ease;
+}
+.neu-im-katalog-item:hover {
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+.neu-im-katalog-date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+  min-width: 80px;
+}
+.neu-im-katalog-itemtitle {
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Atom RSS feed link in Daten tab footer */
+.atom-feed-link {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 24px;
+  padding: 14px 18px;
+  background: var(--bg-secondary, rgba(0,0,0,0.02));
+  border: 1px dashed var(--border);
+  border-radius: 5px;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.15s ease;
+}
+.atom-feed-link:hover {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
+}
+.atom-feed-link strong {
+  font-size: 13px;
+  color: var(--accent);
+}
+.atom-feed-hint {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
 /* v2.7 — Tankstellen Stand badge (replaces amber mock badge from v2.6) */
 .fuel-stand-badge {
   display: inline-flex;
