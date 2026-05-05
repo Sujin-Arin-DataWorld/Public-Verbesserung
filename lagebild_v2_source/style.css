@@ -3626,3 +3626,404 @@ html[data-lang="ls"] .ls-banner { display: block; }
 @media (max-width: 640px) {
   .kpi-detail-modal { padding: 28px 22px 24px; }
 }
+
+/* =========================================================
+   v2.8 — WB ICON SYSTEM & DASHBOARD POLISH
+   Custom inline SVG (Lucide-inspired) replacing emoji.
+   Editorial dashboard tone: NYT/FT/Helsinki/Wien Stadtplan.
+   ========================================================= */
+
+/* ---- Base SVG icon ---- */
+.wb-icon {
+  display: inline-block;
+  vertical-align: -0.18em;
+  flex-shrink: 0;
+  fill: none;
+}
+[data-icon] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+/* ---- Top nav icon polish ---- */
+.view-nav-btn {
+  position: relative;
+  letter-spacing: 0.01em;
+}
+.view-nav-icon {
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  color: var(--text-tertiary);
+  transition: color .15s, background .15s, transform .15s;
+}
+.view-nav-btn:hover .view-nav-icon {
+  color: var(--accent);
+  background: var(--accent-glow);
+}
+.view-nav-btn.active .view-nav-icon {
+  color: var(--accent);
+  background: var(--accent-glow);
+}
+
+/* ---- Section header inline icons ---- */
+.section-icon,
+.section-icon-inline {
+  display: inline-flex;
+  align-items: center;
+  color: var(--accent);
+  margin-right: 8px;
+  vertical-align: -0.15em;
+}
+.section-major-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.section-major-title .section-icon-inline {
+  margin-right: 0;
+}
+
+/* ---- KIEZ CARD ICON CHIP — major upgrade ---- */
+.kiez-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(27, 43, 76, 0.06), rgba(74, 111, 165, 0.10));
+  border: 1px solid rgba(27, 43, 76, 0.12);
+  color: var(--accent);
+  font-size: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  transition: background .2s, border-color .2s, color .2s, transform .2s;
+}
+.kiez-card:hover .kiez-card-icon {
+  background: linear-gradient(135deg, rgba(27, 43, 76, 0.12), rgba(183, 135, 62, 0.14));
+  border-color: rgba(27, 43, 76, 0.25);
+  transform: translateY(-1px);
+}
+.kiez-card.active .kiez-card-icon {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* ---- MITMACHEN CARDS ---- */
+.mm-card {
+  padding: 22px 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+}
+.mm-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px -8px rgba(27, 43, 76, 0.18);
+}
+.mm-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(27, 43, 76, 0.06), rgba(74, 111, 165, 0.10));
+  border: 1px solid rgba(27, 43, 76, 0.12);
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  font-size: 0;
+}
+.mm-card-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  margin: 0 0 6px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+.mm-card-desc {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+  line-height: 1.55;
+  flex: 1;
+}
+
+/* ---- CTA circle (Citizen-as-sensor block) ---- */
+.cta-icon-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(27, 43, 76, 0.15), rgba(183, 135, 62, 0.18));
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ---- DETAIL ACTION BUTTONS — icon chip ---- */
+.detail-action-btn {
+  display: flex !important;
+  flex-direction: column;
+  gap: 4px;
+  align-items: stretch;
+}
+.detail-action-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.detail-action-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: rgba(27, 43, 76, 0.07);
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.detail-action-urgent .detail-action-icon {
+  background: rgba(182, 61, 61, 0.10);
+  color: var(--bad);
+}
+.detail-action-civic .detail-action-icon {
+  background: rgba(27, 43, 76, 0.10);
+  color: var(--accent);
+}
+.detail-action-social .detail-action-icon {
+  background: rgba(183, 135, 62, 0.12);
+  color: var(--accent-warm);
+}
+.detail-action-generic .detail-action-icon {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+.detail-action-label {
+  font-weight: 500;
+  font-size: 13px;
+}
+.detail-action-reason {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  line-height: 1.4;
+  margin-left: 40px;
+  font-style: italic;
+}
+
+/* ---- BUTTONS WITH LEADING ICON ---- */
+.btn-with-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.btn-with-icon .wb-icon {
+  flex-shrink: 0;
+}
+
+/* ---- TICKER trend chips ---- */
+.ticker-content .ticker-up,
+.ticker-content .ticker-down {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 6px 1px 4px;
+  border-radius: 999px;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+}
+.ticker-content .ticker-up {
+  background: rgba(47, 133, 90, 0.10);
+}
+.ticker-content .ticker-down {
+  background: rgba(182, 61, 61, 0.10);
+}
+
+/* ---- KPI trend pill (when re-rendered with SVG) ---- */
+.kpi-trend.trend-up,
+.kpi-trend.trend-down {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 8px 2px 6px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  letter-spacing: 0.02em;
+}
+
+/* ---- RANK PILLS (Top 3 fuel stations) ---- */
+.rank-pill {
+  display: inline-flex;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  margin-right: 6px;
+  vertical-align: middle;
+  letter-spacing: 0;
+}
+.rank-pill.rank-1 { background: linear-gradient(135deg, #C9A227, #B7873E); box-shadow: 0 1px 3px rgba(183,135,62,.3); }
+.rank-pill.rank-2 { background: linear-gradient(135deg, #98A0A8, #7C8590); }
+.rank-pill.rank-3 { background: linear-gradient(135deg, #B57953, #8E5836); }
+
+/* ---- STORY SURPRISE callout ---- */
+.story-surprise {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  background: linear-gradient(90deg, rgba(183,135,62,0.10), transparent);
+  border-left: 3px solid var(--accent-warm);
+  border-radius: 0 6px 6px 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+.story-surprise .wb-icon { color: var(--accent-warm); margin-top: 2px; }
+.story-surprise strong { color: var(--text-primary); font-weight: 600; }
+
+/* ---- KIEZ-DETAIL close button ---- */
+.kiez-detail-close {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.kiez-detail-close:hover { background: var(--bg-secondary); color: var(--text-primary); }
+
+/* ---- KPI SPARKLINE polish ---- */
+.kpi-spark {
+  margin-top: 12px;
+  width: 100%;
+  height: 38px;
+}
+.kpi-spark polyline {
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  filter: drop-shadow(0 1px 1px rgba(27, 43, 76, 0.10));
+}
+.kpi-spark .spark-end-dot {
+  fill: var(--accent);
+}
+.kpi-spark .spark-min-dot,
+.kpi-spark .spark-max-dot {
+  fill: var(--text-tertiary);
+  opacity: 0.55;
+}
+.kpi-spark .spark-axis {
+  stroke: var(--border);
+  stroke-width: 1;
+  stroke-dasharray: 2 3;
+  opacity: 0.6;
+}
+
+/* ---- ASSIST DRAWER button polish ---- */
+.assist-btn {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+}
+.assist-close-btn {
+  width: 32px; height: 32px;
+  border-radius: 6px;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+
+/* ---- KITA-ACTION-BTN with icon ---- */
+.kita-action-btn.btn-with-icon {
+  gap: 8px;
+}
+
+/* ---- PDF/print body — keep icons readable ---- */
+@media print {
+  .wb-icon { color: #000 !important; opacity: 0.9; }
+}
+
+/* ---- TYPOGRAPHY: editorial weight bump ---- */
+.header h1 {
+  font-size: 44px;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+@media (max-width: 720px) {
+  .header h1 { font-size: 32px; }
+}
+.header p {
+  letter-spacing: 0.01em;
+}
+.section-major-title {
+  font-size: 26px;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.section-major-subtitle {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  max-width: 78ch;
+}
+.kiez-card-title {
+  letter-spacing: -0.005em;
+}
+
+/* ---- KPI VALUE — tighter mono ---- */
+.kpi-value {
+  font-feature-settings: "tnum", "ss01";
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+/* ---- LIVE DOT subtle pulse refinement ---- */
+.live-dot {
+  box-shadow:
+    0 0 0 0 currentColor,
+    0 0 8px var(--good);
+  animation: livePulseV2 2.2s ease-in-out infinite;
+}
+@keyframes livePulseV2 {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(47, 133, 90, 0); }
+  50%      { box-shadow: 0 0 0 5px rgba(47, 133, 90, 0); }
+}
+
+/* ---- AI-REGISTER note callout (was ⚠) ---- */
+.ai-register-note {
+  border-left: 2px solid var(--warn);
+  padding-left: 8px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* ---- FUEL-CTA inner heading polish ---- */
+#fuel-cta { transition: border-color .2s; }
+#fuel-cta:hover { border-color: rgba(27, 43, 76, 0.6); }
+
+/* ---- LEAFLET marker layer override (drop default blue) ---- */
+.leaflet-container .leaflet-marker-icon.wb-fuel-marker {
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.18));
+}
+
+/* ---- DETAIL-PANEL chart cleaner gridline ---- */
+.detail-chart canvas {
+  background:
+    linear-gradient(to bottom, var(--bg-secondary) 0%, transparent 50%);
+  border-radius: 6px;
+}
+

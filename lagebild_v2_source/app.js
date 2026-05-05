@@ -4,6 +4,148 @@
 
 const { ORTSBEZIRKE, POPULATION_TIMELINE, LIVE_KPI, ORIGIN_COUNTRIES, CITIZEN_REPORTS, I18N, WIESBADEN_CITY_GEOJSON, CHARGING_STATIONS, STORIES, KPI_DETAILS, UBA_AIRQUALITY } = window.LAGEBILD_DATA;
 
+// =================================================================
+// WB ICON SYSTEM — custom inline SVG, replacing emoji.
+// Editorial dashboard tone (Lucide/Phosphor inspired). 24px viewBox,
+// stroke 1.75, currentColor, round caps. Use:
+//   • Static markup: <span data-icon="home"></span> → hydrateIcons()
+//   • Inline string: wbIcon('home', 18) → returns SVG markup
+// =================================================================
+const WB_ICON_PATHS = {
+  // — Top nav
+  'home':         '<path d="M3.5 11.4 12 4l8.5 7.4V20a1 1 0 0 1-1 1h-4.5v-6.5h-6V21H4.5a1 1 0 0 1-1-1z"/>',
+  'cart':         '<circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 4h2.5l2.4 11.5a1.5 1.5 0 0 0 1.47 1.2H18a1.5 1.5 0 0 0 1.47-1.18L21 7H6"/>',
+  'building':     '<rect x="4.5" y="3" width="15" height="18" rx="1"/><path d="M9.5 21v-4.5h5V21M8.5 7h2m3 0h2M8.5 11h2m3 0h2M8.5 15h2m3 0h2"/>',
+  'ballot':       '<rect x="3.5" y="6" width="17" height="14" rx="1.5"/><path d="M3.5 12h17M9 4v3M15 4v3M8.5 16l3 2 5-5"/>',
+  'users':        '<circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M21 18a4.5 4.5 0 0 0-4.5-4.5"/>',
+  'search':       '<circle cx="11" cy="11" r="6"/><path d="m20 20-4.3-4.3"/>',
+  // — Kiez 6
+  'coffee':       '<path d="M4.5 8h11v6.5a4 4 0 0 1-4 4H8.5a4 4 0 0 1-4-4z"/><path d="M15.5 10h2a3 3 0 0 1 0 6h-2"/><path d="M7.5 4.5c.6 1 .4 2-.4 3s-1 2-.6 3M11 4.5c.6 1 .4 2-.4 3s-1 2-.6 3"/>',
+  'parking':      '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9.5 17.5V7h3.8a3.2 3.2 0 0 1 0 6.4H9.5"/>',
+  'euro':         '<path d="M19 5.5a8 8 0 1 0 0 13"/><path d="M3.5 10h11M3.5 14h11"/>',
+  'recycle':      '<path d="M7 11 4 16h6"/><path d="M10 16 8 12.5"/><path d="m17 12 3 5h-6"/><path d="M14 17l3-5"/><path d="M9 5h6l-3-3"/><path d="M9 5l-3 5"/><path d="M15 5l3 5"/>',
+  'shield-alert': '<path d="M12 3.5 4.5 6V12c0 4.5 3 7.5 7.5 8.5 4.5-1 7.5-4 7.5-8.5V6z"/><path d="M12 8v4.5M12 16h.01"/>',
+  'sparkles':     '<path d="m11 4 1.7 4.5L17 10l-4.3 1.5L11 16l-1.7-4.5L5 10l4.3-1.5z"/><path d="m18 16 .8 1.7 1.7.8-1.7.8L18 21l-.8-1.7-1.7-.8 1.7-.8z"/>',
+  // — Mitmachen 4
+  'clipboard-edit':'<rect x="6" y="4" width="12" height="17" rx="1.5"/><path d="M9.5 4v-.5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1V4"/><path d="m13 13 2.5-2.5 1.7 1.7L14.7 14.7 13 15z"/>',
+  'chart-bar':    '<path d="M3.5 21h17"/><rect x="5.5" y="12" width="3" height="7" rx=".4"/><rect x="11" y="6" width="3" height="13" rx=".4"/><rect x="16.5" y="9" width="3" height="10" rx=".4"/>',
+  'fuel':         '<rect x="4" y="4" width="9" height="16" rx="1.5"/><path d="M4 11h9"/><path d="M13 9h2.5l1.5 2v6.5a1.5 1.5 0 0 0 3 0V9.5L18 7"/>',
+  'microscope':   '<path d="M5 21h14"/><path d="M8 21a5.5 5.5 0 0 0 8-5"/><rect x="9" y="3" width="6" height="9" rx=".7"/><path d="M11 12v3a2 2 0 0 0 2 2"/>',
+  // — Section / misc
+  'map-pin':      '<path d="M12 21s7-7 7-12a7 7 0 1 0-14 0c0 5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/>',
+  'book':         '<path d="M5 4h11a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H5z"/><path d="M5 4v15h12"/>',
+  'ruler':        '<path d="M3 17 17 3l4 4L7 21z"/><path d="m6.5 13.5 2 2M10.5 9.5l2 2M14.5 5.5l2 2"/>',
+  'book-open':    '<path d="M3 5h7a3 3 0 0 1 2 1 3 3 0 0 1 2-1h7v13h-7a2 2 0 0 0-2 2 2 2 0 0 0-2-2H3z"/><path d="M12 6v14"/>',
+  'file-text':    '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 16h4"/>',
+  'mail':         '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+  'unlock':       '<rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0"/>',
+  'edit':         '<path d="M16 4l4 4-11 11H5v-4z"/><path d="m13 7 4 4"/>',
+  // — Action box severity
+  'graduation':   '<path d="m3 9 9-4 9 4-9 4z"/><path d="M7 11v4c0 1.5 2.5 3 5 3s5-1.5 5-3v-4"/><path d="M21 9v5"/>',
+  'briefcase':    '<rect x="3.5" y="7" width="17" height="13" rx="1.5"/><path d="M9 7V5.5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2V7"/><path d="M3.5 13h17"/>',
+  'handshake':    '<path d="m11 16 1.5 1.5L14 16"/><path d="M3 10.5 8 6l3 1 4-1 4.5 4.5L15 15l-4-4-3 3z"/><path d="M11 11l-3 3 2 2 3-3"/>',
+  'wallet':       '<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h13a2 2 0 0 1 0 4H3"/><circle cx="16" cy="12" r="1" fill="currentColor"/>',
+  'cone':         '<path d="m6 21 6-16 6 16z"/><path d="M8 13h8M9 16h6"/>',
+  'globe':        '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18"/><path d="M12 3a14 14 0 0 0 0 18"/>',
+  'scale':        '<path d="M12 4v16"/><path d="M5 20h14"/><path d="M5 7h14"/><path d="M5 7 2.5 13a3 3 0 0 0 5 0z"/><path d="M19 7l-2.5 6a3 3 0 0 0 5 0z"/>',
+  'clipboard':    '<rect x="6" y="4" width="12" height="17" rx="1.5"/><path d="M9 4v-.5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1V4"/><path d="M9 11h6M9 14h4"/>',
+  // — Status / arrows / atmosphere
+  'trend-up':     '<path d="m4 16 5-5 4 4 7-7"/><path d="M14 8h6v6"/>',
+  'trend-down':   '<path d="m4 8 5 5 4-4 7 7"/><path d="M14 16h6v-6"/>',
+  'arrow-right':  '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  'arrow-up-right':'<path d="M7 17 17 7M9 7h8v8"/>',
+  'x':            '<path d="m6 6 12 12M18 6 6 18"/>',
+  'check':        '<path d="m5 12 5 5 9-11"/>',
+  'target':       '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/>',
+  'eye':          '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+  'lightbulb':    '<path d="M9 18h6M10 21h4"/><path d="M9 15c-2-2-3-4-3-6a6 6 0 1 1 12 0c0 2-1 4-3 6"/>',
+  'sun':          '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6 19 19M5 19l1.4-1.4M17.6 6.4 19 5"/>',
+  'clock':        '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  'wind':         '<path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 14h15a3 3 0 1 1-3 3"/>',
+  'crosshair':    '<circle cx="12" cy="12" r="9"/><path d="M22 12h-3M5 12H2M12 22v-3M12 5V2"/>',
+  'leaf':         '<path d="M21 3c-9 0-15 6-15 12 0 3 1 5 3 6 6 0 12-6 12-15z"/><path d="M5 21c2-7 5-11 11-14"/>',
+  'megaphone':    '<path d="M3 9v6h3l9 5V4l-9 5z"/><path d="M19 8a4 4 0 0 1 0 8"/>',
+  'database':     '<ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/>'
+};
+
+function wbIcon(name, size) {
+  size = size || 18;
+  const path = WB_ICON_PATHS[name];
+  if (!path) return '<span style="display:inline-block;width:'+size+'px;height:'+size+'px"></span>';
+  return '<svg class="wb-icon" data-icon-name="'+name+'" width="'+size+'" height="'+size+'" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" fill="none" aria-hidden="true">'+path+'</svg>';
+}
+
+function hydrateIcons(root) {
+  root = root || document;
+  const els = root.querySelectorAll('[data-icon]:not([data-icon-hydrated])');
+  els.forEach(el => {
+    const name = el.dataset.icon;
+    let size;
+    if (el.dataset.iconSize) size = parseInt(el.dataset.iconSize, 10);
+    else if (el.classList.contains('wb-icon-xl')) size = 28;
+    else if (el.classList.contains('wb-icon-lg')) size = 22;
+    else if (el.classList.contains('wb-icon-sm')) size = 14;
+    else size = 18;
+    el.innerHTML = wbIcon(name, size);
+    el.setAttribute('data-icon-hydrated', '1');
+  });
+}
+
+// =================================================================
+// CHART.JS GLOBAL THEME — editorial dashboard defaults.
+// Inter body font, slate-grey labels, hairline grid lines, generous
+// padding. Set BEFORE any chart instantiation.
+// =================================================================
+if (typeof Chart !== 'undefined') {
+  Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, sans-serif";
+  Chart.defaults.font.size = 11;
+  Chart.defaults.font.weight = '500';
+  Chart.defaults.color = '#5C6580';
+  Chart.defaults.borderColor = 'rgba(226, 229, 235, 0.7)';
+  Chart.defaults.elements.line.borderWidth = 1.75;
+  Chart.defaults.elements.line.tension = 0.32;
+  Chart.defaults.elements.point.radius = 2.5;
+  Chart.defaults.elements.point.hoverRadius = 5;
+  Chart.defaults.elements.point.hitRadius = 8;
+  Chart.defaults.elements.point.borderWidth = 1.5;
+  Chart.defaults.elements.bar.borderRadius = 3;
+  Chart.defaults.layout.padding = 8;
+  if (Chart.defaults.plugins && Chart.defaults.plugins.legend) {
+    Chart.defaults.plugins.legend.position = 'bottom';
+    Chart.defaults.plugins.legend.align = 'start';
+    Chart.defaults.plugins.legend.labels.boxWidth = 10;
+    Chart.defaults.plugins.legend.labels.boxHeight = 10;
+    Chart.defaults.plugins.legend.labels.usePointStyle = true;
+    Chart.defaults.plugins.legend.labels.padding = 14;
+    Chart.defaults.plugins.legend.labels.font = { size: 11, weight: '500' };
+  }
+  if (Chart.defaults.plugins && Chart.defaults.plugins.tooltip) {
+    Chart.defaults.plugins.tooltip.backgroundColor = '#1A1F2E';
+    Chart.defaults.plugins.tooltip.titleFont = { size: 12, weight: '600' };
+    Chart.defaults.plugins.tooltip.bodyFont = { size: 11, weight: '500', family: "'JetBrains Mono', monospace" };
+    Chart.defaults.plugins.tooltip.padding = 10;
+    Chart.defaults.plugins.tooltip.cornerRadius = 4;
+    Chart.defaults.plugins.tooltip.displayColors = false;
+    Chart.defaults.plugins.tooltip.borderColor = 'rgba(255,255,255,0.1)';
+    Chart.defaults.plugins.tooltip.borderWidth = 1;
+  }
+  // Scale defaults: hairline grid, slate ticks, no Y axis title overhead
+  if (Chart.defaults.scale) {
+    Chart.defaults.scale.grid = Chart.defaults.scale.grid || {};
+    Chart.defaults.scale.grid.color = 'rgba(226, 229, 235, 0.55)';
+    Chart.defaults.scale.grid.lineWidth = 1;
+    Chart.defaults.scale.grid.drawTicks = false;
+    Chart.defaults.scale.border = Chart.defaults.scale.border || {};
+    Chart.defaults.scale.border.display = false;
+    Chart.defaults.scale.ticks = Chart.defaults.scale.ticks || {};
+    Chart.defaults.scale.ticks.color = '#8892A8';
+    Chart.defaults.scale.ticks.padding = 6;
+    Chart.defaults.scale.ticks.font = { size: 10.5, family: "'JetBrains Mono', monospace" };
+  }
+  Chart.defaults.maintainAspectRatio = false;
+  Chart.defaults.responsive = true;
+}
+
 let currentLang = 'de';
 let currentLayer = 'pop';
 let currentYear = 2026;
@@ -28,8 +170,18 @@ function applyTranslations() {
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     el.placeholder = t(el.dataset.i18nPlaceholder);
   });
+  // v2.7 — title attributes (tooltips) need translation too (e.g. KPI curator button)
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    el.title = t(el.dataset.i18nTitle);
+  });
+  // v2.7 — re-populate cite-url after data-i18n-html overwrites the cite block
+  // (footer-gsm citation is per-language; the URL itself is constant).
+  const citeEl = document.getElementById('cite-url');
+  if (citeEl) citeEl.textContent = window.location.href;
   // Update language attribute (LS = German simplified register)
   document.documentElement.lang = currentLang === 'kr' ? 'ko' : (currentLang === 'ls' ? 'de' : currentLang);
+  // Hydrate any pending data-icon placeholders (idempotent)
+  if (typeof hydrateIcons === 'function') hydrateIcons();
 }
 
 function setLanguage(lang) {
@@ -64,12 +216,14 @@ function setupThemeToggle() {
 // ============ TICKER ============
 function renderTicker() {
   const ticker = document.getElementById('ticker-content');
+  const up = wbIcon('trend-up', 11);
+  const dn = wbIcon('trend-down', 11);
   const items = [
-    `<span><strong>Bevölkerung</strong> 300.089 <span class="ticker-up">↑ +1.156</span></span>`,
-    `<span><strong>AQI Mitte</strong> 42 <span class="ticker-down">↓ -3</span></span>`,
-    `<span><strong>ÖPNV</strong> 91% pünktlich <span class="ticker-up">↑ +2pp</span></span>`,
+    `<span><strong>Bevölkerung</strong> 300.089 <span class="ticker-up">${up} +1.156</span></span>`,
+    `<span><strong>AQI Mitte</strong> 42 <span class="ticker-down">${dn} -3</span></span>`,
+    `<span><strong>ÖPNV</strong> 91% pünktlich <span class="ticker-up">${up} +2pp</span></span>`,
     `<span><strong>Baustellen</strong> 28 aktiv</span>`,
-    `<span><strong>EE-Anteil</strong> 61% <span class="ticker-up">↑ +3pp</span></span>`,
+    `<span><strong>EE-Anteil</strong> 61% <span class="ticker-up">${up} +3pp</span></span>`,
     `<span><strong>Bürger-Hinweise</strong> 18 offen / 132 erledigt</span>`,
     `<span><strong>Datensätze</strong> opendata.cloud.wiesbaden.de · Beta</span>`,
     `<span><strong>Migrationshintergrund</strong> 43,7%</span>`,
@@ -129,7 +283,9 @@ function renderKPIs() {
     }
   ];
 
-  grid.innerHTML = kpis.map(kpi => `
+  grid.innerHTML = kpis.map(kpi => {
+    const trendIcon = kpi.trendClass === 'trend-up' ? wbIcon('trend-up', 11) : (kpi.trendClass === 'trend-down' ? wbIcon('trend-down', 11) : '');
+    return `
     <div class="kpi-card ${kpi.featured ? 'featured' : ''}" data-kpi="${kpi.key}">
       <span class="demo-badge">${t('demo')}</span>
       <div class="kpi-label">${kpi.label}</div>
@@ -138,18 +294,17 @@ function renderKPIs() {
       </div>
       <div class="kpi-status">
         <span>${kpi.status}</span>
-        <span class="kpi-trend ${kpi.trendClass}">${kpi.trend}</span>
+        <span class="kpi-trend ${kpi.trendClass}">${trendIcon}${kpi.trend}</span>
       </div>
-      <svg class="kpi-spark" viewBox="0 0 100 32" preserveAspectRatio="none">
-        <polyline points="${makeSparkPoints(kpi.sparkData)}" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--accent)"/>
-      </svg>
+      ${makeSparkSVG(kpi.sparkData)}
     </div>
-  `).join('');
+  `;}).join('');
 
   // Animate count-up
   setTimeout(() => animateCounters(), 100);
 }
 
+// Polyline points only (kept for back-compat callers)
 function makeSparkPoints(data) {
   const min = Math.min(...data);
   const max = Math.max(...data);
@@ -159,6 +314,30 @@ function makeSparkPoints(data) {
     const y = 32 - ((v - min) / range) * 28 - 2;
     return `${x},${y}`;
   }).join(' ');
+}
+
+// Editorial sparkline with min/max/end dots + dotted axis
+function makeSparkSVG(data) {
+  const min = Math.min(...data);
+  const max = Math.max(...data);
+  const range = max - min || 1;
+  const pts = data.map((v, i) => {
+    const x = (i / (data.length - 1)) * 100;
+    const y = 32 - ((v - min) / range) * 26 - 3;
+    return { x: x, y: y, v: v };
+  });
+  const polyPts = pts.map(p => p.x + ',' + p.y).join(' ');
+  const minPt = pts.reduce((acc, p) => p.v < acc.v ? p : acc, pts[0]);
+  const maxPt = pts.reduce((acc, p) => p.v > acc.v ? p : acc, pts[0]);
+  const endPt = pts[pts.length - 1];
+  const midY = 32 - 0.5 * 26 - 3;
+  return '<svg class="kpi-spark" viewBox="0 0 100 32" preserveAspectRatio="none">'
+    + '<line class="spark-axis" x1="0" y1="' + midY.toFixed(2) + '" x2="100" y2="' + midY.toFixed(2) + '"/>'
+    + '<polyline points="' + polyPts + '" fill="none" stroke="currentColor" stroke-width="1.6" style="color: var(--accent)"/>'
+    + '<circle class="spark-min-dot" cx="' + minPt.x.toFixed(2) + '" cy="' + minPt.y.toFixed(2) + '" r="1.6"/>'
+    + '<circle class="spark-max-dot" cx="' + maxPt.x.toFixed(2) + '" cy="' + maxPt.y.toFixed(2) + '" r="1.6"/>'
+    + '<circle class="spark-end-dot" cx="' + endPt.x.toFixed(2) + '" cy="' + endPt.y.toFixed(2) + '" r="2.2"/>'
+    + '</svg>';
 }
 
 function animateCounters() {
@@ -603,7 +782,7 @@ function evaluateActionRules(o) {
   // 1) Kita u3 < 50 % — official WiKITA portal (real link)
   if (kitaQ != null && kitaQ < 50) {
     actions.push({
-      icon: '🧒',
+      icon: 'graduation',
       label: t('action_kita_vormerk', 'Kita-Vormerkung anlegen'),
       reason: t('action_kita_reason', `Hier weil: Kita-Versorgung u3 nur ${kitaQ.toFixed(1)} %`),
       href: 'https://www.wiesbaden.de/wikita',
@@ -614,7 +793,7 @@ function evaluateActionRules(o) {
   // 2) Wahlbeteiligung < 40 % — Briefwahl Antrag (real link)
   if (typeof turnout === 'number' && turnout < 40) {
     actions.push({
-      icon: '🗳',
+      icon: 'ballot',
       label: t('action_briefwahl', 'Briefwahl beantragen'),
       reason: t('action_briefwahl_reason', `Hier weil: Wahlbeteiligung 2026 nur ${turnout.toFixed(1)} %`),
       href: 'https://www.wiesbaden.de/leben-in-wiesbaden/buergerservice/wahlen/briefwahl.php',
@@ -627,7 +806,7 @@ function evaluateActionRules(o) {
     const share = (soz.latest || 0) / baut.stock_latest * 100;
     if (share < 5) {
       actions.push({
-        icon: '🏠',
+        icon: 'home',
         label: t('action_wbs', 'Wohnberechtigungsschein beantragen'),
         reason: t('action_wbs_reason', `Hier weil: nur ${share.toFixed(1)} % Sozialwohnungs-Quote`),
         href: 'https://www.wiesbaden.de/leben-in-wiesbaden/wohnen/wohnungen-suchen/wbs.php',
@@ -639,7 +818,7 @@ function evaluateActionRules(o) {
   // 4) Hohe Arbeitslosigkeit (>= +2pp gegenüber Stadtmittel) — Bundesagentur Wiesbaden
   if (kk && typeof kk.unemployment_rate === 'number' && kk.unemployment_rate >= cityUnemployment + 2) {
     actions.push({
-      icon: '💼',
+      icon: 'briefcase',
       label: t('action_arbeit', 'Beratung Bundesagentur für Arbeit'),
       reason: t('action_arbeit_reason', `Hier weil: Arbeitslosenquote ${kk.unemployment_rate.toFixed(1)} % (Stadt-Ø ${cityUnemployment} %)`),
       href: 'https://www.arbeitsagentur.de/vor-ort/wiesbaden',
@@ -650,7 +829,7 @@ function evaluateActionRules(o) {
   // 5) Hoher Bürgergeld-Bezug — Sozialberatung
   if (kk && typeof kk.buergergeld_pct === 'number' && kk.buergergeld_pct >= 12) {
     actions.push({
-      icon: '🤝',
+      icon: 'handshake',
       label: t('action_sozialberatung', 'Sozialberatung der Stadt'),
       reason: t('action_sozial_reason', `Hier weil: ${kk.buergergeld_pct.toFixed(1)} % Bürgergeld-Bezug`),
       href: 'https://www.wiesbaden.de/leben-in-wiesbaden/soziales/',
@@ -662,7 +841,7 @@ function evaluateActionRules(o) {
   if (kk && typeof kk.kaufkraft_eur_per_capita === 'number'
         && kk.kaufkraft_eur_per_capita < cityKaufkraftAvg * 0.85) {
     actions.push({
-      icon: '💰',
+      icon: 'wallet',
       label: t('action_schuldnerberatung', 'Schuldner- & Verbraucherberatung'),
       reason: t('action_schulden_reason', `Hier weil: Kaufkraft ${formatNum(Math.round(kk.kaufkraft_eur_per_capita))} € / Jahr (Stadt-Ø ${formatNum(cityKaufkraftAvg)} €)`),
       href: 'https://www.wiesbaden.de/leben-in-wiesbaden/soziales/schuldnerberatung.php',
@@ -673,7 +852,7 @@ function evaluateActionRules(o) {
   // 6) Hohe Bautätigkeit — Bauleitplanung einsehen
   if (baut && typeof baut.completed_latest === 'number' && baut.completed_latest >= 50) {
     actions.push({
-      icon: '🚧',
+      icon: 'cone',
       label: t('action_bau', 'Bauleitplanung einsehen'),
       reason: t('action_bau_reason', `Hier weil: ${baut.completed_latest} Wohnungen 2024 fertiggestellt`),
       href: 'https://www.wiesbaden.de/leben-in-wiesbaden/stadtplanung-bauen/bauleitplanung/',
@@ -684,7 +863,7 @@ function evaluateActionRules(o) {
   // 7) Hoher Ausländeranteil — Ausländerbeirat
   if (typeof o.foreign === 'number' && o.foreign >= 35) {
     actions.push({
-      icon: '🌍',
+      icon: 'globe',
       label: t('action_auslaenderbeirat', 'Ausländerbeirat kontaktieren'),
       reason: t('action_ab_reason', `Hier weil: ${o.foreign.toFixed(1)} % nichtdeutsche Einwohner:innen`),
       href: 'https://www.wiesbaden.de/leben-in-wiesbaden/buergerservice/auslaenderbeirat/',
@@ -696,7 +875,7 @@ function evaluateActionRules(o) {
   const rent = parseFloat(o.rent);
   if (!isNaN(rent) && rent >= 12) {
     actions.push({
-      icon: '⚖',
+      icon: 'scale',
       label: t('action_mieterbund', 'Mieterbund Wiesbaden'),
       reason: t('action_mieter_reason', `Hier weil: Kaltmiete ${rent.toFixed(2).replace('.', ',')} €/m²`),
       href: 'https://www.mieterbund-wiesbaden.de/',
@@ -711,14 +890,14 @@ function evaluateActionRules(o) {
 
   // Generic fallbacks always appended at the end (audit §6.1: keep proven CTAs).
   specific.push({
-    icon: '📋',
+    icon: 'clipboard',
     label: t('detail_action_report', 'Mängel melden'),
     reason: '',
     onClick: 'openHinweis',
     severity: 'generic'
   });
   specific.push({
-    icon: '🗳',
+    icon: 'ballot',
     label: t('detail_action_participate', 'Beteiligungsverfahren'),
     reason: '',
     href: 'https://wiesbadenwirkt.de',
@@ -744,7 +923,7 @@ function renderActionBox(o) {
       return `
         <button class="detail-action-btn detail-action-${r.severity}" ${handler}>
           <div class="detail-action-row">
-            <span class="detail-action-icon">${r.icon}</span>
+            <span class="detail-action-icon">${wbIcon(r.icon, 18)}</span>
             <span class="detail-action-label">${r.label}</span>
           </div>
           ${reason}
@@ -866,7 +1045,7 @@ function openStoryModal(index) {
   // v2.7 — "🎯 Was uns überrascht hat" Callout (audit §6.4) — pre-pended above the finding.
   const findingEl = document.getElementById('story-modal-finding');
   const surpriseHTML = s.surprise && (s.surprise[currentLang] || s.surprise.de)
-    ? `<div class="story-surprise">🎯 ${t('story_surprise_label', 'Was uns überrascht hat')} — ${s.surprise[currentLang] || s.surprise.de}</div>`
+    ? `<div class="story-surprise">${wbIcon('target', 14)} <strong>${t('story_surprise_label', 'Was uns überrascht hat')}</strong> — ${s.surprise[currentLang] || s.surprise.de}</div>`
     : '';
   findingEl.innerHTML = surpriseHTML + `<p class="story-finding-body">${t(s.findingKey)}</p>`;
 
@@ -1962,7 +2141,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!box) return;
     const list = rankedStations();
     const top3 = list.slice(0, 3);
-    const medals = ['🥇', '🥈', '🥉'];
+    const medals = ['<span class="rank-pill rank-1">1</span>', '<span class="rank-pill rank-2">2</span>', '<span class="rank-pill rank-3">3</span>'];
     box.innerHTML = `
       <div class="grocery-stat-item" style="grid-column: 1 / -1; text-align:left; padding:0 0 8px 0; border:none;">
         <span style="font-family: var(--font-mono); font-size:10px; letter-spacing:.08em; color: var(--text-tertiary);">
@@ -2077,10 +2256,10 @@ document.addEventListener('DOMContentLoaded', () => {
               ? `${t('fuel_updated', 'Aktualisiert')}: ${KPI_STAND.fuel.standDate}`
               : t('fuel_updated', 'Aktualisiert'))
       }</div>
-      ${fuelUserLoc ? `<div style="margin-top:6px; font-size:11px;">📍 ${distKm(fuelUserLoc, s).toFixed(1)} km ${t('fuel_from_you', 'von dir')}</div>` : ''}
+      ${fuelUserLoc ? `<div style="margin-top:6px; font-size:11px; display:inline-flex; align-items:center; gap:4px;">${wbIcon('map-pin', 12)} ${distKm(fuelUserLoc, s).toFixed(1)} km ${t('fuel_from_you', 'von dir')}</div>` : ''}
       ${reports.length ? `
         <div style="margin-top:10px; padding-top:10px; border-top:1px solid var(--border);">
-          <div style="font-size:10px; color: var(--text-tertiary); letter-spacing:.06em;">👥 ${t('fuel_citizen_seen', 'BÜRGER MELDUNGEN')}</div>
+          <div style="font-size:10px; color: var(--text-tertiary); letter-spacing:.06em; display:inline-flex; align-items:center; gap:4px;">${wbIcon('users', 12)} ${t('fuel_citizen_seen', 'BÜRGER MELDUNGEN')}</div>
           ${reports.slice(-3).reverse().map(r => `
             <div style="font-size:11px; margin-top:4px;">
               ${r.fuel === 'e10' ? 'E10' : 'Diesel'}: <strong>${r.price.toFixed(3)} €</strong>
@@ -2109,7 +2288,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ${t('fuel_detail_hint', 'Klicke einen Pin oder eine Top-3-Karte, um Details zu sehen.')}
       </div>
       <div style="margin-top:14px; padding:10px; background: rgba(74,111,165,0.1); border-radius:4px; font-size:11px;">
-        💡 ${t('fuel_detail_tip', 'PLZ eingeben für Entfernungs-Sortierung.')}
+        ${wbIcon('lightbulb', 14)} ${t('fuel_detail_tip', 'PLZ eingeben für Entfernungs-Sortierung.')}
       </div>
     `;
   }
@@ -2483,7 +2662,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <meta charset="utf-8"><title>Wiesbaden-Lagebild · Stand ${today}</title>
       ${css}
     </head><body>
-      <button class="no-print" onclick="window.print()">📄 Als PDF speichern (Browser → Drucken → "Als PDF speichern")</button>
+      <button class="no-print btn-with-icon" onclick="window.print()">${wbIcon('file-text', 14)}<span>Als PDF speichern (Browser → Drucken → "Als PDF speichern")</span></button>
       <h1>Wiesbaden-Lagebild · Stand ${today}</h1>
       <div class="stand">Stadt-Snapshot · Landeshauptstadt Wiesbaden · v2.7</div>
 
@@ -2492,9 +2671,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       ${air ? `<h3>Live-Daten</h3>
         <div style="font-size: 12px; line-height: 1.6;">
-          🌬 Luftqualität (UBA · DEHE112 Schiersteiner): NO₂ Ø ${air.no2_avg} µg/m³ · PM₁₀ Ø ${air.pm10_avg} µg/m³ · PM₂,₅ Ø ${air.pm25_avg} µg/m³
+          ${wbIcon('wind', 13)} Luftqualität (UBA · DEHE112 Schiersteiner): NO₂ Ø ${air.no2_avg} µg/m³ · PM₁₀ Ø ${air.pm10_avg} µg/m³ · PM₂,₅ Ø ${air.pm25_avg} µg/m³
           <span class="badge">live</span>
-          ${fuel ? `<br>⛽ Günstigster Super E10 (Tankerkönig): ${fuel.e10.toFixed(3).replace('.',',')} € · ${fuel.brand} ${fuel.addr}<span class="badge">live · ${fuelStand.slice(0,10)}</span>` : ''}
+          ${fuel ? `<br>${wbIcon('fuel', 13)} Günstigster Super E10 (Tankerkönig): ${fuel.e10.toFixed(3).replace('.',',')} € · ${fuel.brand} ${fuel.addr}<span class="badge">live · ${fuelStand.slice(0,10)}</span>` : ''}
         </div>` : ''}
 
       <h2>Daten-Stories (${stories.length})</h2>
@@ -3354,7 +3533,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return `
       <div class="mo-stories-block" style="margin-top:18px; padding-top:14px; border-top:1px solid var(--border-subtle);">
         ${tagged.length ? `
-          <div class="mo-stories-heading">📖 ${taggedLabel} <strong>${o.name}</strong> · ${tagged.length}</div>
+          <div class="mo-stories-heading">${wbIcon('book-open', 14)} ${taggedLabel} <strong>${o.name}</strong> · ${tagged.length}</div>
           <div class="mo-stories-list">${renderList(tagged)}</div>
         ` : ''}
         ${citywide.length ? `
@@ -3396,9 +3575,9 @@ document.addEventListener('DOMContentLoaded', () => {
         ${o.baustellen != null ? moCard(t('mo_lbl_baustellen', 'BAUSTELLEN'), o.baustellen, fmtInt, moDeltaBadge(o.baustellen, avg.baustellen, '', true), '') : ''}
       </div>
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
-        <button data-mm-goto="demokratie" class="btn-secondary" style="padding:7px 14px; font-size:12px;">🗳 ${t('mo_action_demo', 'Mehr im Demokratie-Tab')}</button>
-        <button data-mm-goto="wohnen" class="btn-secondary" style="padding:7px 14px; font-size:12px;">🏘 ${t('mo_action_wohnen', 'Mietspiegel im Wohnen-Tab')}</button>
-        <button data-mm-goto="mitmachen" class="btn-secondary" style="padding:7px 14px; font-size:12px;">📋 ${t('mo_action_report', 'Mängel hier melden')}</button>
+        <button data-mm-goto="demokratie" class="btn-secondary btn-with-icon" style="padding:7px 14px; font-size:12px;">${wbIcon('ballot', 14)} ${t('mo_action_demo', 'Mehr im Demokratie-Tab')}</button>
+        <button data-mm-goto="wohnen" class="btn-secondary btn-with-icon" style="padding:7px 14px; font-size:12px;">${wbIcon('building', 14)} ${t('mo_action_wohnen', 'Mietspiegel im Wohnen-Tab')}</button>
+        <button data-mm-goto="mitmachen" class="btn-secondary btn-with-icon" style="padding:7px 14px; font-size:12px;">${wbIcon('clipboard', 14)} ${t('mo_action_report', 'Mängel hier melden')}</button>
       </div>
       ${renderMoStoriesSection(o)}
     `;
@@ -4008,11 +4187,11 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         ${cap > 0 ? `<p style="font-size:12px; color: var(--text-secondary, var(--text-muted));">${t('kiez_park_capacity_note', 'Bekannte Stellplätze gesamt:')} <strong>${cap}</strong></p>` : ''}
         ${freeNamed.length ? `
-          <h4 class="kiez-section-h4">${escapeHtml(t('kiez_park_free_title', '🟢 Kostenlos parken — benannte Plätze'))}</h4>
+          <h4 class="kiez-section-h4">${wbIcon('check', 13)} ${escapeHtml(t('kiez_park_free_title', 'Kostenlos parken — benannte Plätze'))}</h4>
           <div class="kiez-venues-list">${freeNamed.map(renderRow).join('')}</div>
         ` : ''}
         ${paidNamed.length ? `
-          <h4 class="kiez-section-h4">${escapeHtml(t('kiez_park_paid_title', '💶 Größte gebührenpflichtige Anlagen'))}</h4>
+          <h4 class="kiez-section-h4">${wbIcon('euro', 13)} ${escapeHtml(t('kiez_park_paid_title', 'Größte gebührenpflichtige Anlagen'))}</h4>
           <div class="kiez-venues-list">${paidNamed.map(renderRow).join('')}</div>
         ` : ''}
         <p class="kiez-source-note">${escapeHtml(t('kiez_park_osm_note', 'Quelle: OpenStreetMap. Hoher „Unbekannt"-Anteil = nicht alle Schilder im OSM gepflegt — ggf. vor Ort prüfen.'))}</p>

@@ -55,7 +55,7 @@
         <span class="stand-row"><span class="stand-label">LETZTE AKTUALISIERUNG</span><span class="stand-value" id="stand-last">02.05.2026</span></span>
         <span class="stand-row"><span class="stand-label">NÄCHSTE AKTUALISIERUNG</span><span class="stand-value" id="stand-next">30.06.2026</span></span>
       </div>
-      <button class="kpi-curator-btn" id="curator-btn" title="KPI anpassen">
+      <button class="kpi-curator-btn" id="curator-btn" data-i18n-title="curator_button" title="KPI anpassen">
         <span data-i18n="curator_button">KPI anpassen</span>
       </button>
       <!-- v2.2 GSM dialect: light-only, no dark toggle.
@@ -67,27 +67,27 @@
   <!-- v2.1 — VIEW NAVIGATION -->
   <nav class="view-nav" role="navigation" aria-label="Hauptnavigation">
     <button class="view-nav-btn active" data-view="home">
-      <span class="view-nav-icon" aria-hidden="true">🏠</span>
+      <span class="view-nav-icon" data-icon="home" aria-hidden="true"></span>
       <span data-i18n="nav_home">Übersicht</span>
     </button>
     <button class="view-nav-btn" data-view="alltag">
-      <span class="view-nav-icon" aria-hidden="true">🛒</span>
+      <span class="view-nav-icon" data-icon="cart" aria-hidden="true"></span>
       <span data-i18n="nav_alltag">Alltag</span>
     </button>
     <button class="view-nav-btn" data-view="wohnen">
-      <span class="view-nav-icon" aria-hidden="true">🏘</span>
+      <span class="view-nav-icon" data-icon="building" aria-hidden="true"></span>
       <span data-i18n="nav_wohnen">Wohnen</span>
     </button>
     <button class="view-nav-btn" data-view="demokratie">
-      <span class="view-nav-icon" aria-hidden="true">🗳</span>
+      <span class="view-nav-icon" data-icon="ballot" aria-hidden="true"></span>
       <span data-i18n="nav_demokratie">Demokratie</span>
     </button>
     <button class="view-nav-btn" data-view="mitmachen">
-      <span class="view-nav-icon" aria-hidden="true">👥</span>
+      <span class="view-nav-icon" data-icon="users" aria-hidden="true"></span>
       <span data-i18n="nav_mitmachen">Mitmachen</span>
     </button>
     <button class="view-nav-btn" data-view="daten">
-      <span class="view-nav-icon" aria-hidden="true">🔍</span>
+      <span class="view-nav-icon" data-icon="search" aria-hidden="true"></span>
       <span data-i18n="nav_daten">Daten</span>
     </button>
   </nav>
@@ -108,14 +108,14 @@
   <section class="map-section" style="grid-template-columns: 1fr; padding: 20px 48px 0 48px;">
     <div class="map-container" style="padding:18px 22px;">
       <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-bottom:6px;">
-        <span style="font-size:22px;" aria-hidden="true">📍</span>
+        <span class="section-icon" data-icon="map-pin" data-icon-size="22" aria-hidden="true"></span>
         <h2 style="font-family: var(--font-display); font-size:20px; margin:0;" data-i18n="mo_title">Mein Ortsbezirk</h2>
         <p style="margin:0; font-size:12px; color: var(--text-secondary); flex:1; min-width:200px;" data-i18n="mo_subtitle">Wähle deinen Ortsbezirk — alle KPIs auf einen Blick, mit Vergleich zum Stadt-Durchschnitt.</p>
       </div>
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:10px;">
         <label for="mo-select" style="font-size:11px; color: var(--text-tertiary); font-family: var(--font-mono); letter-spacing:.06em;" data-i18n="mo_pick">ORTSBEZIRK:</label>
         <select id="mo-select" aria-label="Ortsbezirk wählen" style="padding:7px 12px; background:var(--bg-secondary); color:var(--text-primary); border:1px solid var(--border); border-radius:4px; font-family: inherit; font-size:13px; min-width:240px;"></select>
-        <button id="mo-clear" class="btn-secondary" style="padding:7px 14px; font-size:11px;" data-i18n="mo_clear">✕ Zurücksetzen</button>
+        <button id="mo-clear" class="btn-secondary btn-with-icon" style="padding:7px 14px; font-size:11px;"><span data-icon="x" data-icon-size="12" aria-hidden="true"></span><span data-i18n="mo_clear">Zurücksetzen</span></button>
       </div>
       <div id="mo-cards" style="display:none; margin-top:18px;"></div>
     </div>
@@ -128,58 +128,58 @@
   <section class="map-section" style="grid-template-columns: 1fr; padding: 8px 48px 0 48px;">
     <div class="map-container" style="padding: 24px 28px;">
       <div class="section-major" style="margin-bottom: 16px;">
-        <h2 class="section-major-title">🏘 <span data-i18n="kiez_title">Mein Kiez — Was ist hier los?</span></h2>
+        <h2 class="section-major-title"><span class="section-icon-inline" data-icon="building" aria-hidden="true"></span><span data-i18n="kiez_title">Mein Kiez — Was ist hier los?</span></h2>
         <p class="section-major-subtitle" data-i18n="kiez_subtitle">Daten, die Bürger:innen wirklich fragen — Cafés, Parken, Preise, Müllabfuhr, Sicherheit, Events. 6 Quellen, transparent verlinkt.</p>
       </div>
 
       <!-- 6-card category grid (Seoul-style) -->
       <div class="kiez-grid" role="list">
         <button type="button" class="kiez-card" data-kiez-card="gastro" role="listitem" aria-labelledby="kiez-gastro-title">
-          <div class="kiez-card-icon" aria-hidden="true">☕</div>
+          <div class="kiez-card-icon" data-icon="coffee" data-icon-size="24" aria-hidden="true"></div>
           <h3 id="kiez-gastro-title" class="kiez-card-title" data-i18n="kiez_gastro_title">Gastronomie</h3>
           <div class="kiez-card-headline" id="kiez-gastro-headline">—</div>
           <div class="kiez-card-sub" data-i18n="kiez_gastro_sub">Restaurants, Cafés, Bars, Pubs · OSM</div>
-          <div class="kiez-card-cta" data-i18n="kiez_card_open">▾ Details ansehen</div>
+          <div class="kiez-card-cta" data-i18n="kiez_card_open">Details ansehen</div>
         </button>
 
         <button type="button" class="kiez-card" data-kiez-card="parking" role="listitem" aria-labelledby="kiez-parking-title">
-          <div class="kiez-card-icon" aria-hidden="true">🚗</div>
+          <div class="kiez-card-icon" data-icon="parking" data-icon-size="24" aria-hidden="true"></div>
           <h3 id="kiez-parking-title" class="kiez-card-title" data-i18n="kiez_parking_title">Parken</h3>
           <div class="kiez-card-headline" id="kiez-parking-headline">—</div>
           <div class="kiez-card-sub" data-i18n="kiez_parking_sub">Parkplätze · OSM</div>
-          <div class="kiez-card-cta" data-i18n="kiez_card_open">▾ Details ansehen</div>
+          <div class="kiez-card-cta" data-i18n="kiez_card_open">Details ansehen</div>
         </button>
 
         <button type="button" class="kiez-card" data-kiez-card="cpi" role="listitem" aria-labelledby="kiez-cpi-title">
-          <div class="kiez-card-icon" aria-hidden="true">💶</div>
+          <div class="kiez-card-icon" data-icon="euro" data-icon-size="24" aria-hidden="true"></div>
           <h3 id="kiez-cpi-title" class="kiez-card-title" data-i18n="kiez_cpi_title">Lebensmittelpreise</h3>
           <div class="kiez-card-headline" id="kiez-cpi-headline">—</div>
           <div class="kiez-card-sub" data-i18n="kiez_cpi_sub">VPI Deutschland · destatis</div>
-          <div class="kiez-card-cta" data-i18n="kiez_card_open">▾ Details ansehen</div>
+          <div class="kiez-card-cta" data-i18n="kiez_card_open">Details ansehen</div>
         </button>
 
         <button type="button" class="kiez-card" data-kiez-card="elw" role="listitem" aria-labelledby="kiez-elw-title">
-          <div class="kiez-card-icon" aria-hidden="true">🚮</div>
+          <div class="kiez-card-icon" data-icon="recycle" data-icon-size="24" aria-hidden="true"></div>
           <h3 id="kiez-elw-title" class="kiez-card-title" data-i18n="kiez_elw_title">Müllabfuhr</h3>
           <div class="kiez-card-headline" id="kiez-elw-headline">—</div>
           <div class="kiez-card-sub" data-i18n="kiez_elw_sub">Stadtweite Rhythmen · ELW</div>
-          <div class="kiez-card-cta" data-i18n="kiez_card_open">▾ Details ansehen</div>
+          <div class="kiez-card-cta" data-i18n="kiez_card_open">Details ansehen</div>
         </button>
 
         <button type="button" class="kiez-card" data-kiez-card="pks" role="listitem" aria-labelledby="kiez-pks-title">
-          <div class="kiez-card-icon" aria-hidden="true">🚨</div>
+          <div class="kiez-card-icon" data-icon="shield-alert" data-icon-size="24" aria-hidden="true"></div>
           <h3 id="kiez-pks-title" class="kiez-card-title" data-i18n="kiez_pks_title">Sicherheit</h3>
           <div class="kiez-card-headline" id="kiez-pks-headline">—</div>
           <div class="kiez-card-sub" data-i18n="kiez_pks_sub">PKS 2024 · Polizei Hessen</div>
-          <div class="kiez-card-cta" data-i18n="kiez_card_open">▾ Details ansehen</div>
+          <div class="kiez-card-cta" data-i18n="kiez_card_open">Details ansehen</div>
         </button>
 
         <button type="button" class="kiez-card" data-kiez-card="events" role="listitem" aria-labelledby="kiez-events-title">
-          <div class="kiez-card-icon" aria-hidden="true">🎉</div>
+          <div class="kiez-card-icon" data-icon="sparkles" data-icon-size="24" aria-hidden="true"></div>
           <h3 id="kiez-events-title" class="kiez-card-title" data-i18n="kiez_events_title">Events</h3>
           <div class="kiez-card-headline" id="kiez-events-headline">—</div>
           <div class="kiez-card-sub" data-i18n="kiez_events_sub">Top 2026 · Stadt Wiesbaden</div>
-          <div class="kiez-card-cta" data-i18n="kiez_card_open">▾ Details ansehen</div>
+          <div class="kiez-card-cta" data-i18n="kiez_card_open">Details ansehen</div>
         </button>
       </div>
 
@@ -187,7 +187,7 @@
       <section id="kiez-detail" class="kiez-detail" hidden aria-live="polite">
         <header class="kiez-detail-header">
           <h3 id="kiez-detail-title" class="kiez-detail-title">—</h3>
-          <button type="button" id="kiez-detail-close" class="kiez-detail-close" aria-label="Schließen" data-i18n-aria="kiez_detail_close">✕</button>
+          <button type="button" id="kiez-detail-close" class="kiez-detail-close" aria-label="Schließen" data-i18n-aria="kiez_detail_close"><span data-icon="x" data-icon-size="14" aria-hidden="true"></span></button>
         </header>
         <div id="kiez-detail-body" class="kiez-detail-body"></div>
         <footer class="kiez-detail-footer">
@@ -337,13 +337,16 @@
     <div class="detail-actions">
       <div class="detail-actions-title" data-i18n="detail_action_title">Was kann ich tun?</div>
       <button class="detail-action-btn" onclick="document.getElementById('modal-backdrop').classList.add('active')">
-        📋 <span data-i18n="detail_action_report">Mängel melden</span>
+        <span class="detail-action-icon" data-icon="clipboard" aria-hidden="true"></span>
+        <span class="detail-action-label" data-i18n="detail_action_report">Mängel melden</span>
       </button>
       <button class="detail-action-btn" onclick="window.open('https://wiesbadenwirkt.de','_blank')">
-        🗳 <span data-i18n="detail_action_participate">Beteiligungsverfahren ansehen</span>
+        <span class="detail-action-icon" data-icon="ballot" aria-hidden="true"></span>
+        <span class="detail-action-label" data-i18n="detail_action_participate">Beteiligungsverfahren ansehen</span>
       </button>
       <button class="detail-action-btn" onclick="alert('CSV-Download (Mock)')">
-        📊 <span data-i18n="detail_action_data">Daten herunterladen</span>
+        <span class="detail-action-icon" data-icon="chart-bar" aria-hidden="true"></span>
+        <span class="detail-action-label" data-i18n="detail_action_data">Daten herunterladen</span>
       </button>
     </div>
     <div class="detail-chart">
@@ -378,14 +381,14 @@
              by app.js applyFuelLive()/refreshFuelLive(); fallback values shown here. -->
         <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:14px;">
           <span id="fuel-stand-badge" class="fuel-stand-badge fuel-stand-badge--snapshot">
-            ✓ <span data-i18n="fuel_live_badge">SNAPSHOT · TANKERKÖNIG MTS-K</span>
+            <span data-icon="check" data-icon-size="12" aria-hidden="true"></span> <span data-i18n="fuel_live_badge">SNAPSHOT · TANKERKÖNIG MTS-K</span>
           </span>
           <span id="fuel-stand-note" style="font-size:11px; color: var(--text-tertiary);" data-i18n="fuel_live_note">Koordinaten, Marken & Preise: Bundeskartellamt MTS-K via Tankerkönig — CC BY 4.0. Cache 5 min.</span>
         </div>
 
         <!-- PLZ search bar -->
         <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:14px; padding:12px; background:var(--bg-secondary); border-radius:6px; border:1px solid var(--border);">
-          <span style="font-size:18px;">📍</span>
+          <span class="section-icon-inline" data-icon="map-pin" data-icon-size="18" aria-hidden="true"></span>
           <input type="text" id="fuel-plz" maxlength="5" placeholder="65183" data-i18n-placeholder="fuel_plz_ph"
                  style="width:90px; padding:6px 10px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border); border-radius:4px; font-family: var(--font-mono); font-size:13px;">
           <button id="fuel-plz-btn" class="btn-primary" style="padding:6px 14px; font-size:12px;" data-i18n="fuel_plz_btn">Standort setzen</button>
@@ -404,7 +407,7 @@
         <!-- Citizen CTA -->
         <div id="fuel-cta" style="margin-bottom:14px; padding:14px; background:linear-gradient(135deg, rgba(27, 43, 76, 0.08), rgba(74,111,165,0.08)); border:1px dashed var(--accent); border-radius:6px;">
           <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
-            <span style="font-size:24px;">👀</span>
+            <span class="cta-icon-circle" data-icon="eye" data-icon-size="22" aria-hidden="true"></span>
             <div style="flex:1; min-width:200px;">
               <div style="font-weight:600; font-size:13px;" data-i18n="fuel_cta_title">Hast du heute einen anderen Preis gesehen?</div>
               <div style="font-size:11px; color: var(--text-secondary); margin-top:2px;" data-i18n="fuel_cta_desc">Bürger als Sensoren — melde live, wir zeigen es anonym im Dashboard.</div>
@@ -546,36 +549,36 @@
       <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:16px;">
 
         <!-- Card 1: Mängel melden -->
-        <div class="panel" style="padding:20px;" role="region" aria-labelledby="mm-card-melden-title">
-          <div style="font-size:24px; margin-bottom:8px;" aria-hidden="true">📋</div>
-          <h3 id="mm-card-melden-title" style="font-size:16px; margin-bottom:6px;" data-i18n="mm_melden_title">Mängel melden</h3>
-          <p style="font-size:12px; color: var(--text-secondary); margin-bottom:14px; line-height:1.5;" data-i18n="mm_melden_desc">Schlagloch, defekte Beleuchtung, illegale Müllablagerung — direkt an die zuständige Stelle. Hessen-weiter Mängelmelder oder per E-Mail an die Stadtverwaltung.</p>
+        <div class="panel mm-card" role="region" aria-labelledby="mm-card-melden-title">
+          <div class="mm-card-icon" data-icon="clipboard-edit" data-icon-size="22" aria-hidden="true"></div>
+          <h3 id="mm-card-melden-title" class="mm-card-title" data-i18n="mm_melden_title">Mängel melden</h3>
+          <p class="mm-card-desc" data-i18n="mm_melden_desc">Schlagloch, defekte Beleuchtung, illegale Müllablagerung — direkt an die zuständige Stelle. Hessen-weiter Mängelmelder oder per E-Mail an die Stadtverwaltung.</p>
           <button class="btn-primary" id="mm-melden-btn" style="width:100%; padding:10px;" data-i18n="mm_melden_btn">+ Hinweis senden</button>
           <div id="mm-melden-history" style="margin-top:12px; font-size:11px;"></div>
         </div>
 
         <!-- Card 2: Datenwunsch -->
-        <div class="panel" style="padding:20px;" role="region" aria-labelledby="mm-card-data-title">
-          <div style="font-size:24px; margin-bottom:8px;" aria-hidden="true">📊</div>
-          <h3 id="mm-card-data-title" style="font-size:16px; margin-bottom:6px;" data-i18n="mm_data_title">Datenwunsch äußern</h3>
-          <p style="font-size:12px; color: var(--text-secondary); margin-bottom:14px; line-height:1.5;" data-i18n="mm_data_desc">Welche städtischen Daten fehlen dir? Stimme ab — die Top 3 gehen ans Open-Data-Team.</p>
-          <button class="btn-primary" id="mm-data-btn" style="width:100%; padding:10px;" data-i18n="mm_data_btn">▾ Vorschläge ansehen</button>
+        <div class="panel mm-card" role="region" aria-labelledby="mm-card-data-title">
+          <div class="mm-card-icon" data-icon="chart-bar" data-icon-size="22" aria-hidden="true"></div>
+          <h3 id="mm-card-data-title" class="mm-card-title" data-i18n="mm_data_title">Datenwunsch äußern</h3>
+          <p class="mm-card-desc" data-i18n="mm_data_desc">Welche städtischen Daten fehlen dir? Stimme ab — die Top 3 gehen ans Open-Data-Team.</p>
+          <button class="btn-primary" id="mm-data-btn" style="width:100%; padding:10px;" data-i18n="mm_data_btn">Vorschläge ansehen</button>
         </div>
 
         <!-- Card 3: Tankstellen-Preise (link to Alltag) -->
-        <div class="panel" style="padding:20px;" role="region" aria-labelledby="mm-card-fuel-title">
-          <div style="font-size:24px; margin-bottom:8px;" aria-hidden="true">⛽</div>
-          <h3 id="mm-card-fuel-title" style="font-size:16px; margin-bottom:6px;" data-i18n="mm_fuel_title">Spritpreis melden</h3>
-          <p style="font-size:12px; color: var(--text-secondary); margin-bottom:14px; line-height:1.5;" data-i18n="mm_fuel_desc">Andere Preise gesehen als im Dashboard? Anonym melden, lokal gespeichert.</p>
-          <button class="btn-secondary" data-mm-goto="alltag" style="width:100%; padding:10px;" data-i18n="mm_fuel_btn">→ Zu Tankstellen wechseln</button>
+        <div class="panel mm-card" role="region" aria-labelledby="mm-card-fuel-title">
+          <div class="mm-card-icon" data-icon="fuel" data-icon-size="22" aria-hidden="true"></div>
+          <h3 id="mm-card-fuel-title" class="mm-card-title" data-i18n="mm_fuel_title">Spritpreis melden</h3>
+          <p class="mm-card-desc" data-i18n="mm_fuel_desc">Andere Preise gesehen als im Dashboard? Anonym melden, lokal gespeichert.</p>
+          <button class="btn-secondary" data-mm-goto="alltag" style="width:100%; padding:10px;" data-i18n="mm_fuel_btn">Zu Tankstellen wechseln</button>
         </div>
 
         <!-- Card 4: Citizen Science (existing block link) -->
-        <div class="panel" style="padding:20px;" role="region" aria-labelledby="mm-card-cs-title">
-          <div style="font-size:24px; margin-bottom:8px;" aria-hidden="true">🔬</div>
-          <h3 id="mm-card-cs-title" style="font-size:16px; margin-bottom:6px;" data-i18n="mm_cs_title">Citizen Science</h3>
-          <p style="font-size:12px; color: var(--text-secondary); margin-bottom:14px; line-height:1.5;" data-i18n="mm_cs_desc">3 laufende Bürger-Messprojekte. CurieuzeNeuzen-Vorbild, EU Citizen Science Prize 2023.</p>
-          <a href="#cs-projects-grid" class="btn-secondary" style="display:block; text-align:center; width:100%; padding:10px; text-decoration:none;" data-i18n="mm_cs_btn">↓ Zu den Projekten</a>
+        <div class="panel mm-card" role="region" aria-labelledby="mm-card-cs-title">
+          <div class="mm-card-icon" data-icon="microscope" data-icon-size="22" aria-hidden="true"></div>
+          <h3 id="mm-card-cs-title" class="mm-card-title" data-i18n="mm_cs_title">Citizen Science</h3>
+          <p class="mm-card-desc" data-i18n="mm_cs_desc">3 laufende Bürger-Messprojekte. CurieuzeNeuzen-Vorbild, EU Citizen Science Prize 2023.</p>
+          <a href="#cs-projects-grid" class="btn-secondary" style="display:block; text-align:center; width:100%; padding:10px; text-decoration:none;" data-i18n="mm_cs_btn">Zu den Projekten</a>
         </div>
 
       </div>
@@ -592,7 +595,7 @@
             <strong data-i18n="mm_data_send_label">Bereit, deine Stimmen abzuschicken?</strong>
             <span data-i18n="mm_data_send_desc"> — Wir bündeln deine Top-Wünsche in eine E-Mail an das Open-Data-Team der Stadt.</span>
           </div>
-          <button id="mm-data-send-btn" class="btn-primary" style="padding:10px 18px; font-size:12px;" data-i18n="mm_data_send_btn">📧 An opendata@wiesbaden.de senden</button>
+          <button id="mm-data-send-btn" class="btn-primary btn-with-icon" style="padding:10px 18px; font-size:12px;"><span data-icon="mail" data-icon-size="14" aria-hidden="true"></span><span data-i18n="mm_data_send_btn">An opendata@wiesbaden.de senden</span></button>
         </div>
         <p style="font-size:10px; color: var(--text-tertiary); margin-top:12px;" data-i18n="mm_data_note">Nur Vorschläge zu Datensätzen, die heute nicht im Katalog sind.</p>
       </div>
@@ -697,7 +700,7 @@
     <section class="map-section" style="grid-template-columns: 1fr; padding-top: 0;" id="daten-catalog">
       <div class="map-container" style="padding: 28px;">
         <div class="section-major">
-          <h2 class="section-major-title">📚 <span data-i18n="cat_title">Datenkatalog Browser</span></h2>
+          <h2 class="section-major-title"><span class="section-icon-inline" data-icon="database" aria-hidden="true"></span><span data-i18n="cat_title">Datenkatalog Browser</span></h2>
           <p class="section-major-subtitle" data-i18n="cat_subtitle">Alle 232 öffentlichen Datensätze von opendata.cloud.wiesbaden.de — durchsuchen, filtern, direkt zur Quelle.</p>
         </div>
 
@@ -777,8 +780,8 @@
           <label for="hinweis-ort" data-i18n="modal_location">Ort / Adresse / Ortsbezirk</label>
           <div style="display:flex; gap:8px; align-items:center;">
             <input id="hinweis-ort" type="text" placeholder="z. B. Wilhelmstr. 1, 65183 Wiesbaden" style="flex:1;">
-            <button type="button" id="hinweis-geo" class="btn-secondary" style="padding:8px 12px; white-space:nowrap; font-size:12px;" aria-label="GPS-Standort verwenden">
-              📍 <span data-i18n="modal_use_gps">GPS</span>
+            <button type="button" id="hinweis-geo" class="btn-secondary btn-with-icon" style="padding:8px 12px; white-space:nowrap; font-size:12px;" aria-label="GPS-Standort verwenden">
+              <span data-icon="crosshair" data-icon-size="14" aria-hidden="true"></span><span data-i18n="modal_use_gps">GPS</span>
             </button>
           </div>
           <span id="hinweis-geo-info" style="display:block; font-size:11px; color: var(--text-tertiary); margin-top:4px;"></span>
@@ -809,7 +812,7 @@
         <div class="modal-buttons" style="margin-top:14px; flex-wrap:wrap;">
           <button type="button" class="btn-secondary" id="btn-cancel" data-i18n="modal_cancel">Abbrechen</button>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button type="button" class="btn-secondary" id="btn-mailto" data-i18n="modal_send_mail">📧 Per E-Mail</button>
+            <button type="button" class="btn-secondary btn-with-icon" id="btn-mailto"><span data-icon="mail" data-icon-size="14" aria-hidden="true"></span><span data-i18n="modal_send_mail">Per E-Mail</span></button>
             <button type="submit" class="btn-primary" id="btn-modal-send" data-i18n="modal_send_official">→ An Mängelmelder Hessen</button>
           </div>
         </div>
@@ -920,14 +923,14 @@
       </p>
 
       <div class="kita-actions">
-        <a class="kita-action-btn" href="https://wikita.wiesbaden.de/" target="_blank" rel="noopener">
-          📝 <span data-i18n="kita_action_register">Kind vormerken (WiKITA)</span>
+        <a class="kita-action-btn btn-with-icon" href="https://wikita.wiesbaden.de/" target="_blank" rel="noopener">
+          <span data-icon="edit" data-icon-size="14" aria-hidden="true"></span><span data-i18n="kita_action_register">Kind vormerken (WiKITA)</span>
         </a>
-        <a class="kita-action-btn" href="https://www.wiesbaden.de/medien/downloads/leben-in-wiesbaden/amt-51.1/Bericht-Tagesbetreuung-fuer-Kinder-2024_25_final.pdf" target="_blank" rel="noopener">
-          📄 <span data-i18n="kita_action_source">Originalbericht (PDF)</span>
+        <a class="kita-action-btn btn-with-icon" href="https://www.wiesbaden.de/medien/downloads/leben-in-wiesbaden/amt-51.1/Bericht-Tagesbetreuung-fuer-Kinder-2024_25_final.pdf" target="_blank" rel="noopener">
+          <span data-icon="file-text" data-icon-size="14" aria-hidden="true"></span><span data-i18n="kita_action_source">Originalbericht (PDF)</span>
         </a>
-        <a class="kita-action-btn" href="https://opendata.cloud.wiesbaden.de/" target="_blank" rel="noopener">
-          🔓 <span data-i18n="kita_action_open_data">Open Data Wiesbaden</span>
+        <a class="kita-action-btn btn-with-icon" href="https://opendata.cloud.wiesbaden.de/" target="_blank" rel="noopener">
+          <span data-icon="unlock" data-icon-size="14" aria-hidden="true"></span><span data-i18n="kita_action_open_data">Open Data Wiesbaden</span>
         </a>
       </div>
 
@@ -968,7 +971,7 @@
     <div class="modal kpi-detail-modal">
       <button type="button" class="story-modal-close" onclick="closeKpiDetail()" aria-label="Close">×</button>
       <div class="kpi-detail-eyebrow">
-        <span class="kpi-detail-icon" id="kpi-detail-icon">🌬️</span>
+        <span class="kpi-detail-icon" id="kpi-detail-icon" data-icon="wind" data-icon-size="22" aria-hidden="true"></span>
         <span class="kpi-detail-eyebrow-text" data-i18n="kpi_detail_eyebrow">LIVE-INDIKATOR · STADT WIESBADEN</span>
       </div>
       <h3 id="kpi-detail-title"></h3>
@@ -1001,7 +1004,7 @@
        ======================================================= -->
   <button id="assist-btn" class="assist-btn" type="button"
           aria-label="Datenassistent öffnen" data-i18n-aria="assist_btn_label">
-    <span aria-hidden="true">🔎</span>
+    <span data-icon="search" data-icon-size="18" aria-hidden="true"></span>
     <span class="assist-btn-label" data-i18n="assist_btn_label">Datenassistent</span>
   </button>
 
@@ -1017,7 +1020,7 @@
           ⓘ <span data-i18n="assist_info_short">Wie funktioniert das?</span>
         </button>
         <button id="assist-close" type="button" class="assist-close-btn"
-                aria-label="Schließen" data-i18n-aria="assist_close_aria">✕</button>
+                aria-label="Schließen" data-i18n-aria="assist_close_aria"><span data-icon="x" data-icon-size="14" aria-hidden="true"></span></button>
       </header>
 
       <div class="assist-search-row">
@@ -1037,7 +1040,7 @@
       <section id="assist-algorithm-card" class="algorithm-card" hidden
                aria-labelledby="algorithm-card-title">
         <h3 id="algorithm-card-title" class="algorithm-card-title">
-          📐 <span data-i18n="algorithm_card_title">Algorithmus-Karte</span>
+          <span class="section-icon-inline" data-icon="ruler" aria-hidden="true"></span><span data-i18n="algorithm_card_title">Algorithmus-Karte</span>
         </h3>
         <dl class="algorithm-card-list">
           <dt data-i18n="algorithm_card_method_label">Methode</dt>
@@ -1087,10 +1090,9 @@
       <a id="open-ai-register"><span data-i18n="ai_link">AI-Register</span></a>
       <a id="open-meta-usage"><span data-i18n="meta_link">Nutzungs-Statistik</span></a>
       <span style="color: var(--text-tertiary); font-size: 12px;">·</span>
-      <button id="pdf-snapshot-btn" type="button"
+      <button id="pdf-snapshot-btn" type="button" class="btn-with-icon"
               style="padding:6px 12px; background:transparent; color:var(--accent); border:1px solid var(--accent); border-radius:4px; cursor:pointer; font-family:inherit; font-size:12px;"
-              data-i18n="pdf_export_btn"
-              title="Stand der Stadt als PDF exportieren">📄 PDF-Export</button>
+              title="Stand der Stadt als PDF exportieren"><span data-icon="file-text" data-icon-size="14" aria-hidden="true"></span><span data-i18n="pdf_export_btn">PDF-Export</span></button>
       <span style="color: var(--text-tertiary); font-size: 12px;">·</span>
       <span style="display:inline-flex; align-items:center; gap:8px;">
         <input type="text" id="address-input" placeholder="Adresse eingeben (z. B. Wilhelmstraße 1)" data-i18n-placeholder="address_placeholder"
@@ -1106,7 +1108,7 @@
       <div>
         <h4 data-i18n="footer_gsm_cite_h">Zitierhinweis</h4>
         <p data-i18n="footer_gsm_cite_intro">Bitte zitieren Sie diese Anwendung wie folgt:</p>
-        <cite>Park, S. (2026). <em>Wiesbaden-Lagebild v2.7 — Datenbild der Landeshauptstadt</em> [Online-Anwendung]. Abgerufen von&nbsp;<span id="cite-url">[URL]</span>.</cite>
+        <cite data-i18n-html="footer_gsm_cite_body">Park, S. (2026). <em>Wiesbaden-Lagebild v2.7 — Datenbild der Landeshauptstadt</em> [Online-Anwendung, Stand 05.05.2026]. Abgerufen von&nbsp;<span id="cite-url"></span>.</cite>
       </div>
       <div>
         <h4 data-i18n="footer_gsm_a11y_h">Barrierefreiheit</h4>
@@ -1123,13 +1125,9 @@
       <span class="signature">v2.7 · Stand 05.05.2026 · Initiativ-Arbeitsprobe</span>
     </div>
   </footer>
-  <script>
-    // v2.2 GSM — populate citation URL with current location at runtime
-    document.addEventListener('DOMContentLoaded', function () {
-      var citeEl = document.getElementById('cite-url');
-      if (citeEl) citeEl.textContent = window.location.href;
-    });
-  </script>
+  <!-- v2.7: cite-url is now populated inside applyTranslations() so it survives
+       language switches (data-i18n-html re-renders the cite block). -->
+
 
   <script src="data.js"></script>
   <script src="app.js"></script>
