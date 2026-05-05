@@ -1562,6 +1562,33 @@ html[data-lang="ls"] .ls-banner { display: block; }
   padding: 0 2px;
 }
 
+/* v2.7 — Tankstellen Stand badge (replaces amber mock badge from v2.6) */
+.fuel-stand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+}
+.fuel-stand-badge--live {
+  color: var(--good, #2F855A);
+  background: color-mix(in srgb, var(--good, #2F855A) 10%, transparent);
+}
+.fuel-stand-badge--cache {
+  color: var(--warn, #B7873E);
+  background: color-mix(in srgb, var(--warn, #B7873E) 10%, transparent);
+}
+.fuel-stand-badge--snapshot {
+  color: var(--text-secondary, #5C6580);
+  background: color-mix(in srgb, var(--text-secondary, #5C6580) 8%, transparent);
+}
+
 /* v2.7 — Mein-Bezirk Story-Filter (audit §6.5 wiring) */
 .mo-stories-block {}
 .mo-stories-heading {
