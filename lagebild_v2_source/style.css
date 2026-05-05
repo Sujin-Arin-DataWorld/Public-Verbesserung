@@ -1,6 +1,6 @@
 /* =================================================================
    WIESBADEN-LAGEBILD — Government Statistical Modernism (GSM)
-   Light-only, Fraunces serif (display) + Inter (body) + JetBrains Mono (data)
+   Light-only, Lora serif (display, matches wiesbaden.de) + Inter (body) + JetBrains Mono (data)
    Calibrated against dashboard-konjunktur.de (BMWK), Destatis Atlas.
    ================================================================= */
 
@@ -34,7 +34,7 @@
   --bad: #B63D3D;
 
   /* Typography */
-  --font-display: 'Fraunces', 'Times New Roman', serif;
+  --font-display: 'Lora', 'Georgia', 'Times New Roman', serif;
   --font-body: 'Inter', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 }
@@ -275,7 +275,7 @@ body::before {
 
 /* v2.6.3 — Venue list (Top 10 gastronomy / free parking) */
 .kiez-section-h4 {
-  font-family: var(--font-display, Fraunces, serif);
+  font-family: var(--font-display, 'Lora', Georgia, serif);
   font-size: 15px;
   margin: 22px 0 6px;
   color: var(--text);
@@ -2434,7 +2434,7 @@ html[data-lang="ls"] .ls-banner { display: block; }
   border-bottom: 1px solid var(--border);
 }
 .section-major-title {
-  font-family: 'Fraunces', serif;
+  font-family: 'Lora', Georgia, serif;
   font-size: 22px;
   font-weight: 600;
   color: var(--text-primary);
@@ -2651,7 +2651,7 @@ html[data-lang="ls"] .ls-banner { display: block; }
   margin-bottom: 6px;
 }
 .cs-inspiration-title {
-  font-family: 'Fraunces', serif;
+  font-family: 'Lora', Georgia, serif;
   font-size: 18px;
   font-weight: 600;
   color: var(--text-primary);
@@ -2678,7 +2678,7 @@ html[data-lang="ls"] .ls-banner { display: block; }
 }
 .cs-project-icon { font-size: 28px; margin-bottom: 8px; }
 .cs-project-title {
-  font-family: 'Fraunces', serif;
+  font-family: 'Lora', Georgia, serif;
   font-weight: 600;
   font-size: 15px;
   color: var(--text-primary);

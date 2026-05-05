@@ -1589,12 +1589,260 @@ Object.assign(I18N.tr, { mo_stories_about: "Veri öyküleri:",      mo_stories_c
 Object.assign(I18N.ua, { mo_stories_about: "Історії про",         mo_stories_citywide: "Загальноміські історії (актуально й тут)" });
 Object.assign(I18N.kr, { mo_stories_about: "데이터 스토리:",       mo_stories_citywide: "시 전체 스토리 (여기에도 해당)" });
 
+// v2.7 — i18n parity fix: 33 Wohnungsmarkt + Kiez keys missing in TR/UA, plus minor EN/KR
+// (audit-driven fix — user reported footer + KPI sub-text falling back to DE on TR/UA)
+Object.assign(I18N.tr, {
+  wm_title:               "Konut Pazarı",
+  wm_subtitle:            "Resmi kira endeksi (§558d Mietspiegel — mevcut sözleşmeler) ile arz fiyatları (yeni ilanlar) — her ikisi de Wiesbaden Belediyesi kaynağından.",
+  wm_tab_trend:           "Arz fiyatları 2007–2024",
+  wm_tab_matrix:          "Mietspiegel 2025 matrisi",
+  wm_tab_gap:             "Arz ↔ Mevcut",
+  wm_kpi_angebot:         "Arz 2024 · medyan €/m²",
+  wm_kpi_bestand:         "Mietspiegel 2025 · medyan",
+  wm_kpi_gap:             "Arz ↔ Mevcut farkı",
+  wm_kpi_trend:           "Arz 2007 → 2024",
+  wm_chart_median:        "Medyan (tüm büyüklükler)",
+  wm_chart_small:         "<40 m² (küçük)",
+  wm_chart_large:         ">100 m² (büyük)",
+  wm_trend_note:          "KAYNAK",
+  wm_trend_source:        'Wiesbaden Belediyesi: „Arz fiyatları 2007–2024" — medyan €/m²/ay. Yılda 6.000–9.000 ilan değerlendirildi.',
+  wm_trend_method:        "Yöntem: Belediyenin değerlendirdiği platformlarındaki tüm ilanların medyanı. İlan fiyatlarıdır, mevcut kira değildir.",
+  wm_matrix_intro:        "Ortalama €/m²/ay (soğuk kira). Kaynak: Wiesbaden Mietspiegel 2025 — §558d uyarınca nitelikli kira endeksi, 14. güncelleme.",
+  wm_matrix_size:         "Boyut:",
+  wm_matrix_aus:          "Donanım:",
+  wm_matrix_th_baualter:  "Yapım yılı",
+  wm_gap_intro:           "Pazar ne diyor — ve yasal Mietspiegel ne diyor?",
+  wm_gap_disclaimer:      "Önemli: Arz fiyatı ≠ mevcut kira. ImmoScout24 gibi platformlar ilan fiyatı gösterir; kira artışları belediyenin §558d Mietspiegel'ini takip eder. Her iki değer de farklı sorular için gereklidir.",
+  wm_gap_vs:              "Mietspiegel'e karşı",
+  wm_gap_overall:         "Genel medyan",
+  wm_gap_overall_note:    "Arz 2024 vs Mietspiegel medyanı",
+  wm_gap_typical:         "Tipik daire 60–100 m²",
+  wm_gap_typical_note:    "Standart orta konum, 1975–99",
+  wm_gap_small:           "Küçük daire <40 m²",
+  wm_gap_small_note:      "En yüksek prim — öğrenci pazarı",
+  wm_gap_first:           "İlk taşınma (yeni)",
+  wm_gap_first_note:      "Yeni yapı, iyi konum",
+  kiez_gastro_note:       "Kaynak: OpenStreetMap, topluluk tarafından sürdürülür. Yeni mekanların görünmesi günler ila haftalar alır; çok eskileri hâlâ listede olabilir.",
+  kiez_park_type_street_side: "Yol kenarı",
+  kiez_park_type_lane:    "Şerit"
+});
+Object.assign(I18N.ua, {
+  wm_title:               "Ринок житла",
+  wm_subtitle:            "Офіційний індекс оренди (§558d Mietspiegel — діючі договори) та ціни пропозиції (нові оголошення) — обидва з джерел міста Вісбаден.",
+  wm_tab_trend:           "Ціни пропозиції 2007–2024",
+  wm_tab_matrix:          "Матриця Mietspiegel 2025",
+  wm_tab_gap:             "Пропозиція ↔ Фонд",
+  wm_kpi_angebot:         "Пропозиція 2024 · медіана €/м²",
+  wm_kpi_bestand:         "Mietspiegel 2025 · медіана",
+  wm_kpi_gap:             "Пропозиція ↔ Фонд",
+  wm_kpi_trend:           "Пропозиція 2007 → 2024",
+  wm_chart_median:        "Медіана (усі розміри)",
+  wm_chart_small:         "<40 м² (мала)",
+  wm_chart_large:         ">100 м² (велика)",
+  wm_trend_note:          "ДЖЕРЕЛО",
+  wm_trend_source:        "Місто Вісбаден: «Ціни пропозиції 2007–2024» — медіана €/м²/міс. Щорічно оцінено 6.000–9.000 оголошень.",
+  wm_trend_method:        "Метод: медіана за всіма оголошеннями на оцінених містом платформах. Це ціни пропозиції, а не діючі контракти.",
+  wm_matrix_intro:        "Середня €/м²/міс (холодна оренда). Джерело: Mietspiegel Wiesbaden 2025 — кваліфікований індекс §558d, 14-те оновлення.",
+  wm_matrix_size:         "Розмір:",
+  wm_matrix_aus:          "Оснащення:",
+  wm_matrix_th_baualter:  "Рік будівництва",
+  wm_gap_intro:           "Що показує ринок — і що каже офіційний Mietspiegel?",
+  wm_gap_disclaimer:      "Важливо: ціна пропозиції ≠ діюча оренда. Платформи на кшталт ImmoScout24 показують ціни оголошень; підвищення оренди слідує за §558d Mietspiegel. Обидва значення потрібні — для різних питань.",
+  wm_gap_vs:              "проти Mietspiegel",
+  wm_gap_overall:         "Загальна медіана",
+  wm_gap_overall_note:    "Пропозиція 2024 vs медіана Mietspiegel",
+  wm_gap_typical:         "Типова квартира 60–100 м²",
+  wm_gap_typical_note:    "Стандарт, середня локація, 1975–99",
+  wm_gap_small:           "Мала квартира <40 м²",
+  wm_gap_small_note:      "Найбільша надбавка — студентський ринок",
+  wm_gap_first:           "Перше заселення (нове)",
+  wm_gap_first_note:      "Нова забудова, гарне розташування",
+  kiez_gastro_note:       "Джерело: OpenStreetMap, спільнотою підтримується. Поява нових закладів займає дні–тижні; дуже старі ще можуть бути в списку.",
+  kiez_park_type_street_side: "Узбіччя",
+  kiez_park_type_lane:    "Смуга"
+});
+Object.assign(I18N.en, {
+  title_short:            "LAGEBILD",
+  kiez_gastro_note:       "Source: OpenStreetMap, community-maintained. New venues take days to weeks to appear; very old ones may still be listed.",
+  kiez_park_type_lane:    "Lane"
+});
+Object.assign(I18N.kr, {
+  kiez_gastro_note:       "출처: OpenStreetMap, 커뮤니티가 관리. 신규 매장은 등록까지 며칠~몇 주 걸리고, 오래된 매장이 남아있을 수도 있어요.",
+  kiez_park_type_street_side: "도로변",
+  kiez_park_type_lane:    "차선"
+});
+
+// v2.7 — Footer 추가 텍스트 i18n (사용자 보고: footer가 모두 독일어로 노출)
+// 기존 footer-grid <p> 안의 하드코딩 텍스트 + footer-gsm 3 sections 모두 5언어
+Object.assign(I18N.de, {
+  footer_sources_body:   "opendata.cloud.wiesbaden.de · ESWE Verkehr (GTFS-RT) · HLNUG Hessen · DWD Open Data · Marktstammdatenregister · Digitaler Zwilling Wiesbaden (VC Suite)",
+  footer_update_body:    "Verkehr 60 s · Luftqualität 5 min · Baustellen 24 h · Bevölkerung 30 d · Energie monatlich",
+  footer_gsm_cite_h:     "Zitierhinweis",
+  footer_gsm_cite_intro: "Bitte zitieren Sie diese Anwendung wie folgt:",
+  footer_gsm_a11y_h:     "Barrierefreiheit",
+  footer_gsm_a11y_body:  "Diese Anwendung orientiert sich an den Vorgaben der BITV 2.0 sowie WCAG 2.1 Stufe AA. Hinweise zu Barrieren oder Verbesserungsvorschläge nehmen wir per E-Mail entgegen. Eine Fassung in Leichter Sprache ist über die LS-Schaltfläche oben rechts verfügbar.",
+  footer_gsm_imp_h:      "Impressum & Verantwortung",
+  footer_gsm_imp_body:   "Konzept, Datenkuratierung und Umsetzung: Sujin Park. Diese Anwendung ist eine eigenständige Arbeitsprobe und steht in keinem dienstlichen Verhältnis zur Landeshauptstadt Wiesbaden. Datenquellen werden je Indikator ausgewiesen; Lizenz: CC BY 4.0.",
+  address_placeholder:   "Adresse eingeben (z. B. Wilhelmstraße 1)",
+  address_button:        "Suchen"
+});
+Object.assign(I18N.en, {
+  footer_sources_body:   "opendata.cloud.wiesbaden.de · ESWE Verkehr (GTFS-RT) · HLNUG (Hesse) · DWD Open Data · Marktstammdatenregister · Wiesbaden Digital Twin (VC Suite)",
+  footer_update_body:    "Transit 60 s · Air 5 min · Construction 24 h · Population 30 d · Energy monthly",
+  footer_gsm_cite_h:     "How to cite",
+  footer_gsm_cite_intro: "Please cite this application as follows:",
+  footer_gsm_a11y_h:     "Accessibility",
+  footer_gsm_a11y_body:  "This application aims to meet German BITV 2.0 and WCAG 2.1 Level AA. We welcome accessibility feedback by email. A plain-language (Leichte Sprache) version is available via the LS button at the top right.",
+  footer_gsm_imp_h:      "Imprint & responsibility",
+  footer_gsm_imp_body:   "Concept, data curation and implementation: Sujin Park. This is a self-initiated portfolio piece and not an official product of the City of Wiesbaden. Data sources are disclosed per indicator; licence: CC BY 4.0.",
+  address_placeholder:   "Enter an address (e.g. Wilhelmstraße 1)",
+  address_button:        "Search"
+});
+Object.assign(I18N.tr, {
+  footer_sources_body:   "opendata.cloud.wiesbaden.de · ESWE Verkehr (GTFS-RT) · HLNUG (Hessen) · DWD Açık Veri · Marktstammdatenregister · Wiesbaden Dijital İkiz (VC Suite)",
+  footer_update_body:    "Toplu taşıma 60 sn · Hava 5 dk · İnşaat 24 sa · Nüfus 30 gün · Enerji aylık",
+  footer_gsm_cite_h:     "Atıf bilgisi",
+  footer_gsm_cite_intro: "Lütfen bu uygulamayı şöyle alıntılayın:",
+  footer_gsm_a11y_h:     "Erişilebilirlik",
+  footer_gsm_a11y_body:  "Bu uygulama BITV 2.0 ve WCAG 2.1 AA seviyesini hedefler. Erişilebilirlik geri bildirimlerinizi e-posta ile bekliyoruz. Sağ üstteki LS düğmesinden Kolay Dil (Leichte Sprache) sürümüne ulaşabilirsiniz.",
+  footer_gsm_imp_h:      "Künye ve sorumluluk",
+  footer_gsm_imp_body:   "Konsept, veri kuratörlüğü ve uygulama: Sujin Park. Bu, kendi başlattığım bir portföy çalışmasıdır ve Wiesbaden Belediyesi'nin resmi ürünü değildir. Veri kaynakları her gösterge için ayrı belirtilmiştir; lisans: CC BY 4.0.",
+  address_placeholder:   "Adres girin (örn. Wilhelmstraße 1)",
+  address_button:        "Ara"
+});
+Object.assign(I18N.ua, {
+  footer_sources_body:   "opendata.cloud.wiesbaden.de · ESWE Verkehr (GTFS-RT) · HLNUG (Гессен) · DWD Open Data · Marktstammdatenregister · Цифровий двійник Вісбадена (VC Suite)",
+  footer_update_body:    "Транспорт 60 с · Повітря 5 хв · Будівництво 24 год · Населення 30 д · Енергія щомісяця",
+  footer_gsm_cite_h:     "Як цитувати",
+  footer_gsm_cite_intro: "Будь ласка, цитуйте цей застосунок так:",
+  footer_gsm_a11y_h:     "Доступність",
+  footer_gsm_a11y_body:  "Застосунок орієнтується на BITV 2.0 та WCAG 2.1 рівень AA. Повідомлення про бар'єри та пропозиції приймаємо електронною поштою. Версія легкою мовою (Leichte Sprache) доступна через кнопку LS вгорі праворуч.",
+  footer_gsm_imp_h:      "Імпресум і відповідальність",
+  footer_gsm_imp_body:   "Концепція, кураторство даних та реалізація: Sujin Park. Це самостійний демонстраційний проєкт, не пов'язаний офіційно з мерією Вісбадена. Джерела даних вказано для кожного показника; ліцензія: CC BY 4.0.",
+  address_placeholder:   "Введіть адресу (напр. Wilhelmstraße 1)",
+  address_button:        "Пошук"
+});
+Object.assign(I18N.kr, {
+  footer_sources_body:   "opendata.cloud.wiesbaden.de · ESWE Verkehr (GTFS-RT) · HLNUG 헤센 · DWD 오픈 데이터 · 연방계통자료등록부(Marktstammdatenregister) · 비스바덴 디지털 트윈 (VC Suite)",
+  footer_update_body:    "교통 60초 · 대기질 5분 · 공사 24시간 · 인구 30일 · 에너지 월간",
+  footer_gsm_cite_h:     "인용 방법",
+  footer_gsm_cite_intro: "이 앱을 인용하실 때는 아래 형식을 사용해 주세요.",
+  footer_gsm_a11y_h:     "접근성",
+  footer_gsm_a11y_body:  "독일 BITV 2.0 및 WCAG 2.1 AA 레벨 기준을 따릅니다. 접근성 관련 피드백은 이메일로 받고 있어요. 우상단 LS 버튼을 통해 쉬운 독일어(Leichte Sprache) 버전도 사용할 수 있습니다.",
+  footer_gsm_imp_h:      "법적 고지 · 책임",
+  footer_gsm_imp_body:   "기획·데이터 큐레이션·개발: Sujin Park. 비스바덴 시청 공식 제품이 아닌 자율 포트폴리오 작업입니다. 데이터 출처는 지표별로 명시했으며, 라이선스는 CC BY 4.0.",
+  address_placeholder:   "주소 입력 (예: Wilhelmstraße 1)",
+  address_button:        "검색"
+});
+
 // v2.7 — PDF Snapshot Export Button (footer)
 Object.assign(I18N.de, { pdf_export_btn: "📄 PDF-Export",     pdf_export_blocked: "Pop-up blockiert? Bitte erlauben und erneut klicken." });
 Object.assign(I18N.en, { pdf_export_btn: "📄 PDF export",     pdf_export_blocked: "Pop-up blocked? Please allow and try again." });
 Object.assign(I18N.tr, { pdf_export_btn: "📄 PDF dışa aktar", pdf_export_blocked: "Açılır pencere engellendi. Lütfen izin verin." });
 Object.assign(I18N.ua, { pdf_export_btn: "📄 PDF-експорт",    pdf_export_blocked: "Pop-up заблоковано? Дозвольте та спробуйте знову." });
 Object.assign(I18N.kr, { pdf_export_btn: "📄 PDF 저장",       pdf_export_blocked: "팝업 차단됨? 허용 후 다시 클릭해주세요." });
+
+// v2.7 — Action-Box Rule-Engine CTAs (audit §6.1) — Bezirk×KPI Pfade 5-sprachig
+Object.assign(I18N.de, {
+  action_kita_vormerk:        "Kita-Platz vormerken (WiKITA)",
+  action_kita_reason:         "Hier weil: Kita-Versorgung u3 unter 50 %.",
+  action_briefwahl:           "Briefwahl beantragen",
+  action_briefwahl_reason:    "Hier weil: Wahlbeteiligung 2026 unter 40 %.",
+  action_wbs:                 "Wohnberechtigungsschein (WBS) beantragen",
+  action_wbs_reason:          "Hier weil: weniger als 5 % Sozialwohnungs-Quote.",
+  action_arbeit:              "Beratung Bundesagentur für Arbeit",
+  action_arbeit_reason:       "Hier weil: Arbeitslosenquote über Stadt-Durchschnitt.",
+  action_sozialberatung:      "Sozialberatung der Stadt",
+  action_sozial_reason:       "Hier weil: hoher Anteil Bürgergeld-Bezug.",
+  action_schuldnerberatung:   "Schuldner- und Verbraucherberatung",
+  action_schulden_reason:     "Hier weil: Kaufkraft deutlich unter Stadt-Durchschnitt.",
+  action_bau:                 "Bauleitplanung einsehen",
+  action_bau_reason:          "Hier weil: hohe Bautätigkeit im letzten Berichtsjahr.",
+  action_auslaenderbeirat:    "Ausländerbeirat kontaktieren",
+  action_ab_reason:           "Hier weil: Anteil nichtdeutscher Einwohner:innen über 35 %.",
+  action_mieterbund:          "Mieterbund Wiesbaden",
+  action_mieter_reason:       "Hier weil: Kaltmiete liegt über 12 €/m²."
+});
+Object.assign(I18N.en, {
+  action_kita_vormerk:        "Reserve a daycare spot (WiKITA)",
+  action_kita_reason:         "Why here: under-3 daycare coverage below 50%.",
+  action_briefwahl:           "Apply for postal voting",
+  action_briefwahl_reason:    "Why here: 2026 turnout below 40%.",
+  action_wbs:                 "Apply for housing entitlement (WBS)",
+  action_wbs_reason:          "Why here: social-housing share under 5%.",
+  action_arbeit:              "Federal Employment Agency advice",
+  action_arbeit_reason:       "Why here: unemployment above the city average.",
+  action_sozialberatung:      "City social-services counselling",
+  action_sozial_reason:       "Why here: high welfare-recipient share.",
+  action_schuldnerberatung:   "Debt & consumer counselling",
+  action_schulden_reason:     "Why here: purchasing power well below the city mean.",
+  action_bau:                 "View planning permits",
+  action_bau_reason:          "Why here: heavy construction activity last year.",
+  action_auslaenderbeirat:    "Contact the migrant advisory council",
+  action_ab_reason:           "Why here: non-German residents above 35%.",
+  action_mieterbund:          "Wiesbaden tenants' association",
+  action_mieter_reason:       "Why here: cold rent above €12/m²."
+});
+Object.assign(I18N.tr, {
+  action_kita_vormerk:        "Kreş yeri rezerve et (WiKITA)",
+  action_kita_reason:         "Neden burada: 0–3 yaş kreş kapasitesi %50'nin altında.",
+  action_briefwahl:           "Mektupla oy kullanmaya başvur",
+  action_briefwahl_reason:    "Neden burada: 2026 katılımı %40'ın altında.",
+  action_wbs:                 "Konut yararlanma belgesi (WBS) başvurusu",
+  action_wbs_reason:          "Neden burada: sosyal konut oranı %5'in altında.",
+  action_arbeit:              "Federal İş Kurumu danışmanlığı",
+  action_arbeit_reason:       "Neden burada: işsizlik şehir ortalamasının üzerinde.",
+  action_sozialberatung:      "Belediye sosyal hizmet danışmanlığı",
+  action_sozial_reason:       "Neden burada: sosyal yardım alma oranı yüksek.",
+  action_schuldnerberatung:   "Borç ve tüketici danışmanlığı",
+  action_schulden_reason:     "Neden burada: alım gücü şehir ortalamasının çok altında.",
+  action_bau:                 "İmar planını görüntüle",
+  action_bau_reason:          "Neden burada: geçen yıl yoğun inşaat faaliyeti.",
+  action_auslaenderbeirat:    "Yabancılar Meclisi ile iletişime geç",
+  action_ab_reason:           "Neden burada: Alman olmayan nüfus oranı %35 üzerinde.",
+  action_mieterbund:          "Wiesbaden Kiracılar Derneği",
+  action_mieter_reason:       "Neden burada: soğuk kira 12 €/m² üzerinde."
+});
+Object.assign(I18N.ua, {
+  action_kita_vormerk:        "Записатися до ясел (WiKITA)",
+  action_kita_reason:         "Чому тут: покриття ясел до 3 років нижче 50 %.",
+  action_briefwahl:           "Подати на голосування поштою",
+  action_briefwahl_reason:    "Чому тут: явка 2026 нижче 40 %.",
+  action_wbs:                 "Подати на свідоцтво права на житло (WBS)",
+  action_wbs_reason:          "Чому тут: частка соц. житла менша за 5 %.",
+  action_arbeit:              "Консультація Федерального агентства зайнятості",
+  action_arbeit_reason:       "Чому тут: безробіття вище середнього по місту.",
+  action_sozialberatung:      "Соціальна консультація міста",
+  action_sozial_reason:       "Чому тут: висока частка отримувачів допомоги.",
+  action_schuldnerberatung:   "Консультація з боргів і споживчих питань",
+  action_schulden_reason:     "Чому тут: купівельна спроможність значно нижче середньої.",
+  action_bau:                 "Переглянути плани забудови",
+  action_bau_reason:          "Чому тут: висока будівельна активність торік.",
+  action_auslaenderbeirat:    "Звернутися до Ради іноземців",
+  action_ab_reason:           "Чому тут: частка не-німців перевищує 35 %.",
+  action_mieterbund:          "Спілка квартиронаймачів Вісбаден",
+  action_mieter_reason:       "Чому тут: холодна оренда понад 12 €/м²."
+});
+Object.assign(I18N.kr, {
+  action_kita_vormerk:        "어린이집 예약 (WiKITA)",
+  action_kita_reason:         "표시 이유: 0–3세 어린이집 수급률 50% 미만.",
+  action_briefwahl:           "우편투표 신청",
+  action_briefwahl_reason:    "표시 이유: 2026 투표율 40% 미만.",
+  action_wbs:                 "주거자격증명서(WBS) 신청",
+  action_wbs_reason:          "표시 이유: 사회임대주택 비율 5% 미만.",
+  action_arbeit:              "연방고용청 상담",
+  action_arbeit_reason:       "표시 이유: 실업률이 시 평균보다 높음.",
+  action_sozialberatung:      "시청 사회복지 상담",
+  action_sozial_reason:       "표시 이유: 공적부조 수급 비율 높음.",
+  action_schuldnerberatung:   "부채·소비자 상담",
+  action_schulden_reason:     "표시 이유: 구매력이 시 평균보다 크게 낮음.",
+  action_bau:                 "건축계획 열람",
+  action_bau_reason:          "표시 이유: 작년 신축 활동 활발.",
+  action_auslaenderbeirat:    "외국인협의회 문의",
+  action_ab_reason:           "표시 이유: 비독일계 주민 비율 35% 이상.",
+  action_mieterbund:          "Wiesbaden 세입자협회",
+  action_mieter_reason:       "표시 이유: 난방 제외 월세 12 €/m² 이상."
+});
 
 // v2.7 — "Was uns überrascht hat" Callout-Label
 Object.assign(I18N.de, { story_surprise_label: "Was uns überrascht hat" });
