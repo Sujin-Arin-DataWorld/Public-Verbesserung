@@ -2664,7 +2664,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </head><body>
       <button class="no-print btn-with-icon" onclick="window.print()">${wbIcon('file-text', 14)}<span>Als PDF speichern (Browser → Drucken → "Als PDF speichern")</span></button>
       <h1>Wiesbaden-Lagebild · Stand ${today}</h1>
-      <div class="stand">Stadt-Snapshot · Landeshauptstadt Wiesbaden · v2.7</div>
+      <div class="stand">Stadt-Snapshot · Landeshauptstadt Wiesbaden · v2.8</div>
 
       <h2>KPI-Übersicht (${cards.length} Indikatoren)</h2>
       <div class="kpi-grid">${kpiBlock}</div>
@@ -2698,6 +2698,38 @@ document.addEventListener('DOMContentLoaded', () => {
     w.document.open();
     w.document.write(html);
     w.document.close();
+  }
+
+  // ----- v2.8 First-time visitor onboarding (audit §6.1 hint + BMWK pattern) -----
+  // Opens automatically once per browser; localStorage flag prevents re-opening.
+  // Citizens who clear storage / use private browsing see it again — that's fine.
+  const ONBOARDING_KEY = 'wiesbaden_lagebild_seen_onboarding';
+  function setupOnboarding() {
+    const modal = document.getElementById('onboarding-modal');
+    const closeBtn = document.getElementById('onb-close');
+    if (!modal || !closeBtn) return;
+    let seen = false;
+    try { seen = localStorage.getItem(ONBOARDING_KEY) === '1'; } catch (e) {}
+    if (!seen) {
+      // Defer slightly so the page paints first
+      setTimeout(() => modal.classList.add('active'), 600);
+    }
+    closeBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+      try { localStorage.setItem(ONBOARDING_KEY, '1'); } catch (e) {}
+    });
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+        try { localStorage.setItem(ONBOARDING_KEY, '1'); } catch (e2) {}
+      }
+    });
+    // Allow re-open via footer
+    const reopenBtn = document.getElementById('onboarding-reopen');
+    if (reopenBtn) reopenBtn.addEventListener('click', e => {
+      e.preventDefault();
+      modal.classList.add('active');
+    });
   }
 
   // ----- Footer link handlers -----
@@ -3192,6 +3224,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderWohnungsmarkt();
     setupWmTabs();
     setupFooterLinks();
+    setupOnboarding();
     setupLanguageReact();
     setupMitmachen();
     renderMitmachenHistory();
@@ -3964,12 +3997,58 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCatalog();
   }
 
+  // v2.8 — render the "Neu im Katalog" banner (audit §11.2). Idempotent + cached;
+  // only the first daten-view activation triggers the network call.
+  let _neuLoaded = false;
+  async function renderNeuImKatalog() {
+    if (_neuLoaded) return;
+    const wrap = document.getElementById('neu-im-katalog');
+    if (!wrap) return;
+    _neuLoaded = true;
+    try {
+      const items = await fetchNeuImKatalog(7, 5);
+      if (!items.length) {
+        wrap.style.display = 'block';
+        wrap.innerHTML = `<div class="neu-im-katalog-inner">
+          <h3 class="neu-im-katalog-title">📡 ${escapeHtml(t('neu_im_katalog_title', 'Diese Woche neu im Katalog'))}</h3>
+          <p class="neu-im-katalog-empty">${escapeHtml(t('neu_im_katalog_empty', 'Diese Woche keine neuen Datensätze.'))}</p>
+        </div>`;
+        return;
+      }
+      wrap.style.display = 'block';
+      wrap.innerHTML = `
+        <div class="neu-im-katalog-inner">
+          <h3 class="neu-im-katalog-title">📡 ${escapeHtml(t('neu_im_katalog_title', 'Diese Woche neu im Katalog'))}
+            <span class="neu-im-katalog-count">· ${items.length}</span>
+            <span class="neu-im-katalog-mode">🟢 live</span>
+          </h3>
+          <ul class="neu-im-katalog-list">
+            ${items.map(it => `
+              <li>
+                <a href="${escapeHtml(it.l)}" target="_blank" rel="noopener" class="neu-im-katalog-item">
+                  <span class="neu-im-katalog-date">${escapeHtml((it.m || '').slice(0, 10))}</span>
+                  <span class="neu-im-katalog-itemtitle">${escapeHtml(it.t)}</span>
+                </a>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+      `;
+    } catch (e) {
+      // Silently hide on failure — the rest of the catalog still works
+      console.warn('Neu im Katalog fetch failed:', e && e.message);
+      wrap.style.display = 'none';
+      _neuLoaded = false;  // allow retry on next activation
+    }
+  }
+
   // Wire view-router → datenkatalog: when the daten view becomes visible,
   // apply any anchor params and refresh stats.
   window.addEventListener('view-changed-late', (e) => {
     if (e.detail.view === 'daten') {
       applyDatenAnchor();
       renderCatalogStats();
+      renderNeuImKatalog();
     }
   });
 
@@ -4428,10 +4507,73 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ===== v2.5 — Datenassistent (BM25 search drawer, deterministic) =====
+  // v2.8 — Piveau Living Mode (audit §11 Bonus): if the city's Piveau search
+  // endpoint is reachable, queries hit the live API (CORS-frei,
+  // Access-Control-Allow-Origin: *). On any failure (offline, rate-limit,
+  // schema change) we fall back to the build-time Fuse.js BM25 over 232
+  // cached datasets. The Algorithmus-Karte discloses both modes.
   let fuseInstance = null;
   let assistOpen = false;
   let assistSearchCache = {};  // 30-second cache by query
   let lastFocusedBeforeDrawer = null;
+  let _liveModeAvailable = null;       // null = unknown, true/false after probe
+  const PIVEAU_BASE = 'https://opendata.cloud.wiesbaden.de/api/hub/search';
+
+  async function probePiveauLive() {
+    if (_liveModeAvailable !== null) return _liveModeAvailable;
+    try {
+      const r = await fetch(`${PIVEAU_BASE}/search?q=wiesbaden&limit=1`, {
+        method: 'GET', mode: 'cors',
+        signal: AbortSignal.timeout ? AbortSignal.timeout(4000) : undefined
+      });
+      _liveModeAvailable = r.ok;
+    } catch (e) {
+      _liveModeAvailable = false;
+    }
+    return _liveModeAvailable;
+  }
+
+  // Map a Piveau search hit to the same shape Fuse returns
+  // (see _catalog.js.snippet: { i, t, d, th, f, m, l }).
+  function _normalizePiveauHit(hit) {
+    const titleObj = hit.title || {};
+    const descObj = hit.description || {};
+    const langCode = lang();
+    const pickLocalized = obj => obj[langCode] || obj.de || obj.en || Object.values(obj)[0] || '';
+    return {
+      i:  hit.id || '',
+      t:  pickLocalized(titleObj),
+      d:  pickLocalized(descObj).slice(0, 220),
+      th: (hit.categories || []).map(c => (c && c.id) || c).filter(Boolean),
+      f:  ((hit.distributions || []).map(d => (d.format && d.format.id) || '')).filter(Boolean),
+      m:  hit.modified || hit.issued || '',
+      l:  `https://opendata.cloud.wiesbaden.de/app/data-catalog/${hit.id}`,
+      _live: true
+    };
+  }
+
+  async function searchLivePiveau(query, limit = 8) {
+    const q = (query || '').trim();
+    if (!q) return [];
+    const url = `${PIVEAU_BASE}/search?q=${encodeURIComponent(q)}&limit=${limit}&filters=dataset`;
+    const r = await fetch(url, { mode: 'cors' });
+    if (!r.ok) throw new Error('Piveau search HTTP ' + r.status);
+    const json = await r.json();
+    const hits = ((json.result || {}).results || []);
+    return hits.map(_normalizePiveauHit);
+  }
+
+  // v2.8 "Neu im Katalog" — datasets modified in the last N days. The Piveau
+  // search API expects `dateFrom` (verified empirically; audit said minDate but
+  // that path returns empty). Sort by modified DESC.
+  async function fetchNeuImKatalog(days = 7, limit = 5) {
+    const since = new Date(Date.now() - days * 24 * 3600 * 1000).toISOString().slice(0, 10);
+    const url = `${PIVEAU_BASE}/search?dateFrom=${since}&filters=dataset&limit=${limit}&sort=modified+desc`;
+    const r = await fetch(url, { mode: 'cors' });
+    if (!r.ok) throw new Error('Neu-im-Katalog HTTP ' + r.status);
+    const json = await r.json();
+    return ((json.result || {}).results || []).map(_normalizePiveauHit);
+  }
 
   function getFuse() {
     if (fuseInstance) return fuseInstance;
@@ -4451,18 +4593,41 @@ document.addEventListener('DOMContentLoaded', () => {
     return fuseInstance;
   }
 
-  function runBM25Search(query) {
+  // v2.8 — Living Mode wrapper around BM25 fallback. Returns
+  // { results, mode: 'live' | 'cache' }. async; UI must rerender on resolve.
+  async function runDataSearch(query) {
     const q = (query || '').trim();
-    if (!q) return [];
-    const cached = assistSearchCache[q.toLowerCase()];
-    if (cached && (Date.now() - cached.ts) < 30000) return cached.results;
-    const fuse = getFuse();
-    if (!fuse) return [];
-    const hits = fuse.search(q).slice(0, 5);
-    const results = hits.map(h => ({ ...h.item, score: h.score }));
-    assistSearchCache[q.toLowerCase()] = { results, ts: Date.now() };
-    return results;
+    if (!q) return { results: [], mode: 'cache' };
+    const cacheKey = q.toLowerCase();
+    const cached = assistSearchCache[cacheKey];
+    if (cached && (Date.now() - cached.ts) < 30000) return cached.payload;
+
+    let payload;
+    const live = await probePiveauLive();
+    if (live) {
+      try {
+        const liveHits = await searchLivePiveau(q, 8);
+        payload = { results: liveHits, mode: 'live' };
+      } catch (e) {
+        // Live probe said yes but the request failed (rate limit? schema?) —
+        // fall through to cache and remember the live mode is flaky.
+        _liveModeAvailable = false;
+        payload = null;
+      }
+    }
+    if (!payload) {
+      const fuse = getFuse();
+      const hits = fuse ? fuse.search(q).slice(0, 5) : [];
+      payload = {
+        results: hits.map(h => ({ ...h.item, score: h.score })),
+        mode: 'cache'
+      };
+    }
+    assistSearchCache[cacheKey] = { payload, ts: Date.now() };
+    return payload;
   }
+
+  // (v2.7 sync runBM25Search removed — all callers migrated to async runDataSearch.)
 
   function suggestionsForLang() {
     return [
@@ -4504,46 +4669,65 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderAssistResults(query) {
     const el = document.getElementById('assist-results');
     if (!el) return;
-    const results = runBM25Search(query);
-    if (!results.length) {
-      el.innerHTML = `
-        <div class="assist-empty">
-          <div data-i18n="assist_no_results_title">${t('assist_no_results_title', 'Keine Treffer für: ') + escapeHtml(query)}</div>
-          <p style="margin-top:6px;" data-i18n="assist_no_results_desc">${t('assist_no_results_desc', 'Diese Daten sind möglicherweise nicht im Katalog. Möchten Sie die Stadt darum bitten?')}</p>
-          <button type="button" id="assist-empty-cta" class="assist-empty-cta" data-i18n="assist_no_results_cta">${t('assist_no_results_cta', '→ Datenwunsch eintragen')}</button>
-        </div>
-      `;
-      const cta = document.getElementById('assist-empty-cta');
-      if (cta) {
-        cta.addEventListener('click', () => {
-          closeAssistDrawer();
-          location.hash = 'mitmachen';
-          setTimeout(() => {
-            const panel = document.getElementById('mm-data-panel');
-            if (panel) panel.style.display = 'block';
-            renderDatenwunsch();
-          }, 200);
-        });
+    // v2.8 Living Mode — async; first render a "Suche…" placeholder, then
+    // hydrate with live or cached results.
+    el.innerHTML = `<div class="assist-empty"><div>${escapeHtml(t('assist_searching', 'Suche…'))}</div></div>`;
+    runDataSearch(query).then(({ results, mode }) => {
+      // If user typed something else in the meantime, ignore stale results
+      const input = document.getElementById('assist-input');
+      if (input && input.value.trim() !== query.trim()) return;
+
+      if (!results.length) {
+        el.innerHTML = `
+          <div class="assist-empty">
+            <div data-i18n="assist_no_results_title">${t('assist_no_results_title', 'Keine Treffer für: ') + escapeHtml(query)}</div>
+            <p style="margin-top:6px;" data-i18n="assist_no_results_desc">${t('assist_no_results_desc', 'Diese Daten sind möglicherweise nicht im Katalog. Möchten Sie die Stadt darum bitten?')}</p>
+            <button type="button" id="assist-empty-cta" class="assist-empty-cta" data-i18n="assist_no_results_cta">${t('assist_no_results_cta', '→ Datenwunsch eintragen')}</button>
+          </div>
+        `;
+        const cta = document.getElementById('assist-empty-cta');
+        if (cta) {
+          cta.addEventListener('click', () => {
+            closeAssistDrawer();
+            location.hash = 'mitmachen';
+            setTimeout(() => {
+              const panel = document.getElementById('mm-data-panel');
+              if (panel) panel.style.display = 'block';
+              renderDatenwunsch();
+            }, 200);
+          });
+        }
+        return;
       }
-      return;
-    }
-    el.innerHTML = results.map((r, idx) => {
-      const themeBadges = (r.th || []).slice(0, 3).map(th =>
-        `<span class="catalog-theme-badge">${escapeHtml(th)}</span>`).join('');
-      const fmtBadges = (r.f || []).slice(0, 3).map(f =>
-        `<span class="catalog-format-badge">${escapeHtml(f)}</span>`).join('');
-      const matchPct = Math.round((1 - (r.score || 0)) * 100);
-      return `
-        <a href="${r.l ? escapeHtml(r.l) : '#'}" target="_blank" rel="noopener"
-           class="assist-result-card" data-cat-id="${escapeHtml(r.i)}">
-          <div class="assist-result-rank">#${idx + 1} · ${matchPct}% ${t('assist_match', 'Übereinstimmung')}</div>
-          <div class="assist-result-title">${escapeHtml(r.t)}</div>
-          <div class="assist-result-desc">${escapeHtml(r.d || '')}</div>
-          <div class="assist-result-meta">${themeBadges}${fmtBadges}</div>
-          <div class="assist-result-link">${r.m ? 'Stand: ' + r.m + ' · ' : ''}opendata.cloud ↗</div>
-        </a>
-      `;
-    }).join('');
+
+      const modeBadge = mode === 'live'
+        ? `<div class="assist-mode-badge assist-mode-badge--live">🟢 ${escapeHtml(t('assist_mode_live', 'Live · opendata.cloud.wiesbaden.de'))}</div>`
+        : `<div class="assist-mode-badge assist-mode-badge--cache">⚪ ${escapeHtml(t('assist_mode_cache', 'Cache · 232 Datensätze'))}</div>`;
+
+      el.innerHTML = modeBadge + results.map((r, idx) => {
+        const themeBadges = (r.th || []).slice(0, 3).map(th =>
+          `<span class="catalog-theme-badge">${escapeHtml(th)}</span>`).join('');
+        const fmtBadges = (r.f || []).slice(0, 3).map(f =>
+          `<span class="catalog-format-badge">${escapeHtml(f)}</span>`).join('');
+        const matchPct = r.score != null ? Math.round((1 - r.score) * 100) : null;
+        const rank = matchPct != null
+          ? `#${idx + 1} · ${matchPct}% ${t('assist_match', 'Übereinstimmung')}`
+          : `#${idx + 1}`;
+        return `
+          <a href="${r.l ? escapeHtml(r.l) : '#'}" target="_blank" rel="noopener"
+             class="assist-result-card" data-cat-id="${escapeHtml(r.i)}">
+            <div class="assist-result-rank">${rank}</div>
+            <div class="assist-result-title">${escapeHtml(r.t)}</div>
+            <div class="assist-result-desc">${escapeHtml(r.d || '')}</div>
+            <div class="assist-result-meta">${themeBadges}${fmtBadges}</div>
+            <div class="assist-result-link">${r.m ? 'Stand: ' + escapeHtml(r.m.slice(0, 10)) + ' · ' : ''}opendata.cloud ↗</div>
+          </a>
+        `;
+      }).join('');
+    }).catch(e => {
+      console.warn('Datenassistent search failed:', e && e.message);
+      el.innerHTML = `<div class="assist-empty"><div>${escapeHtml(t('assist_error', 'Suche derzeit nicht möglich.'))}</div></div>`;
+    });
   }
 
   function triggerAssistSearch(query) {
