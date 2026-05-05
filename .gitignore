@@ -13,3 +13,7 @@ lagebild_v2_source/Wiesbaden_Lagebild_v2.html
 .vscode/
 .idea/
 *.swp
+
+# Python bytecode (emitter scripts)
+__pycache__/
+*.pyc

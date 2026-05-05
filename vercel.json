@@ -4,9 +4,9 @@
   "outputDirectory": "lagebild_v2_source",
   "cleanUrls": false,
   "rewrites": [
-    { "source": "/",        "destination": "/Wiesbaden_Lagebild_v2.html" },
-    { "source": "/home",    "destination": "/Wiesbaden_Lagebild_v2.html" },
-    { "source": "/(.*)",    "destination": "/Wiesbaden_Lagebild_v2.html" }
+    { "source": "/",                              "destination": "/Wiesbaden_Lagebild_v2.html" },
+    { "source": "/home",                          "destination": "/Wiesbaden_Lagebild_v2.html" },
+    { "source": "/((?!api/).*)",                  "destination": "/Wiesbaden_Lagebild_v2.html" }
   ],
   "headers": [
     {
