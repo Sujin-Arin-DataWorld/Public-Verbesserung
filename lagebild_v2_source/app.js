@@ -1864,8 +1864,49 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (e) {
       // Stay on build-time snapshot. Mark KPI as 'cached' so the badge tells the truth.
       console.warn('Tankerkönig live fetch failed, using build-time snapshot:', e && e.message);
-      KPI_STAND.fuel = { status: 'cached', standDate: 'Snapshot' };
-      try { renderKpiGrid(); } catch(e) {}
+      const meta = D.FUEL_STATIONS_V2_META || {};
+      KPI_STAND.fuel = { status: 'cached', standDate: (meta.fetched_at || '').slice(0, 10) || 'Snapshot' };
+      try { renderKpiGrid(); } catch(e2) {}
+      try { syncFuelStandUI('cache', (D.FUEL_STATIONS_V2 || []).length); } catch(e2) {}
+    }
+  }
+
+  // v2.7 — sync the Tankstellen disclaimer block (#fuel-stand-badge / #fuel-stand-note)
+  // and the table toggle count (#fuel-table-toggle-label) with whatever data we have:
+  // 'live' (runtime fetch ok), 'cache' (runtime failed, last good kept), 'snapshot' (build-time only).
+  // Mock-Badge-Disziplin §9.2: never show stale data without a label.
+  function syncFuelStandUI(state, count) {
+    const badge = document.getElementById('fuel-stand-badge');
+    const note  = document.getElementById('fuel-stand-note');
+    const label = document.getElementById('fuel-table-toggle-label');
+    if (badge) {
+      const span = badge.querySelector('span');
+      const key = `fuel_${state}_badge`;
+      const fallback = (state === 'live' ? 'LIVE · TANKERKÖNIG MTS-K'
+                       : state === 'cache' ? 'CACHE · TANKERKÖNIG MTS-K'
+                       : 'SNAPSHOT · TANKERKÖNIG MTS-K');
+      if (span) {
+        span.textContent = t(key, fallback);
+        span.dataset.i18n = key;
+      }
+      badge.className = `fuel-stand-badge fuel-stand-badge--${state}`;
+    }
+    if (note) {
+      const noteKey = `fuel_${state}_note`;
+      const fallback = state === 'live'
+        ? 'Coordinates, brands & prices: Bundeskartellamt MTS-K — CC BY 4.0. 5-min cache.'
+        : state === 'cache'
+        ? 'Last successful fetch — live API currently unreachable.'
+        : 'Build-time snapshot. Runtime refresh in progress.';
+      note.textContent = t(noteKey, fallback);
+      note.dataset.i18n = noteKey;
+    }
+    if (label) {
+      const tplKey = 'fuel_table_toggle';
+      const tpl = t(tplKey);
+      // Replace {n} placeholder with actual count, fallback to literal n if no token.
+      const filled = tpl.includes('{n}') ? tpl.replace('{n}', count) : tpl + ` (${count})`;
+      label.textContent = filled;
     }
   }
 
@@ -1880,6 +1921,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (opt) {
       opt.value = `${cheapest.e10.toFixed(3).replace('.', ',')} €`;
     }
+    syncFuelStandUI('snapshot', list.length);
   }
 
   function applyFuelLive(payload, ts) {
@@ -1897,6 +1939,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     KPI_STAND.fuel = { status: 'live', standDate: _liveFuelFetchedAt.slice(0, 10) };
     // Rerender any fuel surface that's already on screen.
+    try { syncFuelStandUI('live', _liveFuelStations.length); } catch(e) {}
     try { renderKpiGrid(); } catch(e) {}
     try { renderFuelTop3(); } catch(e) {}
     try { renderFuelTable(); } catch(e) {}

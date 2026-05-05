@@ -372,12 +372,13 @@
       </div>
 
       <div class="alltag-content active" id="alltag-fuel">
-        <!-- v2.1: oil-now-inspired UX with explicit MOCK marker -->
+        <!-- v2.7: live Tankerkönig MTS-K. Badge text + class are runtime-controlled
+             by app.js applyFuelLive()/refreshFuelLive(); fallback values shown here. -->
         <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:14px;">
-          <span style="display:inline-flex; align-items:center; gap:6px; padding:4px 10px; background:rgba(183,135,62,0.14); color:#6B4F1F; border:1px solid rgba(183,135,62,0.35); border-radius:4px; font-family: var(--font-mono); font-size:10px; letter-spacing:.08em; font-weight:500;">
-            ⚠ <span data-i18n="fuel_mock_badge">MOCK · WARTET AUF TANKERKÖNIG-API-KEY</span>
+          <span id="fuel-stand-badge" class="fuel-stand-badge fuel-stand-badge--snapshot">
+            ✓ <span data-i18n="fuel_live_badge">SNAPSHOT · TANKERKÖNIG MTS-K</span>
           </span>
-          <span style="font-size:11px; color: var(--text-tertiary);" data-i18n="fuel_mock_note">Koordinaten + Marken: OpenStreetMap (live). Preise: anker-basiertes Mock.</span>
+          <span id="fuel-stand-note" style="font-size:11px; color: var(--text-tertiary);" data-i18n="fuel_live_note">Koordinaten, Marken & Preise: Bundeskartellamt MTS-K via Tankerkönig — CC BY 4.0. Cache 5 min.</span>
         </div>
 
         <!-- PLZ search bar -->
@@ -413,7 +414,7 @@
 
         <details style="margin-bottom:14px;">
           <summary style="cursor:pointer; font-family: var(--font-mono); font-size:11px; letter-spacing:.08em; color: var(--text-secondary); padding:8px 0;">
-            <span data-i18n="fuel_table_toggle">▸ ALLE 33 TANKSTELLEN (TABELLE)</span>
+            <span id="fuel-table-toggle-label" data-i18n="fuel_table_toggle">▸ ALLE TANKSTELLEN (TABELLE)</span>
           </summary>
           <table class="fuel-table" id="fuel-table" style="margin-top:8px;"></table>
         </details>
