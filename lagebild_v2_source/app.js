@@ -2434,14 +2434,14 @@ document.addEventListener('DOMContentLoaded', () => {
       <style>
         @page { size: A4; margin: 18mm; }
         body { font-family: 'Inter', system-ui, sans-serif; color: #1a1f2e; line-height: 1.55; max-width: 760px; margin: 0 auto; padding: 24px; }
-        h1 { font-family: 'Fraunces', Georgia, serif; font-size: 28px; font-weight: 600; margin: 0 0 6px 0; color: #1B2B4C; }
-        h2 { font-family: 'Fraunces', Georgia, serif; font-size: 18px; font-weight: 600; margin: 24px 0 8px 0; color: #1B2B4C; border-bottom: 1px solid #E2E5EB; padding-bottom: 4px; }
+        h1 { font-family: 'Lora', Georgia, serif; font-size: 28px; font-weight: 600; margin: 0 0 6px 0; color: #1B2B4C; }
+        h2 { font-family: 'Lora', Georgia, serif; font-size: 18px; font-weight: 600; margin: 24px 0 8px 0; color: #1B2B4C; border-bottom: 1px solid #E2E5EB; padding-bottom: 4px; }
         h3 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #5C6580; margin: 16px 0 6px 0; }
         .stand { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #5C6580; }
         .kpi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 14px; margin: 10px 0; }
         .kpi { padding: 8px 10px; border: 1px solid #E2E5EB; border-radius: 4px; }
         .kpi-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: #5C6580; }
-        .kpi-val { font-family: 'Fraunces', Georgia, serif; font-size: 22px; font-weight: 600; color: #1B2B4C; }
+        .kpi-val { font-family: 'Lora', Georgia, serif; font-size: 22px; font-weight: 600; color: #1B2B4C; }
         .kpi-meta { font-size: 10px; color: #8892A8; }
         .story { padding: 8px 0; border-bottom: 1px dotted #E2E5EB; }
         .story-title { font-weight: 600; font-size: 13px; }
@@ -4055,7 +4055,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const sgn = v => (v >= 0 ? '+' : '') + v.toFixed(1) + '%';
         const klass = v => v > 1 ? 'kiez-stat-delta-bad' : v < -1 ? 'kiez-stat-delta-good' : '';
         overallBlock = `
-          <h4 style="font-family:var(--font-display, Fraunces, serif); margin:18px 0 10px; font-size:15px;">${escapeHtml(t('kiez_cpi_overall_title', 'Gesamtindex · Hessen im Vergleich'))}</h4>
+          <h4 style="font-family:var(--font-display, 'Lora', Georgia, serif); margin:18px 0 10px; font-size:15px;">${escapeHtml(t('kiez_cpi_overall_title', 'Gesamtindex · Hessen im Vergleich'))}</h4>
           <div class="kiez-stat-grid">
             <div class="kiez-stat-cell">
               <div class="kiez-stat-label">🏴 ${escapeHtml(t('kiez_cpi_hessen', 'Hessen'))}</div>
@@ -4078,7 +4078,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return {
       title: t('kiez_cpi_title', 'Lebensmittelpreise'),
       body: `
-        <h4 style="font-family:var(--font-display, Fraunces, serif); margin:0 0 10px; font-size:15px;">${escapeHtml(t('kiez_cpi_items_title', '5 Lebensmittel · Deutschland'))}</h4>
+        <h4 style="font-family:var(--font-display, 'Lora', Georgia, serif); margin:0 0 10px; font-size:15px;">${escapeHtml(t('kiez_cpi_items_title', '5 Lebensmittel · Deutschland'))}</h4>
         <div class="kiez-stat-grid">${cells}</div>
         ${overallBlock}
         <p style="font-size:11px; color: var(--text-tertiary, var(--text-muted)); line-height:1.55; margin-top:10px;">

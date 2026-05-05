@@ -8,7 +8,9 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- v2.7: Fraunces → Lora to match wiesbaden.de official typography (Inter body + Lora display).
+       Both Lora & Inter are OFL/free; we keep JetBrains Mono for tabular data. -->
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -1070,11 +1072,11 @@
     <div class="footer-grid">
       <div class="footer-col">
         <h4 data-i18n="footer_sources">DATENQUELLEN</h4>
-        <p>opendata.cloud.wiesbaden.de · ESWE Verkehr (GTFS-RT) · HLNUG Hessen · DWD Open Data · Marktstammdatenregister · Digitaler Zwilling Wiesbaden (VC Suite)</p>
+        <p data-i18n="footer_sources_body">opendata.cloud.wiesbaden.de · ESWE Verkehr (GTFS-RT) · HLNUG Hessen · DWD Open Data · Marktstammdatenregister · Digitaler Zwilling Wiesbaden (VC Suite)</p>
       </div>
       <div class="footer-col">
         <h4 data-i18n="footer_update">AKTUALISIERUNG</h4>
-        <p>Verkehr 60 s · Luftqualität 5 min · Baustellen 24 h · Bevölkerung 30 d · Energie monatlich</p>
+        <p data-i18n="footer_update_body">Verkehr 60 s · Luftqualität 5 min · Baustellen 24 h · Bevölkerung 30 d · Energie monatlich</p>
       </div>
       <div class="footer-col">
         <h4 data-i18n="footer_privacy">DATENSCHUTZ</h4>
@@ -1102,23 +1104,23 @@
          a Barrierefreiheit declaration, and an Impressum-style author block. -->
     <div class="footer-gsm" role="complementary" aria-label="Daten und Methodik">
       <div>
-        <h4>Zitierhinweis</h4>
-        <p>Bitte zitieren Sie diese Anwendung wie folgt:</p>
-        <cite>Park, S. (2026). <em>Wiesbaden-Lagebild v2.2 — Datenbild der Landeshauptstadt</em> [Online-Anwendung]. Stand: 02.05.2026. Abgerufen von&nbsp;<span id="cite-url">[URL]</span>.</cite>
+        <h4 data-i18n="footer_gsm_cite_h">Zitierhinweis</h4>
+        <p data-i18n="footer_gsm_cite_intro">Bitte zitieren Sie diese Anwendung wie folgt:</p>
+        <cite>Park, S. (2026). <em>Wiesbaden-Lagebild v2.7 — Datenbild der Landeshauptstadt</em> [Online-Anwendung]. Abgerufen von&nbsp;<span id="cite-url">[URL]</span>.</cite>
       </div>
       <div>
-        <h4>Barrierefreiheit</h4>
-        <p>Diese Anwendung orientiert sich an den Vorgaben der BITV&nbsp;2.0 sowie WCAG&nbsp;2.1 Stufe&nbsp;AA. Hinweise zu Barrieren oder Verbesserungsvorschläge nehmen wir per E-Mail entgegen: <span style="font-family:var(--font-mono); font-size:11px;">barrierefreiheit@&#8203;lagebild.example</span>. Eine Fassung in Leichter Sprache ist über die LS-Schaltfläche oben rechts verfügbar.</p>
+        <h4 data-i18n="footer_gsm_a11y_h">Barrierefreiheit</h4>
+        <p data-i18n="footer_gsm_a11y_body">Diese Anwendung orientiert sich an den Vorgaben der BITV 2.0 sowie WCAG 2.1 Stufe AA. Hinweise zu Barrieren oder Verbesserungsvorschläge nehmen wir per E-Mail entgegen. Eine Fassung in Leichter Sprache ist über die LS-Schaltfläche oben rechts verfügbar.</p>
       </div>
       <div>
-        <h4>Impressum &amp; Verantwortung</h4>
-        <p>Konzept, Datenkuratierung und Umsetzung: <strong>Sujin Park</strong>. Diese Anwendung ist eine eigenständige Arbeitsprobe und steht in keinem dienstlichen Verhältnis zur Landeshauptstadt Wiesbaden. Datenquellen werden je Indikator ausgewiesen; Lizenz: CC&nbsp;BY&nbsp;4.0.</p>
+        <h4 data-i18n="footer_gsm_imp_h">Impressum &amp; Verantwortung</h4>
+        <p data-i18n="footer_gsm_imp_body">Konzept, Datenkuratierung und Umsetzung: Sujin Park. Diese Anwendung ist eine eigenständige Arbeitsprobe und steht in keinem dienstlichen Verhältnis zur Landeshauptstadt Wiesbaden. Datenquellen werden je Indikator ausgewiesen; Lizenz: CC BY 4.0.</p>
       </div>
     </div>
 
     <div class="footer-bottom">
       <span data-i18n="footer_credits">Konzept &amp; Datenaufbereitung: Sujin Park</span>
-      <span class="signature">v2.2 · GSM-Dialekt · Stand 02.05.2026 · Initiativ-Arbeitsprobe</span>
+      <span class="signature">v2.7 · Stand 05.05.2026 · Initiativ-Arbeitsprobe</span>
     </div>
   </footer>
   <script>
