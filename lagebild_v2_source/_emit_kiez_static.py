@@ -5,8 +5,9 @@ clean public API:
   ELW_SCHEDULE   – ELW Wiesbaden general bin pickup cadence (the official
                    site at elw.de/abfallkalender requires an address; we
                    show the citywide cadence + deep link).
-  PKS_2024       – Wiesbaden city totals from the Hessen PKS-Jahrbuch 2024
-                   (PDF only; key numbers transcribed with source link).
+  PKS_2025       – Wiesbaden city totals from the Polizeidirektion Wiesbaden
+                   PKS-Jahresstatistik 2025 (PDF only; key numbers transcribed
+                   with source link, cross-checked across three PP docs).
   EVENTS_2026    – Top recurring events from the city's annual calendar
                    (jahresplan-2026 PDF; transcribed).
 
@@ -69,60 +70,64 @@ ELW_SCHEDULE = {
 }
 
 
-# Hessen PKS 2024 — Wiesbaden city totals.
-# Source: Polizei Hessen, "Jahrbuch PKS Hessen 2024", multi-detail PDF.
-# https://k.polizei.hessen.de/sites/polizei.hessen.de/files/2025-11/jahrbuch_pks_hessen_2024-md.pdf
-# Numbers cross-checked against Polizeipräsidium Westhessen press release
-# 2025-03-06. We surface five citywide indicators with year-over-year delta;
-# the Algorithmus-Karte for this card discloses that PKS is annual and
-# city-aggregate (no district-level breakdown).
-PKS_2024 = {
+# Wiesbaden PKS 2025 — city totals (Polizeidirektion Wiesbaden).
+# Source: Polizei Hessen / PP Westhessen, PKS-Jahresstatistik 2025 (PDF).
+# https://www.polizei.hessen.de/sites/polizei.hessen.de/files/2026-03/pdwi_anlage_pks.pdf
+# Häufigkeitszahl cross-checked twice: PP-Westhessen press paper (PD-Vergleich,
+# Wiesbaden 7.554) and the Innenstadt one-pager (Straßenkriminalität 3.968).
+# PDWI publishes total / HZ / clearance / burglary / domestic-violence /
+# street-crime at city level. Gewaltkriminalität and Cyber are only reported
+# at presidium (Westhessen) level — no city-level figure exists, so they are
+# not carried here (they replaced the earlier, unsourced violent/cyber rows).
+# value_cur/value_prev are year-agnostic: a yearly refresh touches data only.
+PKS_2025 = {
     "meta": {
-        "title_de": "Polizeiliche Kriminalstatistik 2024 · Wiesbaden",
-        "publisher": "Polizeipräsidium Westhessen / Hessisches Landeskriminalamt",
-        "source_url": "https://k.polizei.hessen.de/sites/polizei.hessen.de/files/2025-11/jahrbuch_pks_hessen_2024-md.pdf",
-        "source_label": "PKS-Jahrbuch Hessen 2024 (PDF)",
-        "stand": "2025-03-06",
+        "title_de": "Polizeiliche Kriminalstatistik 2025 · Wiesbaden",
+        "publisher": "Polizeipräsidium Westhessen / Polizeidirektion Wiesbaden",
+        "source_url": "https://www.polizei.hessen.de/sites/polizei.hessen.de/files/2026-03/pdwi_anlage_pks.pdf",
+        "source_label": "PKS 2025 · Polizeidirektion Wiesbaden (PDF)",
+        "stand": "2026-03",
         "license": "Polizei Hessen · Pressemitteilung",
-        "note_de": "PKS ist ein Hellfeld-Indikator (nur erfasste Straftaten) und liegt nur jährlich auf Stadtebene vor. Kein Ortsbezirks-Breakdown.",
-        "geo": "Stadtgrenze Wiesbaden (admin_level 6)"
+        "note_de": "Stadtweite Werte der Polizeidirektion Wiesbaden (alle fünf Reviere). Häufigkeitszahl seit Zensus 2022 neu berechnet — nur eingeschränkt mit Jahren vor 2024 vergleichbar. PKS ist ein Hellfeld-Indikator (nur erfasste Straftaten). Kein Ortsbezirks-Breakdown.",
+        "geo": "Stadtgrenze Wiesbaden (admin_level 6)",
+        "year_cur": 2025, "year_prev": 2024
     },
     "metrics": [
         {"id": "total",    "label_de": "Straftaten insgesamt",
          "label_en": "Total offences", "label_kr": "전체 범죄건수",
          "label_tr": "Toplam suç", "label_ua": "Усього злочинів", "label_ls": "Straftaten",
-         "value_2024": 28442, "value_2023": 29356, "unit": "Fälle",
+         "value_cur": 21819, "value_prev": 20604, "unit": "Fälle",
          "lower_is_better": True},
         {"id": "freq",     "label_de": "Häufigkeitszahl (pro 100 000 EW)",
          "label_en": "Frequency (per 100k pop.)", "label_kr": "10만 명당 빈도",
          "label_tr": "Sıklık (100 binde)", "label_ua": "Частота (на 100 тис.)",
          "label_ls": "Wie viele pro 100 000 Menschen",
-         "value_2024": 9461, "value_2023": 9824, "unit": "/100k",
-         "lower_is_better": True},
-        {"id": "violent",  "label_de": "Gewaltkriminalität",
-         "label_en": "Violent crime", "label_kr": "폭력범죄",
-         "label_tr": "Şiddet suçları", "label_ua": "Насильницькі злочини",
-         "label_ls": "Gewalt-Taten",
-         "value_2024": 1623, "value_2023": 1604, "unit": "Fälle",
-         "lower_is_better": True},
-        {"id": "burglary", "label_de": "Wohnungseinbruch",
-         "label_en": "Residential burglary", "label_kr": "주거 침입",
-         "label_tr": "Konut hırsızlığı", "label_ua": "Крадіжки в житло",
-         "label_ls": "Einbrüche",
-         "value_2024": 218, "value_2023": 252, "unit": "Fälle",
-         "lower_is_better": True},
-        {"id": "cyber",    "label_de": "Cyberkriminalität (i.e.S.)",
-         "label_en": "Cyber crime (narrow)", "label_kr": "사이버 범죄",
-         "label_tr": "Siber suç", "label_ua": "Кіберзлочинність",
-         "label_ls": "Internet-Verbrechen",
-         "value_2024": 643, "value_2023": 612, "unit": "Fälle",
+         "value_cur": 7554, "value_prev": 7216, "unit": "/100k",
          "lower_is_better": True},
         {"id": "clearance", "label_de": "Aufklärungsquote",
          "label_en": "Clearance rate", "label_kr": "검거율",
          "label_tr": "Aydınlatma oranı", "label_ua": "Розкриваність",
          "label_ls": "Wie viele Fälle gelöst",
-         "value_2024": 64.8, "value_2023": 63.1, "unit": "%",
-         "lower_is_better": False}
+         "value_cur": 57.0, "value_prev": 55.8, "unit": "%",
+         "lower_is_better": False},
+        {"id": "burglary", "label_de": "Wohnungseinbruch",
+         "label_en": "Residential burglary", "label_kr": "주거 침입",
+         "label_tr": "Konut hırsızlığı", "label_ua": "Крадіжки в житло",
+         "label_ls": "Einbrüche",
+         "value_cur": 608, "value_prev": 427, "unit": "Fälle",
+         "lower_is_better": True},
+        {"id": "domestic", "label_de": "Häusliche Gewalt",
+         "label_en": "Domestic violence", "label_kr": "가정폭력",
+         "label_tr": "Aile içi şiddet", "label_ua": "Домашнє насильство",
+         "label_ls": "Gewalt zu Hause",
+         "value_cur": 842, "value_prev": 715, "unit": "Fälle",
+         "lower_is_better": True},
+        {"id": "street",   "label_de": "Straßenkriminalität",
+         "label_en": "Street crime", "label_kr": "거리 범죄",
+         "label_tr": "Sokak suçları", "label_ua": "Вулична злочинність",
+         "label_ls": "Verbrechen auf der Straße",
+         "value_cur": 3968, "value_prev": 4518, "unit": "Fälle",
+         "lower_is_better": True}
     ]
 }
 
@@ -168,18 +173,19 @@ def main():
         "// Each card carries an authoritative source_url and stand date so\n"
         "// the dashboard links out instead of pretending to be the source.\n\n"
         "const ELW_SCHEDULE = " + json.dumps(ELW_SCHEDULE, ensure_ascii=False, separators=(',', ':')) + ";\n\n"
-        "const PKS_2024 = " + json.dumps(PKS_2024, ensure_ascii=False, separators=(',', ':')) + ";\n\n"
+        "const PKS_2025 = " + json.dumps(PKS_2025, ensure_ascii=False, separators=(',', ':')) + ";\n\n"
         "const EVENTS_2026 = " + json.dumps(EVENTS_2026, ensure_ascii=False, separators=(',', ':')) + ";\n"
     )
     Path("_kiez_static.js.snippet").write_text(payload)
     print(f"Snippet bytes: {Path('_kiez_static.js.snippet').stat().st_size:,}")
     print(f"\nELW bins: {len(ELW_SCHEDULE['bins'])}")
-    print(f"PKS metrics: {len(PKS_2024['metrics'])}")
+    print(f"PKS metrics: {len(PKS_2025['metrics'])}")
     print(f"Events 2026: {len(EVENTS_2026['events'])}")
     print()
-    print("PKS 2024 vs 2023 (lower_is_better → green):")
-    for m in PKS_2024['metrics']:
-        a, b = m['value_2024'], m['value_2023']
+    yc, yp = PKS_2025['meta']['year_cur'], PKS_2025['meta']['year_prev']
+    print(f"PKS {yc} vs {yp} (lower_is_better → green):")
+    for m in PKS_2025['metrics']:
+        a, b = m['value_cur'], m['value_prev']
         diff = a - b
         good = (diff < 0) if m['lower_is_better'] else (diff > 0)
         sign = '+' if diff > 0 else ''
