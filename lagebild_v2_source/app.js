@@ -1761,7 +1761,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const components = { pm10: 1, no2: 5, pm2_5: 9 };
       // Fetch one component at a time — UBA v3 endpoint takes a single component param.
       const responses = await Promise.all(Object.entries(components).map(async ([key, cid]) => {
-        const url = `https://www.umweltbundesamt.de/api/air_data/v3/measures/json?date_from=${fmt(start)}&date_to=${fmt(end)}&time_from=1&time_to=24&station=${stationId}&component=${cid}`;
+        // Via our /api/air Edge proxy — UBA sends no CORS header, so a direct
+        // browser fetch is blocked. The proxy returns UBA's JSON verbatim.
+        const url = `/api/air?date_from=${fmt(start)}&date_to=${fmt(end)}&time_from=1&time_to=24&station=${stationId}&component=${cid}`;
         const r = await fetch(url, { mode: 'cors' });
         if (!r.ok) throw new Error('UBA HTTP ' + r.status);
         return [key, await r.json()];
@@ -4109,14 +4111,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (ehead) ehead.textContent = `${D.ELW_SCHEDULE.bins.length} ${t('kiez_elw_bins', 'Tonnen · Rhythmen')}`;
     }
     // PKS
-    if (D.PKS_2024) {
-      const total = D.PKS_2024.metrics.find(m => m.id === 'total');
+    if (D.PKS_2025) {
+      const total = D.PKS_2025.metrics.find(m => m.id === 'total');
       const phead2 = document.getElementById('kiez-pks-headline');
       if (phead2 && total) {
-        const diff = total.value_2024 - total.value_2023;
-        const pct = (diff / total.value_2023 * 100);
+        const diff = total.value_cur - total.value_prev;
+        const pct = (diff / total.value_prev * 100);
         const sign = pct >= 0 ? '+' : '';
-        phead2.textContent = `${total.value_2024.toLocaleString('de-DE')} · ${sign}${pct.toFixed(1)}% ${t('kiez_pks_yoy', 'ggü. 2023')}`;
+        phead2.textContent = `${total.value_cur.toLocaleString('de-DE')} · ${sign}${pct.toFixed(1)}% ${t('kiez_pks_yoy', 'ggü. 2024')}`;
       }
     }
     // Events
@@ -4370,12 +4372,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function kiezBuildPks() {
-    const p = D.PKS_2024;
+    const p = D.PKS_2025;
     if (!p) return { title: '', body: '' };
     const lng = lang();
     const labelKey = 'label_' + (lng === 'kr' ? 'kr' : lng);
     const cells = p.metrics.map(m => {
-      const a = m.value_2024, b = m.value_2023;
+      const a = m.value_cur, b = m.value_prev;
       const isPct = m.unit === '%';
       const diff = a - b;
       const pct = b ? ((a - b) / b * 100) : 0;
@@ -4388,7 +4390,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="kiez-stat-cell">
           <div class="kiez-stat-label">${escapeHtml(m[labelKey] || m.label_de)}</div>
           <div class="kiez-stat-value">${valueStr} <span class="kiez-stat-delta ${klass}">${deltaStr}</span></div>
-          <div class="kiez-stat-label" style="text-transform:none; margin-top:4px;">2023 → 2024</div>
+          <div class="kiez-stat-label" style="text-transform:none; margin-top:4px;">${p.meta.year_prev} → ${p.meta.year_cur}</div>
         </div>
       `;
     }).join('');
@@ -4396,7 +4398,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: t('kiez_pks_title', 'Sicherheit'),
       body: `<div class="kiez-stat-grid">${cells}</div><p style="font-size:11px; color: var(--text-tertiary, var(--text-muted)); line-height:1.55;">${escapeHtml(p.meta.note_de)}</p>`,
       sourceUrl: p.meta.source_url,
-      sourceLabel: p.meta.source_label || 'PKS-Jahrbuch Hessen 2024 (PDF) ↗'
+      sourceLabel: p.meta.source_label || 'PKS 2025 · Polizeidirektion Wiesbaden (PDF) ↗'
     };
   }
 
