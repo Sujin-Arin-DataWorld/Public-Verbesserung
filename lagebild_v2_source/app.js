@@ -1761,7 +1761,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const components = { pm10: 1, no2: 5, pm2_5: 9 };
       // Fetch one component at a time — UBA v3 endpoint takes a single component param.
       const responses = await Promise.all(Object.entries(components).map(async ([key, cid]) => {
-        const url = `https://www.umweltbundesamt.de/api/air_data/v3/measures/json?date_from=${fmt(start)}&date_to=${fmt(end)}&time_from=1&time_to=24&station=${stationId}&component=${cid}`;
+        // Via our /api/air Edge proxy — UBA sends no CORS header, so a direct
+        // browser fetch is blocked. The proxy returns UBA's JSON verbatim.
+        const url = `/api/air?date_from=${fmt(start)}&date_to=${fmt(end)}&time_from=1&time_to=24&station=${stationId}&component=${cid}`;
         const r = await fetch(url, { mode: 'cors' });
         if (!r.ok) throw new Error('UBA HTTP ' + r.status);
         return [key, await r.json()];
