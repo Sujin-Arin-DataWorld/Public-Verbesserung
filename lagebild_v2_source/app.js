@@ -418,11 +418,13 @@ function _buildLayerLookups() {
       }
     });
   }
-  // KITA_VERSORGUNG → quote_u3 percent (real official PDF)
-  if (Array.isArray(D2.KITA_VERSORGUNG)) {
-    D2.KITA_VERSORGUNG.forEach(k => {
-      if (k && k.bezirk && typeof k.quote_u3 === 'number') {
-        lookup.kita[k.bezirk] = k.quote_u3;
+  // KITA_VERSORGUNG → u3 coverage quote (%) from the real official PDF.
+  // Shape is { ortsbezirke: [{ name, u3: { quote }, elem: {...} }] } — an object
+  // with a nested array, keyed by district name (matches ORTSBEZIRKE.name).
+  if (D2.KITA_VERSORGUNG && Array.isArray(D2.KITA_VERSORGUNG.ortsbezirke)) {
+    D2.KITA_VERSORGUNG.ortsbezirke.forEach(k => {
+      if (k && k.name && k.u3 && typeof k.u3.quote === 'number') {
+        lookup.kita[k.name] = k.u3.quote;
       }
     });
   }
