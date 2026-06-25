@@ -1541,8 +1541,21 @@ function setupViewRouter() {
   // Initial view from URL hash. Strip query string so deep-anchor URLs
   // like #daten?id=foo route to the 'daten' view instead of falling back
   // to 'home' (정교화 1 prerequisite).
-  const initial = (location.hash || '').replace('#', '').split('?')[0].trim() || 'home';
-  showView(initial);
+  // v2.9 — distinguish real view hashes from in-page scroll anchors.
+  // Before: a non-view hash (e.g. #cs-projects-grid from the citizen-science
+  // "Zu den Projekten" link) fell through to showView() and was forced to
+  // 'home', so the jump link wrongly navigated to the home view.
+  // After: an unknown hash that matches an element id is treated as a scroll
+  // target — the current view stays put and we smooth-scroll to that element.
+  function routeHash() {
+    const raw = (location.hash || '').replace('#', '').split('?')[0].trim();
+    if (raw && !VALID_VIEWS.includes(raw)) {
+      const anchor = document.getElementById(raw);
+      if (anchor) { anchor.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+    }
+    showView(raw || 'home');
+  }
+  routeHash();
 
   // Click handlers
   document.querySelectorAll('.view-nav-btn').forEach(btn => {
@@ -1563,10 +1576,7 @@ function setupViewRouter() {
 
   // React to back/forward + manual hash edits. Same query-strip as above
   // so the user can paste a deep-anchor URL into the address bar.
-  window.addEventListener('hashchange', () => {
-    const v = (location.hash || '').replace('#', '').split('?')[0].trim() || 'home';
-    showView(v);
-  });
+  window.addEventListener('hashchange', routeHash);
 }
 
 // ============ LIVE CLOCK ============
