@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>MapLibre 테스트</title>
+  <script src="https://unpkg.com/maplibre-gl@^5/dist/maplibre-gl.js"></script>
+
+  <link href="https://unpkg.com/maplibre-gl@^5/dist/maplibre-gl.css" rel="stylesheet"/>
+  <style>
+    html, body { margin: 0; height: 100%; }
+    #map { position: absolute; inset: 0; }   /* 높이 필수! 없으면 안 보임 */
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script>
+    const map = new maplibregl.Map({
+      container: 'map',
+      style: { version: 8, sources: {}, layers: [
+        { id: 'bg', type: 'background', paint: { 'background-color': '#dbeafe' } }
+      ]},
+      center: [8.24, 50.08],
+      zoom: 11
+    });
+
+    // 지도가 다 준비된 다음에 데이터 얹기 (이 'load' 타이밍이 중요!)
+    map.on('load', async () => {
+      // 같은 폴더의 geojson 읽기 (이미 [경도,위도] 순서라 변환 불필요)
+      const geo = await fetch('wiesbaden_ortsbezirke.geojson').then(r => r.json());
+
+      // 1) 데이터를 source로 등록
+      map.addSource('bez', { type: 'geojson', data: geo });
+
+      // 2) 채우기 레이어 (초록)
+      map.addLayer({ id: 'bez-fill', type: 'fill', source: 'bez',
+        paint: { 'fill-color': '#22a884', 'fill-opacity': 0.6 } });
+
+      // 3) 경계선 레이어 (흰색)
+      map.addLayer({ id: 'bez-line', type: 'line', source: 'bez',
+        paint: { 'line-color': '#ffffff', 'line-width': 1 } });
+
+      // 4) 클릭하면 동네 이름 팝업
+      map.on('click', 'bez-fill', (e) => {
+        new maplibregl.Popup()
+          .setLngLat(e.lngLat)
+          .setHTML(e.features[0].properties.name)
+          .addTo(map);
+      });
+    });
+  </script>
+</body>
+</html>

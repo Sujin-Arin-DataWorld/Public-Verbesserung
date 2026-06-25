@@ -1,0 +1,59 @@
+{
+  "@context": "https://project-open-data.cio.gov/v1.1/schema/catalog.jsonld",
+  "@type": "dcat:Dataset",
+  "dct:identifier": "ortsbezirke-referenz-wiesbaden",
+  "dct:title": "Ortsbezirke Wiesbaden – Referenz (Stammdaten und Alias)",
+  "dct:description": "Zentrale Referenz der 26 Wiesbadener Ortsbezirke als raeumlicher Schluessel fuer alle ortsbezirksbezogenen Statistiken. Enthaelt eine Stammtabelle (eindeutige ID, offizieller Name, OSM-Bezug, AKK-Kennzeichen), eine Alias-Tabelle (jede vorkommende Schreibweise zur ID) und die Geometrie als GeoJSON. Die ID ist der verbindliche Schluessel, der Name dient der Anzeige.",
+  "dct:publisher": {
+    "@type": "foaf:Agent",
+    "foaf:name": "Landeshauptstadt Wiesbaden, Amt fuer Statistik und Stadtforschung"
+  },
+  "dcat:contactPoint": {
+    "@type": "vcard:Organization",
+    "vcard:fn": "Amt fuer Statistik und Stadtforschung",
+    "vcard:hasEmail": "mailto:PLATZHALTER@wiesbaden.de"
+  },
+  "dct:license": "http://dcat-ap.de/def/licenses/dl-by-de/2.0",
+  "dct:issued": "2026-06-24",
+  "dct:modified": "2026-06-24",
+  "dct:accrualPeriodicity": "http://publications.europa.eu/resource/authority/frequency/IRREG",
+  "dct:spatial": "Landeshauptstadt Wiesbaden",
+  "dct:temporal": { "dcat:startDate": "Gebietsstand – PLATZHALTER" },
+  "dcat:theme": [
+    "http://publications.europa.eu/resource/authority/data-theme/GOVE",
+    "http://publications.europa.eu/resource/authority/data-theme/REGI"
+  ],
+  "dcat:keyword": [
+    "Ortsbezirke", "Referenzdaten", "Stammdaten", "raeumlicher Schluessel",
+    "Geodaten", "Datenstandard", "Wiesbaden"
+  ],
+  "dcat:distribution": [
+    {
+      "@type": "dcat:Distribution",
+      "dct:title": "Stammtabelle (CSV)",
+      "dcat:downloadURL": "https://opendata.cloud.wiesbaden.de/fddf927f-0479-41e4-992e-836c25344452/ortsbezirke_referenz.csv",
+      "dct:format": "CSV",
+      "dcat:mediaType": "text/csv",
+      "dct:description": "Eine Zeile je Ortsbezirk: ortsbezirk_id, name_offiziell, osm_id, akk. Trennzeichen Semikolon, UTF-8.",
+      "dct:license": "http://dcat-ap.de/def/licenses/dl-by-de/2.0"
+    },
+    {
+      "@type": "dcat:Distribution",
+      "dct:title": "Alias-Crosswalk (CSV)",
+      "dcat:downloadURL": "https://opendata.cloud.wiesbaden.de/fddf927f-0479-41e4-992e-836c25344452/ortsbezirke_alias.csv",
+      "dct:format": "CSV",
+      "dcat:mediaType": "text/csv",
+      "dct:description": "Abbildung jeder vorkommenden Schreibweise auf die ortsbezirk_id. Trennzeichen Semikolon (Namen koennen Kommas enthalten).",
+      "dct:license": "http://dcat-ap.de/def/licenses/dl-by-de/2.0"
+    },
+    {
+      "@type": "dcat:Distribution",
+      "dct:title": "Stammdaten mit Geometrie (GeoJSON, EPSG:4326)",
+      "dcat:downloadURL": "https://opendata.cloud.wiesbaden.de/fddf927f-0479-41e4-992e-836c25344452/ortsbezirke_referenz.geojson",
+      "dct:format": "GeoJSON",
+      "dcat:mediaType": "application/geo+json",
+      "dct:description": "26 Polygone mit den Eigenschaften ortsbezirk_id, name_offiziell, osm_id, akk. Koordinaten lon/lat nach RFC 7946.",
+      "dct:license": "http://dcat-ap.de/def/licenses/dl-by-de/2.0"
+    }
+  ]
+}
