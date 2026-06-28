@@ -35,8 +35,8 @@ for osm in order:
     feats.append({
         "type": "Feature",
         "properties": {
-            "ortsbezirk_id": r["ortsbezirk_id"],
-            "name_offiziell": r["name_offiziell"],
+            "ortsbezirk_nummer": r["ortsbezirk_nummer"],
+            "ortsbezirk_name": r["ortsbezirk_name"],
             "osm_id": int(osm),
             "akk": r["akk"] == "true",
         },

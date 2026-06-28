@@ -1,4 +1,4 @@
-ortsbezirk_id;name_offiziell;osm_id;akk
+ortsbezirk_nummer;ortsbezirk_name;osm_id;akk
 01;Mitte;3897825;false
 02;Nordost;3897896;false
 03;Südost;3898238;false

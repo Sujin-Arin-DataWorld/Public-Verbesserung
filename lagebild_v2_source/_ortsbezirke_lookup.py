@@ -3,7 +3,7 @@
 Zwei Tabellen, eine Aufgabe: jede beliebige Schreibweise eines Ortsbezirks
 auf die eine offizielle ID und den offiziellen Namen abbilden.
 
-  ortsbezirke_referenz.csv  (Stamm)  -> die Wahrheit: id, name_offiziell, osm_id, akk
+  ortsbezirke_referenz.csv  (Stamm)  -> die Wahrheit: ortsbezirk_nummer, ortsbezirk_name, osm_id, akk
   ortsbezirke_alias.csv     (Alias)  -> der Uebersetzer: Schreibvariante -> id
 
 Das formalisiert die fruehere fuzzy_district_match()-Logik als Daten.
@@ -33,14 +33,14 @@ def _norm(s: str) -> str:
 
 
 def _load():
-    stamm = {}  # id -> name_offiziell
+    stamm = {}  # ortsbezirk_nummer -> ortsbezirk_name
     with REFERENZ.open(encoding="utf-8") as f:
         for r in csv.DictReader(f, delimiter=";"):
-            stamm[r["ortsbezirk_id"]] = r["name_offiziell"]
+            stamm[r["ortsbezirk_nummer"]] = r["ortsbezirk_name"]
     alias = {}  # normalisierter Alias -> id
     with ALIAS.open(encoding="utf-8") as f:
         for r in csv.DictReader(f, delimiter=";"):
-            alias[_norm(r["alias"])] = r["ortsbezirk_id"]
+            alias[_norm(r["alias"])] = r["ortsbezirk_nummer"]
     # die offiziellen Namen sind selbst auch gueltige Aliase
     for oid, name in stamm.items():
         alias.setdefault(_norm(name), oid)
@@ -51,7 +51,7 @@ _STAMM, _ALIAS = _load()
 
 
 def to_id(name: str) -> str | None:
-    """Beliebige Schreibweise -> offizielle ortsbezirk_id, sonst None."""
+    """Beliebige Schreibweise -> offizielle ortsbezirk_nummer, sonst None."""
     return _ALIAS.get(_norm(name))
 
 
