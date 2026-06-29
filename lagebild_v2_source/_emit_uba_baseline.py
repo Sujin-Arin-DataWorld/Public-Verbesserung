@@ -7,9 +7,10 @@ Umweltbundesamt OpenData API for Wiesbaden Schiersteiner Straße
 Ringkirche (665, DEHE037) and Süd (650, DEHE022) if a station
 returns no data.
 
-API: https://www.umweltbundesamt.de/api/air_data/v3/measures/json
+API: https://luftdaten.umweltbundesamt.de/api/air-data/v4/measures/json
 License: Datenlizenz Deutschland — Namensnennung 2.0
-Auth: none. Verified open + CORS-free as of 2026-05-04.
+Auth: none. v4 host/path (air-data, hyphenated) verified 2026-06-26;
+response schema is byte-identical to v3.
 
 This snapshot is the BUILD-TIME baseline + last-cached-fallback.
 At runtime app.js will optionally re-fetch the latest hour for the
@@ -24,7 +25,7 @@ import datetime, json, sys, urllib.request
 from collections import defaultdict
 from pathlib import Path
 
-API = "https://www.umweltbundesamt.de/api/air_data/v3/measures/json"
+API = "https://luftdaten.umweltbundesamt.de/api/air-data/v4/measures/json"
 
 # Wiesbaden Schiersteiner is the primary urban-roadside station;
 # Ringkirche is a secondary urban background; Süd is suburban.
@@ -79,7 +80,7 @@ def main() -> None:
             "title_en": "Air quality · 7-day daily averages Wiesbaden",
             "publisher": "Umweltbundesamt (UBA)",
             "license": "Datenlizenz Deutschland — Namensnennung 2.0",
-            "source_api": "https://www.umweltbundesamt.de/api/air_data/v3",
+            "source_api": "https://luftdaten.umweltbundesamt.de/api/air-data/v4",
             "source_doc": "https://luftqualitaet.api.bund.dev",
             "fetched_at": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "period": {"from": days[0], "to": days[-1]},

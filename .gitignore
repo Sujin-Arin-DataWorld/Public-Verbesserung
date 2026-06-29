@@ -17,3 +17,5 @@ lagebild_v2_source/Wiesbaden_Lagebild_v2.html
 # Python bytecode (emitter scripts)
 __pycache__/
 *.pyc
+.vercel
+.env*

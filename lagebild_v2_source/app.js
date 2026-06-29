@@ -2141,12 +2141,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function rankedStations() {
-    // Cheapest first; null prices go last; if user set a location compute distance.
+    // With a user location: nearest first (straight-line / Haversine distance). Otherwise: cheapest first.
     const list = fuelStations().filter(s => s.e10 != null);
     if (fuelUserLoc) {
       list.forEach(s => { s._dist = distKm(fuelUserLoc, s); });
+      list.sort((a, b) => a._dist - b._dist);
+    } else {
+      list.sort((a, b) => a.e10 - b.e10);
     }
-    list.sort((a, b) => a.e10 - b.e10);
     return list;
   }
 
@@ -2617,7 +2619,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cards = selection
       .map(id => D.KPI_OPTIONS.find(k => k.id === id))
       .filter(Boolean);
-    const stories = (D.STORIES || []).slice(0, 8);
+    const stories = (D.STORIES || []);
     const sources = (D.DATA_SOURCES || []).slice(0, 25);
     const air = D.UBA_AIRQUALITY && D.UBA_AIRQUALITY.headline;
     const fuel = (D.FUEL_STATIONS_V2 || []).filter(s => s.e10 != null).sort((a,b)=>a.e10-b.e10)[0];

@@ -1,9 +1,9 @@
 // Wiesbaden-Lagebild — Umweltbundesamt (UBA) air-quality proxy.
 //
-// The UBA air_data v3 API sends no CORS header, so the browser can't fetch it
+// The UBA air-data v4 API sends no CORS header, so the browser can't fetch it
 // directly (it throws "No 'Access-Control-Allow-Origin' header"). This Edge
 // Function calls UBA server-side and returns the same JSON with CORS headers.
-// No API key required — UBA air_data is a public endpoint. License: © UBA.
+// No API key required — UBA air-data is a public endpoint. License: © UBA.
 //
 // Route: /api/air?date_from=&date_to=&time_from=&time_to=&station=&component=
 // The frontend calls this once per component (pm10/no2/pm2_5) and aggregates
@@ -14,7 +14,7 @@
 
 export const config = { runtime: 'edge' };
 
-const UBA_BASE = 'https://www.umweltbundesamt.de/api/air_data/v3/measures/json';
+const UBA_BASE = 'https://luftdaten.umweltbundesamt.de/api/air-data/v4/measures/json';
 
 export default async function handler(req: Request): Promise<Response> {
   const q = new URL(req.url).searchParams;

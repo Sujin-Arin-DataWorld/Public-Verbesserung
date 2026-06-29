@@ -87,8 +87,7 @@ def extract_5steller(raw: str) -> dict:
     months = complete[-12:]
     series = []
     for item, info in TRACKED.items():
-        s = dict(info)
-        s["values"] = [data[info["id"]][m] for m in months]
+        s = {**info, "values": [data[info["id"]][m] for m in months]}
         series.append(s)
     return {"months": months, "series": series}
 
