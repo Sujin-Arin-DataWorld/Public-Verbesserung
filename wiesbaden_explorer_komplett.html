@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open-Data Wiesbaden — Katalog · Tabelle · Diagramm · Karte (PoC)</title>
+<link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<style>
+  :root{--bg:#f6f7f9;--panel:#ffffff;--panel2:#eef1f4;--line:#d8dde3;--ink:#1b1f27;--mut:#5f6b7a;
+    --accent:#2563eb;--accent2:#0f9d6e;--num:#2563eb;--txt:#0f9d6e;--r:12px;
+    --mono:ui-monospace,Menlo,monospace;--sans:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.5}
+  .wrap{max-width:1120px;margin:0 auto;padding:24px 20px 80px}
+  h1{font-size:1.35rem;margin:0 0 4px}
+  .sub{color:var(--mut);font-size:.88rem;margin:0 0 16px}.sub b{color:var(--accent2)}
+  .tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+  #q{flex:1;min-width:200px;background:var(--panel);border:1px solid var(--line);border-radius:9px;color:var(--ink);padding:9px 12px;font-size:.9rem}
+  .chip{background:var(--panel2);border:1px solid var(--line);border-radius:999px;color:var(--ink);padding:5px 11px;font-size:.78rem;cursor:pointer}
+  .chip.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  .count{color:var(--mut);font-size:.82rem;margin:0 0 12px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column}
+  .ttl{font-weight:600;font-size:.92rem;margin-bottom:5px;line-height:1.35}
+  .desc{color:var(--mut);font-size:.79rem;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+  .b{font-size:.63rem;font-family:var(--mono);padding:1px 7px;border-radius:5px;border:1px solid var(--line);color:var(--mut)}
+  .b.th{color:var(--accent2);border-color:rgba(90,209,154,.3)}.b.f{color:var(--accent);border-color:rgba(79,157,255,.3)}
+  .foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;gap:8px}
+  .stand{color:var(--mut);font-size:.71rem}
+  .erk{background:var(--accent);border:0;border-radius:8px;color:#fff;font-weight:600;padding:7px 13px;font-size:.81rem;cursor:pointer;white-space:nowrap}
+  .erk.open{background:var(--panel2);color:var(--ink);border:1px solid var(--line)}
+  .exp{grid-column:1/-1;background:var(--panel2);border:1px solid var(--accent);border-radius:var(--r);padding:15px 17px;margin-top:-4px}
+  .exp h3{margin:0 0 8px;font-size:.95rem}
+  .views{display:flex;gap:7px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+  .vtab{background:var(--panel);border:1px solid var(--line);border-radius:7px;color:var(--ink);padding:5px 12px;font-size:.8rem;cursor:pointer}
+  .vtab.on{background:var(--accent2);border-color:var(--accent2);color:#fff;font-weight:600}
+  .vtab.geo{border-color:rgba(90,209,154,.5)}
+  .ctrls{display:flex;flex-wrap:wrap;gap:9px;align-items:center;font-size:.8rem;margin-bottom:10px}
+  .ctrls label{color:var(--mut)}
+  select{background:var(--panel);border:1px solid var(--line);border-radius:7px;color:var(--ink);padding:4px 7px;font-size:.8rem;max-width:170px}
+  .tg{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:.8rem}.tg input{accent-color:var(--accent2)}
+  .cols{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+  .col{display:flex;align-items:center;gap:5px;background:var(--panel);border-radius:6px;padding:3px 8px;font-size:.76rem}
+  .t{font-size:.58rem;font-family:var(--mono);padding:1px 5px;border-radius:4px}
+  .t.numeric{background:rgba(79,157,255,.16);color:var(--num)}.t.text{background:rgba(90,209,154,.16);color:var(--txt)}
+  .mchips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;max-height:96px;overflow:auto}
+  .mchip{border:1px solid var(--line);border-radius:6px;padding:3px 9px;font-size:.72rem;cursor:pointer;background:var(--panel);color:var(--ink);font-family:var(--mono);user-select:none}
+  .legend2{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:8px;font-size:.72rem;color:var(--mut)}
+  .lk{display:flex;align-items:center;gap:5px}
+  .sw{width:11px;height:11px;border-radius:2px;display:inline-block;flex:none}
+  svg{width:100%;height:auto;display:block}.bar{fill:var(--accent)}.bar:hover{fill:var(--accent2)}
+  .axis{fill:var(--mut);font-size:11px;font-family:var(--mono)}
+  .tbl{overflow:auto;max-height:240px;border:1px solid var(--line);border-radius:8px}
+  table{border-collapse:collapse;width:100%;font-size:.74rem;white-space:nowrap}
+  th,td{padding:5px 9px;border-bottom:1px solid var(--line);text-align:left}
+  th{position:sticky;top:0;background:var(--panel);color:var(--mut);font-family:var(--mono);font-size:.67rem}
+  td.n{font-family:var(--mono);text-align:right;color:var(--num)}
+  .tbl table tr:nth-child(2n) td{background:rgba(0,0,0,.022)}
+  .pvwrap{margin-top:4px}.pvscroll{max-height:440px}
+  .pivtbl{border-collapse:collapse;font-size:.74rem;white-space:nowrap}
+  .pivtbl th,.pivtbl td{border:1px solid var(--line);padding:4px 9px}
+  .pivtbl thead th{position:sticky;top:0;background:var(--panel2);color:var(--mut);font-family:var(--mono);font-size:.66rem;z-index:1}
+  .pivtbl .pvrowh{position:sticky;left:0;background:var(--panel);text-align:left;font-weight:600;z-index:1}
+  .pivtbl .pvcorner{position:sticky;left:0;top:0;z-index:3;text-align:left;background:var(--panel2)}
+  .pivtbl td.n{text-align:right;font-family:var(--mono);color:var(--num)}
+  .pivtbl .pvcell{cursor:pointer}.pivtbl .pvcell:hover{background:rgba(37,99,235,.12)}
+  .pivtbl .pvtot,.pivtbl .pvtotrow th,.pivtbl .pvtotrow td{background:var(--panel2);font-weight:600;color:var(--ink)}
+  .pvdetail{margin-top:10px;position:relative;background:var(--panel);border:1px solid var(--accent);border-radius:8px;padding:10px 30px 10px 12px;font-size:.78rem;max-width:470px;line-height:1.6}
+  .pvdetail b{color:var(--accent2)}
+  .pvdx{position:absolute;top:5px;right:8px;border:0;background:transparent;font-size:1rem;cursor:pointer;color:var(--mut);line-height:1}
+  .dashbar{display:flex;flex-wrap:wrap;gap:7px;align-items:center;background:#fff7e6;border:1px solid #e7cd92;border-radius:10px;padding:8px 12px;margin:0 0 14px}
+  .dashlbl{font-size:.8rem;font-weight:600;color:#7a5a16}
+  .pinchip{display:inline-flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:3px 5px 3px 10px;font-size:.76rem}
+  .pinchip>b{font-weight:600;color:var(--ink)}
+  .pinview{font-size:.62rem;font-family:var(--mono);color:var(--mut);background:var(--panel2);padding:1px 5px;border-radius:4px}
+  .pinchip button{border:0;background:transparent;cursor:pointer;color:var(--mut);font-size:.9rem;padding:0 3px;line-height:1}
+  .pinchip button:hover{color:var(--accent)}
+  .pinclear{border:0;background:transparent;color:var(--mut);font-size:.72rem;cursor:pointer;text-decoration:underline}
+  .ld{color:var(--mut);padding:14px;text-align:center;font-size:.84rem}.err{color:#ff8a8a;padding:8px;font-size:.8rem}
+  .more{display:block;margin:18px auto 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:9px;padding:9px 22px;cursor:pointer}
+  .mapbox{height:380px;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+  .apiline{font-family:var(--mono);font-size:.72rem;color:var(--mut);margin:-2px 0 10px;word-break:break-all}
+  .apiline code{background:var(--panel2);padding:1px 5px;border-radius:4px;color:var(--accent)}
+  .apibox{margin-top:20px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+  .apibox>summary{cursor:pointer;font-size:.9rem;color:var(--ink)}
+  .apibox>summary b{color:var(--accent2)}
+  .aprow{display:flex;gap:8px;align-items:baseline;margin:12px 0 2px;flex-wrap:wrap}
+  .aptag{font-size:.66rem;font-family:var(--mono);background:var(--accent);color:#fff;padding:1px 7px;border-radius:5px;white-space:nowrap}
+  .apcode{font-family:var(--mono);font-size:.74rem;color:var(--ink);word-break:break-all}
+  .apcode b{color:var(--accent)}
+  .apout{font-family:var(--mono);font-size:.72rem;color:var(--mut);margin:2px 0 0;padding-left:6px}
+  .apout code{background:var(--panel2);padding:1px 4px;border-radius:3px}
+  .apsnip{background:#0f1722;color:#dbe6f3;border-radius:8px;padding:11px 13px;font-family:var(--mono);font-size:.74rem;line-height:1.55;overflow-x:auto;margin:12px 0 0;white-space:pre}
+  .legend{display:flex;align-items:center;gap:9px;font-size:.74rem;color:var(--mut);margin-top:8px;flex-wrap:wrap}
+  .legbar{height:10px;width:150px;border-radius:3px;background:linear-gradient(90deg,#ffffcc,#a1dab4,#41b6c4,#2c7fb8,#253494)}
+  .exp-btn{background:var(--panel);border:1px solid var(--line);color:var(--mut);border-radius:6px;padding:3px 8px;font-size:.72rem;cursor:pointer}
+  .exp-btn:hover{color:var(--ink);border-color:var(--accent2)}
+  .kpi{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:10px;font-size:.78rem;color:var(--mut)}
+  .kpi b{color:var(--ink);font-family:var(--mono)}
+  .sr{color:var(--mut)}.sr b{font-family:var(--mono)}
+  circle:hover{fill:var(--accent2)!important}
+  .maplibregl-popup-content{background:#ffffff;color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:7px 10px}
+  .maplibregl-popup-content b{color:var(--accent2)}
+  footer{margin-top:24px;color:var(--mut);font-size:.78rem;border-top:1px solid var(--line);padding-top:14px}
+  footer b{color:var(--accent2)}footer code{background:var(--panel);padding:1px 5px;border-radius:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Open-Data Wiesbaden — ein Explorer pro Datensatz <span style="font-size:.58rem;border:1px solid var(--accent2);color:var(--accent2);padding:2px 6px;border-radius:6px;font-family:var(--mono)">PoC</span></h1>
+  <p class="sub">Jede Karte erkennt <b>aus den Daten selbst</b>, was sie kann: <b>Tabelle</b> + <b>Diagramm</b> immer,
+     <b>Karte</b> nur wenn ein Ortsbezirks-Schlüssel vorhanden ist. Keine Konfiguration je Datensatz.</p>
+  <div class="tools"><input id="q" placeholder="Katalog durchsuchen … (Titel · Beschreibung · Spalten)"></div>
+  <div class="tools" id="themes"></div>
+  <p class="count" id="count"></p>
+  <p class="count" id="portalnote" style="opacity:.78"></p>
+  <div id="dashbar" class="dashbar" hidden></div>
+  <div class="grid" id="grid"></div>
+  <button class="more" id="more" hidden>Mehr laden</button>
+
+  <details class="apibox" open>
+    <summary><b>API-Beispiele</b> — so lädt der Explorer Daten: zwei offene Aufrufe, kein Backend, kein Login, kein API-Key</summary>
+    <div class="aprow"><span class="aptag">1 · Katalog</span><span class="apcode" id="api-cat">…</span></div>
+    <div class="apout" id="api-cat-out"></div>
+    <div class="aprow"><span class="aptag">2 · CSV eines Datensatzes</span><span class="apcode" id="api-csv">…</span></div>
+    <div class="apout" id="api-csv-out"></div>
+    <div class="apsnip" id="api-snip">const res  = await fetch(csvUrl);          // CORS offen, kein Key
+const text = await res.text();
+const { headers, rows } = parseCSV(text);  // ; -getrennt, dt. Zahlen (1.234,56)
+const typ  = inferType(rows, spalte);      // numerisch? text? → passende Ansichten</div>
+  </details>
+
+  <footer>
+    <p><b>So „pro Datensatz":</b> ein Engine, das jede CSV liest, Spaltentypen rät und die passenden Ansichten
+    freischaltet. <code>Karte</code> erscheint nur bei Geo-Schlüssel (Join auf <code>wiesbaden_ortsbezirke.geojson</code>,
+    Normalisierung + Teilstring). Daten live aus <code>opendata.cloud.wiesbaden.de</code> — kein Backend.</p>
+    <p style="margin-top: 8px; opacity: 0.85;"><b>Status:</b> Liest Daten live direkt vom Wiesbaden-Portal. Noch nicht integriert — ein funktionierendes Prototyp &amp; Vorschlag.</p>
+  </footer>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const SEARCH="https://opendata.cloud.wiesbaden.de/api/hub/search/search";
+const RAMP=['#ffffcc','#a1dab4','#41b6c4','#2c7fb8','#253494'];
+let CAT=[], THEMES=[], state={q:"",theme:"",n:24}, GEO=null, GEO_NORM=[], CURMAP=null, HEADERS={};
+let PINS=[]; try{PINS=JSON.parse(localStorage.getItem("wbx_pins")||"[]");}catch(e){}
+let PENDING_VIEW=null;
+const VIEWLBL={tab:"Tabelle",pivot:"Kreuztabelle",chart:"Diagramm",trend:"Zeitverlauf",stack:"Anteile",scatter:"Korrelation",slope:"Rangwechsel",map:"Karte",matrix:"Matrix",api:"API"};
+
+function deNum(s){if(s==null)return null;s=(""+s).trim();if(!s||s==="-")return null;
+  if(/^\d{1,4}[.\-/]\d{1,2}[.\-/]\d{1,4}$/.test(s))return null;          // Datum, keine Zahl
+  if(s.includes(",")&&s.includes("."))s=s.replace(/\./g,"").replace(",",".");
+  else if(s.includes(","))s=s.replace(",",".");else if(/^\d{1,3}(\.\d{3})+$/.test(s))s=s.replace(/\./g,"");
+  if(!/^-?\d+(\.\d+)?$/.test(s))return null;                            // strikt: nur reine Zahl (kein Hex/Code/Teil-Parse)
+  const n=parseFloat(s);return isNaN(n)?null:n;}
+function parseCSV(text){
+  const d=(text.split("\n")[0].split(";").length>text.split("\n")[0].split(",").length)?";":",";
+  const rows=[];let row=[],cur="",q=false;
+  for(let i=0;i<text.length;i++){const c=text[i];
+    if(q){if(c==='"'){if(text[i+1]==='"'){cur+='"';i++;}else q=false;}else cur+=c;}
+    else if(c==='"')q=true;else if(c===d){row.push(cur);cur="";}
+    else if(c==="\n"){row.push(cur);rows.push(row);row=[];cur="";}else if(c!=="\r")cur+=c;}
+  if(cur!==""||row.length){row.push(cur);rows.push(row);}
+  const headers=rows.shift().map(h=>h.trim());
+  const objs=rows.filter(r=>r.some(v=>v!=="")).map(r=>{const o={};headers.forEach((h,i)=>o[h]=(r[i]||"").trim());return o;});
+  return {headers,objs};
+}
+function inferType(rows,col){let n=0,num=0;for(const r of rows){const v=r[col];if(v===""||v==null)continue;n++;if(deNum(v)!==null)num++;}return n>0&&num/n>=0.9?"numeric":"text";}
+// numerisch ≠ messbar: IDs/Schlüssel/Datum/Koordinaten sind keine Kennzahlen
+function isMeasure(id){const n=(id||"").toLowerCase();
+  if(/(^|[ _\-.])(id|nr|nummer|hausnummer|schl(ü|ue)ssel|key|code|plz|postleitzahl)\d*$/.test(n))return false;
+  if(/datum|date/.test(n))return false;
+  if(/jahr$|year$/.test(n)||/^(monat|month|quartal|kw|stand)$/.test(n))return false;
+  if(/breitengrad|l(ä|ae)ngengrad|^lat$|^lon$|^lng$|latitude|longitude|x[_ ]?coord|y[_ ]?coord|rechtswert|hochwert/.test(n))return false;
+  return true;}
+function esc(s){return(""+s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function norm(s){s=(s||"").toLowerCase();for(const[k,v]of Object.entries({"ä":"a","ö":"o","ü":"u","ß":"ss"}))s=s.split(k).join(v);return s.replace(/[\/\-\s,.()]+/g,"");}
+function matchGeo(name){const n=norm(name);if(!n||n==="wiesbaden")return null;
+  for(const g of GEO_NORM)if(n===g.n)return g.name;                                   // exakt
+  for(const g of GEO_NORM)if(n.length>=5&&g.n.length>n.length&&g.n.endsWith(n))return g.name; // AKK-Kurzform: Kastel->Mainz-Kastel (Suffix, nicht 'Mainz')
+  return null;}
+function fmt(n){if(Number.isInteger(n))return n.toLocaleString("de");return n.toLocaleString("de",{maximumFractionDigits:n>=1000?1:2});}
+function geoColumn(fields,rows){
+  let best=null,bestHit=0;
+  for(const f of fields.filter(f=>f.type==="text")){
+    const vals=new Set(rows.map(r=>r[f.id]).filter(Boolean));if(!vals.size)continue;
+    let hit=0;vals.forEach(v=>{if(matchGeo(v))hit++;});
+    if(hit>bestHit&&hit>=4&&hit/vals.size>=0.5){bestHit=hit;best=f.id;}  // muss MEHRHEIT echter Ortsbezirke sein
+  }
+  return best;
+}
+function killMap(){ if(CURMAP){ try{CURMAP.remove();}catch(e){} CURMAP=null; } }
+
+async function explore(item,host){
+  host.innerHTML=`<div class="ld">CSV wird geladen …</div>`;
+  let objs,headers;
+  try{const r=await fetch(item.csv);if(!r.ok)throw new Error("HTTP "+r.status);({headers,objs}=parseCSV(await r.text()));}
+  catch(e){host.innerHTML=`<div class="err">Vorschau nicht verfügbar: ${e.message}</div>`;return;}
+  const fields=headers.map(h=>({id:h,type:inferType(objs,h)}));
+  const mets=fields.filter(f=>f.type==="numeric"&&isMeasure(f.id));
+  const geoCol=geoColumn(fields,objs);
+  const latC=fields.find(f=>/breitengrad|^lat$|latitude|^breite$/i.test(f.id)),lngC=fields.find(f=>/l(ae|ä)ngengrad|^lng$|^lon$|^long$|longitude|^l(ae|ä)nge$/i.test(f.id));
+  const ptCols=(latC&&lngC)?{lat:latC.id,lng:lngC.id}:null;
+  const yCol=fields.find(f=>/^jahr$|^year$/i.test(f.id));
+  const yList=yCol?[...new Set(objs.map(r=>r[yCol.id]).filter(Boolean))].sort().reverse():[];
+  host._d={item,objs,fields,mets,geoCol,ptCols,yCol:yCol?yCol.id:null,yList,year:yList[0]||"__all"};
+  const nCat=fields.filter(f=>f.type==="text").length+(yCol?1:0);
+  host.innerHTML=`<h3>${esc(item.t)}</h3>
+    <div class="views">
+      <button class="vtab on" data-v="tab">▦ Tabelle</button>
+      ${(nCat>=2&&mets.length>=1)?`<button class="vtab" data-v="pivot">⊞ Kreuztabelle</button>`:""}
+      ${mets.length?`<button class="vtab" data-v="chart">▮ Diagramm</button>`:""}
+      ${(yCol&&mets.length)?`<button class="vtab" data-v="trend">📈 Zeitverlauf</button>`:""}
+      ${(yCol&&mets.length>=2&&!geoCol)?`<button class="vtab" data-v="stack">◳ Anteile</button>`:""}
+      ${mets.length>=2?`<button class="vtab" data-v="scatter">✻ Korrelation</button>`:""}
+      ${(geoCol&&yCol&&yList.length>=2)?`<button class="vtab" data-v="slope">⇅ Rangwechsel</button>`:""}
+      ${(geoCol||ptCols)?`<button class="vtab geo" data-v="map">🗺️ Karte</button>`:""}
+      ${(yCol&&(geoCol||mets.length>=2))?`<button class="vtab" data-v="matrix">▦ Matrix</button>`:""}
+      <button class="vtab" data-v="api">⚙ API</button>
+      <span class="stand" style="margin-left:auto;display:flex;gap:7px;align-items:center">${objs.length} Z · ${fields.length} Sp${ptCols?` · Punkte ✓`:geoCol?` · Geo ✓`:""}<button class="exp-btn pin-btn">📌 Anheften</button><button class="exp-btn" data-x="csv">⬇ CSV</button><button class="exp-btn" data-x="json">⬇ JSON</button></span>
+    </div>
+    <div class="cols">${fields.map(f=>`<span class="col">${esc(f.id)}<span class="t ${f.type}">${f.type}</span></span>`).join("")}</div>
+    <div class="vbody"></div>`;
+  host.querySelectorAll(".vtab").forEach(b=>b.onclick=()=>{
+    host.querySelectorAll(".vtab").forEach(x=>x.classList.remove("on"));b.classList.add("on");showView(host,b.dataset.v);});
+  host.querySelectorAll(".exp-btn[data-x]").forEach(b=>b.onclick=()=>exportData(host._d,b.dataset.x));
+  const _pb=host.querySelector(".pin-btn"); if(_pb)_pb.onclick=()=>{pinView(host._d.item,(host.querySelector(".vtab.on")||{}).dataset?.v||"tab");_pb.textContent="✓ Angeheftet";setTimeout(()=>_pb.textContent="📌 Anheften",1200);};
+  showView(host,"tab");
+  if(PENDING_VIEW){const _vt=host.querySelector('.vtab[data-v="'+PENDING_VIEW+'"]'); if(_vt)_vt.click(); PENDING_VIEW=null;}
+}
+
+function yRows(d){return (d.yCol&&d.year&&d.year!=="__all")?d.objs.filter(r=>r[d.yCol]===d.year):d.objs;}
+function yearSelHTML(d,cls){return d.yCol?`<label>Jahr</label><select class="${cls}"><option value="__all">Alle</option>${d.yList.map(y=>`<option ${y===d.year?"selected":""}>${esc(y)}</option>`).join("")}</select>`:"";}
+function stats(v){if(!v.length)return null;const s=[...v].sort((a,b)=>a-b),sum=v.reduce((a,b)=>a+b,0),m=Math.floor(s.length/2);return{n:v.length,min:s[0],max:s[s.length-1],med:s.length%2?s[m]:(s[m-1]+s[m])/2,mean:sum/v.length,sum};}
+function niceTicks(min,max,n){const span=(max-min)||1,step0=span/(n||5),mag=Math.pow(10,Math.floor(Math.log10(step0))),nm=step0/mag;let step=(nm<1.5?1:nm<3?2:nm<7?5:10)*mag;const lo=Math.ceil(min/step)*step,t=[];for(let v=lo;v<=max+step*0.001;v+=step)t.push(v);return t;}
+function centroid(f){const g=f.geometry;let ring;if(g.type==="Polygon")ring=g.coordinates[0];else if(g.type==="MultiPolygon")ring=g.coordinates.map(p=>p[0]).sort((a,b)=>b.length-a.length)[0];else return[8.24,50.08];let x=0,y=0;ring.forEach(c=>{x+=c[0];y+=c[1];});return[x/ring.length,y/ring.length];}
+// Kartografie: Rate/Preis/Index -> Choropleth; rohe Anzahl -> proportionale Symbole
+function isRateMetric(col,objs){let n=(col||"").toLowerCase().split("ä").join("a").split("ö").join("o").split("ü").join("u").split("ß").join("ss");
+  if(/anzahl|insgesamt|bevoelker|frauen|maenner|deutsche|wohnungen|sitze|stimmen|_abs|bestand|fertig|neubau|zahl|stoff|menge/.test(n))return false; // Anzahl zuerst (vor 'wert'/'alter')
+  if(/quote|anteil|_pro|prozent|durchschnitt|kaufkraft|bodenrichtwert|preis|euro|_qm|miete|alter|dichte|index|wert/.test(n))return true;
+  return objs.some(r=>(r[col]||"").includes(","));}
+function exportData(d,kind){const rows=yRows(d),cols=d.fields.map(f=>f.id);let blob,name;
+  if(kind==="json"){blob=new Blob([JSON.stringify(rows,null,2)],{type:"application/json"});name="wiesbaden_export.json";}
+  else{const csv=[cols.join(";")].concat(rows.map(r=>cols.map(c=>{const v=""+(r[c]??"");return /[;"\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}).join(";"))).join("\n");blob=new Blob(["﻿"+csv],{type:"text/csv;charset=utf-8"});name="wiesbaden_export.csv";}
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
+
+function showView(host,v){
+  killMap();   // jede Ansicht: evtl. alte Karte aufräumen
+  const {item,objs,fields,mets,geoCol}=host._d, body=host.querySelector(".vbody");
+  if(v==="tab"){
+    const d=host._d;
+    body.innerHTML=`${d.yCol?`<div class="ctrls">${yearSelHTML(d,"tyear")}</div>`:""}<div class="tbl"><table></table></div>`;
+    const drawT=()=>{const rows=yRows(d);
+      body.querySelector("table").innerHTML=`<tr>${fields.map(f=>`<th>${esc(f.id)}</th>`).join("")}</tr>`+
+        rows.slice(0,60).map(r=>`<tr>${fields.map(f=>`<td class="${f.type==="numeric"?"n":""}">${esc(r[f.id]??"")}</td>`).join("")}</tr>`).join("");};
+    if(d.yCol)body.querySelector(".tyear").addEventListener("change",e=>{d.year=e.target.value;drawT();});
+    drawT();
+  } else if(v==="chart"){
+    const dims=fields.filter(f=>f.type==="text");
+    body.innerHTML=`<div class="ctrls">
+      <label>Achse</label><select class="cdim">${(dims.length?dims:fields).map(f=>`<option>${esc(f.id)}</option>`).join("")}</select>
+      <label>Wert</label><select class="cmet">${mets.map(f=>`<option>${esc(f.id)}</option>`).join("")}</select>
+      <label>Aggregat</label><select class="cagg"><option value="avg">Ø</option><option value="sum">Σ</option></select><span class="stand aggnote" style="color:var(--accent2)"></span>
+      ${yearSelHTML(host._d,"cyear")}
+      </div><div class="kpi"></div><div class="cchart"></div>`;
+    const gd=(dims.find(f=>/name|bezirk/i.test(f.id))||dims[0]);if(gd)body.querySelector(".cdim").value=gd.id;
+    body.querySelector(".cagg").value=/preis|wert|miete|alter|qm|quote|anteil/i.test(mets[0]?.id||"")?"avg":"sum";
+    if(host._d.yCol)body.querySelector(".cyear").addEventListener("change",e=>{host._d.year=e.target.value;});
+    const draw=()=>{
+      const dim=body.querySelector(".cdim").value,met=body.querySelector(".cmet").value,agg=body.querySelector(".cagg").value;
+      const g={};yRows(host._d).forEach(r=>{const k=r[dim]??"—";const x=deNum(r[met]);if(x==null)return;(g[k]=g[k]||[]).push(x);});
+      let arr=Object.entries(g).map(([k,vs])=>({k,v:agg==="avg"?vs.reduce((a,b)=>a+b,0)/vs.length:vs.reduce((a,b)=>a+b,0)}));
+      if(geoCol&&dim===geoCol)arr=arr.filter(a=>matchGeo(a.k));  // Gesamt-/Fremdzeilen raus -> Balken = KPI = Karte
+      const multi=Object.values(g).some(vs=>vs.length>1);body.querySelector(".cagg").disabled=!multi;body.querySelector(".aggnote").textContent=multi?"":"Ø = Σ · 1 Zeile je Kategorie";
+      const st=stats(arr.map(a=>a.v));
+      body.querySelector(".kpi").innerHTML=st?`Anzahl <b>${st.n}</b> · Min <b>${fmt(st.min)}</b> · Median <b>${fmt(st.med)}</b> · Ø <b>${fmt(st.mean)}</b> · Max <b>${fmt(st.max)}</b> · Σ <b>${fmt(st.sum)}</b>`:"";
+      arr.sort((a,b)=>b.v-a.v);arr=arr.slice(0,30);const C=body.querySelector(".cchart");
+      if(!arr.length){C.innerHTML=`<div class="ld">keine numerischen Werte</div>`;return;}
+      const W=560,rh=22,pL=150,pR=56,H=arr.length*rh+10,max=Math.max(...arr.map(d=>d.v))||1,bw=W-pL-pR;
+      let s=`<svg viewBox="0 0 ${W} ${H}">`;
+      arr.forEach((d,i)=>{const y=i*rh+5,w=Math.max(1,(d.v/max)*bw),lb=(""+d.k).length>21?(""+d.k).slice(0,19)+"…":d.k;
+        s+=`<text class="axis" x="${pL-6}" y="${y+11}" text-anchor="end">${esc(lb)}</text><rect class="bar" x="${pL}" y="${y}" width="${w}" height="${rh-8}" rx="3"><title>${esc(""+d.k)}: ${fmt(d.v)}</title></rect><text class="axis" x="${pL+w+5}" y="${y+11}">${fmt(d.v)}</text>`;});
+      C.innerHTML=s+`</svg>`;};
+    body.querySelectorAll("select").forEach(s=>s.addEventListener("change",draw));draw();
+  } else if(v==="trend"){
+    const d=host._d;
+    const years=[...new Set(d.objs.map(r=>r[d.yCol]).filter(Boolean))].sort();
+    const textDim=fields.find(f=>f.type==="text"), dimCol=geoCol||(textDim||{}).id;
+    const catMode=!!dimCol && d.objs.length>years.length*1.2;   // Langformat (Zeile je Kategorie+Jahr) -> Linie je Kategorie; sonst Linie je Spalte
+    const COL=['#1f77b4','#2ca02c','#ff7f0e','#d62728','#9467bd','#17becf','#8c564b','#e377c2','#bcbd22','#7f7f7f'];
+    const W=660,H=320,pL=58,pR=145,pT=12,pB=26,iw=W-pL-pR,ih=H-pT-pB;
+    const Xof=i=>pL+(years.length<=1?iw/2:iw*i/(years.length-1));
+    const drawLines=(C,arr)=>{
+      const all=arr.flatMap(s=>s.pts.filter(v=>v!=null));
+      if(!all.length){C.innerHTML='<div class="ld">keine Auswahl — bitte Spalten wählen</div>';return;}
+      const maxV=Math.max(...all),minV=Math.min(0,...all),Y=v=>pT+ih-ih*(v-minV)/((maxV-minV)||1);
+      const spread=(tg,top,bot,g)=>{const idx=tg.map((y,i)=>i).sort((a,b)=>tg[a]-tg[b]),ly=tg.slice();let pv=-1e9;idx.forEach(i=>{ly[i]=Math.max(tg[i],pv+g);pv=ly[i];});const ov=ly[idx[idx.length-1]]-bot;if(ov>0)idx.forEach(i=>ly[i]-=ov);const un=top-ly[idx[0]];if(un>0)idx.forEach(i=>ly[i]+=un);return ly;};
+      let s=`<svg viewBox="0 0 ${W} ${H}">`;
+      s+=`<line x1="${pL}" y1="${Y(maxV)}" x2="${W-pR}" y2="${Y(maxV)}" stroke="#e3e6ea"/><line x1="${pL}" y1="${Y(minV)}" x2="${W-pR}" y2="${Y(minV)}" stroke="#e3e6ea"/>`;
+      s+=`<text class="axis" x="${pL-6}" y="${Y(maxV)+4}" text-anchor="end">${fmt(maxV)}</text><text class="axis" x="${pL-6}" y="${Y(minV)+4}" text-anchor="end">${fmt(minV)}</text>`;
+      const step=Math.max(1,Math.ceil(years.length/8));
+      years.forEach((y,i)=>{if(i%step===0||i===years.length-1)s+=`<text class="axis" x="${Xof(i)}" y="${H-8}" text-anchor="middle">${esc(y)}</text>`;});
+      const ends=[];
+      arr.forEach(ser=>{
+        const pts=years.map((y,i)=>ser.pts[i]!=null?`${Xof(i)},${Y(ser.pts[i])}`:null).filter(Boolean).join(" ");
+        s+=`<polyline points="${pts}" fill="none" stroke="${ser.color}" stroke-width="1.8"/>`;
+        let li=-1;years.forEach((y,i)=>{if(ser.pts[i]!=null)li=i;});
+        if(li>=0)ends.push({x:Xof(li),y:Y(ser.pts[li]),label:(""+ser.label).slice(0,22),color:ser.color});
+      });
+      const ly=spread(ends.map(e=>e.y),pT+4,pT+ih,12);
+      ends.forEach((e,i)=>{if(Math.abs(ly[i]-e.y)>2)s+=`<line x1="${e.x}" y1="${e.y}" x2="${e.x+5}" y2="${ly[i]}" stroke="${e.color}" stroke-width="0.6" stroke-opacity="0.45"/>`;
+        s+=`<text x="${e.x+6}" y="${ly[i]+3}" style="font-size:10px;fill:${e.color}">${esc(e.label)}</text>`;});
+      C.innerHTML=s+`</svg>`;
+    };
+    if(catMode){
+      body.innerHTML=`<div class="ctrls"><label>Wert</label><select class="tmet">${mets.map(f=>`<option>${esc(f.id)}</option>`).join("")}</select><span class="stand">Verlauf je ${geoCol?"Ortsbezirk":"Kategorie"} · ${years.length} Jahre · Top 10</span></div><div class="cchart"></div>`;
+      const draw=()=>{
+        const met=body.querySelector(".tmet").value,C=body.querySelector(".cchart"),series={};
+        d.objs.forEach(r=>{const k=r[dimCol];if(geoCol&&!matchGeo(k))return;const y=r[d.yCol],val=deNum(r[met]);if(k==null||!y||val==null)return;(series[k]=series[k]||{})[y]=val;});
+        let names=Object.keys(series);const last=years[years.length-1];
+        names.sort((a,b)=>(series[b][last]??-Infinity)-(series[a][last]??-Infinity));names=names.slice(0,10);
+        drawLines(C,names.map((n,i)=>({label:n,color:COL[i%COL.length],pts:years.map(y=>series[n][y]??null)})));
+      };
+      body.querySelector(".tmet").addEventListener("change",draw);draw();
+    } else {
+      const sel=new Set([mets[0]?.id].filter(Boolean));
+      body.innerHTML=`<div class="ctrls" style="display:block"><span class="stand">Spalten zum Vergleichen wählen (mehrere möglich) · ${years.length} Jahre</span><div class="mchips">${mets.map(f=>`<span class="mchip" data-m="${esc(f.id)}">${esc(f.id)}</span>`).join("")}</div></div><div class="cchart"></div>`;
+      const draw=()=>{
+        const C=body.querySelector(".cchart");
+        const arr=[...sel].map((m,i)=>{const byY={};d.objs.forEach(r=>{const y=r[d.yCol],val=deNum(r[m]);if(!y||val==null)return;byY[y]=(byY[y]||0)+val;});return {label:m,color:COL[i%COL.length],pts:years.map(y=>(y in byY)?byY[y]:null)};});
+        drawLines(C,arr);
+        body.querySelectorAll(".mchip").forEach(c=>{const idx=[...sel].indexOf(c.dataset.m),on=idx>=0;c.style.background=on?COL[idx%COL.length]:"";c.style.color=on?"#fff":"";c.style.borderColor=on?COL[idx%COL.length]:"";});
+      };
+      body.querySelectorAll(".mchip").forEach(c=>c.onclick=()=>{const m=c.dataset.m;sel.has(m)?sel.delete(m):sel.add(m);draw();});
+      draw();
+    }
+  } else if(v==="scatter"){
+    const d=host._d, dimCol=geoCol||(fields.find(f=>f.type==="text")||{}).id;
+    const perYear=!geoCol&&!!d.yCol;                 // ohne Geo/Kategorie: ein Punkt je Jahr, alle Jahre nutzen
+    const labelCol=perYear?d.yCol:dimCol;
+    body.innerHTML=`<div class="ctrls"><label>X</label><select class="sx">${mets.map(f=>`<option>${esc(f.id)}</option>`).join("")}</select><label>Y</label><select class="sy">${mets.map(f=>`<option>${esc(f.id)}</option>`).join("")}</select>${perYear?`<span class="stand">Punkt = Jahr · alle Jahre</span>`:yearSelHTML(d,"syear")}<span class="sr"></span></div><div class="cchart"></div>`;
+    if(mets[1])body.querySelector(".sy").value=mets[1].id;
+    if(d.yCol&&!perYear)body.querySelector(".syear").addEventListener("change",e=>{d.year=e.target.value;});
+    const draw=()=>{
+      const xk=body.querySelector(".sx").value,yk=body.querySelector(".sy").value,C=body.querySelector(".cchart"),rows=perYear?d.objs:yRows(d),pts=[];
+      rows.forEach(r=>{if(geoCol&&!matchGeo(r[dimCol]))return;const x=deNum(r[xk]),y=deNum(r[yk]);if(x==null||y==null)return;pts.push({l:r[labelCol],x,y});});
+      if(pts.length<2){C.innerHTML='<div class="ld">zu wenige Punkte</div>';body.querySelector(".sr").textContent="";return;}
+      const xs=pts.map(p=>p.x),ys=pts.map(p=>p.y);
+      const n=pts.length,mx=xs.reduce((a,b)=>a+b,0)/n,my=ys.reduce((a,b)=>a+b,0)/n;let cov=0,vx=0,vy=0;
+      pts.forEach(p=>{cov+=(p.x-mx)*(p.y-my);vx+=(p.x-mx)**2;vy+=(p.y-my)**2;});
+      const r=(vx&&vy)?cov/Math.sqrt(vx*vy):null;
+      body.querySelector(".sr").innerHTML=`Korrelation r = <b>${r==null?"n. v.":r.toFixed(2)}</b>`;
+      let xmin=Math.min(...xs),xmax=Math.max(...xs),ymin=Math.min(...ys),ymax=Math.max(...ys);
+      const xp=((xmax-xmin)||1)*0.06,yp=((ymax-ymin)||1)*0.06;xmin-=xp;xmax+=xp;ymin-=yp;ymax+=yp;
+      const W=640,H=360,pL=66,pR=18,pT=14,pB=46,iw=W-pL-pR,ih=H-pT-pB;
+      const X=v=>pL+iw*(v-xmin)/((xmax-xmin)||1),Y=v=>pT+ih-ih*(v-ymin)/((ymax-ymin)||1);
+      let s=`<svg viewBox="0 0 ${W} ${H}">`;
+      niceTicks(ymin,ymax,5).forEach(t=>{const y=Y(t);if(y<pT-1||y>pT+ih+1)return;s+=`<line x1="${pL}" y1="${y}" x2="${pL+iw}" y2="${y}" stroke="#eceff3"/><text class="axis" x="${pL-7}" y="${y+3}" text-anchor="end">${fmt(t)}</text>`;});
+      niceTicks(xmin,xmax,5).forEach(t=>{const x=X(t);if(x<pL-1||x>pL+iw+1)return;s+=`<line x1="${x}" y1="${pT}" x2="${x}" y2="${pT+ih}" stroke="#eceff3"/><text class="axis" x="${x}" y="${pT+ih+15}" text-anchor="middle">${fmt(t)}</text>`;});
+      s+=`<line x1="${pL}" y1="${pT+ih}" x2="${pL+iw}" y2="${pT+ih}" stroke="#c4cbd4"/><line x1="${pL}" y1="${pT}" x2="${pL}" y2="${pT+ih}" stroke="#c4cbd4"/>`;
+      s+=`<text class="axis" x="${pL+iw/2}" y="${H-8}" text-anchor="middle" font-weight="600">${esc(xk)}</text>`;
+      s+=`<text class="axis" x="15" y="${pT+ih/2}" text-anchor="middle" transform="rotate(-90 15 ${pT+ih/2})" font-weight="600">${esc(yk)}</text>`;
+      pts.forEach(p=>{s+=`<circle cx="${X(p.x)}" cy="${Y(p.y)}" r="5" fill="#2563eb" fill-opacity="0.6" stroke="#fff" stroke-width="0.8"><title>${esc(""+p.l)}: ${esc(xk)}=${fmt(p.x)}, ${esc(yk)}=${fmt(p.y)}</title></circle>`;});
+      C.innerHTML=s+`</svg>`;
+    };
+    body.querySelector(".sx").addEventListener("change",draw);body.querySelector(".sy").addEventListener("change",draw);
+    if(d.yCol&&!perYear)body.querySelector(".syear").addEventListener("change",draw);
+    draw();
+  } else if(v==="stack"){
+    const d=host._d,yc=d.yCol;
+    const years=[...new Set(d.objs.map(r=>r[yc]).filter(Boolean))].sort();
+    const COL=['#1f77b4','#2ca02c','#ff7f0e','#d62728','#9467bd','#17becf','#8c564b','#e377c2','#bcbd22','#7f7f7f','#aec7e8','#98df8a'];
+    let defc=mets.filter(f=>!isRateMetric(f.id,d.objs)).map(f=>f.id);if(!defc.length)defc=mets.map(f=>f.id);
+    const sel=new Set(defc.slice(0,6));
+    body.innerHTML=`<div class="ctrls" style="display:block"><label class="tg" style="display:inline-flex"><input type="checkbox" class="pct"> 100 % (Anteile)</label> <span class="stand">Spalten stapeln — Zusammensetzung über die Zeit</span><div class="mchips">${mets.map(f=>`<span class="mchip" data-m="${esc(f.id)}">${esc(f.id)}</span>`).join("")}</div></div><div class="cchart"></div><div class="legend2"></div>`;
+    const valOf=(y,m)=>{let s=0,a=false;d.objs.forEach(r=>{if(r[yc]!==y)return;const x=deNum(r[m]);if(x!=null){s+=x;a=true;}});return a?s:0;};
+    const draw=()=>{
+      const C=body.querySelector(".cchart"),cols=[...sel],pct=body.querySelector(".pct").checked;
+      body.querySelectorAll(".mchip").forEach(c=>{const idx=cols.indexOf(c.dataset.m),on=idx>=0;c.style.background=on?COL[idx%COL.length]:"";c.style.color=on?"#fff":"";c.style.borderColor=on?COL[idx%COL.length]:"";});
+      if(!cols.length){C.innerHTML='<div class="ld">Spalten wählen</div>';body.querySelector(".legend2").innerHTML="";return;}
+      const W=680,H=320,pL=58,pR=12,pT=12,pB=26,iw=W-pL-pR,ih=H-pT-pB;
+      const X=i=>pL+(years.length<=1?iw/2:iw*i/(years.length-1));
+      const stacks=years.map(y=>{const raw=cols.map(m=>valOf(y,m)),tot=pct?(raw.reduce((a,b)=>a+b,0)||1):1;let cum=0;return raw.map(val=>{const h=pct?val/tot*100:val,lo=cum;cum+=h;return [lo,cum];});});
+      const maxY=pct?100:Math.max(1,...stacks.map(s=>s[s.length-1][1])),Y=val=>pT+ih-ih*val/maxY;
+      let s=`<svg viewBox="0 0 ${W} ${H}">`;
+      s+=`<text class="axis" x="${pL-6}" y="${Y(maxY)+4}" text-anchor="end">${pct?'100%':fmt(maxY)}</text><text class="axis" x="${pL-6}" y="${Y(0)+4}" text-anchor="end">0</text>`;
+      const step=Math.max(1,Math.ceil(years.length/8));
+      years.forEach((y,i)=>{if(i%step===0||i===years.length-1)s+=`<text class="axis" x="${X(i)}" y="${H-8}" text-anchor="middle">${esc(y)}</text>`;});
+      cols.forEach((m,ci)=>{const top=years.map((y,i)=>`${X(i)},${Y(stacks[i][ci][1])}`),bot=years.map((y,i)=>`${X(i)},${Y(stacks[i][ci][0])}`).reverse();s+=`<polygon points="${top.concat(bot).join(" ")}" fill="${COL[ci%COL.length]}" fill-opacity="0.8" stroke="#fff" stroke-width="0.4"/>`;});
+      C.innerHTML=s+`</svg>`;
+      body.querySelector(".legend2").innerHTML=cols.map((m,ci)=>`<span class="lk"><span class="sw" style="background:${COL[ci%COL.length]}"></span>${esc(m)}</span>`).join("");
+    };
+    body.querySelectorAll(".mchip").forEach(c=>c.onclick=()=>{const m=c.dataset.m;sel.has(m)?sel.delete(m):sel.add(m);draw();});
+    body.querySelector(".pct").addEventListener("change",draw);draw();
+  } else if(v==="slope"){
+    const d=host._d,yc=d.yCol;
+    const years=[...new Set(d.objs.map(r=>r[yc]).filter(Boolean))].sort(),y0=years[0],y1=years[years.length-1];
+    body.innerHTML=`<div class="ctrls"><label>Wert</label><select class="slm">${mets.map(f=>`<option>${esc(f.id)}</option>`).join("")}</select><span class="stand">${esc(y0)} → ${esc(y1)} · je Ortsbezirk · <b style="color:#0f9d6e">grün ↑</b> / <b style="color:#d6455d">rot ↓</b></span></div><div class="cchart"></div>`;
+    const vOf=(y,n,met)=>{let s=0,a=false;d.objs.forEach(r=>{if(r[yc]!==y||matchGeo(r[d.geoCol])!==n)return;const x=deNum(r[met]);if(x!=null){s+=x;a=true;}});return a?s:null;};
+    const draw=()=>{
+      const met=body.querySelector(".slm").value,C=body.querySelector(".cchart");
+      const names=[...new Set(d.objs.map(r=>matchGeo(r[d.geoCol])).filter(Boolean))];
+      let rows=names.map(n=>({n,a:vOf(y0,n,met),b:vOf(y1,n,met)})).filter(r=>r.a!=null&&r.b!=null);
+      if(rows.length<2){C.innerHTML='<div class="ld">zu wenig Daten</div>';return;}
+      rows.sort((a,b)=>b.b-a.b);rows=rows.slice(0,16);
+      const all=rows.flatMap(r=>[r.a,r.b]),mn=Math.min(...all),mx=Math.max(...all);
+      const gap=15,W=680,pL=160,pR=160,pT=26,pB=14,ih=Math.max(220,rows.length*gap),H=ih+pT+pB,xa=pL,xb=W-pR,Y=val=>pT+ih-ih*(val-mn)/((mx-mn)||1);
+      const spread=(tg,top,bot)=>{const idx=tg.map((y,i)=>i).sort((a,b)=>tg[a]-tg[b]),ly=tg.slice();let pv=-1e9;idx.forEach(i=>{ly[i]=Math.max(tg[i],pv+gap);pv=ly[i];});const ov=ly[idx[idx.length-1]]-bot;if(ov>0)idx.forEach(i=>ly[i]-=ov);const un=top-ly[idx[0]];if(un>0)idx.forEach(i=>ly[i]+=un);return ly;};
+      const dL=rows.map(r=>Y(r.a)),dR=rows.map(r=>Y(r.b)),lyL=spread(dL,pT+5,pT+ih-1),lyR=spread(dR,pT+5,pT+ih-1);
+      let s=`<svg viewBox="0 0 ${W} ${H}">`;
+      s+=`<text class="axis" x="${xa}" y="15" text-anchor="middle" font-weight="600">${esc(y0)}</text><text class="axis" x="${xb}" y="15" text-anchor="middle" font-weight="600">${esc(y1)}</text>`;
+      s+=`<line x1="${xa}" y1="${pT}" x2="${xa}" y2="${pT+ih}" stroke="#e3e6ea"/><line x1="${xb}" y1="${pT}" x2="${xb}" y2="${pT+ih}" stroke="#e3e6ea"/>`;
+      rows.forEach((r,i)=>{const col=r.b>=r.a?'#0f9d6e':'#d6455d';
+        s+=`<line x1="${xa}" y1="${dL[i]}" x2="${xb}" y2="${dR[i]}" stroke="${col}" stroke-width="1.5" stroke-opacity="0.8"/><circle cx="${xa}" cy="${dL[i]}" r="3" fill="${col}"/><circle cx="${xb}" cy="${dR[i]}" r="3" fill="${col}"/>`;
+        if(Math.abs(lyL[i]-dL[i])>2)s+=`<line x1="${xa}" y1="${dL[i]}" x2="${xa-7}" y2="${lyL[i]}" stroke="${col}" stroke-width="0.6" stroke-opacity="0.4"/>`;
+        if(Math.abs(lyR[i]-dR[i])>2)s+=`<line x1="${xb}" y1="${dR[i]}" x2="${xb+7}" y2="${lyR[i]}" stroke="${col}" stroke-width="0.6" stroke-opacity="0.4"/>`;
+        s+=`<text class="axis" x="${xa-9}" y="${lyL[i]+3}" text-anchor="end">${esc((""+r.n).slice(0,15))} · ${fmt(r.a)}</text><text class="axis" x="${xb+9}" y="${lyR[i]+3}" text-anchor="start">${fmt(r.b)} · ${esc((""+r.n).slice(0,15))}</text>`;});
+      C.innerHTML=s+`</svg>`;
+    };
+    body.querySelector(".slm").addEventListener("change",draw);draw();
+  } else if(v==="matrix"){
+    const d=host._d,yc=d.yCol,geoM=!!d.geoCol;
+    const years=[...new Set(d.objs.map(r=>r[yc]).filter(Boolean))].sort();
+    const RAMP2=['#f7fbff','#c6dbef','#6baed6','#2171b5','#08306b'],colorOf=t=>(t==null||isNaN(t))?'#eceff3':RAMP2[Math.max(0,Math.min(4,Math.floor(t*5-1e-9)))];
+    const rowsDef=geoM?[...new Set(d.objs.map(r=>matchGeo(r[d.geoCol])).filter(Boolean))]:mets.map(f=>f.id);
+    body.innerHTML=`<div class="ctrls">${geoM?`<label>Wert</label><select class="mxm">${mets.map(f=>`<option>${esc(f.id)}</option>`).join("")}</select>`:""}<span class="stand">${geoM?'Ortsbezirk':'Spalte'} × Jahr · Farbe = ${geoM?'Wert':'je Zeile normiert'} · dunkel = hoch</span></div><div class="cchart" style="overflow:auto"></div>`;
+    const cellOf=(row,y,met)=>{let s=0,a=false;d.objs.forEach(r=>{if(r[yc]!==y)return;if(geoM){if(matchGeo(r[d.geoCol])!==row)return;const x=deNum(r[met]);if(x!=null){s+=x;a=true;}}else{const x=deNum(r[row]);if(x!=null){s+=x;a=true;}}});return a?s:null;};
+    const draw=()=>{
+      const met=geoM?body.querySelector(".mxm").value:null,C=body.querySelector(".cchart");
+      let rws=rowsDef.map(row=>({row,vals:years.map(y=>cellOf(row,y,met))}));
+      if(geoM){rws.sort((a,b)=>(b.vals[b.vals.length-1]??-Infinity)-(a.vals[a.vals.length-1]??-Infinity));rws=rws.slice(0,24);
+        const all=rws.flatMap(r=>r.vals).filter(v=>v!=null),mn=Math.min(...all),mx=Math.max(...all);rws.forEach(r=>r.norm=r.vals.map(v=>v==null?null:(mx>mn?(v-mn)/(mx-mn):0.5)));}
+      else rws.forEach(r=>{const vv=r.vals.filter(v=>v!=null),mn=Math.min(...vv),mx=Math.max(...vv);r.norm=r.vals.map(v=>v==null?null:(mx>mn?(v-mn)/(mx-mn):0.5));});
+      const cw=Math.max(11,Math.min(32,Math.floor(420/years.length))),ch=18,pL=190,pT=28,W=pL+cw*years.length+12,H=pT+ch*rws.length+8;
+      const step=Math.max(1,Math.ceil(years.length/12));
+      let s=`<svg viewBox="0 0 ${W} ${H}" style="min-width:${W}px;max-width:none">`;
+      years.forEach((y,i)=>{if(i%step===0||i===years.length-1)s+=`<text class="axis" x="${pL+cw*i+cw/2}" y="${pT-6}" text-anchor="middle">${esc((""+y).slice(-2))}</text>`;});
+      rws.forEach((r,ri)=>{s+=`<text class="axis" x="${pL-6}" y="${pT+ch*ri+ch/2+3}" text-anchor="end">${esc((""+r.row).slice(0,24))}</text>`;r.vals.forEach((val,ci)=>{s+=`<rect x="${pL+cw*ci}" y="${pT+ch*ri}" width="${cw-1}" height="${ch-1}" rx="1" fill="${colorOf(r.norm[ci])}"><title>${esc(""+r.row)} ${esc(years[ci])}: ${val==null?'–':fmt(val)}</title></rect>`;});});
+      C.innerHTML=s+`</svg>`;
+    };
+    if(geoM)body.querySelector(".mxm").addEventListener("change",draw);
+    draw();
+  } else if(v==="pivot"){
+    const d=host._d;
+    const textDims=fields.filter(f=>f.type==="text").map(f=>f.id);
+    const catDims=[...textDims]; if(d.yCol&&!catDims.includes(d.yCol))catDims.push(d.yCol);
+    const metIds=mets.map(f=>f.id);
+    const rowDef=textDims.find(t=>/name|bezirk/i.test(t))||catDims[0];
+    const colDef=catDims.find(c=>c!==rowDef)||"__mets";
+    body.innerHTML=`<div class="ctrls">
+        <label>Zeilen</label><select class="pvrow">${catDims.map(c=>`<option ${c===rowDef?"selected":""}>${esc(c)}</option>`).join("")}</select>
+        <label>Spalten</label><select class="pvcol">${catDims.map(c=>`<option ${c===colDef?"selected":""}>${esc(c)}</option>`).join("")}<option value="__mets" ${colDef==="__mets"?"selected":""}>— Kennzahlen —</option></select>
+        <span class="pvwlbl"><label>Wert</label><select class="pvval">${metIds.map(m=>`<option>${esc(m)}</option>`).join("")}</select></span>
+        <label>Aggregat</label><select class="pvagg"><option value="sum">Σ</option><option value="avg">Ø</option></select>
+        <span class="stand">Zeile × Spalte · Zelle klicken für Details (Herkunft)</span>
+      </div><div class="pvwrap"></div><div class="pvdetail" hidden></div>`;
+    body.querySelector(".pvagg").value=/preis|wert|miete|alter|qm|quote|anteil|dichte|index/i.test(metIds[0]||"")?"avg":"sum";
+    const draw=()=>{
+      let rowDim=body.querySelector(".pvrow").value, colSel=body.querySelector(".pvcol").value;
+      const valc=body.querySelector(".pvval").value, agg=body.querySelector(".pvagg").value;
+      if(colSel===rowDim){colSel=catDims.find(c=>c!==rowDim)||"__mets";body.querySelector(".pvcol").value=colSel;}
+      const metMode=colSel==="__mets";
+      body.querySelector(".pvwlbl").style.display=metMode?"none":"";
+      const agf=a=>a.length?(agg==="avg"?a.reduce((x,y)=>x+y,0)/a.length:a.reduce((x,y)=>x+y,0)):null;
+      const cube={}, rowKeys=[], colSet=new Set();
+      d.objs.forEach(r=>{const rk=r[rowDim];if(rk==null||rk==="")return;if(!cube[rk]){cube[rk]={};rowKeys.push(rk);}
+        if(metMode){metIds.forEach(m=>{const x=deNum(r[m]);if(x!=null){(cube[rk][m]=cube[rk][m]||[]).push(x);}});}
+        else{const ck=r[colSel];if(ck==null||ck==="")return;colSet.add(ck);const x=deNum(r[valc]);if(x!=null){(cube[rk][ck]=cube[rk][ck]||[]).push(x);}}});
+      const colKeys=metMode?metIds:[...colSet].sort();
+      const cell=(rk,ck)=>agf((cube[rk]&&cube[rk][ck])||[]);
+      const rowTot=rk=>agf(colKeys.flatMap(ck=>(cube[rk]&&cube[rk][ck])||[]));
+      const colTot=ck=>agf(rowKeys.flatMap(rk=>(cube[rk]&&cube[rk][ck])||[]));
+      const grand=agf(rowKeys.flatMap(rk=>colKeys.flatMap(ck=>(cube[rk]&&cube[rk][ck])||[])));
+      let h=`<table class="pivtbl"><thead><tr><th class="pvcorner">${esc(rowDim)} \\ ${esc(metMode?"Kennzahl":colSel)}</th>${colKeys.map(ck=>`<th>${esc(ck)}</th>`).join("")}<th class="pvtot">Σ</th></tr></thead><tbody>`;
+      rowKeys.forEach(rk=>{h+=`<tr><th class="pvrowh">${esc(rk)}</th>`;
+        colKeys.forEach(ck=>{const v=cell(rk,ck);h+=`<td class="n pvcell" data-r="${esc(rk)}" data-c="${esc(ck)}" data-v="${v==null?"":v}">${v==null?"·":fmt(v)}</td>`;});
+        const rt=rowTot(rk);h+=`<td class="n pvtot">${rt==null?"·":fmt(rt)}</td></tr>`;});
+      h+=`<tr class="pvtotrow"><th class="pvrowh">Insgesamt</th>${colKeys.map(ck=>{const v=colTot(ck);return `<td class="n">${v==null?"·":fmt(v)}</td>`;}).join("")}<td class="n">${grand==null?"·":fmt(grand)}</td></tr></tbody></table>`;
+      body.querySelector(".pvwrap").innerHTML=`<div class="tbl pvscroll">${h}</div>`;
+      body.querySelectorAll(".pvcell").forEach(td=>td.onclick=()=>{const det=body.querySelector(".pvdetail");det.hidden=false;
+        det.innerHTML=`<button class="pvdx">×</button><div><b>${esc(rowDim)}:</b> ${esc(td.dataset.r)}</div><div><b>${esc(metMode?"Kennzahl":colSel)}:</b> ${esc(td.dataset.c)}</div>${metMode?"":`<div><b>Wert:</b> ${esc(valc)}</div>`}<div><b>${agg==="avg"?"Ø (Durchschnitt)":"Σ (Summe)"}:</b> ${td.dataset.v===""?"keine Daten":fmt(+td.dataset.v)}</div><div><b>Statistik:</b> ${esc(d.item.t)}</div><div style="opacity:.7;font-size:.72rem">Quelle: opendata.cloud.wiesbaden.de · live CSV</div>`;
+        det.querySelector(".pvdx").onclick=()=>det.hidden=true;});
+    };
+    body.querySelectorAll(".pvrow,.pvcol,.pvval,.pvagg").forEach(s=>s.addEventListener("change",draw));
+    draw();
+  } else if(v==="api"){
+    const dd=host._d,geo=dd.geoCol,pt=dd.ptCols,yc=dd.yCol;
+    const views=["Tabelle",dd.mets.length&&"Diagramm",(yc&&dd.mets.length)&&"Zeitverlauf",dd.mets.length>=2&&"Korrelation",(geo||pt)&&"Karte"].filter(Boolean).join(" · ");
+    body.innerHTML=`
+      <div class="aprow"><span class="aptag">CSV dieses Datensatzes</span><span class="apcode">GET <b>${esc(dd.item.csv)}</b></span></div>
+      <div class="apout">→ <code>${dd.objs.length}</code> Zeilen · <code>${dd.fields.length}</code> Spalten · semikolon-getrennt · UTF-8 · deutsche Zahlen (1.234,56)</div>
+      <div class="cols" style="margin-top:10px">${dd.fields.map(f=>`<span class="col">${esc(f.id)}<span class="t ${f.type}">${f.type}</span></span>`).join("")}</div>
+      <div class="apsnip">const res  = await fetch("${esc(dd.item.csv)}");   // CORS offen — kein Key, kein Login
+const text = await res.text();
+const { headers, rows } = parseCSV(text);          // ${dd.objs.length} Zeilen, ${dd.fields.length} Spalten
+// automatisch erkannte Ansichten für DIESEN Datensatz:
+//   ${views}${(geo&&!pt)?`\n//   Karte: Choropleth (Rate) / Symbole (Anzahl), Join über "${esc(geo)}"`:""}${pt?`\n//   Punkt-Karte: Cluster / Heatmap über ${esc(pt.lat)} / ${esc(pt.lng)}`:""}${yc?`\n//   Zeitachse: "${esc(yc)}"`:""}</div>
+      <div class="apout" style="margin-top:8px">Kein Backend · kein Login · kein API-Key — alles direkt im Browser.</div>`;
+  } else if(v==="map"){
+    renderMap(host._d,body);
+  }
+}
+
+// ---- Karte INLINE in .vbody (kein Modal) ---------------------------------
+function renderMap(d,body){ if(d.ptCols) return renderPointMap(d,body); return renderDistrictMap(d,body); }
+function renderDistrictMap(d,body){
+  body.innerHTML=`<div class="ctrls">
+      <label>Wert</label><select class="mmet">${d.mets.map(f=>`<option>${esc(f.id)}</option>`).join("")}</select>
+      <label>Darstellung</label><select class="mviz"><option value="auto">Auto</option><option value="choro">Choropleth</option><option value="symbol">Symbole</option></select>
+      ${yearSelHTML(d,"myear")}
+      <label>Aggregat</label><select class="magg"><option value="avg">Ø</option><option value="sum">Σ</option></select>
+      <label class="tg"><input type="checkbox" class="m3d"> 3D</label>
+      <span class="sr mvinfo"></span>
+    </div>
+    <div class="mapbox"></div>
+    <div class="legend"><span class="lt">—</span><span class="legbar"></span><span class="lhint"></span><span class="lmin">–</span>–<span class="lmax">–</span><span style="margin-left:auto">⬜ keine Daten</span></div>`;
+  body.querySelector(".magg").value=/preis|wert|miete|alter|qm|quote|anteil/i.test(d.mets[0]?.id||"")?"avg":"sum";
+  killMap();
+  CURMAP=new maplibregl.Map({container:body.querySelector(".mapbox"),style:"https://tiles.openfreemap.org/styles/positron",center:[8.305,50.075],zoom:10.3,attributionControl:{compact:true}});
+  CURMAP.addControl(new maplibregl.NavigationControl({visualizePitch:true}),"top-right");
+  const popup=new maplibregl.Popup({closeButton:false,closeOnClick:false,offset:8}),M=CURMAP;
+  const paint=()=>{
+    if(!M.getSource||!M.getSource("bez"))return;
+    const met=body.querySelector(".mmet").value,agg=body.querySelector(".magg").value;
+    const rate=isRateMetric(met,d.objs);let mode=body.querySelector(".mviz").value;
+    if(mode==="auto")mode=rate?"choro":"symbol";
+    const threeD=body.querySelector(".m3d").checked;
+    if(threeD)mode="choro";   // 3D = extrudierte Choroplethen → erzwingt Choropleth, auch bei Anzahl-Daten
+    const by={};yRows(d).forEach(r=>{const g=matchGeo(r[d.geoCol]);if(!g)return;const v=deNum(r[met]);if(v==null)return;(by[g]=by[g]||[]).push(v);});
+    const vals=[];
+    GEO.features.forEach(f=>{const a=by[f.properties.name];if(a&&a.length){f.properties._v=agg==="avg"?a.reduce((x,y)=>x+y,0)/a.length:a.reduce((x,y)=>x+y,0);vals.push(f.properties._v);}else delete f.properties._v;});
+    M.getSource("bez").setData(GEO);
+    let mn=Math.min(...vals),mx=Math.max(...vals);if(!isFinite(mn)){mn=0;mx=1;}if(mn===mx)mx=mn+1;
+    const stops=[];RAMP.forEach((c,i)=>stops.push(mn+(mx-mn)*i/(RAMP.length-1),c));
+    const cexpr=["case",["has","_v"],["interpolate",["linear"],["get","_v"],...stops],"#d9d9d9"];
+    M.setPaintProperty("fill","fill-color",cexpr);M.setPaintProperty("ext","fill-extrusion-color",cexpr);
+    M.setPaintProperty("ext","fill-extrusion-height",["case",["has","_v"],["interpolate",["linear"],["get","_v"],mn,300,mx,6000],0]);
+    // proportionale Symbole: Radius ~ sqrt(Wert) (Fläche ∝ Wert)
+    const smin=Math.sqrt(Math.max(0,mn)),smax=Math.sqrt(Math.max(0,mx))||1;
+    const feats=GEO.features.filter(f=>f.properties._v!=null).map(f=>({type:"Feature",geometry:{type:"Point",coordinates:f.properties._c},
+      properties:{name:f.properties.name,_v:f.properties._v,_r:Math.max(4,6+28*((Math.sqrt(Math.max(0,f.properties._v))-smin)/((smax-smin)||1)))}}));
+    M.getSource("pts").setData({type:"FeatureCollection",features:feats});
+    const vis=(id,on)=>M.setLayoutProperty(id,"visibility",on?"visible":"none");
+    vis("fill",mode==="choro"&&!threeD);vis("ext",mode==="choro"&&threeD);vis("sym",mode==="symbol");
+    M.easeTo({pitch:threeD?52:0,bearing:threeD?-18:0,duration:500});
+    body.querySelector(".lt").textContent=met;body.querySelector(".lmin").textContent=fmt(mn);body.querySelector(".lmax").textContent=fmt(mx);
+    body.querySelector(".legbar").style.display=mode==="symbol"?"none":"inline-block";
+    body.querySelector(".lhint").textContent=mode==="symbol"?" ● Kreisfläche ∝ Wert ":"";
+    body.querySelector(".mvinfo").innerHTML=body.querySelector(".mviz").value==="auto"?`Auto: ${rate?"Rate → <b>Choropleth</b>":"Anzahl → <b>Symbole</b>"}`:"";
+  };
+  M.on("load",()=>{
+    GEO.features.forEach(f=>{if(!f.properties._c)f.properties._c=centroid(f);});
+    M.addSource("bez",{type:"geojson",data:GEO});
+    M.addSource("pts",{type:"geojson",data:{type:"FeatureCollection",features:[]}});
+    M.addLayer({id:"fill",type:"fill",source:"bez",paint:{"fill-color":"#d9d9d9","fill-opacity":.8}});
+    M.addLayer({id:"ext",type:"fill-extrusion",source:"bez",layout:{visibility:"none"},paint:{"fill-extrusion-color":"#d9d9d9","fill-extrusion-height":0,"fill-extrusion-opacity":.9}});
+    M.addLayer({id:"ln",type:"line",source:"bez",paint:{"line-color":"#9aa3b2","line-width":.6}});
+    M.addLayer({id:"sym",type:"circle",source:"pts",layout:{visibility:"none"},paint:{"circle-radius":["get","_r"],"circle-color":"#2563eb","circle-opacity":.68,"circle-stroke-color":"#fff","circle-stroke-width":1}});
+    ["fill","ext"].forEach(L=>{
+      M.on("mousemove",L,e=>{const f=e.features[0],v=f.properties._v;M.getCanvas().style.cursor="pointer";
+        popup.setLngLat(e.lngLat).setHTML(`<b>${f.properties.name}</b><br>${v!=null?fmt(+v):"keine Daten"}`).addTo(M);});
+      M.on("mouseleave",L,()=>{M.getCanvas().style.cursor="";popup.remove();});
+    });
+    M.on("mousemove","sym",e=>{const f=e.features[0];M.getCanvas().style.cursor="pointer";popup.setLngLat(f.geometry.coordinates).setHTML(`<b>${f.properties.name}</b><br>${fmt(+f.properties._v)}`).addTo(M);});
+    M.on("mouseleave","sym",()=>{M.getCanvas().style.cursor="";popup.remove();});
+    M.resize();paint();
+  });
+  ["mmet","mviz","magg"].forEach(c=>body.querySelector("."+c).addEventListener("change",paint));
+  if(d.yCol)body.querySelector(".myear").addEventListener("change",e=>{d.year=e.target.value;paint();});
+  body.querySelector(".m3d").addEventListener("change",paint);
+}
+
+// ---- Punkt-Karte (lat/lng-Daten): Cluster / Heatmap / Punkte -------------
+function renderPointMap(d,body){
+  const wmets=d.fields.filter(f=>f.type==="numeric"&&isMeasure(f.id));
+  body.innerHTML=`<div class="ctrls">
+      <label>Darstellung</label><select class="pviz"><option value="cluster">Cluster</option><option value="heat">Heatmap</option><option value="dots">Punkte</option></select>
+      <label>Gewicht</label><select class="pw"${wmets.length?"":" disabled"}>${wmets.length?wmets.map(f=>`<option>${esc(f.id)}</option>`).join(""):`<option value="">gleich gewichtet</option>`}</select>
+      <span class="sr pinfo"></span>
+    </div>
+    <div class="mapbox"></div>
+    <div class="legend"><span class="lt">Standorte (Punktdaten)</span><span style="margin-left:auto">○ Cluster = Anzahl · Heatmap = Dichte</span></div>`;
+  const wd=wmets.find(f=>/anzahl|ladepunkt|leistung|count/i.test(f.id));if(wd)body.querySelector(".pw").value=wd.id;
+  killMap();
+  CURMAP=new maplibregl.Map({container:body.querySelector(".mapbox"),style:"https://tiles.openfreemap.org/styles/positron",center:[8.24,50.08],zoom:11,attributionControl:{compact:true}});
+  CURMAP.addControl(new maplibregl.NavigationControl(),"top-right");
+  const popup=new maplibregl.Popup({closeButton:false,closeOnClick:false,offset:8}),M=CURMAP;
+  const fc=()=>{const w=body.querySelector(".pw").value,feats=[];
+    d.objs.forEach(r=>{const la=deNum(r[d.ptCols.lat]),lo=deNum(r[d.ptCols.lng]);if(la==null||lo==null||la<46||la>56||lo<4||lo>17)return;
+      feats.push({type:"Feature",geometry:{type:"Point",coordinates:[lo,la]},properties:{w:(w&&deNum(r[w]))||1,name:r["Anzeigename (Karte)"]||r["Standortbezeichnung"]||r["Straße"]||"Standort",op:r["Betreiber"]||"",art:r["Art der Ladeeinrichtung"]||""}});});
+    return {type:"FeatureCollection",features:feats};};
+  const apply=()=>{if(!M.getSource||!M.getSource("cp"))return;
+    M.getSource("cp").setData(fc());
+    const mode=body.querySelector(".pviz").value,vis=(id,on)=>M.getLayer(id)&&M.setLayoutProperty(id,"visibility",on?"visible":"none");
+    vis("clusters",mode==="cluster");vis("unclustered",mode==="dots");vis("heat",mode==="heat");
+    body.querySelector(".pinfo").innerHTML=`<b>${fc().features.length}</b> Standorte`;};
+  M.on("load",()=>{
+    M.addSource("cp",{type:"geojson",data:fc(),cluster:true,clusterRadius:48,clusterMaxZoom:14});
+    M.addLayer({id:"heat",type:"heatmap",source:"cp",layout:{visibility:"none"},paint:{"heatmap-weight":["interpolate",["linear"],["get","w"],0,0.3,10,1],"heatmap-radius":["interpolate",["linear"],["zoom"],10,18,15,42],"heatmap-opacity":0.78,"heatmap-color":["interpolate",["linear"],["heatmap-density"],0,"rgba(255,255,204,0)",0.3,"#a1dab4",0.6,"#41b6c4",0.85,"#2c7fb8",1,"#253494"]}});
+    M.addLayer({id:"clusters",type:"circle",source:"cp",filter:["has","point_count"],paint:{"circle-color":"#2563eb","circle-opacity":.85,"circle-radius":["step",["get","point_count"],13,10,19,50,27],"circle-stroke-color":"#fff","circle-stroke-width":1.5}});
+    M.addLayer({id:"unclustered",type:"circle",source:"cp",layout:{visibility:"none"},filter:["!",["has","point_count"]],paint:{"circle-color":"#2563eb","circle-radius":5,"circle-opacity":.8,"circle-stroke-color":"#fff","circle-stroke-width":1}});
+    M.on("mousemove","clusters",e=>{M.getCanvas().style.cursor="pointer";popup.setLngLat(e.features[0].geometry.coordinates).setHTML(`<b>${e.features[0].properties.point_count}</b> Standorte`).addTo(M);});
+    M.on("mouseleave","clusters",()=>{M.getCanvas().style.cursor="";popup.remove();});
+    M.on("click","clusters",e=>{const f=e.features[0];M.getSource("cp").getClusterExpansionZoom(f.properties.cluster_id).then(z=>M.easeTo({center:f.geometry.coordinates,zoom:z})).catch(()=>{});});
+    M.on("mousemove","unclustered",e=>{const p=e.features[0].properties;M.getCanvas().style.cursor="pointer";popup.setLngLat(e.features[0].geometry.coordinates).setHTML(`<b>${esc(p.name)}</b>${p.op?"<br>"+esc(p.op):""}${p.art?" · "+esc(p.art):""}`).addTo(M);});
+    M.on("mouseleave","unclustered",()=>{M.getCanvas().style.cursor="";popup.remove();});
+    const fs=fc().features;if(fs.length){const b=new maplibregl.LngLatBounds();fs.forEach(f=>b.extend(f.geometry.coordinates));M.fitBounds(b,{padding:40,maxZoom:14});}
+    M.resize();apply();
+  });
+  body.querySelector(".pviz").addEventListener("change",apply);
+  body.querySelector(".pw").addEventListener("change",apply);
+}
+
+// ---- Katalog -------------------------------------------------------------
+function de(x){return(x&&typeof x==="object")?(x.de||x.en||Object.values(x)[0]||""):(x||"");}
+function toItem(r){let csv=null,fmts=new Set();(r.distributions||[]).forEach(d=>{const f=((d.format||{}).id||"").toUpperCase();if(f)fmts.add(f);if(f==="CSV"&&!csv)csv=(d.access_url||[])[0]||d.download_url;});
+  return{t:de(r.title),d:de(r.description),th:de((r.categories||[])[0]?.label),f:[...fmts],m:(r.modified||"").slice(0,10),csv};}
+async function loadCatalog(){
+  try{const r=await fetch(SEARCH+"?filters=dataset&limit=300");const j=await r.json();
+    const items=(j.result?.results||[]).map(toItem).filter(x=>x.csv);
+    if(items.length){console.log("Katalog live:",items.length);return items;}}catch(e){console.warn("live fail",e);}
+  console.log("Katalog Fallback JSON");
+  return await (await fetch("wiesbaden_catalog_explorable.json")).json();
+}
+function filtered(){const q=state.q.toLowerCase();return CAT.filter(o=>(!state.theme||o.th===state.theme)&&(!q||((o.t||"")+" "+(o.d||"")+" "+(o.cols||[]).join(" ")).toLowerCase().includes(q)));}
+function savePins(){try{localStorage.setItem("wbx_pins",JSON.stringify(PINS));}catch(e){}}
+function pinView(item,view){if(!item||!item.csv)return;if(PINS.some(p=>p.csv===item.csv&&p.view===view))return;PINS.push({csv:item.csv,title:item.t,view});savePins();renderDashbar();}
+function renderDashbar(){const bar=$("#dashbar");if(!bar)return;if(!PINS.length){bar.hidden=true;bar.innerHTML="";return;}bar.hidden=false;
+  bar.innerHTML=`<span class="dashlbl">📌 Mein Dashboard</span>`+PINS.map((p,i)=>`<span class="pinchip"><b>${esc((p.title||"").slice(0,30))}</b><span class="pinview">${esc(VIEWLBL[p.view]||p.view)}</span><button data-open="${i}" title="öffnen">▸</button><button data-rm="${i}" title="entfernen">×</button></span>`).join("")+`<button class="pinclear">alle löschen</button>`;
+  bar.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>openPin(PINS[+b.dataset.open]));
+  bar.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{PINS.splice(+b.dataset.rm,1);savePins();renderDashbar();});
+  bar.querySelector(".pinclear").onclick=()=>{PINS=[];savePins();renderDashbar();};}
+function openPin(pin){if(!pin)return;const idx=CAT.findIndex(o=>o.csv===pin.csv);if(idx<0)return;
+  PENDING_VIEW=pin.view;
+  state.q=(pin.title||"").slice(0,24);state.theme="";$("#q").value=state.q;state.n=24;render();
+  setTimeout(()=>{const card=$(`#grid .card[data-i="${idx}"]`);if(!card){PENDING_VIEW=null;return;}card.scrollIntoView({block:"center"});
+    const p=card.nextElementSibling;
+    if(p&&p.classList.contains("exp")){const vt=p.querySelector('.vtab[data-v="'+pin.view+'"]');if(vt)vt.click();PENDING_VIEW=null;}
+    else{card.querySelector('[data-act="erk"]').click();}  // explore() wendet PENDING_VIEW an
+  },160);}
+function render(){
+  const list=filtered(),slice=list.slice(0,state.n);$("#count").textContent=`${list.length} Datensätze`;
+  const q=state.q.toLowerCase();
+  $("#grid").innerHTML=slice.map(o=>{
+    const hc=q?(o.cols||[]).filter(c=>c.toLowerCase().includes(q)):[];
+    const cb=hc.length?`<span class="b" style="background:#fef3c7;color:#92400e" title="Treffer in Spaltenüberschrift">🔎 ${esc(hc.slice(0,3).join(", "))}${hc.length>3?" …":""}</span>`:"";
+    return `<div class="card" data-i="${CAT.indexOf(o)}">
+    <div class="ttl">${esc(o.t)}</div><div class="desc">${esc(o.d||"")}</div>
+    <div class="badges">${o.th?`<span class="b th">${esc(o.th)}</span>`:""}${(o.f||[]).map(f=>`<span class="b f">${esc(f)}</span>`).join("")}${cb}</div>
+    <div class="foot"><span class="stand">${o.m?"Stand: "+o.m:""}</span><button class="erk" data-act="erk">▸ Erkunden</button></div></div>`;
+  }).join("");
+  $("#more").hidden=state.n>=list.length;
+  $("#grid").querySelectorAll('[data-act="erk"]').forEach(btn=>btn.onclick=()=>{
+    const card=btn.closest(".card"),item=CAT[+card.dataset.i];let p=card.nextElementSibling;
+    if(p&&p.classList.contains("exp")){killMap();p.remove();btn.classList.remove("open");btn.textContent="▸ Erkunden";return;}
+    p=document.createElement("div");p.className="exp";card.after(p);btn.classList.add("open");btn.textContent="▾ Schließen";explore(item,p);
+  });
+}
+async function fillApiDemo(total){
+  $("#api-cat").innerHTML=`GET <b>${SEARCH}?filters=dataset&amp;limit=300</b>`;
+  $("#api-cat-out").innerHTML=`→ <code>${total||CAT.length}</code> Datensätze, davon <code>${CAT.length}</code> mit CSV-Distribution (clientseitig gefiltert)`;
+  const s=CAT.find(o=>/bodenrichtwerte/i.test(o.t))||CAT.find(o=>o.csv)||CAT[0]; if(!s)return;
+  $("#api-csv").innerHTML=`GET <b>${esc(s.csv)}</b>`;
+  try{const r=await fetch(s.csv);const t=await r.text();const l0=t.split("\n")[0].replace(/\r$/,"").slice(0,100);
+    $("#api-csv-out").innerHTML=`→ „${esc(s.t.slice(0,38))}…" · <code>${(t.match(/\n/g)||[]).length}</code> Zeilen · Header: <code>${esc(l0)}</code>`;
+  }catch(e){$("#api-csv-out").textContent="(CSV-Beispiel nicht geladen — offline?)";}
+}
+(async function(){
+  GEO=await (await fetch("lagebild_v2_source/wiesbaden_ortsbezirke.geojson")).json();
+  GEO_NORM=GEO.features.map(f=>({name:f.properties.name,n:norm(f.properties.name)}));
+  CAT=await loadCatalog();
+  try{HEADERS=await (await fetch("wiesbaden_headers.json")).json();}catch(e){console.warn("headers fail",e);}
+  CAT.forEach(o=>{o.cols=HEADERS[o.csv]||[];});
+  let total=null;try{total=(await (await fetch(SEARCH+"?filters=dataset&countOnly=true")).json()).result?.count;}catch(e){}
+  $("#portalnote").textContent=total?`Zeigt ${CAT.length} von ${total} Portal-Datensätzen — alle mit CSV-Distribution. Die übrigen ${total-CAT.length} sind Echtzeit-Feeds (XML) / GML und nicht-tabellarisch.`:`${CAT.length} Datensätze mit CSV-Distribution.`;
+  fillApiDemo(total);
+  THEMES=[...new Set(CAT.map(o=>o.th).filter(Boolean))].sort((a,b)=>CAT.filter(o=>o.th===b).length-CAT.filter(o=>o.th===a).length);
+  $("#themes").innerHTML=`<button class="chip on" data-th="">Alle CSV (${CAT.length})</button>`+THEMES.map(t=>`<button class="chip" data-th="${esc(t)}">${esc(t)} (${CAT.filter(o=>o.th===t).length})</button>`).join("");
+  $("#themes").querySelectorAll(".chip").forEach(c=>c.onclick=()=>{$("#themes").querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));c.classList.add("on");state.theme=c.dataset.th;state.n=24;render();});
+  $("#q").addEventListener("input",e=>{state.q=e.target.value;state.n=24;render();});
+  $("#more").onclick=()=>{state.n+=24;render();};
+  render();
+  renderDashbar();
+})();
+</script>
+</body>
+</html>
