@@ -2673,6 +2673,15 @@ document.addEventListener('DOMContentLoaded', () => {
         .map-legend .sw { display: inline-block; width: 18px; height: 10px; }
         .map-legend-min { margin-right: 5px; } .map-legend-max { margin-left: 5px; }
         .map-legend-note { width: 100%; text-align: center; margin-top: 3px; color: #8892A8; }
+        .kpi { break-inside: avoid; }
+        .mein-sub { font-size: 11px; color: #5C6580; margin: 0 0 8px 0; }
+        .mein-id { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8892A8; font-weight: 400; }
+        .mein-delta { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #5C6580; white-space: nowrap; }
+        .mein-kiez { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 18px; margin: 4px 0 8px; break-inside: avoid; }
+        .mein-kiez-row { display: flex; justify-content: space-between; gap: 10px; padding: 5px 0; border-bottom: 1px dotted #E2E5EB; font-size: 11px; break-inside: avoid; }
+        .mein-kiez-k { color: #5C6580; font-weight: 600; }
+        .mein-kiez-v { color: #1B2B4C; text-align: right; font-family: 'JetBrains Mono', monospace; }
+        .mein-note { font-size: 12px; color: #5C6580; font-style: italic; }
       </style>
     `;
 
@@ -2750,6 +2759,103 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const mapBlock = buildSnapshotMap(currentLayer);
 
+    // ----- v2.9: personalized "Mein Ortsbezirk" + "Mein Kiez" -----
+    // Both hang off the district the citizen picked on the dashboard
+    // (localStorage 'wiesbaden_lagebild_my_ortsbezirk', shared by moRender +
+    // renderKiezHeadlines). Recomputed here so the PDF mirrors the screen.
+    // No selection → an honest placeholder note instead of data.
+    function buildMeinBlock() {
+      let moId = '';
+      try { moId = localStorage.getItem('wiesbaden_lagebild_my_ortsbezirk') || ''; } catch (e) {}
+      const o = moId ? (D.ORTSBEZIRKE || []).find(d => d.id === moId) : null;
+      if (!o) {
+        return `
+        <section class="snap-map-block">
+          <h2>Mein Ortsbezirk &amp; Mein Kiez</h2>
+          <p class="mein-note">${t('pdf_mein_none', 'Kein Ortsbezirk gewählt. Im Dashboard unter „Mein Ortsbezirk" einen Bezirk wählen — dann erscheinen hier die persönlichen Kennzahlen und die Kiez-Übersicht.')}</p>
+        </section>`;
+      }
+      // --- Mein Ortsbezirk: KPIs vs Stadt-Durchschnitt (mirrors moRender) ---
+      const avg = moCityAvg();
+      const tu = moTurnoutFor(o);
+      const turnoutCity = moTurnoutAvg();
+      const turnoutMy = tu ? tu.wahlbeteiligung_2026 : null;
+      const fmtInt = v => v == null ? '—' : Number(v).toLocaleString('de-DE');
+      const fmtPct = v => v == null ? '—' : Number(v).toFixed(1) + '%';
+      const fmtAge = v => v == null ? '—' : Number(v).toFixed(1) + ' J.';
+      const fmtRent = v => v == null ? '—' : '€' + Number(v).toFixed(2) + '/m²';
+      const delta = (my, av, unit) => {
+        if (my == null || av == null || av === 0) return '';
+        const diff = my - av;
+        // Mirror moDeltaBadge: integer count deltas (thousands-sep), 1 decimal for rates.
+        const isCount = !unit;
+        const shown = isCount ? Math.sign(diff) * Math.round(Math.abs(diff)) : diff;
+        const sign = shown > 0 ? '+' : (shown < 0 ? '−' : '');
+        const mag = isCount ? Math.abs(shown).toLocaleString('de-DE') : Math.abs(diff).toFixed(1);
+        return `<span class="mein-delta">(${sign}${mag}${unit || ''} ${t('mo_vs', 'vs Stadt')})</span>`;
+      };
+      const card = (label, val, sub, deltaHtml) =>
+        `<div class="kpi"><div class="kpi-label">${label}</div><div class="kpi-val">${val}</div><div class="kpi-meta">${sub || ''}${sub && deltaHtml ? ' ' : ''}${deltaHtml || ''}</div></div>`;
+      const moCards = [
+        card(t('mo_lbl_pop', 'BEVÖLKERUNG'), fmtInt(o.pop), t('mo_sub_pop', 'Einwohner'), delta(o.pop, avg.pop / (D.ORTSBEZIRKE || []).length, '')),
+        card(t('mo_lbl_foreign', 'AUSLÄNDERANTEIL'), fmtPct(o.foreign), '', delta(o.foreign, avg.foreign, ' pp')),
+        card(t('mo_lbl_age', 'Ø ALTER'), fmtAge(o.age), '', delta(o.age, avg.age, ' J.')),
+        o.rent != null ? card(t('mo_lbl_rent', 'KALTMIETE Ø'), fmtRent(o.rent), '', delta(o.rent, avg.rent, '€')) : '',
+        o.charging != null ? card(t('mo_lbl_charging', 'E-LADESÄULEN'), fmtInt(o.charging), t('mo_sub_charging', 'Ladepunkte'), delta(o.charging, avg.charging, '')) : '',
+        o.baustellen != null ? card(t('mo_lbl_baustellen', 'BAUSTELLEN'), fmtInt(o.baustellen), '', delta(o.baustellen, avg.baustellen, '')) : '',
+        turnoutMy != null ? card(t('mo_lbl_turnout', 'WAHLBETEILIGUNG 2026'), fmtPct(turnoutMy), '', delta(turnoutMy, turnoutCity, ' pp')) : ''
+      ].filter(Boolean).join('');
+      // --- Mein Kiez: 6 headlines (mirrors renderKiezHeadlines) ---
+      const kiez = [];
+      if (D.OSM_GASTRONOMIE) {
+        const all = D.OSM_GASTRONOMIE.items || D.OSM_GASTRONOMIE;
+        const list = all.filter(g => g.d === o.name);
+        kiez.push([t('kiez_card_gastro', 'Cafés & Restaurants'),
+          `${list.length} · ${list.filter(x => x.t === 'cafe').length} ${t('kiez_cafe_short', 'Cafés')} · ${list.filter(x => x.t === 'restaurant').length} ${t('kiez_rest_short', 'Restaurants')}`]);
+      }
+      if (D.OSM_PARKING) {
+        const list = D.OSM_PARKING.filter(p => p.d === o.name);
+        kiez.push([t('kiez_card_parking', 'Parken'),
+          `${list.length} · ${list.filter(x => x.f === 'no').length} ${t('kiez_free', 'kostenlos')} · ${list.filter(x => x.f === 'yes').length} ${t('kiez_paid', 'gebührenpflichtig')}`]);
+      }
+      if (D.CPI_TIMELINE) {
+        const eier = D.CPI_TIMELINE.series.find(s => s.id === 'eier');
+        if (eier) {
+          const f = eier.values[0], l = eier.values[eier.values.length - 1];
+          const pct = ((l - f) / f * 100);
+          kiez.push([t('kiez_card_cpi', 'Lebensmittelpreise'),
+            `${eier.icon} ${t('kiez_cpi_eier_label', 'Eier')} ${pct >= 0 ? '+' : ''}${pct.toFixed(1)}% (${t('kiez_cpi_window', '12 Mon.')})`]);
+        }
+      }
+      if (D.ELW_SCHEDULE) {
+        kiez.push([t('kiez_card_elw', 'Müllabfuhr'), `${D.ELW_SCHEDULE.bins.length} ${t('kiez_elw_bins', 'Tonnen · Rhythmen')}`]);
+      }
+      if (D.PKS_2025) {
+        const total = D.PKS_2025.metrics.find(m => m.id === 'total');
+        if (total) {
+          const pct = ((total.value_cur - total.value_prev) / total.value_prev * 100);
+          kiez.push([t('kiez_card_pks', 'Sicherheit'),
+            `${total.value_cur.toLocaleString('de-DE')} · ${pct >= 0 ? '+' : ''}${pct.toFixed(1)}% ${t('kiez_pks_yoy', 'ggü. 2024')}`]);
+        }
+      }
+      if (D.EVENTS_2026) {
+        kiez.push([t('kiez_card_events', 'Events'), `${D.EVENTS_2026.events.length} ${t('kiez_events_count', 'Top-Events 2026')}`]);
+      }
+      const kiezRows = kiez.map(([k, v]) =>
+        `<div class="mein-kiez-row"><span class="mein-kiez-k">${k}</span><span class="mein-kiez-v">${v}</span></div>`).join('');
+      return `
+        <section class="snap-map-block">
+          <h2>Mein Ortsbezirk — ${o.name} <span class="mein-id">Ortsbezirk ${o.id}</span></h2>
+          <div class="mein-sub">${t('mo_compare_note', 'Vergleich mit Stadt-Durchschnitt')}</div>
+          <div class="kpi-grid">${moCards}</div>
+        </section>
+        <section class="snap-map-block">
+          <h2>Mein Kiez — ${o.name}</h2>
+          <div class="mein-kiez">${kiezRows}</div>
+        </section>`;
+    }
+    const meinBlock = buildMeinBlock();
+
     const html = `<!DOCTYPE html><html lang="de"><head>
       <meta charset="utf-8"><title>Wiesbaden-Lagebild · Stand ${today}</title>
       ${css}
@@ -2769,6 +2875,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="badge">${fmtStand(KPI_STAND.air)}</span>
           ${fuel ? `<br>${wbIcon('fuel', 13)} Günstigster Super E10 (Tankerkönig): ${fuel.e10.toFixed(3).replace('.',',')} € · ${fuel.brand} ${fuel.addr || fuel.address || ''}<span class="badge">${fmtStand(KPI_STAND.fuel)}</span>` : ''}
         </div>` : ''}
+
+      ${meinBlock}
 
       <h2>Daten-Stories (${stories.length})</h2>
       ${storyBlock}
@@ -3621,8 +3729,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const pct = (diff / avg) * 100;
     const better = invert ? diff < 0 : diff > 0;
     const color = Math.abs(pct) < 3 ? 'var(--text-tertiary)' : (better ? '#2F855A' : '#B63D3D');
-    const sign = diff > 0 ? '+' : '';
-    return `<span style="color:${color}; font-family: var(--font-mono); font-size:11px; margin-left:6px;">(${sign}${diff.toFixed(unit === '%' ? 1 : 1)}${unit || ''} ${t('mo_vs', 'vs Stadt')})</span>`;
+    // v2.9 — count metrics (no unit, e.g. Bevölkerung/Baustellen/Ladesäulen) show
+    // whole-number deltas with a thousands separator; rate metrics (pp / J. / €)
+    // keep one decimal. Avoids nonsense like "+7841.1 Einwohner".
+    const isCount = !unit;
+    const shown = isCount ? Math.sign(diff) * Math.round(Math.abs(diff)) : diff;
+    const sign = shown > 0 ? '+' : (shown < 0 ? '−' : '');
+    const mag = isCount ? Math.abs(shown).toLocaleString('de-DE') : Math.abs(diff).toFixed(1);
+    return `<span style="color:${color}; font-family: var(--font-mono); font-size:11px; margin-left:6px;">(${sign}${mag}${unit || ''} ${t('mo_vs', 'vs Stadt')})</span>`;
   }
 
   function moCard(label, myVal, formatter, deltaHtml, sublabel) {
