@@ -160,6 +160,14 @@ function t(key) {
   return (I18N[currentLang] && I18N[currentLang][key]) || I18N.de[key] || key;
 }
 
+// v2.9 — pick a source-citation label by active language (sourceLabelEn/Tr/Ua/Kr),
+// falling back to the German sourceLabelDe. Used for STORIES + KPI_DETAILS modals.
+function _slPick(obj) {
+  if (!obj) return '';
+  const suf = ({ de: 'De', en: 'En', tr: 'Tr', ua: 'Ua', kr: 'Kr', ls: 'De' })[currentLang] || 'De';
+  return obj['sourceLabel' + suf] || obj.sourceLabelDe || '';
+}
+
 function applyTranslations() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     el.textContent = t(el.dataset.i18n);
@@ -1059,7 +1067,7 @@ function openStoryModal(index) {
     </div>
   `).join('');
 
-  document.getElementById('story-modal-source-text').textContent = s.sourceLabelDe;
+  document.getElementById('story-modal-source-text').textContent = _slPick(s);
   const link = document.getElementById('story-modal-source-link');
   link.href = s.sourceUrl;
   link.textContent = t('story_modal_view_source');
@@ -1206,7 +1214,7 @@ function openKpiDetail(id) {
     };
   }
 
-  document.getElementById('kpi-detail-source-text').textContent = detail.sourceLabelDe || '';
+  document.getElementById('kpi-detail-source-text').textContent = _slPick(detail);
   const link = document.getElementById('kpi-detail-source-link');
   if (link) {
     link.href = detail.sourceUrl || '#';
@@ -2664,7 +2672,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const title = (D.I18N.de && D.I18N.de[s.titleKey]) || s.titleKey;
       return `<div class="story">
         <div class="story-title">${String(i+1).padStart(2,'0')} · ${title}</div>
-        <div class="story-source">${s.sourceLabelDe || ''}</div>
+        <div class="story-source">${_slPick(s)}</div>
       </div>`;
     }).join('');
 
@@ -4572,7 +4580,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const q = (query || '').trim();
     if (!q) return [];
     const url = `${PIVEAU_BASE}/search?q=${encodeURIComponent(q)}&limit=${limit}&filters=dataset`;
-    const r = await fetch(url, { mode: 'cors' });
+    const r = await fetch(url, { mode: 'cors',
+      signal: AbortSignal.timeout ? AbortSignal.timeout(6000) : undefined });
     if (!r.ok) throw new Error('Piveau search HTTP ' + r.status);
     const json = await r.json();
     const hits = ((json.result || {}).results || []);
@@ -4585,7 +4594,8 @@ document.addEventListener('DOMContentLoaded', () => {
   async function fetchNeuImKatalog(days = 7, limit = 5) {
     const since = new Date(Date.now() - days * 24 * 3600 * 1000).toISOString().slice(0, 10);
     const url = `${PIVEAU_BASE}/search?dateFrom=${since}&filters=dataset&limit=${limit}&sort=modified+desc`;
-    const r = await fetch(url, { mode: 'cors' });
+    const r = await fetch(url, { mode: 'cors',
+      signal: AbortSignal.timeout ? AbortSignal.timeout(6000) : undefined });
     if (!r.ok) throw new Error('Neu-im-Katalog HTTP ' + r.status);
     const json = await r.json();
     return ((json.result || {}).results || []).map(_normalizePiveauHit);
@@ -4623,7 +4633,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (live) {
       try {
         const liveHits = await searchLivePiveau(q, 8);
-        payload = { results: liveHits, mode: 'live' };
+        // Accept live results only when non-empty; a transient empty/flaky
+        // response must fall through to the cache, not blank the assistant.
+        payload = liveHits.length ? { results: liveHits, mode: 'live' } : null;
       } catch (e) {
         // Live probe said yes but the request failed (rate limit? schema?) —
         // fall through to cache and remember the live mode is flaky.
@@ -4639,7 +4651,8 @@ document.addEventListener('DOMContentLoaded', () => {
         mode: 'cache'
       };
     }
-    assistSearchCache[cacheKey] = { payload, ts: Date.now() };
+    // Cache only non-empty results so a transient blank doesn't persist 30 s.
+    if (payload.results.length) assistSearchCache[cacheKey] = { payload, ts: Date.now() };
     return payload;
   }
 
