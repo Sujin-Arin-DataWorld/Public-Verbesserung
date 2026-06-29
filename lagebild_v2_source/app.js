@@ -188,6 +188,8 @@ function applyTranslations() {
   if (citeEl) citeEl.textContent = window.location.href;
   // Update language attribute (LS = German simplified register)
   document.documentElement.lang = currentLang === 'kr' ? 'ko' : (currentLang === 'ls' ? 'de' : currentLang);
+  // v2.9 — localize the browser tab title too
+  try { document.title = t('title') + ' · ' + t('subtitle'); } catch (e) {}
   // Hydrate any pending data-icon placeholders (idempotent)
   if (typeof hydrateIcons === 'function') hydrateIcons();
 }
@@ -227,15 +229,15 @@ function renderTicker() {
   const up = wbIcon('trend-up', 11);
   const dn = wbIcon('trend-down', 11);
   const items = [
-    `<span><strong>Bevölkerung</strong> 300.089 <span class="ticker-up">${up} +1.156</span></span>`,
+    `<span><strong>${t('kpi_population')}</strong> 300.089 <span class="ticker-up">${up} +1.156</span></span>`,
     `<span><strong>AQI Mitte</strong> 42 <span class="ticker-down">${dn} -3</span></span>`,
-    `<span><strong>ÖPNV</strong> 91% pünktlich <span class="ticker-up">${up} +2pp</span></span>`,
-    `<span><strong>Baustellen</strong> 28 aktiv</span>`,
-    `<span><strong>EE-Anteil</strong> 61% <span class="ticker-up">${up} +3pp</span></span>`,
-    `<span><strong>Bürger-Hinweise</strong> 18 offen / 132 erledigt</span>`,
-    `<span><strong>Datensätze</strong> opendata.cloud.wiesbaden.de · Beta</span>`,
-    `<span><strong>Migrationshintergrund</strong> 43,7%</span>`,
-    `<span><strong>Smart City Index</strong> Rang 25/82 (Bitkom 2024)</span>`
+    `<span><strong>${t('kpi_transit')}</strong> 91% <span class="ticker-up">${up} +2pp</span></span>`,
+    `<span><strong>${t('kpi_construction')}</strong> 28</span>`,
+    `<span><strong>${t('kpi_energy')}</strong> 61% <span class="ticker-up">${up} +3pp</span></span>`,
+    `<span><strong>${t('citizen_title')}</strong> 18 ${t('citizen_open')} / 132 ${t('citizen_resolved')}</span>`,
+    `<span><strong>${t('ticker_datasets')}</strong> opendata.cloud.wiesbaden.de · Beta</span>`,
+    `<span><strong>${t('ticker_migration')}</strong> 43,7%</span>`,
+    `<span><strong>Smart City Index</strong> ${t('ticker_rank')} 25/82 (Bitkom 2024)</span>`
   ];
   // duplicate for seamless scroll
   ticker.innerHTML = items.join('') + items.join('');
@@ -2826,6 +2828,9 @@ document.addEventListener('DOMContentLoaded', () => {
           renderEconomy();
           renderCitizenScience();
           renderWohnungsmarkt();
+          try { renderDemokratie(); } catch (e) {}
+          try { renderKiezHeadlines(); } catch (e) {}
+          try { fillMoSelectOptions(); } catch (e) {}
           // Re-render currently open modals
           const curatorModal = document.getElementById('curator-modal');
           if (curatorModal && curatorModal.classList.contains('active')) renderCuratorModal();
@@ -3655,13 +3660,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // v2.9 — re-fillable so the district picker re-localizes on language change
+  // (placeholder + "Ortsbezirk" label), preserving the current selection.
+  function fillMoSelectOptions() {
+    const sel = document.getElementById('mo-select');
+    if (!sel) return;
+    const cur = sel.value;
+    const list = (D.ORTSBEZIRKE || []).slice();
+    sel.innerHTML = `<option value="">— ${t('mo_pick_placeholder', 'Bitte wählen')} —</option>` +
+      list.map(o => `<option value="${o.id}">${o.name} (${t('detail_district', 'Ortsbezirk')} ${o.id})</option>`).join('');
+    if (cur) sel.value = cur;
+  }
+
   function setupMeinOrtsbezirk() {
     const sel = document.getElementById('mo-select');
     const clearBtn = document.getElementById('mo-clear');
     if (!sel) return;
     const list = (D.ORTSBEZIRKE || []).slice();
-    sel.innerHTML = `<option value="">— ${t('mo_pick_placeholder', 'Bitte wählen')} —</option>` +
-      list.map(o => `<option value="${o.id}">${o.name} (Ortsbezirk ${o.id})</option>`).join('');
+    fillMoSelectOptions();
 
     function pick(id) {
       const o = list.find(x => x.id === id);
@@ -4124,7 +4140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const first = eier.values[0], last = eier.values[eier.values.length - 1];
         const pct = ((last - first) / first * 100);
         const sign = pct >= 0 ? '+' : '';
-        chead.textContent = `${eier.icon} ${t('kiez_cpi_eier_label', 'Eier')} ${sign}${pct.toFixed(1)}% (12 Mon.)`;
+        chead.textContent = `${eier.icon} ${t('kiez_cpi_eier_label', 'Eier')} ${sign}${pct.toFixed(1)}% (${t('kiez_cpi_window', '12 Mon.')})`;
       }
     }
     // ELW

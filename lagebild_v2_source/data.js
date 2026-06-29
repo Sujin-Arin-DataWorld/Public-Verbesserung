@@ -312,8 +312,8 @@ const I18N = {
   },
 
   en: {
-    title: "WIESBADEN CITY DASHBOARD",
-    subtitle: "Real-time data of the State Capital",
+    title: "WIESBADEN-LAGEBILD",
+    subtitle: "Real-time data from the state capital",
     liveLabel: "LIVE",
     demo: "Demo data",
 
@@ -333,7 +333,7 @@ const I18N = {
     map_subtitle: "26 districts · Click for details",
     layers: "LAYERS",
     layer_pop: "Population",
-    layer_foreign: "Foreign-born share",
+    layer_foreign: "Foreign nationals",
     layer_construction: "Construction",
     layer_air: "Air quality",
     layer_bike: "Bike paths (km)",
@@ -342,7 +342,7 @@ const I18N = {
 
     detail_district: "District",
     detail_population: "Population",
-    detail_foreign: "Foreign-born",
+    detail_foreign: "Foreign nationals",
     detail_age: "Avg. age",
     detail_construction: "Construction",
     detail_air: "Air quality",
@@ -406,9 +406,9 @@ const I18N = {
     wm_trend_note: "SOURCE",
     wm_trend_source: "City of Wiesbaden: 'Angebotsmieten 2007 bis 2024' — median €/m²/month. 6,000–9,000 listings/year.",
     wm_trend_method: "Method: median across all listings on platforms tracked by the city. Asking rents, not existing tenancies.",
-    wm_matrix_intro: "Mean €/m²/month (net cold rent). Source: Mietspiegel Wiesbaden 2025 — qualified §558d Mietspiegel, 14th edition.",
+    wm_matrix_intro: "Mean €/m²/month (net base rent). Source: Mietspiegel Wiesbaden 2025 — qualified §558d Mietspiegel, 14th edition.",
     wm_matrix_size: "Size:",
-    wm_matrix_aus: "Fixtures:",
+    wm_matrix_aus: "Amenities:",
     wm_matrix_th_baualter: "Built",
     wm_gap_intro: "What the market shows — and what the legal Mietspiegel says.",
     wm_gap_disclaimer: "Important: asking rents ≠ existing rents. Platforms like ImmoScout24 show asking rents (listings); rent increases follow the qualified §558d Mietspiegel. Both numbers matter — for different questions.",
@@ -424,23 +424,23 @@ const I18N = {
   },
 
   tr: {
-    title: "WIESBADEN ŞEHİR PANELİ",
-    subtitle: "Eyalet Başkenti'nin gerçek zamanlı verileri",
+    title: "WIESBADEN DURUM PANOSU",
+    subtitle: "Eyalet başkentinin gerçek zamanlı verileri",
     liveLabel: "CANLI",
-    title_short: "ŞEHİR PANELİ",
+    title_short: "DURUM PANOSU",
     demo: "Demo veriler",
 
-    kpi_air: "Hava Kalitesi",
+    kpi_air: "Hava kalitesi",
     kpi_air_unit: "AQI · PM2.5",
     kpi_air_status: "İyi",
-    kpi_transit: "Toplu Taşıma Dakikliği",
+    kpi_transit: "Toplu taşıma dakikliği",
     kpi_transit_status: "Plan üstünde",
     kpi_construction: "Şantiyeler",
     kpi_construction_status: "şehir genelinde aktif",
     kpi_energy: "Yenilenebilir Enerji",
     kpi_energy_status: "elektrik karışımında",
     kpi_population: "Nüfus",
-    kpi_population_status: "sakin (Ocak 2025)",
+    kpi_population_status: "nüfus (Ocak 2025)",
 
     map_title: "Veri katmanlı şehir haritası",
     map_subtitle: "26 mahalle · Detaylar için tıklayın",
@@ -495,7 +495,7 @@ const I18N = {
     footer_update: "Güncelleme sıklığı",
     footer_about: "Bu pano hakkında",
     footer_dsgvo: "GDPR ve HODaG uyumlu · Kişisel veri yok",
-    footer_credits: "Konsept ve mock-up: Sujin Park · İstatistik ve Kentsel Araştırma Ofisi başvurusu",
+    footer_credits: "Konsept ve mock-up: Sujin Park · Amt für Statistik und Stadtforschung başvurusu",
 
     trend_up: "↑",
     trend_down: "↓",
@@ -506,7 +506,7 @@ const I18N = {
 
   ua: {
     title: "ВІСБАДЕН — МІСЬКА ПАНЕЛЬ",
-    subtitle: "Дані столиці землі в реальному часі",
+    subtitle: "Дані столиці землі Гессен у реальному часі",
     liveLabel: "НАЖИВО",
     title_short: "МІСЬКА ПАНЕЛЬ",
     demo: "Демо-дані",
@@ -514,12 +514,12 @@ const I18N = {
     kpi_air: "Якість повітря",
     kpi_air_unit: "AQI · PM2.5",
     kpi_air_status: "Добра",
-    kpi_transit: "Пунктуальність транспорту",
+    kpi_transit: "Пунктуальність громадського транспорту",
     kpi_transit_status: "Вище плану",
     kpi_construction: "Будмайданчики",
     kpi_construction_status: "активні в місті",
     kpi_energy: "Відновлювана енергія",
-    kpi_energy_status: "в електромережі",
+    kpi_energy_status: "в енергобалансі",
     kpi_population: "Населення",
     kpi_population_status: "мешканців (січ. 2025)",
 
@@ -528,17 +528,17 @@ const I18N = {
     layers: "ШАРИ",
     layer_pop: "Населення",
     layer_foreign: "Частка іноземців",
-    layer_construction: "Будівництво",
+    layer_construction: "Будмайданчики",
     layer_air: "Якість повітря",
     layer_bike: "Велодоріжки (км)",
-    layer_charging: "Зарядки EV",
+    layer_charging: "Зарядні станції EV",
     timeline: "ЧАСОВА ШКАЛА",
 
     detail_district: "Район",
     detail_population: "Населення",
     detail_foreign: "Іноземці",
     detail_age: "Сер. вік",
-    detail_construction: "Будівництво",
+    detail_construction: "Будмайданчики",
     detail_air: "Якість повітря",
     detail_bike: "Велодоріжки",
     detail_close: "Закрити",
@@ -576,7 +576,7 @@ const I18N = {
     footer_update: "Частота оновлення",
     footer_about: "Про панель",
     footer_dsgvo: "Відповідає GDPR та HODaG · Без персональних даних",
-    footer_credits: "Концепт і мок-ап: Суджін Парк · Заявка Управління статистики",
+    footer_credits: "Концепт і мок-ап: Sujin Park · заявка до Управління статистики та міських досліджень",
 
     trend_up: "↑",
     trend_down: "↓",
@@ -1171,7 +1171,7 @@ Object.assign(I18N.de, {
 Object.assign(I18N.kr, {
   curator_button: "KPI 맞춤",
   curator_title: "내 KPI 선택",
-  curator_subtitle: "내 일상에 맞게 Lagebild를 직접 구성하세요",
+  curator_subtitle: "내 일상에 맞게 시 상황판을 직접 구성하세요",
   curator_save: "저장",
   curator_reset: "기본값 복원",
   curator_min: "최소 3개 선택",
@@ -1186,19 +1186,19 @@ Object.assign(I18N.kr, {
   fuel_table_diesel: "디젤",
   fuel_table_updated: "갱신",
   fuel_source: "출처: Tankerkönig MTS-K (연방카르텔청 연료 시장 투명성청)",
-  grocery_disclaimer: "비스바덴 시민이 크라우드소싱 · World Bank/NCBI 2024 검증 (Pearson r=0.94-0.96)",
+  grocery_disclaimer: "비스바덴 시민이 크라우드소싱 · 방법론 검증: World Bank/NCBI 2024 (Pearson r=0,94–0,96)",
   grocery_contributors: "기여자",
   grocery_samples: "이번 주 데이터",
   grocery_change: "전주 대비",
   grocery_join: "참여하기",
-  economy_new: "신규 영업신고 (주간)",
+  economy_new: "신규 사업자 등록 (주간)",
   economy_closed: "폐업 신고 (주간)",
   economy_unemployment: "실업률",
-  economy_jobs: "고용청 공석",
+  economy_jobs: "채용 공고 (고용청)",
   cs_title: "Citizen Science 비스바덴",
-  cs_subtitle: "시민이 측정하고 신고하고 함께 만든다",
-  cs_inspiration: "선례: 시민 2만명, 정책 변화 한 건",
-  cs_inspiration_desc: "CurieuzeNeuzen 플랑드르 2018: Citizen Science가 측정 가능한 행동·정책 변화를 만든다는 것을 입증. 비스바덴이 독일 첫 사례 가능.",
+  cs_subtitle: "시민이 측정하고 신고하고 함께 만듭니다",
+  cs_inspiration: "선례: 시민 2만 명이 만든 하나의 정책 변화",
+  cs_inspiration_desc: "CurieuzeNeuzen 플랑드르 2018은 Citizen Science(시민 과학)가 행동과 도시 정책을 측정 가능하게 바꾼다는 것을 보여줬습니다. 비스바덴이 독일의 첫 적용 사례가 될 수 있습니다.",
   cs_status: "현황",
   cs_participants: "참여자",
   cs_partner: "파트너",
@@ -1213,14 +1213,14 @@ Object.assign(I18N.kr, {
   detail_complaints: "처리 기간",
   ai_link: "AI-Register",
   ai_title: "비스바덴 AI 등록부",
-  ai_subtitle: "시청이 사용하는 모든 알고리즘 — 평이한 언어로. 모델: 헬싱키 AI Register.",
+  ai_subtitle: "시청이 사용하는 모든 알고리즘 — 평이한 언어로. 모델: Helsinki AI Register.",
   ai_purpose: "목적",
   ai_type: "유형",
   ai_risk: "위험도",
   ai_since: "사용 시작",
   meta_link: "사용 통계",
-  meta_title: "어떤 패널이 가장 많이 쓰이나?",
-  meta_subtitle: "daten.berlin.de 모델 투명성 — 실제로 무엇이 중요한지 측정",
+  meta_title: "어떤 패널이 가장 많이 쓰이나요?",
+  meta_subtitle: "daten.berlin.de처럼 투명하게 — 실제로 무엇이 중요한지 측정합니다",
   meta_visits: "월간 방문",
   meta_views: "조회",
   address_placeholder: "주소 입력 (예: Wilhelmstraße 1)",
@@ -1252,7 +1252,7 @@ Object.assign(I18N.en || {}, {
   grocery_contributors: "Contributors",
   grocery_samples: "Data points this week",
   grocery_change: "vs. last week",
-  grocery_join: "+ Join the weekly measurement",
+  grocery_join: "+ Join in",
   grocery_table_header: "Store / Product",
   economy_new: "New business registrations (week)",
   economy_closed: "Deregistrations (week)",
@@ -1276,8 +1276,8 @@ Object.assign(I18N.en || {}, {
   detail_action_report: "Report an issue",
   detail_action_participate: "View participation processes",
   detail_action_data: "Download data",
-  detail_rent: "Avg. cold rent",
-  detail_kita: "Daycare coverage (u3)",
+  detail_rent: "Avg. base rent",
+  detail_kita: "Daycare coverage (under 3)",
   detail_complaints: "Resolution time",
   // AI Register
   ai_link: "AI Register",
@@ -1304,9 +1304,9 @@ Object.assign(I18N.en || {}, {
 });
 
 Object.assign(I18N.tr || {}, {
-  curator_button: "KPI Özelleştir",
+  curator_button: "KPI seç",
   curator_title: "KPI'larını Seç",
-  curator_subtitle: "Günlük hayatına uygun şekilde panoyu kendin oluştur",
+  curator_subtitle: "Panoyu günlük hayatına göre kendin düzenle",
   curator_save: "Kaydet",
   curator_reset: "Varsayılana dön",
   curator_min: "En az 3 KPI seçin",
@@ -1325,44 +1325,44 @@ Object.assign(I18N.tr || {}, {
   grocery_contributors: "Katkı sağlayanlar",
   grocery_samples: "Bu hafta veri noktaları",
   grocery_change: "geçen haftaya göre",
-  grocery_join: "+ Haftalık ölçüme katıl",
+  grocery_join: "Katıl",
   grocery_table_header: "Mağaza / Ürün",
-  economy_new: "Yeni işletme kaydı (hafta)",
-  economy_closed: "Kapanışlar (hafta)",
+  economy_new: "Yeni işletme kaydı (haftalık)",
+  economy_closed: "İşletme kapanışları (haftalık)",
   economy_unemployment: "İşsizlik oranı",
-  economy_jobs: "Açık pozisyonlar (İş Kurumu)",
+  economy_jobs: "Açık pozisyonlar (Agentur für Arbeit)",
   economy_net: "net",
   economy_vs_last: "geçen haftaya göre",
   economy_per_week: "/ hafta",
   cs_title: "Vatandaş Bilimi Wiesbaden",
-  cs_subtitle: "Vatandaşlar ölçüyor, bildiriyor, şehri şekillendiriyor",
+  cs_subtitle: "Vatandaşlar ölçer, bildirir, birlikte şekillendirir",
   cs_inspiration: "Örnek: 20.000 vatandaş, bir politika değişikliği",
-  cs_inspiration_desc: "CurieuzeNeuzen Flaman 2018 gösterdi: Vatandaş Bilimi davranışı ve şehir politikasını ölçülebilir şekilde değiştirir. Wiesbaden Almanya'daki ilk uygulama olabilir.",
+  cs_inspiration_desc: "CurieuzeNeuzen Vlaanderen 2018 şunu gösterdi: Vatandaş Bilimi davranışı ve şehir politikasını ölçülebilir biçimde değiştirir. Wiesbaden, Almanya'daki ilk uygulama örneği olabilir.",
   cs_status: "Durum",
   cs_participants: "katılımcı",
   cs_partner: "Ortak",
   cs_join: "Katıl",
   cs_target: "hedef",
   detail_action_title: "Ne yapabilirim?",
-  detail_action_report: "Sorun bildir",
+  detail_action_report: "Mängel melden (sorun bildir)",
   detail_action_participate: "Katılım süreçlerini görüntüle",
   detail_action_data: "Veriyi indir",
-  detail_rent: "Ort. soğuk kira",
-  detail_kita: "Kreş doluluk (0–3)",
+  detail_rent: "Ort. kira (soğuk)",
+  detail_kita: "Kreş kapasitesi (0–3)",
   detail_complaints: "İşlem süresi",
   ai_link: "AI Register",
   ai_title: "Wiesbaden Yapay Zeka Sicili",
   ai_subtitle: "Şehrin kullandığı her algoritma — sade dille. Model: Helsinki AI Register.",
-  ai_purpose: "Algoritma ve amaç",
+  ai_purpose: "Amaç",
   ai_type: "Tip",
   ai_risk: "Risk",
-  ai_since: "Tarihten beri",
+  ai_since: "Kullanımda",
   ai_risk_niedrig: "düşük",
   ai_risk_mittel: "orta",
   ai_risk_hoch: "yüksek",
   meta_link: "Kullanım İstatistikleri",
   meta_title: "Hangi paneller en çok kullanılıyor?",
-  meta_subtitle: "daten.berlin.de gibi şeffaflık — gerçekten önemli olanı ölçüyoruz",
+  meta_subtitle: "daten.berlin.de'deki gibi şeffaflık — gerçekten önemli olanı ölçüyoruz",
   meta_visits: "Aylık ziyaret",
   meta_views: "görüntüleme",
   address_placeholder: "Adres girin (örn. Wilhelmstraße 1)",
@@ -1387,14 +1387,14 @@ Object.assign(I18N.ua || {}, {
   fuel_table_e10: "Бензин E10",
   fuel_table_diesel: "Дизель",
   fuel_table_updated: "Оновлено",
-  fuel_source: "Джерело: Tankerkönig MTS-K (Федеральне відомство з нагляду за прозорістю ринку пального)",
+  fuel_source: "Джерело: Tankerkönig MTS-K (Markttransparenzstelle für Kraftstoffe — служба прозорості ринку пального, Bundeskartellamt)",
   grocery_disclaimer: "Зібрано громадянами Вісбадена · Метод перевірено: Світовий банк/NCBI 2024 (Pearson r=0,94–0,96)",
   grocery_contributors: "Учасники",
   grocery_samples: "Точок даних цього тижня",
   grocery_change: "порівняно з минулим тижнем",
-  grocery_join: "+ Долучитися до щотижневого вимірювання",
+  grocery_join: "Долучитися",
   grocery_table_header: "Магазин / Продукт",
-  economy_new: "Нові реєстрації бізнесу (тиждень)",
+  economy_new: "Нові реєстрації підприємств (тиждень)",
   economy_closed: "Закриття (тиждень)",
   economy_unemployment: "Рівень безробіття",
   economy_jobs: "Відкриті вакансії (Федеральне агентство з працевлаштування)",
@@ -1402,9 +1402,9 @@ Object.assign(I18N.ua || {}, {
   economy_vs_last: "порівняно з минулим тижнем",
   economy_per_week: "/ тиждень",
   cs_title: "Громадська наука Вісбаден",
-  cs_subtitle: "Громадяни вимірюють, повідомляють і формують місто",
+  cs_subtitle: "Мешканці вимірюють, повідомляють і долучаються",
   cs_inspiration: "Прецедент: 20 000 громадян, одна зміна політики",
-  cs_inspiration_desc: "CurieuzeNeuzen Фландрія 2018 довела: Громадська наука вимірно змінює поведінку та політику міста. Вісбаден може стати першим німецьким містом, що це впровадить.",
+  cs_inspiration_desc: "CurieuzeNeuzen у Фландрії (2018) довів: громадянська наука вимірно змінює поведінку людей і міську політику. Вісбаден може стати першим таким прикладом у Німеччині.",
   cs_status: "Статус",
   cs_participants: "учасників",
   cs_partner: "Партнер",
@@ -1415,15 +1415,15 @@ Object.assign(I18N.ua || {}, {
   detail_action_participate: "Переглянути процеси участі",
   detail_action_data: "Завантажити дані",
   detail_rent: "Середня оренда",
-  detail_kita: "Покриття ясел (0–3)",
+  detail_kita: "Забезпеченість яслами (до 3 р.)",
   detail_complaints: "Час обробки",
   ai_link: "AI Register",
   ai_title: "Реєстр AI Вісбадена",
   ai_subtitle: "Кожен алгоритм, який використовує місто — простою мовою. Модель: Helsinki AI Register.",
-  ai_purpose: "Алгоритм і призначення",
+  ai_purpose: "Призначення",
   ai_type: "Тип",
   ai_risk: "Ризик",
-  ai_since: "З",
+  ai_since: "У використанні з",
   ai_risk_niedrig: "низький",
   ai_risk_mittel: "середній",
   ai_risk_hoch: "високий",
@@ -1456,7 +1456,7 @@ Object.assign(I18N.de, {
 Object.assign(I18N.en, { charging_fast: "Fast charging", charging_normal: "Normal charging", charging_plugs: "plugs" });
 Object.assign(I18N.tr, { charging_fast: "Hızlı şarj", charging_normal: "Normal şarj", charging_plugs: "soket" });
 Object.assign(I18N.ua, { charging_fast: "Швидке заряджання", charging_normal: "Звичайне заряджання", charging_plugs: "роз'ємів" });
-Object.assign(I18N.kr, { charging_fast: "급속 충전", charging_normal: "완속 충전", charging_plugs: "구" });
+Object.assign(I18N.kr, { charging_fast: "급속 충전", charging_normal: "완속 충전", charging_plugs: "충전구" });
 
 // v2.1 — charging "outside city" tooltip label (5 langs)
 Object.assign(I18N.de, { charging_outside: "außerhalb Wiesbadens (ESWE-Versorgungsgebiet)" });
@@ -1477,7 +1477,7 @@ Object.assign(I18N.de, { wm_tab_boden: "Bodenrichtwert 2000–2024", wm_boden_in
 Object.assign(I18N.en, { wm_tab_boden: "Land value 2000–2024", wm_boden_intro: "Land value & real-estate prices 2000–2024 — source: Wiesbaden expert valuation board (Gutachterausschuss).", wm_boden_note_label: "25-YEAR PRICE TREND", wm_boden_note: "Wohnbauland (€/m²): official land value. Apartments, new build, resale: average €/m². Source: expert valuation board reports.", wm_boden_kpi_land: "Land 2024 · €/m²", wm_boden_kpi_apt: "Apartment 2024 · €/m²", wm_boden_kpi_new: "New build 2024 · €/m²", wm_boden_kpi_efh: "Detached house 2024", wm_boden_land: "Land value", wm_boden_apt: "Apartment", wm_boden_resale: "Resale", wm_boden_new: "New build" });
 Object.assign(I18N.tr, { wm_tab_boden: "Arsa değeri 2000–2024", wm_boden_intro: "Arsa değeri ve emlak fiyatları 2000–2024 — kaynak: Wiesbaden Bilirkişi Kurulu.", wm_boden_note_label: "25 YILLIK FİYAT TRENDİ", wm_boden_note: "Konut arsası (€/m²): resmi arsa değeri. Daireler, yeni inşaat, ikinci el: ortalama €/m². Kaynak: Bilirkişi Kurulu raporları.", wm_boden_kpi_land: "Arsa 2024 · €/m²", wm_boden_kpi_apt: "Daire 2024 · €/m²", wm_boden_kpi_new: "Yeni inşaat 2024 · €/m²", wm_boden_kpi_efh: "Müstakil ev 2024", wm_boden_land: "Arsa", wm_boden_apt: "Daire", wm_boden_resale: "İkinci el", wm_boden_new: "Yeni inşaat" });
 Object.assign(I18N.ua, { wm_tab_boden: "Вартість землі 2000–2024", wm_boden_intro: "Вартість землі та нерухомості 2000–2024 — джерело: експертна комісія Вісбадена.", wm_boden_note_label: "25-РІЧНИЙ ТРЕНД", wm_boden_note: "Будівельна земля (€/м²): офіційна вартість. Квартири, новобуди, перепродаж: середні €/м². Джерело: звіти експертної комісії.", wm_boden_kpi_land: "Земля 2024 · €/м²", wm_boden_kpi_apt: "Квартира 2024 · €/м²", wm_boden_kpi_new: "Новобуд 2024 · €/м²", wm_boden_kpi_efh: "Окремий будинок 2024", wm_boden_land: "Земля", wm_boden_apt: "Квартира", wm_boden_resale: "Перепродаж", wm_boden_new: "Новобуд" });
-Object.assign(I18N.kr, { wm_tab_boden: "토지시세 2000–2024", wm_boden_intro: "토지시세 & 부동산 가격 2000–2024 — 출처: 비스바덴 감정평가위원회 (Gutachterausschuss).", wm_boden_note_label: "25년 가격 추이", wm_boden_note: "택지 (€/m²): 공식 토지시세. 자가아파트, 신축, 재판매: 평균 €/m². 출처: 감정평가위 보고서.", wm_boden_kpi_land: "택지 2024 · €/m²", wm_boden_kpi_apt: "자가아파트 2024 · €/m²", wm_boden_kpi_new: "신축 2024 · €/m²", wm_boden_kpi_efh: "단독주택 2024", wm_boden_land: "택지", wm_boden_apt: "자가아파트", wm_boden_resale: "재판매", wm_boden_new: "신축" });
+Object.assign(I18N.kr, { wm_tab_boden: "토지시세 2000–2024", wm_boden_intro: "토지 기준시가 & 부동산 가격 2000–2024 — 출처: 비스바덴 부동산 감정평가위원회(Gutachterausschuss).", wm_boden_note_label: "25년 가격 추이", wm_boden_note: "택지 (€/m²): 공식 토지시세. 자가아파트, 신축, 재판매: 평균 €/m². 출처: 감정평가위 보고서.", wm_boden_kpi_land: "택지 2024 · €/m²", wm_boden_kpi_apt: "자가아파트 2024 · €/m²", wm_boden_kpi_new: "신축 2024 · €/m²", wm_boden_kpi_efh: "단독주택 2024", wm_boden_land: "택지", wm_boden_apt: "자가아파트", wm_boden_resale: "재판매", wm_boden_new: "신축" });
 
 Object.assign(I18N.kr, {
   grocery_table_header: "마트 / 상품",
@@ -1491,12 +1491,12 @@ Object.assign(I18N.kr, {
 
   // v2.1 Wohnungsmarkt
   wm_title: "주택 시장",
-  wm_subtitle: "Mietspiegel §558d (실거주) vs. 호가 (시장) — 둘 다 시청 출처",
+  wm_subtitle: "임대료 기준표(Mietspiegel §558d, 실거주) vs. 호가(시장) — 둘 다 시청 출처",
   wm_tab_trend: "호가 2007–2024",
   wm_tab_matrix: "Mietspiegel 2025 매트릭스",
   wm_tab_gap: "호가 vs 실거주",
   wm_kpi_angebot: "호가 2024 · 중간값 €/m²",
-  wm_kpi_bestand: "Mietspiegel 2025 · 중간값",
+  wm_kpi_bestand: "임대료 기준표(Mietspiegel) 2025 · 중간값",
   wm_kpi_gap: "호가 vs 실거주",
   wm_kpi_trend: "호가 추이 2007→2024",
   wm_chart_median: "중간값 (전체 면적)",
@@ -1504,22 +1504,22 @@ Object.assign(I18N.kr, {
   wm_chart_large: ">100 m² (대형)",
   wm_trend_note: "출처",
   wm_trend_source: "비스바덴 시청: 「Angebotsmieten 2007–2024」 — 월별 €/m² 중간값. 연 6,000–9,000건 매물.",
-  wm_trend_method: "방법론: 시청이 추적하는 플랫폼 매물 전체의 중간값. 호가이지 실거주 임대료 아님.",
-  wm_matrix_intro: "월별 €/m² 평균 (Nettokaltmiete). 출처: Mietspiegel Wiesbaden 2025 — qualifizierter §558d Mietspiegel 14차 개정.",
+  wm_trend_method: "방법론: 시청이 분석하는 플랫폼 매물 전체의 중간값. 실거주(Bestand) 임대료가 아닌 호가입니다.",
+  wm_matrix_intro: "월별 €/m² 평균(순수 기본임대료, Nettokaltmiete). 출처: Mietspiegel Wiesbaden 2025 — 자격 인정 §558d 임대료 기준표, 14차 개정.",
   wm_matrix_size: "면적:",
   wm_matrix_aus: "설비:",
   wm_matrix_th_baualter: "준공년도",
-  wm_gap_intro: "시장이 보여주는 가격 vs 법적 Mietspiegel — 둘 다 의미 있는 다른 숫자.",
-  wm_gap_disclaimer: "중요: 호가 ≠ 실거주 임대료. ImmoScout24 같은 플랫폼은 호가만 보여주지만, 임대료 인상은 qualifizierter §558d Mietspiegel을 따라야 합니다. 두 숫자 모두 필요 — 다른 질문에 답하기 위해.",
+  wm_gap_intro: "시장이 보여주는 가격과 법정 임대료 기준표(Mietspiegel)가 말하는 가격 — 무엇이 다를까요?",
+  wm_gap_disclaimer: "중요: 호가 ≠ 실거주 임대료. ImmoScout24 같은 플랫폼은 호가(매물 가격)를 보여주지만, 임대료 인상은 시의 자격 인정 §558d 임대료 기준표(Mietspiegel)를 따릅니다. 두 값 모두 필요합니다 — 서로 다른 질문에 답하기 때문입니다.",
   wm_gap_vs: "vs Mietspiegel",
   wm_gap_overall: "전체 중간값",
   wm_gap_overall_note: "호가 2024 vs Mietspiegel 중간값",
   wm_gap_typical: "표준 60–100 m²",
-  wm_gap_typical_note: "표준 mittlere Wohnlage, 1975–99",
+  wm_gap_typical_note: "중간 입지(mittlere Wohnlage) 표준, 1975–99",
   wm_gap_small: "소형 <40 m²",
   wm_gap_small_note: "최고 프리미엄 — 학생 시장",
   wm_gap_first: "신축 입주",
-  wm_gap_first_note: "신축, gut Wohnlage"
+  wm_gap_first_note: "신축, 양호한 입지(gute Wohnlage)"
 });
 
 // Charging stations — Stadt Wiesbaden Open Data
@@ -1560,9 +1560,9 @@ const ANGEBOTSMIETEN_TIMELINE = [{"jahr": 2024, "anzahl_der_angebotenen_mietwohn
 // v2.1 — Fuel UX (PLZ search, mock badge, citizen CTA, modal) — 5 langs
 Object.assign(I18N.de, { fuel_mock_badge: "MOCK · WARTET AUF TANKERKÖNIG-API-KEY", fuel_mock_note: "Koordinaten + Marken: OpenStreetMap (live). Preise: anker-basiertes Mock.", fuel_live_badge: "LIVE · TANKERKÖNIG MTS-K", fuel_live_note: "Koordinaten, Marken & Preise: Bundeskartellamt MTS-K via Tankerkönig — CC BY 4.0. Cache 5 min.", fuel_cache_badge: "CACHE · TANKERKÖNIG MTS-K", fuel_cache_note: "Letzter erfolgreicher Fetch — Live-API derzeit nicht erreichbar.", fuel_snapshot_badge: "SNAPSHOT · TANKERKÖNIG MTS-K", fuel_snapshot_note: "Build-time-Snapshot. Runtime-Refresh läuft im Hintergrund.", fuel_plz_ph: "65183", fuel_plz_btn: "Standort setzen", fuel_plz_invalid: "5-stellige PLZ eingeben", fuel_plz_loading: "Suche…", fuel_plz_notfound: "PLZ nicht gefunden", fuel_top3_near: "GÜNSTIGSTE 3 IN DEINER NÄHE · SUPER E10", fuel_detail_label: "TANKSTELLE", fuel_detail_hint: "Klicke einen Pin oder eine Top-3-Karte, um Details zu sehen.", fuel_detail_tip: "PLZ eingeben für Entfernungs-Sortierung.", fuel_updated: "Aktualisiert", fuel_from_you: "von dir", fuel_citizen_seen: "BÜRGER MELDUNGEN", fuel_citizen_recent: "LETZTE BÜRGER-MELDUNGEN", fuel_cta_title: "Hast du heute einen anderen Preis gesehen?", fuel_cta_desc: "Bürger als Sensoren — melde live, wir zeigen es anonym im Dashboard.", fuel_cta_btn: "+ Preis melden", fuel_table_toggle: "▸ ALLE {n} TANKSTELLEN (TABELLE)", fuel_modal_title: "Preis melden", fuel_modal_subtitle: "Anonym, DSGVO-konform, lokal gespeichert (kein Server, kein Tracking).", fuel_modal_station: "Welche Tankstelle?", fuel_modal_fuel: "Spritsorte", fuel_modal_price: "Preis (€/Liter)", fuel_modal_send: "Senden", fuel_thanks: "✓ Danke! Deine Meldung wurde anonym gespeichert." });
 Object.assign(I18N.en, { fuel_mock_badge: "MOCK · WAITING FOR TANKERKÖNIG API KEY", fuel_mock_note: "Coordinates + brands: OpenStreetMap (live). Prices: anchor-based mock.", fuel_live_badge: "LIVE · TANKERKÖNIG MTS-K", fuel_live_note: "Coordinates, brands & prices: Bundeskartellamt MTS-K via Tankerkönig — CC BY 4.0. 5-min cache.", fuel_cache_badge: "CACHED · TANKERKÖNIG MTS-K", fuel_cache_note: "Last successful fetch — live API currently unreachable.", fuel_snapshot_badge: "SNAPSHOT · TANKERKÖNIG MTS-K", fuel_snapshot_note: "Build-time snapshot. Runtime refresh in progress.", fuel_plz_ph: "65183", fuel_plz_btn: "Set location", fuel_plz_invalid: "Enter a 5-digit postcode", fuel_plz_loading: "Searching…", fuel_plz_notfound: "Postcode not found", fuel_top3_near: "CHEAPEST 3 NEAR YOU · SUPER E10", fuel_detail_label: "STATION", fuel_detail_hint: "Click a pin or a top-3 card to see details.", fuel_detail_tip: "Enter a postcode to sort by distance.", fuel_updated: "Updated", fuel_from_you: "from you", fuel_citizen_seen: "CITIZEN REPORTS", fuel_citizen_recent: "RECENT CITIZEN REPORTS", fuel_cta_title: "Saw a different price today?", fuel_cta_desc: "Citizens as sensors — report live, we show it anonymously on the dashboard.", fuel_cta_btn: "+ Report price", fuel_table_toggle: "▸ ALL {n} STATIONS (TABLE)", fuel_modal_title: "Report a price", fuel_modal_subtitle: "Anonymous, GDPR-compliant, stored locally (no server, no tracking).", fuel_modal_station: "Which station?", fuel_modal_fuel: "Fuel type", fuel_modal_price: "Price (€/liter)", fuel_modal_send: "Submit", fuel_thanks: "✓ Thanks! Your report was saved anonymously." });
-Object.assign(I18N.tr, { fuel_mock_badge: "MOCK · TANKERKÖNIG API ANAHTARI BEKLENİYOR", fuel_mock_note: "Koordinatlar + markalar: OpenStreetMap (canlı). Fiyatlar: çapa-tabanlı mock.", fuel_live_badge: "CANLI · TANKERKÖNIG MTS-K", fuel_live_note: "Koordinat, marka ve fiyat: Bundeskartellamt MTS-K via Tankerkönig — CC BY 4.0. 5 dk önbellek.", fuel_cache_badge: "ÖNBELLEK · TANKERKÖNIG MTS-K", fuel_cache_note: "Son başarılı çekim — canlı API şu an erişilemez.", fuel_snapshot_badge: "SNAPSHOT · TANKERKÖNIG MTS-K", fuel_snapshot_note: "Build-time snapshot. Runtime yenileme devam ediyor.", fuel_plz_ph: "65183", fuel_plz_btn: "Konum belirle", fuel_plz_invalid: "5 haneli posta kodu girin", fuel_plz_loading: "Aranıyor…", fuel_plz_notfound: "Posta kodu bulunamadı", fuel_top3_near: "YAKININDAKİ EN UCUZ 3 · SUPER E10", fuel_detail_label: "İSTASYON", fuel_detail_hint: "Detay için bir pin veya top-3 kartına tıkla.", fuel_detail_tip: "Mesafeye göre sıralamak için posta kodu gir.", fuel_updated: "Güncellendi", fuel_from_you: "senden", fuel_citizen_seen: "VATANDAŞ BİLDİRİMLERİ", fuel_citizen_recent: "SON VATANDAŞ BİLDİRİMLERİ", fuel_cta_title: "Bugün farklı bir fiyat gördün mü?", fuel_cta_desc: "Sensör olarak vatandaşlar — canlı bildir, panoda anonim gösteririz.", fuel_cta_btn: "+ Fiyat bildir", fuel_table_toggle: "▸ TÜM {n} İSTASYON (TABLO)", fuel_modal_title: "Fiyat bildir", fuel_modal_subtitle: "Anonim, KVKK uyumlu, yerel saklanır (sunucu yok, izleme yok).", fuel_modal_station: "Hangi istasyon?", fuel_modal_fuel: "Yakıt türü", fuel_modal_price: "Fiyat (€/litre)", fuel_modal_send: "Gönder", fuel_thanks: "✓ Teşekkürler! Bildirimin anonim olarak kaydedildi." });
+Object.assign(I18N.tr, { fuel_mock_badge: "MOCK · TANKERKÖNIG API ANAHTARI BEKLENİYOR", fuel_mock_note: "Koordinatlar + markalar: OpenStreetMap (canlı). Fiyatlar: referans-tabanlı örnek (mock).", fuel_live_badge: "CANLI · TANKERKÖNIG MTS-K", fuel_live_note: "Koordinat, marka ve fiyat: Bundeskartellamt MTS-K via Tankerkönig — CC BY 4.0. 5 dk önbellek.", fuel_cache_badge: "ÖNBELLEK · TANKERKÖNIG MTS-K", fuel_cache_note: "Son başarılı çekim — canlı API şu an erişilemez.", fuel_snapshot_badge: "ANLIK GÖRÜNTÜ · TANKERKÖNIG MTS-K", fuel_snapshot_note: "Derleme anındaki görüntü. Çalışma anı yenilemesi arka planda sürüyor.", fuel_plz_ph: "65183", fuel_plz_btn: "Konum belirle", fuel_plz_invalid: "5 haneli posta kodu girin", fuel_plz_loading: "Aranıyor…", fuel_plz_notfound: "Posta kodu bulunamadı", fuel_top3_near: "YAKININDAKİ EN UCUZ 3 · SUPER E10", fuel_detail_label: "İSTASYON", fuel_detail_hint: "Detay için bir pin veya top-3 kartına tıkla.", fuel_detail_tip: "Mesafeye göre sıralamak için posta kodu gir.", fuel_updated: "Güncellendi", fuel_from_you: "senden", fuel_citizen_seen: "VATANDAŞ BİLDİRİMLERİ", fuel_citizen_recent: "SON VATANDAŞ BİLDİRİMLERİ", fuel_cta_title: "Bugün farklı bir fiyat gördün mü?", fuel_cta_desc: "Sensör olarak vatandaşlar — canlı bildir, panoda anonim gösteririz.", fuel_cta_btn: "+ Fiyat bildir", fuel_table_toggle: "▸ TÜM {n} İSTASYON (TABLO)", fuel_modal_title: "Fiyat bildir", fuel_modal_subtitle: "Anonim, KVKK uyumlu, yerel saklanır (sunucu yok, izleme yok).", fuel_modal_station: "Hangi istasyon?", fuel_modal_fuel: "Yakıt türü", fuel_modal_price: "Fiyat (€/litre)", fuel_modal_send: "Gönder", fuel_thanks: "✓ Teşekkürler! Bildirimin anonim olarak kaydedildi." });
 Object.assign(I18N.ua, { fuel_mock_badge: "MOCK · ОЧІКУЄ КЛЮЧ TANKERKÖNIG API", fuel_mock_note: "Координати + бренди: OpenStreetMap (живі). Ціни: mock на основі прив'язки.", fuel_live_badge: "НАЖИВО · TANKERKÖNIG MTS-K", fuel_live_note: "Координати, бренди й ціни: Bundeskartellamt MTS-K via Tankerkönig — CC BY 4.0. Кеш 5 хв.", fuel_cache_badge: "КЕШ · TANKERKÖNIG MTS-K", fuel_cache_note: "Останнє успішне завантаження — live API наразі недоступний.", fuel_snapshot_badge: "SNAPSHOT · TANKERKÖNIG MTS-K", fuel_snapshot_note: "Build-time snapshot. Оновлення в фоні.", fuel_plz_ph: "65183", fuel_plz_btn: "Встановити локацію", fuel_plz_invalid: "Введіть 5-значний індекс", fuel_plz_loading: "Пошук…", fuel_plz_notfound: "Індекс не знайдено", fuel_top3_near: "НАЙДЕШЕВШІ 3 ПОБЛИЗУ · SUPER E10", fuel_detail_label: "ЗАПРАВКА", fuel_detail_hint: "Натисніть мітку або картку топ-3, щоб побачити деталі.", fuel_detail_tip: "Введіть індекс для сортування за відстанню.", fuel_updated: "Оновлено", fuel_from_you: "від вас", fuel_citizen_seen: "ЗВІТИ ГРОМАДЯН", fuel_citizen_recent: "ОСТАННІ ЗВІТИ ГРОМАДЯН", fuel_cta_title: "Бачили сьогодні іншу ціну?", fuel_cta_desc: "Громадяни як сенсори — повідомте, ми покажемо анонімно.", fuel_cta_btn: "+ Повідомити ціну", fuel_table_toggle: "▸ ВСІ {n} ЗАПРАВКИ (ТАБЛИЦЯ)", fuel_modal_title: "Повідомити ціну", fuel_modal_subtitle: "Анонімно, відповідно до GDPR, зберігається локально (без сервера, без трекінгу).", fuel_modal_station: "Яка заправка?", fuel_modal_fuel: "Тип палива", fuel_modal_price: "Ціна (€/літр)", fuel_modal_send: "Надіслати", fuel_thanks: "✓ Дякуємо! Ваш звіт збережено анонімно." });
-Object.assign(I18N.kr, { fuel_mock_badge: "MOCK · TANKERKÖNIG API 키 대기 중", fuel_mock_note: "좌표 + 브랜드: OpenStreetMap (라이브). 가격: anchor 기반 mock.", fuel_live_badge: "라이브 · TANKERKÖNIG MTS-K", fuel_live_note: "좌표·브랜드·가격: Bundeskartellamt MTS-K via Tankerkönig — CC BY 4.0. 5분 캐시.", fuel_cache_badge: "캐시 · TANKERKÖNIG MTS-K", fuel_cache_note: "마지막 성공 fetch — 라이브 API 현재 접속 불가.", fuel_snapshot_badge: "스냅샷 · TANKERKÖNIG MTS-K", fuel_snapshot_note: "빌드타임 스냅샷. 백그라운드에서 라이브 새로고침 중.", fuel_plz_ph: "65183", fuel_plz_btn: "위치 설정", fuel_plz_invalid: "5자리 우편번호 입력", fuel_plz_loading: "검색 중…", fuel_plz_notfound: "우편번호 못 찾음", fuel_top3_near: "내 주변 가장 저렴한 3곳 · SUPER E10", fuel_detail_label: "주유소", fuel_detail_hint: "지도 핀 또는 Top-3 카드를 클릭하면 상세가 나와요.", fuel_detail_tip: "우편번호 입력하면 거리순 정렬.", fuel_updated: "업데이트", fuel_from_you: "당신 위치에서", fuel_citizen_seen: "시민 제보", fuel_citizen_recent: "최근 시민 제보", fuel_cta_title: "오늘 다른 가격 봤어요?", fuel_cta_desc: "시민이 센서 — 제보하면 익명으로 대시보드에 표시.", fuel_cta_btn: "+ 가격 제보", fuel_table_toggle: "▸ 전체 {n}개 주유소 (표)", fuel_modal_title: "가격 제보", fuel_modal_subtitle: "익명, GDPR/DSGVO 준수, 로컬 저장 (서버 없음, 추적 없음).", fuel_modal_station: "어느 주유소?", fuel_modal_fuel: "연료 종류", fuel_modal_price: "가격 (€/리터)", fuel_modal_send: "보내기", fuel_thanks: "✓ 감사합니다! 제보는 익명으로 저장됐어요." });
+Object.assign(I18N.kr, { fuel_mock_badge: "MOCK · TANKERKÖNIG API 키 대기 중", fuel_mock_note: "좌표 + 브랜드: OpenStreetMap (라이브). 가격: anchor 기반 mock.", fuel_live_badge: "라이브 · TANKERKÖNIG MTS-K", fuel_live_note: "좌표·브랜드·가격: Bundeskartellamt MTS-K via Tankerkönig — CC BY 4.0. 5분 캐시.", fuel_cache_badge: "캐시 · TANKERKÖNIG MTS-K", fuel_cache_note: "마지막 성공 fetch — 라이브 API 현재 접속 불가.", fuel_snapshot_badge: "스냅샷 · TANKERKÖNIG MTS-K", fuel_snapshot_note: "빌드타임 스냅샷. 백그라운드에서 라이브 새로고침 중.", fuel_plz_ph: "65183", fuel_plz_btn: "위치 설정", fuel_plz_invalid: "5자리 우편번호 입력", fuel_plz_loading: "검색 중…", fuel_plz_notfound: "우편번호를 찾을 수 없음", fuel_top3_near: "내 주변 가장 저렴한 3곳 · SUPER E10", fuel_detail_label: "주유소", fuel_detail_hint: "지도 핀 또는 Top-3 카드를 클릭하면 상세 정보가 표시됩니다.", fuel_detail_tip: "우편번호 입력하면 거리순 정렬.", fuel_updated: "업데이트", fuel_from_you: "현재 위치에서", fuel_citizen_seen: "시민 제보", fuel_citizen_recent: "최근 시민 제보", fuel_cta_title: "오늘 다른 가격을 보셨나요?", fuel_cta_desc: "시민이 곧 센서입니다 — 제보하시면 익명으로 대시보드에 반영됩니다.", fuel_cta_btn: "+ 가격 제보", fuel_table_toggle: "▸ 전체 {n}개 주유소 (표)", fuel_modal_title: "가격 제보", fuel_modal_subtitle: "익명, GDPR/DSGVO 준수, 로컬 저장 (서버 없음, 추적 없음).", fuel_modal_station: "어느 주유소?", fuel_modal_fuel: "연료 종류", fuel_modal_price: "가격 (€/리터)", fuel_modal_send: "보내기", fuel_thanks: "✓ 감사합니다! 제보가 익명으로 저장되었습니다." });
 
 // 2026 Kommunalwahl turnout, 26 Ortsbezirke (incl. comparison vs 2021)
 // Source: opendata.cloud.wiesbaden.de · Amt für Statistik · CC BY 4.0
@@ -1578,13 +1578,13 @@ Object.assign(I18N.kr, { nav_home: "한눈에", nav_alltag: "일상", nav_wohnen
 // v2.1 — Phase E (Mängelmelder modal + Mitmachen view) — 5 langs
 Object.assign(I18N.de, { modal_type_trash: "Müll / illegale Ablagerung", modal_type_vandal: "Vandalismus", modal_type_green: "Grünfläche / Baum", modal_type_bike: "Radinfrastruktur", modal_use_gps: "GPS", modal_route_intro: "Wir können deinen Hinweis auf zwei Wegen weiterleiten:", modal_route_1: "1. Mängelmelder Hessen", modal_route_1_desc: "— offizielles, hessenweites System (sicherheitsportal.hessen.de). Empfohlen.", modal_route_2: "2. E-Mail an die Stadtverwaltung", modal_route_2_desc: "— öffnet dein Mail-Programm mit vorausgefülltem Text. Fallback ohne Account.", modal_send_mail: "📧 Per E-Mail", modal_send_official: "→ An Mängelmelder Hessen", modal_validate: "Bitte Ort oder Beschreibung angeben.", modal_official_ok: "✓ Mängelmelder Hessen geöffnet · Text in der Zwischenablage. Ref: ", modal_mail_ok: "✓ E-Mail vorbereitet · Ref: ", modal_gps_loading: "Standort wird ermittelt…", modal_gps_unsupported: "GPS nicht verfügbar in diesem Browser.", modal_gps_denied: "Standort verweigert oder Fehler: ", modal_gps_no_addr: "(Adresse nicht aufgelöst)", mm_title: "Mitmachen — Wiesbaden gestalten", mm_subtitle: "6 konkrete Wege, wie deine Beobachtung in städtische Daten und Entscheidungen einfließt.", mm_melden_title: "Mängel melden", mm_melden_desc: "Schlagloch, defekte Beleuchtung, illegale Müllablagerung — direkt an die zuständige Stelle. Hessen-weiter Mängelmelder oder per E-Mail an die Stadtverwaltung.", mm_melden_btn: "+ Hinweis senden", mm_melden_history: "DEINE LETZTEN MELDUNGEN", mm_data_title: "Datenwunsch äußern", mm_data_desc: "Welche städtischen Daten fehlen dir? Stimme ab — die Top 3 gehen ans Open-Data-Team.", mm_data_btn: "▾ Vorschläge ansehen", mm_data_heading: "Welche Daten fehlen dir?", mm_data_intro: "Klicke ↑/↓ um zu unterstützen. Die Top 3 schicken wir ans Open-Data-Team. (Lokal gespeichert, anonym.)", mm_data_note: "Nur Vorschläge zu Datensätzen, die heute nicht im Katalog sind.", mm_fuel_title: "Spritpreis melden", mm_fuel_desc: "Andere Preise gesehen als im Dashboard? Anonym melden, lokal gespeichert.", mm_fuel_btn: "→ Zu Tankstellen wechseln", mm_cs_title: "Citizen Science", mm_cs_desc: "3 laufende Bürger-Messprojekte. CurieuzeNeuzen-Vorbild, EU Citizen Science Prize 2023.", mm_cs_btn: "↓ Zu den Projekten" });
 Object.assign(I18N.en, { modal_type_trash: "Trash / illegal dumping", modal_type_vandal: "Vandalism", modal_type_green: "Green space / tree", modal_type_bike: "Bicycle infrastructure", modal_use_gps: "GPS", modal_route_intro: "We can forward your report two ways:", modal_route_1: "1. Mängelmelder Hessen", modal_route_1_desc: "— official Hesse-wide system (sicherheitsportal.hessen.de). Recommended.", modal_route_2: "2. Email to city administration", modal_route_2_desc: "— opens your mail client with prefilled text. Fallback, no account needed.", modal_send_mail: "📧 Send by mail", modal_send_official: "→ To Mängelmelder Hessen", modal_validate: "Please add a location or description.", modal_official_ok: "✓ Mängelmelder Hessen opened · Text copied to clipboard. Ref: ", modal_mail_ok: "✓ Email prepared · Ref: ", modal_gps_loading: "Locating…", modal_gps_unsupported: "GPS not available in this browser.", modal_gps_denied: "Location denied or error: ", modal_gps_no_addr: "(address not resolved)", mm_title: "Get involved — shape Wiesbaden", mm_subtitle: "6 concrete ways your observations feed into city data and decisions.", mm_melden_title: "Report an issue", mm_melden_desc: "Pothole, broken light, illegal dumping — straight to the right authority. Hesse-wide Mängelmelder or email to the city.", mm_melden_btn: "+ Send a report", mm_melden_history: "YOUR RECENT REPORTS", mm_data_title: "Request data", mm_data_desc: "What city data is missing? Vote — the top 3 go to the open-data team.", mm_data_btn: "▾ See proposals", mm_data_heading: "What data do you wish existed?", mm_data_intro: "Click ↑/↓ to support. We send the top 3 to the open-data team. (Local, anonymous.)", mm_data_note: "Only proposals for datasets not currently in the catalog.", mm_fuel_title: "Report a fuel price", mm_fuel_desc: "Saw a different price than the dashboard? Submit anonymously, stored locally.", mm_fuel_btn: "→ Go to fuel stations", mm_cs_title: "Citizen Science", mm_cs_desc: "3 ongoing citizen-led measurement projects. CurieuzeNeuzen model, EU Citizen Science Prize 2023.", mm_cs_btn: "↓ See projects" });
-Object.assign(I18N.tr, { modal_type_trash: "Çöp / yasadışı atık", modal_type_vandal: "Vandalizm", modal_type_green: "Yeşil alan / ağaç", modal_type_bike: "Bisiklet altyapısı", modal_use_gps: "GPS", modal_route_intro: "Bildirimini iki yolla iletebiliriz:", modal_route_1: "1. Mängelmelder Hessen", modal_route_1_desc: "— resmi, eyalet çapında sistem (sicherheitsportal.hessen.de). Tavsiye edilir.", modal_route_2: "2. Belediyeye e-posta", modal_route_2_desc: "— posta programını önceden doldurulmuş metinle açar. Hesap gerekmez.", modal_send_mail: "📧 E-posta ile", modal_send_official: "→ Mängelmelder Hessen'e", modal_validate: "Lütfen konum veya açıklama ekleyin.", modal_official_ok: "✓ Mängelmelder Hessen açıldı · Metin panoya kopyalandı. Ref: ", modal_mail_ok: "✓ E-posta hazır · Ref: ", modal_gps_loading: "Konum belirleniyor…", modal_gps_unsupported: "Bu tarayıcıda GPS yok.", modal_gps_denied: "Konum reddedildi veya hata: ", modal_gps_no_addr: "(adres çözümlenmedi)", mm_title: "Katıl — Wiesbaden'i şekillendir", mm_subtitle: "6 somut yol — gözlemlerin şehir verilerine ve kararlarına nasıl yansıyor.", mm_melden_title: "Sorun bildir", mm_melden_desc: "Çukur, bozuk lamba, yasadışı atık — doğrudan yetkiliye. Eyalet sistemi veya belediyeye e-posta.", mm_melden_btn: "+ Bildirim gönder", mm_melden_history: "SON BİLDİRİMLERİN", mm_data_title: "Veri talep et", mm_data_desc: "Hangi şehir verileri eksik? Oyla — top 3 açık veri ekibine gider.", mm_data_btn: "▾ Önerileri gör", mm_data_heading: "Hangi veri olsun isterdin?", mm_data_intro: "Desteklemek için ↑/↓ tıkla. Top 3'ü açık veri ekibine gönderiyoruz. (Yerel, anonim.)", mm_data_note: "Yalnızca katalogda olmayan datasetler için öneriler.", mm_fuel_title: "Yakıt fiyatı bildir", mm_fuel_desc: "Farklı fiyat gördün mü? Anonim olarak gönder, yerel saklanır.", mm_fuel_btn: "→ Yakıt istasyonlarına git", mm_cs_title: "Vatandaş Bilimi", mm_cs_desc: "3 devam eden vatandaş ölçüm projesi. CurieuzeNeuzen modeli, AB Citizen Science Ödülü 2023.", mm_cs_btn: "↓ Projelere git" });
-Object.assign(I18N.ua, { modal_type_trash: "Сміття / нелегальне звалище", modal_type_vandal: "Вандалізм", modal_type_green: "Зелена зона / дерево", modal_type_bike: "Велоінфраструктура", modal_use_gps: "GPS", modal_route_intro: "Ми можемо передати ваше повідомлення двома шляхами:", modal_route_1: "1. Mängelmelder Hessen", modal_route_1_desc: "— офіційна система Гессену (sicherheitsportal.hessen.de). Рекомендовано.", modal_route_2: "2. Електронна пошта до міської адміністрації", modal_route_2_desc: "— відкриє ваш поштовий клієнт із готовим текстом. Резервний варіант.", modal_send_mail: "📧 Електронною поштою", modal_send_official: "→ До Mängelmelder Hessen", modal_validate: "Будь ласка, додайте місце або опис.", modal_official_ok: "✓ Mängelmelder Hessen відкрито · Текст скопійовано в буфер обміну. Ref: ", modal_mail_ok: "✓ Електронну пошту підготовлено · Ref: ", modal_gps_loading: "Визначення місцезнаходження…", modal_gps_unsupported: "GPS недоступний у цьому браузері.", modal_gps_denied: "Доступ до геолокації відхилено або помилка: ", modal_gps_no_addr: "(адреса не визначена)", mm_title: "Долучайся — формуй Вісбаден", mm_subtitle: "6 конкретних способів, як ваше спостереження впливає на дані та рішення міста.", mm_melden_title: "Повідомити проблему", mm_melden_desc: "Яма, зламаний ліхтар, нелегальне сміття — прямо до відповідального органу. Система Гессену або e-mail.", mm_melden_btn: "+ Надіслати повідомлення", mm_melden_history: "ВАШІ ОСТАННІ ЗВІТИ", mm_data_title: "Запит на дані", mm_data_desc: "Яких даних бракує? Голосуйте — топ 3 надсилаємо команді відкритих даних.", mm_data_btn: "▾ Дивитися пропозиції", mm_data_heading: "Яких даних ви бажаєте?", mm_data_intro: "Натискайте ↑/↓ для підтримки. Топ 3 ми надсилаємо команді. (Локально, анонімно.)", mm_data_note: "Лише пропозиції щодо датасетів, яких немає в каталозі.", mm_fuel_title: "Повідомити ціну палива", mm_fuel_desc: "Бачили іншу ціну? Надішліть анонімно, зберігається локально.", mm_fuel_btn: "→ До заправок", mm_cs_title: "Громадянська наука", mm_cs_desc: "3 поточні громадські вимірювальні проєкти. Модель CurieuzeNeuzen, премія EU Citizen Science 2023.", mm_cs_btn: "↓ До проєктів" });
+Object.assign(I18N.tr, { modal_type_trash: "Çöp / yasadışı atık", modal_type_vandal: "Vandalizm", modal_type_green: "Yeşil alan / ağaç", modal_type_bike: "Bisiklet altyapısı", modal_use_gps: "GPS", modal_route_intro: "Bildirimini iki yolla iletebiliriz:", modal_route_1: "1. Mängelmelder Hessen", modal_route_1_desc: "— resmi, eyalet çapında sistem (sicherheitsportal.hessen.de). Tavsiye edilir.", modal_route_2: "2. Belediyeye e-posta", modal_route_2_desc: "— posta programını önceden doldurulmuş metinle açar. Hesap gerekmez.", modal_send_mail: "📧 E-posta ile", modal_send_official: "→ Mängelmelder Hessen'e", modal_validate: "Lütfen konum veya açıklama ekleyin.", modal_official_ok: "✓ Mängelmelder Hessen açıldı · Metin panoya kopyalandı. Ref: ", modal_mail_ok: "✓ E-posta hazır · Ref: ", modal_gps_loading: "Konum belirleniyor…", modal_gps_unsupported: "Bu tarayıcıda GPS yok.", modal_gps_denied: "Konum reddedildi veya hata: ", modal_gps_no_addr: "(adres çözümlenmedi)", mm_title: "Katıl — Wiesbaden'i şekillendir", mm_subtitle: "6 somut yol — gözlemlerin şehir verilerine ve kararlarına nasıl yansıyor.", mm_melden_title: "Sorun bildir", mm_melden_desc: "Çukur, bozuk aydınlatma, yasadışı çöp dökümü — doğrudan yetkili birime. Eyalet çapındaki Mängelmelder Hessen üzerinden veya belediyeye e-posta ile.", mm_melden_btn: "+ Bildirim gönder", mm_melden_history: "SON BİLDİRİMLERİN", mm_data_title: "Veri talep et", mm_data_desc: "Hangi şehir verileri eksik? Oyla — top 3 açık veri ekibine gider.", mm_data_btn: "▾ Önerileri gör", mm_data_heading: "Hangi veri olsun isterdin?", mm_data_intro: "Desteklemek için ↑/↓ tıkla. Top 3'ü açık veri ekibine gönderiyoruz. (Yerel, anonim.)", mm_data_note: "Yalnızca katalogda olmayan datasetler için öneriler.", mm_fuel_title: "Yakıt fiyatı bildir", mm_fuel_desc: "Farklı fiyat gördün mü? Anonim olarak gönder, yerel saklanır.", mm_fuel_btn: "→ Yakıt istasyonlarına git", mm_cs_title: "Vatandaş Bilimi", mm_cs_desc: "3 devam eden vatandaş ölçüm projesi. CurieuzeNeuzen modeli, AB Citizen Science Ödülü 2023.", mm_cs_btn: "↓ Projelere git" });
+Object.assign(I18N.ua, { modal_type_trash: "Сміття / нелегальне звалище", modal_type_vandal: "Вандалізм", modal_type_green: "Зелена зона / дерево", modal_type_bike: "Велоінфраструктура", modal_use_gps: "GPS", modal_route_intro: "Ми можемо передати ваше повідомлення двома шляхами:", modal_route_1: "1. Mängelmelder Hessen", modal_route_1_desc: "— офіційна система Гессену (sicherheitsportal.hessen.de). Рекомендовано.", modal_route_2: "2. Електронна пошта до міської адміністрації", modal_route_2_desc: "— відкриє ваш поштовий клієнт із готовим текстом. Резервний варіант.", modal_send_mail: "📧 Електронною поштою", modal_send_official: "→ До Mängelmelder Hessen", modal_validate: "Будь ласка, додайте місце або опис.", modal_official_ok: "✓ Mängelmelder Hessen відкрито · Текст скопійовано в буфер обміну. Ref: ", modal_mail_ok: "✓ Електронну пошту підготовлено · Ref: ", modal_gps_loading: "Визначення місцезнаходження…", modal_gps_unsupported: "GPS недоступний у цьому браузері.", modal_gps_denied: "Доступ до геолокації відхилено або помилка: ", modal_gps_no_addr: "(адреса не визначена)", mm_title: "Долучайся — формуй Вісбаден", mm_subtitle: "6 конкретних способів, як ваше спостереження потрапляє в міські дані та рішення.", mm_melden_title: "Повідомити проблему", mm_melden_desc: "Яма, зламаний ліхтар, нелегальне звалище сміття — напряму до відповідального органу. Загальногессенський Mängelmelder або електронною поштою до міської адміністрації.", mm_melden_btn: "+ Надіслати повідомлення", mm_melden_history: "ВАШІ ОСТАННІ ЗВІТИ", mm_data_title: "Запит на дані", mm_data_desc: "Яких даних бракує? Голосуйте — топ 3 надсилаємо команді відкритих даних.", mm_data_btn: "▾ Дивитися пропозиції", mm_data_heading: "Яких даних ви бажаєте?", mm_data_intro: "Натискайте ↑/↓ для підтримки. Топ 3 ми надсилаємо команді. (Локально, анонімно.)", mm_data_note: "Лише пропозиції щодо наборів даних, яких сьогодні немає в каталозі.", mm_fuel_title: "Повідомити ціну палива", mm_fuel_desc: "Бачили іншу ціну? Надішліть анонімно, зберігається локально.", mm_fuel_btn: "→ До заправок", mm_cs_title: "Громадянська наука", mm_cs_desc: "3 поточні громадські вимірювальні проєкти. Модель CurieuzeNeuzen, премія EU Citizen Science 2023.", mm_cs_btn: "↓ До проєктів" });
 // v2.7 — Mein-Bezirk Story-Filter labels (audit §6.5 wiring)
 Object.assign(I18N.de, { mo_stories_about: "Daten-Stories über", mo_stories_citywide: "Stadt-weite Stories (auch hier relevant)" });
 Object.assign(I18N.en, { mo_stories_about: "Data stories about",  mo_stories_citywide: "Citywide stories (also relevant here)" });
 Object.assign(I18N.tr, { mo_stories_about: "Veri öyküleri:",      mo_stories_citywide: "Şehir geneli öyküler (burada da geçerli)" });
-Object.assign(I18N.ua, { mo_stories_about: "Історії про",         mo_stories_citywide: "Загальноміські історії (актуально й тут)" });
+Object.assign(I18N.ua, { mo_stories_about: "Історії даних про",         mo_stories_citywide: "Загальноміські історії (актуально й тут)" });
 Object.assign(I18N.kr, { mo_stories_about: "데이터 스토리:",       mo_stories_citywide: "시 전체 스토리 (여기에도 해당)" });
 
 // v2.7 — i18n parity fix: 33 Wohnungsmarkt + Kiez keys missing in TR/UA, plus minor EN/KR
@@ -1620,9 +1620,9 @@ Object.assign(I18N.tr, {
   wm_gap_small_note:      "En yüksek prim — öğrenci pazarı",
   wm_gap_first:           "İlk taşınma (yeni)",
   wm_gap_first_note:      "Yeni yapı, iyi konum",
-  kiez_gastro_note:       "Kaynak: OpenStreetMap, topluluk tarafından sürdürülür. Yeni mekanların görünmesi günler ila haftalar alır; çok eskileri hâlâ listede olabilir.",
+  kiez_gastro_note:       "Kaynak: OpenStreetMap, topluluk tarafından sürdürülür. Yeni mekanların eklenmesi günler ila haftalar alır. ODbL.",
   kiez_park_type_street_side: "Yol kenarı",
-  kiez_park_type_lane:    "Şerit"
+  kiez_park_type_lane:    "Park şeridi"
 });
 Object.assign(I18N.ua, {
   wm_title:               "Ринок житла",
@@ -1653,19 +1653,19 @@ Object.assign(I18N.ua, {
   wm_gap_typical_note:    "Стандарт, середня локація, 1975–99",
   wm_gap_small:           "Мала квартира <40 м²",
   wm_gap_small_note:      "Найбільша надбавка — студентський ринок",
-  wm_gap_first:           "Перше заселення (нове)",
+  wm_gap_first:           "Перше заселення (новобуд)",
   wm_gap_first_note:      "Нова забудова, гарне розташування",
-  kiez_gastro_note:       "Джерело: OpenStreetMap, спільнотою підтримується. Поява нових закладів займає дні–тижні; дуже старі ще можуть бути в списку.",
+  kiez_gastro_note:       "Джерело: OpenStreetMap, ведеться спільнотою. Нові заклади з'являються в базі за дні–тижні. ODbL.",
   kiez_park_type_street_side: "Узбіччя",
   kiez_park_type_lane:    "Смуга"
 });
 Object.assign(I18N.en, {
   title_short:            "LAGEBILD",
-  kiez_gastro_note:       "Source: OpenStreetMap, community-maintained. New venues take days to weeks to appear; very old ones may still be listed.",
+  kiez_gastro_note:       "Source: OpenStreetMap, community-maintained (ODbL). New venues take days to weeks to appear.",
   kiez_park_type_lane:    "Lane"
 });
 Object.assign(I18N.kr, {
-  kiez_gastro_note:       "출처: OpenStreetMap, 커뮤니티가 관리. 신규 매장은 등록까지 며칠~몇 주 걸리고, 오래된 매장이 남아있을 수도 있어요.",
+  kiez_gastro_note:       "출처: OpenStreetMap, 커뮤니티가 관리합니다. 신규 매장은 등록까지 며칠에서 몇 주가 걸립니다. ODbL.",
   kiez_park_type_street_side: "도로변",
   kiez_park_type_lane:    "차선"
 });
@@ -1753,7 +1753,7 @@ Object.assign(I18N.de, {
   onb_reopen:   "ⓘ Wie funktioniert das?"
 });
 Object.assign(I18N.en, {
-  onb_title:    "Welcome to the Wiesbaden situation board",
+  onb_title:    "Welcome to Wiesbaden-Lagebild",
   onb_subtitle: "In 30 seconds we'll show you how to get the most out of it.",
   onb_step1_h:  "1. Data for your district",
   onb_step1_b:  "Pick \"My district\" at the top. KPIs, stories and action suggestions will be filtered to that district.",
@@ -1792,17 +1792,17 @@ Object.assign(I18N.ua, {
   onb_reopen:   "ⓘ Як це працює?"
 });
 Object.assign(I18N.kr, {
-  onb_title:    "Wiesbaden-Lagebild에 오신 것을 환영합니다",
-  onb_subtitle: "30초 안에 가장 잘 사용하는 법을 알려드릴게요.",
+  onb_title:    "비스바덴 시 상황판에 오신 것을 환영합니다",
+  onb_subtitle: "30초 안에 가장 잘 활용하는 법을 알려드립니다.",
   onb_step1_h:  "1. 우리 동네 데이터",
-  onb_step1_b:  "상단 \"우리 동네\"를 선택. KPI·스토리·추천 행동이 그 동네 기준으로 필터링됩니다.",
+  onb_step1_b:  "상단에서 \"우리 동네\"를 선택하세요. KPI·스토리·추천 행동이 해당 동네 기준으로 필터링됩니다.",
   onb_step2_h:  "2. 동네별 구체적 행동",
-  onb_step2_b:  "지도에서 동네 클릭. 행동 박스에 맞춤 CTA 1~3개 표시 (어린이집 예약, 우편투표, 주거자격증명서 등).",
+  onb_step2_b:  "지도에서 동네를 클릭하세요. 행동 박스에 맞춤 행동 1~3개가 표시됩니다 (어린이집 예약, 우편투표, 주거자격증명서 등).",
   onb_step3_h:  "3. 언어 + LS 모드",
   onb_step3_b:  "우측 상단: 5개 언어 + 쉬운 독일어(LS). 모든 데이터를 사용자 언어로.",
-  onb_citizen:  "빠진 게 있나요? \"참여\" 탭에서 신고 또는 데이터 요청을 보내주세요 — 익명, GDPR 준수.",
+  onb_citizen:  "빠진 게 있나요? \"참여\" 탭에서 신고나 데이터 요청을 보내주세요 — 모두 익명이며 DSGVO를 준수합니다.",
   onb_start:    "시작하기",
-  onb_reopen:   "ⓘ 사용법?"
+  onb_reopen:   "ⓘ 사용법 보기"
 });
 
 // v2.8 — Story 7 (Haushalt) + Story 9 (Pendler) titles, findings, chart labels
@@ -1846,9 +1846,9 @@ Object.assign(I18N.tr, {
   story7_fact1: "Toplam 1,41 milyar €",
   story7_fact2: "Sosyal 530 milyon €",
   story7_fact3: "İlk 10 alan",
-  story9: "Komütasyon başkenti: Wiesbaden'e her gün 110.000 kişi geliyor",
-  story9_finding: "Wiesbaden bir komüt şehridir: 110.000 sosyal sigortalı çalışan günlük olarak çevre belediyelerden buraya geliyor, sadece 50.000 Wiesbadenli dışarı çıkıyor — net giriş +60.000. En büyük kaynak Mainz (24.000), sonra Frankfurt (12.000). Şehir içi ulaşımda otomobil hâlâ %56 ile baskın; toplu taşıma ve bisiklet birlikte ancak %32'ye ulaşıyor.",
-  story9_chart_ds: "Wiesbaden modal-split 2023 (%)",
+  story9: "İşe gidiş-geliş başkenti: Wiesbaden'e her gün 110.000 kişi geliyor",
+  story9_finding: "Wiesbaden bir işe gidiş-geliş şehridir: 110.000 sosyal sigortalı çalışan her gün çevre belediyelerden buraya geliyor, sadece 50.000 Wiesbadenli ters yönde dışarı gidiyor — net giriş +60.000. En büyük kaynak Mainz (24.000), ardından Frankfurt (12.000). Şehir içi ulaşımda otomobil hâlâ %56 ile baskın; toplu taşıma ve bisiklet birlikte ancak %32'ye ulaşıyor.",
+  story9_chart_ds: "Wiesbaden ulaşım türü dağılımı 2023 (%)",
   story9_chart_y: "% tüm yolculuklar",
   story9_fact1: "110.000 gelen",
   story9_fact2: "+60.000 net",
@@ -1860,7 +1860,7 @@ Object.assign(I18N.ua, {
   story7_chart_ds: "Витрати 2025 (млн €)",
   story7_chart_y: "млн €",
   story7_fact1: "Всього 1,41 млрд €",
-  story7_fact2: "530 млн € соц.",
+  story7_fact2: "530 млн € на соц.",
   story7_fact3: "Топ-10 сфер",
   story9: "Столиця маятника: 110 000 людей щодня їдуть у Вісбаден на роботу",
   story9_finding: "Вісбаден — місто маятникових мігрантів: 110 000 застрахованих працівників щодня приїжджають сюди з прилеглих муніципалітетів, лише 50 000 вісбаденців їздять у зворотному напрямку — сальдо +60 000. Найбільше джерело — Майнц (24 000), потім Франкфурт (12 000). У міському русі досі переважає автомобіль (56 %); громадський транспорт і велосипед разом сягають лише 32 %.",
@@ -1872,14 +1872,14 @@ Object.assign(I18N.ua, {
 });
 Object.assign(I18N.kr, {
   story7: "세금은 어디로 가나? 2025년 비스바덴 시 예산 14.1억 €",
-  story7_finding: "비스바덴 시는 2025년 14.1억 유로 지출을 계획. 최대 항목은 사회복지(5.3억 €, 38%), 다음으로 아동·청소년·가족 지원(3.33억 €, 24%). 두 항목을 합치면 시 전체 지출의 61% — 이렇게 명확하게 드러나는 정치적 지표는 드물어요.",
+  story7_finding: "비스바덴 시는 2025년 14.1억 유로의 지출을 계획하고 있습니다. 최대 항목은 사회복지(5.3억 €, 38%), 다음은 아동·청소년·가족 지원(3.33억 €, 24%)입니다. 두 항목을 합치면 시 전체 지출의 61% — 이만큼 명확하게 드러나는 정치적 지표는 드뭅니다.",
   story7_chart_ds: "2025 지출 (백만 €)",
   story7_chart_y: "백만 €",
   story7_fact1: "총 14.1억 €",
   story7_fact2: "복지 5.3억 €",
   story7_fact3: "상위 10개 분야",
   story9: "통근 수도: 매일 11만 명이 비스바덴으로 출근",
-  story9_finding: "비스바덴은 통근 도시 — 4대 보험 가입 노동자 11만 명이 매일 인근 지역에서 출근. 반대로 비스바덴에서 외부로 통근하는 인원은 5만 명. 순유입 +6만. 최대 출발지는 마인츠(2.4만), 그다음 프랑크푸르트(1.2만). 시내 교통은 여전히 자동차 56%가 지배. 대중교통+자전거는 합쳐 32%에 그침.",
+  story9_finding: "비스바덴은 통근 도시입니다. 사회보험 가입 노동자 11만 명이 매일 인근 지역에서 이곳으로 출근하고, 반대로 비스바덴에서 외부로 통근하는 사람은 5만 명뿐이어서 순유입은 +6만 명입니다. 최대 출발지는 Mainz(2.4만), 다음이 Frankfurt(1.2만)입니다. 시내 교통은 여전히 자동차가 56%로 우세하며, 대중교통과 자전거는 합쳐도 32%에 그칩니다.",
   story9_chart_ds: "비스바덴 교통 분담률 2023 (%)",
   story9_chart_y: "% 전체 이동",
   story9_fact1: "11만 명 유입",
@@ -1917,7 +1917,7 @@ Object.assign(I18N.tr, {
   assist_mode_cache:     "Önbellek · 232 veri seti",
   neu_im_katalog_title:  "Bu hafta katalogda yeni",
   neu_im_katalog_empty:  "Bu hafta yeni veri seti yok.",
-  neu_im_katalog_link:   "Tüm veri setleri →",
+  neu_im_katalog_link:   "Tüm veri setlerini gör →",
   atom_feed_label:       "🔔 Yeni veri setlerini RSS ile takip et",
   atom_feed_hint:        "27 AB dili · Wiesbaden Belediyesi Atom akışı"
 });
@@ -1925,20 +1925,20 @@ Object.assign(I18N.ua, {
   assist_searching:      "Пошук…",
   assist_error:          "Пошук наразі недоступний. Спробуйте пізніше.",
   assist_mode_live:      "Наживо · opendata.cloud.wiesbaden.de",
-  assist_mode_cache:     "Кеш · 232 датасети",
+  assist_mode_cache:     "Кеш · 232 набори даних",
   neu_im_katalog_title:  "Цього тижня нове в каталозі",
   neu_im_katalog_empty:  "Цього тижня нових датасетів немає.",
-  neu_im_katalog_link:   "Переглянути всі датасети →",
-  atom_feed_label:       "🔔 Підписатися на нові датасети через RSS",
+  neu_im_katalog_link:   "Переглянути всі набори даних →",
+  atom_feed_label:       "🔔 Підписатися на нові набори даних через RSS",
   atom_feed_hint:        "27 мов ЄС · Atom-стрічка міста Вісбаден"
 });
 Object.assign(I18N.kr, {
   assist_searching:      "검색 중…",
-  assist_error:          "현재 검색 불가. 잠시 후 다시 시도해주세요.",
+  assist_error:          "현재 검색할 수 없습니다. 잠시 후 다시 시도해주세요.",
   assist_mode_live:      "라이브 · opendata.cloud.wiesbaden.de",
   assist_mode_cache:     "캐시 · 232개 데이터셋",
   neu_im_katalog_title:  "이번 주 카탈로그 신규",
-  neu_im_katalog_empty:  "이번 주 신규 데이터셋 없음.",
+  neu_im_katalog_empty:  "이번 주 신규 데이터셋이 없습니다.",
   neu_im_katalog_link:   "전체 데이터셋 보기 →",
   atom_feed_label:       "🔔 신규 데이터셋 RSS 구독",
   atom_feed_hint:        "EU 27개 언어 · 비스바덴 시청 Atom 피드"
@@ -1947,7 +1947,7 @@ Object.assign(I18N.kr, {
 // v2.7 — PDF Snapshot Export Button (footer)
 Object.assign(I18N.de, { pdf_export_btn: "📄 PDF-Export",     pdf_export_blocked: "Pop-up blockiert? Bitte erlauben und erneut klicken." });
 Object.assign(I18N.en, { pdf_export_btn: "📄 PDF export",     pdf_export_blocked: "Pop-up blocked? Please allow and try again." });
-Object.assign(I18N.tr, { pdf_export_btn: "📄 PDF dışa aktar", pdf_export_blocked: "Açılır pencere engellendi. Lütfen izin verin." });
+Object.assign(I18N.tr, { pdf_export_btn: "📄 PDF dışa aktar", pdf_export_blocked: "Açılır pencere engellendi mi? Lütfen izin verip tekrar tıklayın." });
 Object.assign(I18N.ua, { pdf_export_btn: "📄 PDF-експорт",    pdf_export_blocked: "Pop-up заблоковано? Дозвольте та спробуйте знову." });
 Object.assign(I18N.kr, { pdf_export_btn: "📄 PDF 저장",       pdf_export_blocked: "팝업 차단됨? 허용 후 다시 클릭해주세요." });
 
@@ -1982,7 +1982,7 @@ Object.assign(I18N.en, {
   action_arbeit:              "Federal Employment Agency advice",
   action_arbeit_reason:       "Why here: unemployment above the city average.",
   action_sozialberatung:      "City social-services counselling",
-  action_sozial_reason:       "Why here: high welfare-recipient share.",
+  action_sozial_reason:       "Why here: high share of Bürgergeld (basic income support) recipients.",
   action_schuldnerberatung:   "Debt & consumer counselling",
   action_schulden_reason:     "Why here: purchasing power well below the city mean.",
   action_bau:                 "View planning permits",
@@ -1990,7 +1990,7 @@ Object.assign(I18N.en, {
   action_auslaenderbeirat:    "Contact the migrant advisory council",
   action_ab_reason:           "Why here: non-German residents above 35%.",
   action_mieterbund:          "Wiesbaden tenants' association",
-  action_mieter_reason:       "Why here: cold rent above €12/m²."
+  action_mieter_reason:       "Why here: base rent above €12/m²."
 });
 Object.assign(I18N.tr, {
   action_kita_vormerk:        "Kreş yeri rezerve et (WiKITA)",
@@ -2140,28 +2140,28 @@ Object.assign(I18N.en, {
 
 Object.assign(I18N.tr, {
   story5: "İnşaat patlaması 2024: 555 yeni konut — 187'si Biebrich'te",
-  story5_finding: "Wiesbaden 2024'te 555 yeni konut tamamladı; Biebrich tek başına 187'sini inşa etti. Heßloch, Amöneburg ve Kostheim toplamda 3 konut katkı yaptı.",
+  story5_finding: "Wiesbaden 2024'te şehir genelinde 555 konut tamamladı; her üç konuttan biri yalnızca Biebrich'te yapıldı. Heßloch, Amöneburg ve Kostheim birlikte yalnızca 3 konut ekledi. Bu bir kriz değil — ama sosyal konut planlamasında dikkate alınması gereken mekânsal bir dengesizlik.",
   story5_chart_ds: "Tamamlanan konutlar 2024",
   story5_chart_y: "Konut",
   story5_fact1: "555 toplam",
   story5_fact2: "187 Biebrich",
-  story5_fact3: "26 bölge",
+  story5_fact3: "26 mahalle",
   story6: "Katılım 2026: Heßloch ile Amöneburg arasında 45 puan fark",
-  story6_finding: "Heßloch %73 katılım gösterdi, Amöneburg %28. İkisi de Wiesbaden'in parçası — şehrin en büyük demokratik dengesizliği partiler arası değil, bölgeler arası.",
+  story6_finding: "Kent kenarındaki küçük, varlıklı köy Heßloch 2026'da %73 katılımla oy kullandı. İkinci en yüksek sosyal yardım oranına sahip Mainz-Amöneburg ise %28'de kaldı. İkisi de Wiesbaden'in parçası. Katılım, siyasi güvenin ve yapısal aidiyetin bir göstergesidir — şehrin en büyük demokratik dengesizliği partiler arasında değil, mahalleler arasındadır.",
   story6_chart_ds: "Yerel seçim 2026 katılımı (%)",
   story6_chart_y: "% katılım",
   story6_fact1: "Heßloch %73",
   story6_fact2: "Amöneburg %28",
-  story6_fact3: "26 bölge",
+  story6_fact3: "26 mahalle",
   story8: "Okullar ve çeşitlilik: göçmen kökeni %42,8 → %54,8 (8 yıl)",
-  story8_finding: "Wiesbaden 2016–2024 yalnızca 3 yeni okul açtı, ama göçmen kökenli öğrenci oranı yapısal olarak yükseldi.",
+  story8_finding: "Wiesbaden 2016 ile 2024 arasında yalnızca 3 yeni genel eğitim okulu açtı (75 → 78), ama öğrenci çeşitliliği yapısal olarak arttı: genel eğitim öğrencilerinin %54,8'i bugün göçmen kökenli (2016: %42,8). Bu, altyapı büyümeden pedagojik gereksinimleri değiştiriyor — 2030 eğitim planlaması için bir veri izi.",
   story8_chart_ds1: "Göçmen kökeni payı (%)",
   story8_chart_y: "% göçmen kökenli",
   story8_fact1: "+12 puan",
   story8_fact2: "+%11 öğrenci",
   story8_fact3: "78 okul",
   story10: "v2.5 → v2.8: pano kendini ölçüyor",
-  story10_finding: "Bu veri öyküsü öz-yansıtıcı: v2.5'te 0 canlı kaynak, 6 katman, 4 öykü, 3 genel buton vardı. v2.8'de 3 canlı, 11 katman, 10 öykü ve 312 bölge×KPI yolu var.",
+  story10_finding: "Bu veri öyküsü öz-yansıtıcıdır: panoyu kendisiyle karşılaştırır. v2.5'te 0 canlı kaynak, 6 harita katmanı, 4 veri öyküsü ve 3 genel eylem butonu vardı. v2.8'de 3 canlı kaynak (UBA hava kalitesi, Tankerkönig MTS-K, Piveau Living Mode), 11 katman (Mietspiegel/kreş/seçim/sosyal konut/alım gücü dahil), 10 öykü ve 3 genel buton yerine 312 mahalle×KPI yollu, duruma bağlı bir eylem kutusu var.",
   story10_chart_v25: "v2.5 (önce)",
   story10_chart_v27: "v2.8 (bugün)",
   story10_chart_y: "Adet",
@@ -2172,66 +2172,66 @@ Object.assign(I18N.tr, {
 
 Object.assign(I18N.ua, {
   story5: "Будівельний бум 2024: 555 нових квартир — 187 в одному Бібріху",
-  story5_finding: "Вісбаден здав у 2024 році 555 нових квартир по місту, з них 187 — лише в Бібріху. Гессльох, Амьоненбург та Костхайм разом дали 3 квартири.",
+  story5_finding: "У 2024 році Вісбаден ввів в експлуатацію 555 квартир по всьому місту — кожна третя з них припала лише на Biebrich. Heßloch, Amöneburg і Kostheim разом дали 3 квартири. Це не криза, але просторова диспропорція, яку варто врахувати в плануванні соціального житла.",
   story5_chart_ds: "Здані квартири 2024",
   story5_chart_y: "Квартир",
   story5_fact1: "555 разом",
-  story5_fact2: "187 Бібріх",
-  story5_fact3: "26 округів",
+  story5_fact2: "187 у Biebrich",
+  story5_fact3: "26 районів",
   story6: "Явка 2026: 45 п.п. різниці між Гессльохом та Амьоненбургом",
-  story6_finding: "Гессльох (заможне село) — 73% явка. Майнц-Амьоненбург — 28%. Обидва — частина Вісбадена. Найбільша демократична нерівність — не між партіями, а між округами.",
+  story6_finding: "Heßloch — невелике заможне село на околиці — у 2026 році показало явку 73 %. Mainz-Amöneburg, район із другою найвищою часткою отримувачів Bürgergeld, дав лише 28 %. Обидва належать до столиці землі Вісбаден. Явка — індикатор політичної довіри та структурної участі: найбільша демократична нерівність міста пролягає не між партіями, а між районами.",
   story6_chart_ds: "Явка комунальних виборів 2026 (%)",
   story6_chart_y: "% явки",
-  story6_fact1: "Гессльох 73%",
-  story6_fact2: "Амьоненбург 28%",
-  story6_fact3: "26 округів",
+  story6_fact1: "Heßloch 73 %",
+  story6_fact2: "Amöneburg 28 %",
+  story6_fact3: "26 районів",
   story8: "Школи й різноманіття: міграц. походження 42,8% → 54,8% (8 років)",
-  story8_finding: "Між 2016 і 2024 Вісбаден збудував лише 3 нові загальні школи, але склад учнів суттєво змінився.",
+  story8_finding: "Між 2016 і 2024 роками Вісбаден збудував лише 3 нові загальноосвітні школи (з 75 до 78), але різноманіття учнів зросло структурно: сьогодні 54,8 % учнів загальноосвітніх шкіл мають міграційне походження (2016: 42,8 %). Це змінює педагогічні вимоги, тоді як інфраструктура за ними не встигає — слід даних для планування освіти до 2030 року.",
   story8_chart_ds1: "Частка з міграц. походженням (%)",
   story8_chart_y: "% з міграц. походж.",
   story8_fact1: "+12 п.п.",
   story8_fact2: "+11% учнів",
-  story8_fact3: "78 шкіл",
+  story8_fact3: "78 шкіл сьогодні",
   story10: "v2.5 → v2.8: дашборд міряє себе",
-  story10_finding: "Самоаналіз: v2.5 — 0 живих джерел, 6 шарів, 4 історії, 3 загальні кнопки. v2.8 — 3 живих, 11 шарів, 8 історій, 312 шляхів округ×KPI.",
+  story10_finding: "Ця історія даних — саморефлексивна: вона порівнює Lagebild із самим собою. У v2.5 було 0 живих джерел, 6 шарів карти, 4 історії даних і 3 загальні кнопки дій. У v2.8 — 3 живі джерела (UBA якість повітря, Tankerkönig MTS-K, Piveau Living Mode), 11 шарів (з Mietspiegel/яслами/виборами/соцжитлом/купівельною спроможністю), 10 історій і контекстна Action-Box із 312 шляхами район×KPI замість 3 загальних.",
   story10_chart_v25: "v2.5 (до)",
   story10_chart_v27: "v2.8 (сьогодні)",
   story10_chart_y: "Кількість",
   story10_fact1: "v2.5 → v2.8",
-  story10_fact2: "+5 шарів",
+  story10_fact2: "+5 шарів карти",
   story10_fact3: "0 прихованих mock"
 });
 
 Object.assign(I18N.kr, {
   story5: "2024 신축 붐: 555채 — 그중 187채가 Biebrich 한 동네",
-  story5_finding: "비스바덴이 2024년 시 전체에서 555채 신축을 완공했는데 Biebrich 한 동네에서만 187채. Heßloch·Amöneburg·Kostheim 합쳐서 3채. 사회임대주택 계획에서 따져볼 공간 편향.",
+  story5_finding: "비스바덴은 2024년 시 전체에서 555호의 주택을 완공했고, 그중 세 채 중 한 채가 Biebrich 한 동네에서 나왔습니다. Heßloch·Amöneburg·Kostheim은 합쳐서 3호에 그쳤습니다. 위기는 아니지만, 사회임대주택 계획에서 고려해야 할 공간적 편중입니다.",
   story5_chart_ds: "2024 완공 주택 (호)",
   story5_chart_y: "주택수",
   story5_fact1: "555 시 전체",
   story5_fact2: "187 Biebrich",
   story5_fact3: "26 동네",
   story6: "2026 투표율: Heßloch와 Amöneburg 간 45%p 격차",
-  story6_finding: "Heßloch 73%, Amöneburg 28%. 같은 시 안에서 정치 신뢰의 가장 큰 격차는 정당이 아닌 동네 사이.",
+  story6_finding: "외곽의 작고 부유한 마을 Heßloch는 2026년 73%가 투표했지만, 시민수당(Bürgergeld) 수급률이 두 번째로 높은 Mainz-Amöneburg는 28%에 그쳤습니다. 둘 다 같은 비스바덴 시에 속합니다. 투표율은 정치적 신뢰와 구조적 참여의 지표로, 이 도시의 가장 큰 민주주의 격차는 정당 사이가 아니라 동네 사이에 있습니다.",
   story6_chart_ds: "지방선거 2026 투표율 (%)",
   story6_chart_y: "투표율 %",
   story6_fact1: "Heßloch 73%",
   story6_fact2: "Amöneburg 28%",
   story6_fact3: "26 동네",
   story8: "학교와 다양성: 이주배경 42.8% → 54.8% (8년)",
-  story8_finding: "2016~2024년 비스바덴은 일반학교 3곳만 추가로 신설(75→78). 그러나 이주배경 학생 비율은 12%p 증가. 인프라보다 빠른 다양성 변화 — 2030 교육계획이 따라잡아야 할 데이터.",
+  story8_finding: "2016~2024년 비스바덴은 일반학교를 3곳만 추가로 신설(75→78)했지만, 학생 구성의 다양성은 구조적으로 커졌습니다. 오늘날 일반학교 학생의 54,8%가 이주 배경을 가지고 있습니다(2016년 42,8%). 인프라가 따라가지 못하는 사이 교육 현장의 요구는 달라지고 있으며, 이는 2030 교육계획을 위한 데이터 단서입니다.",
   story8_chart_ds1: "이주배경 비율 (%)",
   story8_chart_y: "이주배경 %",
   story8_fact1: "+12%p 다양성",
   story8_fact2: "+11% 학생",
   story8_fact3: "78개 학교",
   story10: "v2.5 → v2.8: 대시보드가 스스로를 측정",
-  story10_finding: "자기성찰적 데이터 스토리. v2.5: 라이브 0, EBENEN 6, Story 4, 일반 CTA 3. v2.8: 라이브 3 (UBA 공기, Tankerkönig 휘발유), EBENEN 11, Story 8, 동네×KPI 312 경로 rule engine.",
+  story10_finding: "이 데이터 스토리는 대시보드 스스로를 측정합니다. v2.5는 라이브 출처 0개, 지도 레이어 6개, 데이터 스토리 4개, 일반 행동 버튼 3개였습니다. v2.8은 라이브 출처 3개(UBA 대기질, Tankerkönig MTS-K, Piveau Living Mode), 레이어 11개(Mietspiegel·어린이집·선거·사회임대주택·구매력 포함), 스토리 10개, 그리고 일반 버튼 3개 대신 동네×KPI 312개 경로의 상태 기반 행동 박스를 갖췄습니다.",
   story10_chart_v25: "v2.5 (이전)",
   story10_chart_v27: "v2.8 (현재)",
   story10_chart_y: "개수",
   story10_fact1: "v2.5 → v2.8",
-  story10_fact2: "+5 EBENEN",
-  story10_fact3: "0 숨은 mock"
+  story10_fact2: "지도 레이어 +5개",
+  story10_fact3: "숨은 mock 0개"
 });
 
 // v2.7 — 5 neue EBENEN-Layer (rent/kita/turnout/sozialwohn/kaufkraft)
@@ -2244,7 +2244,7 @@ Object.assign(I18N.de, {
 });
 Object.assign(I18N.en, {
   layer_rent:       "Rent index · €/m²",
-  layer_kita:       "Daycare coverage (u3)",
+  layer_kita:       "Daycare coverage (under 3)",
   layer_turnout:    "Turnout 2026",
   layer_sozialwohn: "Social housing",
   layer_kaufkraft:  "Purchasing power"
@@ -2254,14 +2254,14 @@ Object.assign(I18N.tr, {
   layer_kita:       "Kreş kapasitesi (0–3)",
   layer_turnout:    "Katılım 2026",
   layer_sozialwohn: "Sosyal konut",
-  layer_kaufkraft:  "Alım gücü"
+  layer_kaufkraft:  "Alım gücü / kişi"
 });
 Object.assign(I18N.ua, {
-  layer_rent:       "Оренда · €/m²",
+  layer_rent:       "Mietspiegel · €/м²",
   layer_kita:       "Ясла (до 3 р.)",
   layer_turnout:    "Явка 2026",
   layer_sozialwohn: "Соц. житло",
-  layer_kaufkraft:  "Купівельна спромож."
+  layer_kaufkraft:  "Купів. спромож. / меш."
 });
 Object.assign(I18N.kr, {
   layer_rent:       "임대료 · €/m²",
@@ -2271,7 +2271,7 @@ Object.assign(I18N.kr, {
   layer_kaufkraft:  "구매력"
 });
 
-Object.assign(I18N.kr, { modal_type_trash: "쓰레기 / 불법 투기", modal_type_vandal: "기물 파손", modal_type_green: "녹지 / 나무", modal_type_bike: "자전거 인프라", modal_use_gps: "GPS", modal_route_intro: "두 가지 방식으로 전송 가능:", modal_route_1: "1. Mängelmelder Hessen", modal_route_1_desc: "— 헤센 주 공식 시스템 (sicherheitsportal.hessen.de). 권장.", modal_route_2: "2. 시청 이메일", modal_route_2_desc: "— 메일 프로그램이 미리 작성된 텍스트로 열림. 계정 불필요.", modal_send_mail: "📧 이메일", modal_send_official: "→ Mängelmelder Hessen으로", modal_validate: "위치 또는 설명을 입력해주세요.", modal_official_ok: "✓ Mängelmelder Hessen 열림 · 텍스트 클립보드 복사됨. Ref: ", modal_mail_ok: "✓ 이메일 준비됨 · Ref: ", modal_gps_loading: "위치 확인 중…", modal_gps_unsupported: "이 브라우저는 GPS 미지원.", modal_gps_denied: "위치 거부 또는 오류: ", modal_gps_no_addr: "(주소 미해결)", mm_title: "참여 — 비스바덴을 함께", mm_subtitle: "6가지 구체적 방법 — 당신의 관찰이 시청 데이터와 결정에 반영됩니다.", mm_melden_title: "문제 신고", mm_melden_desc: "도로 파손, 가로등 고장, 불법 투기 — 담당 부서로 바로. 헤센 주 시스템 또는 시청 이메일.", mm_melden_btn: "+ 신고 보내기", mm_melden_history: "최근 내 신고", mm_data_title: "데이터 요청", mm_data_desc: "어떤 시청 데이터가 부족한가요? 투표 — 상위 3개는 Open Data 팀으로.", mm_data_btn: "▾ 제안 보기", mm_data_heading: "어떤 데이터를 원하나요?", mm_data_intro: "↑/↓ 클릭으로 지지. 상위 3개를 Open Data 팀에 보냅니다. (로컬, 익명.)", mm_data_note: "현재 카탈로그에 없는 데이터셋 제안만.", mm_fuel_title: "주유 가격 제보", mm_fuel_desc: "대시보드와 다른 가격 봤어요? 익명 제보, 로컬 저장.", mm_fuel_btn: "→ 주유소로 이동", mm_cs_title: "시민 과학", mm_cs_desc: "3개 진행 중인 시민 측정 프로젝트. CurieuzeNeuzen 모델, EU Citizen Science Prize 2023.", mm_cs_btn: "↓ 프로젝트로" });
+Object.assign(I18N.kr, { modal_type_trash: "쓰레기 / 불법 투기", modal_type_vandal: "기물 파손", modal_type_green: "녹지 / 나무", modal_type_bike: "자전거 인프라", modal_use_gps: "GPS", modal_route_intro: "두 가지 방식으로 전송 가능:", modal_route_1: "1. Mängelmelder Hessen", modal_route_1_desc: "— 헤센주 전역 공식 시스템 (sicherheitsportal.hessen.de). 권장합니다.", modal_route_2: "2. 시청 이메일", modal_route_2_desc: "— 메일 프로그램이 미리 작성된 텍스트로 열림. 계정 불필요.", modal_send_mail: "📧 이메일", modal_send_official: "→ Mängelmelder Hessen으로", modal_validate: "위치 또는 설명을 입력해주세요.", modal_official_ok: "✓ Mängelmelder Hessen(헤센주 신고 시스템)이 열렸습니다 · 텍스트가 클립보드에 복사되었습니다. Ref: ", modal_mail_ok: "✓ 이메일이 준비되었습니다 · Ref: ", modal_gps_loading: "위치 확인 중…", modal_gps_unsupported: "이 브라우저는 GPS 미지원.", modal_gps_denied: "위치 거부 또는 오류: ", modal_gps_no_addr: "(주소 미해결)", mm_title: "참여 — 비스바덴을 함께", mm_subtitle: "6가지 구체적 방법 — 여러분의 관찰이 시청 데이터와 결정에 반영됩니다.", mm_melden_title: "문제 신고", mm_melden_desc: "도로 파손, 가로등 고장, 불법 투기 — 담당 부서로 바로. 헤센 주 시스템 또는 시청 이메일.", mm_melden_btn: "+ 신고 보내기", mm_melden_history: "최근 내 신고", mm_data_title: "데이터 요청", mm_data_desc: "어떤 시청 데이터가 부족한가요? 투표 — 상위 3개는 Open Data 팀으로.", mm_data_btn: "▾ 제안 보기", mm_data_heading: "어떤 데이터를 원하나요?", mm_data_intro: "↑/↓를 클릭해 지지하세요. 상위 3개를 Open Data 팀에 보냅니다. (로컬 저장, 익명.)", mm_data_note: "현재 카탈로그에 없는 데이터셋 제안만.", mm_fuel_title: "주유 가격 제보", mm_fuel_desc: "대시보드와 다른 가격을 보셨나요? 익명 제보, 로컬 저장.", mm_fuel_btn: "→ 주유소로 이동", mm_cs_title: "시민 과학", mm_cs_desc: "3개 진행 중인 시민 측정 프로젝트. CurieuzeNeuzen 모델, EU Citizen Science Prize 2023.", mm_cs_btn: "↓ 프로젝트로" });
 
 // v2.1 — Datenwunsch: candidate datasets that are NOT yet in opendata.cloud
 // (verified via search 2026-05-04). Citizens vote ↑/↓ → top 3 to open-data team.
@@ -2310,9 +2310,9 @@ const DATA_SOURCES = [
 // v2.1 — Daten view (5 langs)
 Object.assign(I18N.de, { dk_title: "Datenkatalog & Transparenz", dk_subtitle: "Jede Zahl im Dashboard hat eine Quelle. Hier siehst du alle: live oder mock, Lizenz, Aktualisierungsfrequenz.", dk_footer: "Alle Datensätze stammen von <a href='https://opendata.cloud.wiesbaden.de' target='_blank' rel='noopener'>opendata.cloud.wiesbaden.de</a>, OpenStreetMap (ODbL) oder dem Bundeskartellamt MTS-K. Keine personenbezogenen Daten — DSGVO-konform.", dk_kpi_total: "Datenquellen insgesamt", dk_kpi_live: "Echte Daten (live + static)", dk_kpi_mock: "Mock (transparent ausgewiesen)", dk_kpi_citizen: "Bürger-Beiträge", dk_th_dataset: "Datensatz", dk_th_used: "Verwendet in", dk_th_publisher: "Herausgeber", dk_th_license: "Lizenz", dk_th_freq: "Frequenz", dk_th_status: "Status" });
 Object.assign(I18N.en, { dk_title: "Data catalog & transparency", dk_subtitle: "Every number on this dashboard has a source. Here you see all: live vs mock, license, update frequency.", dk_footer: "All datasets come from <a href='https://opendata.cloud.wiesbaden.de' target='_blank' rel='noopener'>opendata.cloud.wiesbaden.de</a>, OpenStreetMap (ODbL) or Bundeskartellamt MTS-K. No personal data — GDPR-compliant.", dk_kpi_total: "Total data sources", dk_kpi_live: "Real data (live + static)", dk_kpi_mock: "Mock (clearly labeled)", dk_kpi_citizen: "Citizen contributions", dk_th_dataset: "Dataset", dk_th_used: "Used in", dk_th_publisher: "Publisher", dk_th_license: "License", dk_th_freq: "Frequency", dk_th_status: "Status" });
-Object.assign(I18N.tr, { dk_title: "Veri kataloğu & şeffaflık", dk_subtitle: "Pano üzerindeki her sayının bir kaynağı vardır. Hepsini görürsünüz: canlı/mock, lisans, güncelleme sıklığı.", dk_footer: "Tüm datasetler opendata.cloud.wiesbaden.de, OpenStreetMap (ODbL) veya Bundeskartellamt MTS-K kaynaklıdır. Kişisel veri yok — KVKK uyumlu.", dk_kpi_total: "Toplam kaynak", dk_kpi_live: "Gerçek veri", dk_kpi_mock: "Mock (şeffaf)", dk_kpi_citizen: "Vatandaş katkıları", dk_th_dataset: "Dataset", dk_th_used: "Kullanılan yer", dk_th_publisher: "Yayıncı", dk_th_license: "Lisans", dk_th_freq: "Sıklık", dk_th_status: "Durum" });
-Object.assign(I18N.ua, { dk_title: "Каталог даних і прозорість", dk_subtitle: "Кожне число на панелі має джерело. Тут — усі: наживо/mock, ліцензія, частота.", dk_footer: "Усі дані з opendata.cloud.wiesbaden.de, OpenStreetMap (ODbL) або Bundeskartellamt MTS-K. Без персональних даних — GDPR.", dk_kpi_total: "Усього джерел", dk_kpi_live: "Реальні дані", dk_kpi_mock: "Mock (прозоро)", dk_kpi_citizen: "Внески громадян", dk_th_dataset: "Датасет", dk_th_used: "Використання", dk_th_publisher: "Видавець", dk_th_license: "Ліцензія", dk_th_freq: "Частота", dk_th_status: "Статус" });
-Object.assign(I18N.kr, { dk_title: "데이터 카탈로그 & 투명성", dk_subtitle: "대시보드 모든 숫자엔 출처가 있어요. 라이브/mock, 라이선스, 갱신 주기 한눈에.", dk_footer: "모든 데이터셋 출처: opendata.cloud.wiesbaden.de, OpenStreetMap (ODbL), 또는 Bundeskartellamt MTS-K. 개인정보 없음 — DSGVO 준수.", dk_kpi_total: "전체 데이터 출처", dk_kpi_live: "실제 데이터", dk_kpi_mock: "Mock (명시)", dk_kpi_citizen: "시민 기여", dk_th_dataset: "데이터셋", dk_th_used: "사용 위치", dk_th_publisher: "발행기관", dk_th_license: "라이선스", dk_th_freq: "주기", dk_th_status: "상태" });
+Object.assign(I18N.tr, { dk_title: "Veri kataloğu & şeffaflık", dk_subtitle: "Panodaki her sayının bir kaynağı var. Hepsini burada görürsün: canlı mı mock mu, lisans, güncelleme sıklığı.", dk_footer: "Tüm datasetler opendata.cloud.wiesbaden.de, OpenStreetMap (ODbL) veya Bundeskartellamt MTS-K kaynaklıdır. Kişisel veri yok — KVKK uyumlu.", dk_kpi_total: "Toplam kaynak", dk_kpi_live: "Gerçek veri (canlı + statik)", dk_kpi_mock: "Mock (şeffaf)", dk_kpi_citizen: "Vatandaş katkıları", dk_th_dataset: "Dataset", dk_th_used: "Kullanılan yer", dk_th_publisher: "Yayıncı", dk_th_license: "Lisans", dk_th_freq: "Sıklık", dk_th_status: "Durum" });
+Object.assign(I18N.ua, { dk_title: "Каталог даних і прозорість", dk_subtitle: "Кожне число на панелі має джерело. Тут — усі: наживо/mock, ліцензія, частота.", dk_footer: "Усі дані з opendata.cloud.wiesbaden.de, OpenStreetMap (ODbL) або Bundeskartellamt MTS-K. Без персональних даних — GDPR.", dk_kpi_total: "Усього джерел", dk_kpi_live: "Реальні дані (live + static)", dk_kpi_mock: "Mock (прозоро)", dk_kpi_citizen: "Внески громадян", dk_th_dataset: "Датасет", dk_th_used: "Використано в", dk_th_publisher: "Видавець", dk_th_license: "Ліцензія", dk_th_freq: "Частота", dk_th_status: "Статус" });
+Object.assign(I18N.kr, { dk_title: "데이터 카탈로그 & 투명성", dk_subtitle: "대시보드의 모든 숫자에는 출처가 있습니다. 라이브인지 mock인지, 라이선스, 갱신 주기를 한눈에 볼 수 있습니다.", dk_footer: "모든 데이터셋 출처: opendata.cloud.wiesbaden.de, OpenStreetMap (ODbL), 또는 Bundeskartellamt MTS-K. 개인정보 없음 — DSGVO 준수.", dk_kpi_total: "전체 데이터 출처", dk_kpi_live: "실제 데이터", dk_kpi_mock: "Mock (명시)", dk_kpi_citizen: "시민 기여", dk_th_dataset: "데이터셋", dk_th_used: "사용 위치", dk_th_publisher: "발행기관", dk_th_license: "라이선스", dk_th_freq: "주기", dk_th_status: "상태" });
 
 // v2.1 — Datenwunsch vote labels (5 langs)
 Object.assign(I18N.de, { mm_data_upvote: "Hochstimmen", mm_data_downvote: "Runterstimmen" });
@@ -2323,30 +2323,30 @@ Object.assign(I18N.kr, { mm_data_upvote: "지지",          mm_data_downvote: "�
 
 // v2.1 — Mein Ortsbezirk (5 langs)
 Object.assign(I18N.de, { mo_title: "Mein Ortsbezirk", mo_subtitle: "Wähle deinen Ortsbezirk — alle KPIs auf einen Blick, mit Vergleich zum Stadt-Durchschnitt.", mo_pick: "ORTSBEZIRK:", mo_pick_placeholder: "Bitte wählen", mo_clear: "✕ Zurücksetzen", mo_compare_note: "Vergleich mit Stadt-Durchschnitt", mo_vs: "vs Stadt", mo_lbl_pop: "BEVÖLKERUNG", mo_sub_pop: "Einwohner", mo_lbl_foreign: "AUSLÄNDERANTEIL", mo_lbl_age: "Ø ALTER", mo_lbl_rent: "KALTMIETE Ø", mo_lbl_kita: "KITA-PLÄTZE FREI", mo_sub_kita: "Plätze", mo_lbl_turnout: "WAHLBETEILIGUNG 2026", mo_lbl_charging: "E-LADESÄULEN", mo_sub_charging: "Ladepunkte", mo_lbl_baustellen: "BAUSTELLEN", mo_action_demo: "Mehr im Demokratie-Tab", mo_action_wohnen: "Mietspiegel im Wohnen-Tab", mo_action_report: "Mängel hier melden" });
-Object.assign(I18N.en, { mo_title: "My district", mo_subtitle: "Pick your district — all KPIs at a glance, compared to the city average.", mo_pick: "DISTRICT:", mo_pick_placeholder: "Please pick", mo_clear: "✕ Reset", mo_compare_note: "Compared to city average", mo_vs: "vs city", mo_lbl_pop: "POPULATION", mo_sub_pop: "residents", mo_lbl_foreign: "FOREIGN-BORN SHARE", mo_lbl_age: "MEDIAN AGE", mo_lbl_rent: "RENT Ø", mo_lbl_kita: "DAYCARE FREE", mo_sub_kita: "places", mo_lbl_turnout: "TURNOUT 2026", mo_lbl_charging: "EV CHARGERS", mo_sub_charging: "points", mo_lbl_baustellen: "CONSTRUCTION SITES", mo_action_demo: "More in Democracy tab", mo_action_wohnen: "Mietspiegel in Housing tab", mo_action_report: "Report an issue" });
-Object.assign(I18N.tr, { mo_title: "Benim mahallem", mo_subtitle: "Mahalleni seç — tüm KPI'lar bir bakışta, şehir ortalamasıyla karşılaştırmalı.", mo_pick: "MAHALLE:", mo_pick_placeholder: "Lütfen seçiniz", mo_clear: "✕ Sıfırla", mo_compare_note: "Şehir ortalamasıyla karşılaştırma", mo_vs: "şehir ile", mo_lbl_pop: "NÜFUS", mo_sub_pop: "kişi", mo_lbl_foreign: "YABANCI ORANI", mo_lbl_age: "Ort. YAŞ", mo_lbl_rent: "KİRA Ø", mo_lbl_kita: "KREŞ BOŞ", mo_sub_kita: "yer", mo_lbl_turnout: "KATILIM 2026", mo_lbl_charging: "ŞARJ İST.", mo_sub_charging: "nokta", mo_lbl_baustellen: "İNŞAAT", mo_action_demo: "Demokrasi sekmesi", mo_action_wohnen: "Konut sekmesi", mo_action_report: "Sorun bildir" });
-Object.assign(I18N.ua, { mo_title: "Мій округ", mo_subtitle: "Виберіть свій округ — усі KPI на одному екрані, порівняно з містом.", mo_pick: "ОКРУГ:", mo_pick_placeholder: "Будь ласка, виберіть", mo_clear: "✕ Скинути", mo_compare_note: "Порівняння з середнім по місту", mo_vs: "проти міста", mo_lbl_pop: "НАСЕЛЕННЯ", mo_sub_pop: "жителів", mo_lbl_foreign: "ІНОЗЕМЦІВ", mo_lbl_age: "Сер. ВІК", mo_lbl_rent: "ОРЕНДА Ø", mo_lbl_kita: "САДОЧКИ ВІЛЬНІ", mo_sub_kita: "місць", mo_lbl_turnout: "ЯВКА 2026", mo_lbl_charging: "ЗАРЯДКИ", mo_sub_charging: "точок", mo_lbl_baustellen: "БУДМАЙДАНЧИКИ", mo_action_demo: "Демократія", mo_action_wohnen: "Житло", mo_action_report: "Повідомити" });
-Object.assign(I18N.kr, { mo_title: "우리 동네", mo_subtitle: "동네 선택 — 모든 KPI 한눈에, 시 평균 대비 비교.", mo_pick: "동네:", mo_pick_placeholder: "선택하세요", mo_clear: "✕ 초기화", mo_compare_note: "시 평균 대비", mo_vs: "시 대비", mo_lbl_pop: "인구", mo_sub_pop: "명", mo_lbl_foreign: "외국인 비율", mo_lbl_age: "평균 연령", mo_lbl_rent: "임대료 Ø", mo_lbl_kita: "어린이집 빈자리", mo_sub_kita: "자리", mo_lbl_turnout: "투표율 2026", mo_lbl_charging: "전기차 충전소", mo_sub_charging: "지점", mo_lbl_baustellen: "공사 현장", mo_action_demo: "민주주의 탭에서 더보기", mo_action_wohnen: "Mietspiegel 보기", mo_action_report: "문제 신고" });
+Object.assign(I18N.en, { mo_title: "My district", mo_subtitle: "Pick your district — all KPIs at a glance, compared to the city average.", mo_pick: "DISTRICT:", mo_pick_placeholder: "Please pick", mo_clear: "✕ Reset", mo_compare_note: "Compared to city average", mo_vs: "vs city", mo_lbl_pop: "POPULATION", mo_sub_pop: "residents", mo_lbl_foreign: "FOREIGN NATIONALS", mo_lbl_age: "MEDIAN AGE", mo_lbl_rent: "BASE RENT Ø", mo_lbl_kita: "DAYCARE FREE", mo_sub_kita: "places", mo_lbl_turnout: "TURNOUT 2026", mo_lbl_charging: "EV CHARGERS", mo_sub_charging: "points", mo_lbl_baustellen: "CONSTRUCTION SITES", mo_action_demo: "More in Democracy tab", mo_action_wohnen: "Mietspiegel in Housing tab", mo_action_report: "Report an issue" });
+Object.assign(I18N.tr, { mo_title: "Benim mahallem", mo_subtitle: "Mahalleni seç — tüm KPI'lar bir bakışta, şehir ortalamasıyla karşılaştırmalı.", mo_pick: "MAHALLE:", mo_pick_placeholder: "Lütfen seçiniz", mo_clear: "✕ Sıfırla", mo_compare_note: "Şehir ortalamasıyla karşılaştırma", mo_vs: "şehir ile", mo_lbl_pop: "NÜFUS", mo_sub_pop: "kişi", mo_lbl_foreign: "YABANCI ORANI", mo_lbl_age: "ORT. YAŞ", mo_lbl_rent: "ORT. KİRA", mo_lbl_kita: "KREŞ BOŞ", mo_sub_kita: "yer", mo_lbl_turnout: "KATILIM 2026", mo_lbl_charging: "ŞARJ İST.", mo_sub_charging: "nokta", mo_lbl_baustellen: "İNŞAAT", mo_action_demo: "Demokrasi sekmesinde daha fazlası", mo_action_wohnen: "Mietspiegel için Konut sekmesi", mo_action_report: "Buradaki sorunu bildir" });
+Object.assign(I18N.ua, { mo_title: "Мій округ", mo_subtitle: "Виберіть свій округ — усі KPI на одному екрані, порівняно з містом.", mo_pick: "ОКРУГ:", mo_pick_placeholder: "Будь ласка, виберіть", mo_clear: "✕ Скинути", mo_compare_note: "Порівняння з середнім по місту", mo_vs: "проти міста", mo_lbl_pop: "НАСЕЛЕННЯ", mo_sub_pop: "жителів", mo_lbl_foreign: "ІНОЗЕМЦІВ", mo_lbl_age: "Сер. ВІК", mo_lbl_rent: "ОРЕНДА Ø", mo_lbl_kita: "САДОЧКИ ВІЛЬНІ", mo_sub_kita: "місць", mo_lbl_turnout: "ЯВКА 2026", mo_lbl_charging: "ЗАРЯДКИ", mo_sub_charging: "точок", mo_lbl_baustellen: "БУДМАЙДАНЧИКИ", mo_action_demo: "Докладніше у вкладці «Демократія»", mo_action_wohnen: "Mietspiegel у вкладці «Житло»", mo_action_report: "Повідомити про проблему тут" });
+Object.assign(I18N.kr, { mo_title: "우리 동네", mo_subtitle: "동네를 선택하세요 — 모든 KPI를 한눈에, 시 평균과 비교해서.", mo_pick: "동네:", mo_pick_placeholder: "선택하세요", mo_clear: "✕ 초기화", mo_compare_note: "시 평균 대비", mo_vs: "시 대비", mo_lbl_pop: "인구", mo_sub_pop: "명", mo_lbl_foreign: "외국인 비율", mo_lbl_age: "평균 연령", mo_lbl_rent: "임대료 Ø", mo_lbl_kita: "어린이집 빈자리", mo_sub_kita: "자리", mo_lbl_turnout: "투표율 2026", mo_lbl_charging: "전기차 충전소", mo_sub_charging: "지점", mo_lbl_baustellen: "공사 현장", mo_action_demo: "민주주의 탭에서 더보기", mo_action_wohnen: "주거 탭에서 임대료 기준표 보기", mo_action_report: "문제 신고" });
 
 // v2.1 — Datenwunsch send-CTA (5 langs)
 Object.assign(I18N.de, { mm_data_send_label: "Bereit, deine Stimmen abzuschicken?", mm_data_send_desc: " — Wir bündeln deine Top-Wünsche in eine E-Mail an das Open-Data-Team der Stadt.", mm_data_send_btn: "📧 An opendata@wiesbaden.de senden", mm_data_send_empty: "Bitte erst mindestens einen Datenwunsch hochstimmen.", mm_data_send_ok: "✓ E-Mail vorbereitet · ", mm_data_send_count: "Datenwunsch-Stimmen" });
 Object.assign(I18N.en, { mm_data_send_label: "Ready to send your votes?",            mm_data_send_desc: " — We bundle your top requests into an email to the city's open-data team.",   mm_data_send_btn: "📧 Send to opendata@wiesbaden.de",        mm_data_send_empty: "Please upvote at least one request first.",          mm_data_send_ok: "✓ Email prepared · ",             mm_data_send_count: "data-request votes" });
 Object.assign(I18N.tr, { mm_data_send_label: "Oylarını göndermeye hazır mısın?",     mm_data_send_desc: " — Taleplerini şehrin açık-veri ekibine e-posta olarak göndeririz.",         mm_data_send_btn: "📧 opendata@wiesbaden.de'ye gönder",       mm_data_send_empty: "Lütfen önce en az bir talebe oy ver.",                mm_data_send_ok: "✓ E-posta hazır · ",               mm_data_send_count: "veri talebi oyu" });
 Object.assign(I18N.ua, { mm_data_send_label: "Готові надіслати свої голоси?",        mm_data_send_desc: " — Ми збираємо ваші топ-запити в електронному листі команді відкритих даних.", mm_data_send_btn: "📧 Надіслати opendata@wiesbaden.de",      mm_data_send_empty: "Будь ласка, спочатку проголосуйте щонайменше за один запит.", mm_data_send_ok: "✓ Електронну пошту підготовлено · ", mm_data_send_count: "голосів за дані" });
-Object.assign(I18N.kr, { mm_data_send_label: "당신 투표 보낼 준비됐어요?",                mm_data_send_desc: " — 시청 Open Data 팀에 이메일로 묶어서 보내드려요.",                            mm_data_send_btn: "📧 opendata@wiesbaden.de에 보내기",        mm_data_send_empty: "최소 하나 이상 지지 투표 후 보내주세요.",                  mm_data_send_ok: "✓ 이메일 준비됨 · ",                mm_data_send_count: "데이터 요청 투표" });
+Object.assign(I18N.kr, { mm_data_send_label: "투표를 보낼 준비가 되셨나요?",                mm_data_send_desc: " — 시청 Open Data 팀에 이메일로 모아서 보내드립니다.",                            mm_data_send_btn: "📧 opendata@wiesbaden.de에 보내기",        mm_data_send_empty: "최소 하나 이상 지지 투표 후 보내주세요.",                  mm_data_send_ok: "✓ 이메일이 준비되었습니다 · ",                mm_data_send_count: "데이터 요청 투표" });
 
 // v2.1 — Demokratie view (5 langs)
 Object.assign(I18N.de, { dem_title: "Demokratie & Beteiligung", dem_subtitle: "Kommunalwahl 2026 vs 2021 — wer geht in welchem Ortsbezirk wählen, und wie hat sich das verändert?", dem_tab_map: "Wahlbeteiligung Karte", dem_tab_compare: "2026 vs 2021", dem_tab_ai: "KI-Register", dem_kpi_city: "Wahlbeteiligung Stadt 2026", dem_kpi_diff: "gegenüber 2021", dem_kpi_highest: "Höchste:", dem_kpi_lowest: "Niedrigste:", dem_legend_label: "FARBSKALA · WAHLBETEILIGUNG 2026", dem_legend_note: "Hover/Click einen Ortsbezirk für Details. Heßloch, Igstadt, Frauenstein zeigen die höchste Beteiligung — historisch wohlhabende, kleine Außenortsbezirke.", dem_compare_intro: "Wahlbeteiligung Ortsbeiratswahlen — alle 26 Ortsbezirke, 2026 gegenüber 2021. Briefwahl-Anteil rechts.", dem_ai_intro: "Welche Algorithmen setzt die Stadt ein? Modell: Helsinki AI Register + Berlin Verwaltungsregister.", dem_tooltip_turnout: "Wahlbeteiligung 2026", dem_detail_label: "ORTSBEZIRK", dem_detail_change: "Veränderung", dem_detail_brief: "Briefwahl", dem_detail_eligible: "Wahlberechtigte 2026", dem_detail_nodata: "keine Wahldaten verfügbar", dem_th_district: "Ortsbezirk", dem_th_2026: "Beteiligung 2026", dem_th_2021: "2021", dem_th_diff: "Δ pp", dem_th_brief: "Briefwahl 2026", dem_th_eligible: "Wahlberechtigte" });
 Object.assign(I18N.en, { dem_title: "Democracy & participation", dem_subtitle: "Local elections 2026 vs 2021 — turnout per Ortsbezirk and how it shifted.", dem_tab_map: "Turnout map", dem_tab_compare: "2026 vs 2021", dem_tab_ai: "AI Register", dem_kpi_city: "City turnout 2026", dem_kpi_diff: "vs 2021", dem_kpi_highest: "Highest:", dem_kpi_lowest: "Lowest:", dem_legend_label: "COLOR SCALE · TURNOUT 2026", dem_legend_note: "Hover/click an Ortsbezirk for details. Heßloch, Igstadt, Frauenstein lead — historically affluent small outer districts.", dem_compare_intro: "Turnout in district council elections — all 26 Ortsbezirke, 2026 vs 2021. Postal-vote share on the right.", dem_ai_intro: "Which algorithms does the city deploy? Model: Helsinki AI Register + Berlin Administrative Register.", dem_tooltip_turnout: "Turnout 2026", dem_detail_label: "DISTRICT", dem_detail_change: "Change", dem_detail_brief: "Postal vote", dem_detail_eligible: "Eligible 2026", dem_detail_nodata: "no election data available", dem_th_district: "District", dem_th_2026: "Turnout 2026", dem_th_2021: "2021", dem_th_diff: "Δ pp", dem_th_brief: "Postal 2026", dem_th_eligible: "Eligible" });
-Object.assign(I18N.tr, { dem_title: "Demokrasi & katılım", dem_subtitle: "Yerel seçim 2026 - 2021 karşılaştırması — katılım ve değişim.", dem_tab_map: "Katılım haritası", dem_tab_compare: "2026 - 2021", dem_tab_ai: "YZ Kaydı", dem_kpi_city: "Şehir katılımı 2026", dem_kpi_diff: "2021'e karşı", dem_kpi_highest: "En yüksek:", dem_kpi_lowest: "En düşük:", dem_legend_label: "RENK SKALASI · KATILIM 2026", dem_legend_note: "Detay için Ortsbezirk üzerine gel/tıkla.", dem_compare_intro: "Mahalle seçimleri katılımı — 26 Ortsbezirk, 2026 ve 2021.", dem_ai_intro: "Şehir hangi algoritmaları kullanıyor? Model: Helsinki + Berlin.", dem_tooltip_turnout: "Katılım 2026", dem_detail_label: "BÖLGE", dem_detail_change: "Değişim", dem_detail_brief: "Mektupla", dem_detail_eligible: "Seçmen 2026", dem_detail_nodata: "veri yok", dem_th_district: "Bölge", dem_th_2026: "Katılım 2026", dem_th_2021: "2021", dem_th_diff: "Δ pp", dem_th_brief: "Mektup 2026", dem_th_eligible: "Seçmen" });
-Object.assign(I18N.ua, { dem_title: "Демократія та участь", dem_subtitle: "Місцеві вибори 2026 vs 2021 — явка по округах і як вона змінилася.", dem_tab_map: "Карта явки", dem_tab_compare: "2026 vs 2021", dem_tab_ai: "Реєстр ШІ", dem_kpi_city: "Явка міста 2026", dem_kpi_diff: "vs 2021", dem_kpi_highest: "Найвища:", dem_kpi_lowest: "Найнижча:", dem_legend_label: "ШКАЛА · ЯВКА 2026", dem_legend_note: "Наведіть/клацніть округ для деталей.", dem_compare_intro: "Явка на виборах рад округів — 26 округів, 2026 vs 2021.", dem_ai_intro: "Які алгоритми використовує місто? Модель: Гельсінкі + Берлін.", dem_tooltip_turnout: "Явка 2026", dem_detail_label: "ОКРУГ", dem_detail_change: "Зміна", dem_detail_brief: "Поштою", dem_detail_eligible: "Виборців 2026", dem_detail_nodata: "немає даних", dem_th_district: "Округ", dem_th_2026: "Явка 2026", dem_th_2021: "2021", dem_th_diff: "Δ pp", dem_th_brief: "Пошта 2026", dem_th_eligible: "Виборців" });
-Object.assign(I18N.kr, { dem_title: "민주주의 & 참여", dem_subtitle: "2026 지방선거 vs 2021 — 동네별 투표율과 변화.", dem_tab_map: "투표율 지도", dem_tab_compare: "2026 vs 2021", dem_tab_ai: "AI 등록부", dem_kpi_city: "시 투표율 2026", dem_kpi_diff: "2021 대비", dem_kpi_highest: "최고:", dem_kpi_lowest: "최저:", dem_legend_label: "색상 스케일 · 투표율 2026", dem_legend_note: "동네 hover/클릭으로 상세. Heßloch, Igstadt, Frauenstein이 가장 높음 — 작고 부유한 외곽 동네.", dem_compare_intro: "동네 의회 선거 투표율 — 26 동네, 2026 vs 2021. 우편투표 비율 우측.", dem_ai_intro: "시청은 어떤 알고리즘을 사용하나요? 모델: 헬싱키 + 베를린.", dem_tooltip_turnout: "투표율 2026", dem_detail_label: "동네", dem_detail_change: "변화", dem_detail_brief: "우편투표", dem_detail_eligible: "유권자 2026", dem_detail_nodata: "선거 데이터 없음", dem_th_district: "동네", dem_th_2026: "투표율 2026", dem_th_2021: "2021", dem_th_diff: "Δ pp", dem_th_brief: "우편 2026", dem_th_eligible: "유권자" });
+Object.assign(I18N.tr, { dem_title: "Demokrasi & katılım", dem_subtitle: "Belediye seçimi 2026 ile 2021 karşılaştırması — hangi mahallede kim oy kullanıyor ve bu nasıl değişti?", dem_tab_map: "Katılım haritası", dem_tab_compare: "2026 ↔ 2021", dem_tab_ai: "YZ Sicili", dem_kpi_city: "Şehir katılımı 2026", dem_kpi_diff: "2021'e göre", dem_kpi_highest: "En yüksek:", dem_kpi_lowest: "En düşük:", dem_legend_label: "RENK SKALASI · KATILIM 2026", dem_legend_note: "Detay için bir mahalleye gel/tıkla. En yüksek katılım Heßloch, Igstadt ve Frauenstein'de — tarihsel olarak varlıklı, küçük dış mahalleler.", dem_compare_intro: "Mahalle meclisi seçimlerine katılım — 26 mahalle, 2026 ile 2021 karşılaştırması. Mektupla oy oranı sağda.", dem_ai_intro: "Şehir hangi algoritmaları kullanıyor? Model: Helsinki AI Register + Berlin idari sicili.", dem_tooltip_turnout: "Katılım 2026", dem_detail_label: "MAHALLE", dem_detail_change: "Değişim", dem_detail_brief: "Mektupla oy", dem_detail_eligible: "Seçmen 2026", dem_detail_nodata: "veri yok", dem_th_district: "Mahalle", dem_th_2026: "Katılım 2026", dem_th_2021: "2021", dem_th_diff: "Δ pp", dem_th_brief: "Mektupla oy 2026", dem_th_eligible: "Seçmen" });
+Object.assign(I18N.ua, { dem_title: "Демократія та участь", dem_subtitle: "Місцеві вибори 2026 проти 2021 — хто йде голосувати в кожному районі та як це змінилося.", dem_tab_map: "Карта явки", dem_tab_compare: "2026 vs 2021", dem_tab_ai: "Реєстр ШІ", dem_kpi_city: "Явка міста 2026", dem_kpi_diff: "проти 2021", dem_kpi_highest: "Найвища:", dem_kpi_lowest: "Найнижча:", dem_legend_label: "ШКАЛА · ЯВКА 2026", dem_legend_note: "Наведіть або клацніть район для деталей. Heßloch, Igstadt і Frauenstein показують найвищу явку — історично заможні невеликі околичні райони.", dem_compare_intro: "Явка на виборах рад районів — усі 26 районів, 2026 проти 2021. Частка голосування поштою — праворуч.", dem_ai_intro: "Які алгоритми використовує місто? Модель: Helsinki AI Register + Berlin Verwaltungsregister.", dem_tooltip_turnout: "Явка 2026", dem_detail_label: "ОКРУГ", dem_detail_change: "Зміна", dem_detail_brief: "Поштою", dem_detail_eligible: "Виборців 2026", dem_detail_nodata: "немає даних", dem_th_district: "Округ", dem_th_2026: "Явка 2026", dem_th_2021: "2021", dem_th_diff: "Δ п.п.", dem_th_brief: "Пошта 2026", dem_th_eligible: "Виборців" });
+Object.assign(I18N.kr, { dem_title: "민주주의 & 참여", dem_subtitle: "2026 지방선거 vs 2021 — 어느 동네에서 누가 투표하고, 어떻게 달라졌나.", dem_tab_map: "투표율 지도", dem_tab_compare: "2026 vs 2021", dem_tab_ai: "AI 등록부", dem_kpi_city: "시 투표율 2026", dem_kpi_diff: "2021 대비", dem_kpi_highest: "최고:", dem_kpi_lowest: "최저:", dem_legend_label: "색상 스케일 · 투표율 2026", dem_legend_note: "동네에 마우스를 올리거나 클릭하면 상세 정보가 나옵니다. Heßloch, Igstadt, Frauenstein이 가장 높습니다 — 역사적으로 부유한 작은 외곽 동네입니다.", dem_compare_intro: "동네 의회 선거 투표율 — 26개 동네 전체, 2026 vs 2021. 우편투표 비율은 오른쪽에 표시됩니다.", dem_ai_intro: "시청은 어떤 알고리즘을 사용하나요? 모델: Helsinki AI Register + 베를린 행정 등록부.", dem_tooltip_turnout: "투표율 2026", dem_detail_label: "동네", dem_detail_change: "변화", dem_detail_brief: "우편투표", dem_detail_eligible: "유권자 2026", dem_detail_nodata: "선거 데이터 없음", dem_th_district: "동네", dem_th_2026: "투표율 2026", dem_th_2021: "2021", dem_th_diff: "Δ pp", dem_th_brief: "우편 2026", dem_th_eligible: "유권자" });
 
 // Kita-Versorgung modal — citizen-facing details when KPI is clicked.
 Object.assign(I18N.de, { kita_modal_title: "Kita-Versorgung 2024/25 · Alle 26 Ortsbezirke", kita_modal_sub: "Quelle: „Tagesbetreuung für Kinder 2024/25“ · Amt für Soziale Arbeit · Stand 09/2025", kita_modal_u3: "Krippe (0–3 Jahre)", kita_modal_elem: "Kindergarten (3–6 Jahre)", kita_col_district: "Ortsbezirk", kita_col_quote: "Quote", kita_col_bilanz: "Bilanz", kita_col_delta: "Δ ggü. Vorjahr", kita_status_critical: "Kritisch", kita_status_under: "Unterversorgt", kita_status_balanced: "Ausreichend", kita_status_over: "Überversorgt", kita_legend: "Quote = Plätze ÷ Basiszahl Kinder · 100% = bedarfsdeckend. Vier Ortsbezirke (Frauenstein, Rambach, Heßloch, Igstadt) haben aktuell 0% Krippenplätze. Westend hat das größte absolute Defizit (−157 Plätze).", kita_action_register: "Kind vormerken (WiKITA)", kita_action_source: "Originalbericht (PDF)", kita_action_open_data: "Open Data Wiesbaden", kita_summary_label: "Stadtweit", kita_summary_bilanz: "fehlende Plätze stadtweit" });
 Object.assign(I18N.en, { kita_modal_title: "Daycare Coverage 2024/25 · All 26 Districts", kita_modal_sub: "Source: 2024/25 daycare report · Wiesbaden Social Services · Sept 2025", kita_modal_u3: "Crèche (0–3 yrs)", kita_modal_elem: "Kindergarten (3–6 yrs)", kita_col_district: "District", kita_col_quote: "Coverage", kita_col_bilanz: "Balance", kita_col_delta: "Δ vs. last year", kita_status_critical: "Critical", kita_status_under: "Undersupplied", kita_status_balanced: "Adequate", kita_status_over: "Oversupplied", kita_legend: "Coverage = places ÷ children base · 100% = demand met. Four districts (Frauenstein, Rambach, Heßloch, Igstadt) currently have 0% crèche coverage. Westend has the largest absolute deficit (−157 places).", kita_action_register: "Register child (WiKITA)", kita_action_source: "Original report (PDF)", kita_action_open_data: "Open Data Wiesbaden", kita_summary_label: "Citywide", kita_summary_bilanz: "places missing citywide" });
-Object.assign(I18N.tr, { kita_modal_title: "Kreş Doluluk 2024/25 · 26 İlçe", kita_modal_sub: "Kaynak: 2024/25 bakım raporu · Wiesbaden Sosyal Hizmet · Eylül 2025", kita_modal_u3: "Kreş (0–3 yaş)", kita_modal_elem: "Anaokulu (3–6 yaş)", kita_col_district: "İlçe", kita_col_quote: "Doluluk", kita_col_bilanz: "Bilanço", kita_col_delta: "Δ geçen yıla göre", kita_status_critical: "Kritik", kita_status_under: "Yetersiz", kita_status_balanced: "Yeterli", kita_status_over: "Fazla", kita_legend: "Doluluk = yer ÷ çocuk sayısı · %100 = ihtiyaç karşılandı. Dört ilçede (Frauenstein, Rambach, Heßloch, Igstadt) 0% kreş yeri var. En büyük açık Westend'de (−157 yer).", kita_action_register: "Çocuk kaydı (WiKITA)", kita_action_source: "Orijinal rapor (PDF)", kita_action_open_data: "Open Data Wiesbaden", kita_summary_label: "Şehir geneli", kita_summary_bilanz: "şehir genelinde eksik yer" });
-Object.assign(I18N.ua, { kita_modal_title: "Покриття дитсадків 2024/25 · 26 районів", kita_modal_sub: "Джерело: звіт про догляд за дітьми 2024/25 · Соцслужба Вісбадена · вересень 2025", kita_modal_u3: "Ясла (0–3 р.)", kita_modal_elem: "Дитсадок (3–6 р.)", kita_col_district: "Район", kita_col_quote: "Покриття", kita_col_bilanz: "Баланс", kita_col_delta: "Δ до минулого року", kita_status_critical: "Критично", kita_status_under: "Недостат.", kita_status_balanced: "Достатньо", kita_status_over: "Надлишок", kita_legend: "Покриття = місця ÷ діти · 100% = потреба задоволена. Чотири райони (Frauenstein, Rambach, Heßloch, Igstadt) мають 0% місць у яслах. Найбільший дефіцит — Westend (−157 місць).", kita_action_register: "Записати дитину (WiKITA)", kita_action_source: "Оригінальний звіт (PDF)", kita_action_open_data: "Open Data Wiesbaden", kita_summary_label: "У місті", kita_summary_bilanz: "місць не вистачає в місті" });
+Object.assign(I18N.tr, { kita_modal_title: "Kreş kapasitesi 2024/25 · 26 mahalle", kita_modal_sub: "Kaynak: „Çocuklar için gündüz bakımı 2024/25\" · Amt für Soziale Arbeit · Eylül 2025", kita_modal_u3: "Kreş (0–3 yaş)", kita_modal_elem: "Anaokulu (3–6 yaş)", kita_col_district: "Mahalle", kita_col_quote: "Doluluk", kita_col_bilanz: "Bilanço", kita_col_delta: "Δ geçen yıla göre", kita_status_critical: "Kritik", kita_status_under: "Yetersiz", kita_status_balanced: "Yeterli", kita_status_over: "Fazla", kita_legend: "Kapasite = yer ÷ çocuk taban sayısı · %100 = ihtiyacı karşılar. Dört mahallede (Frauenstein, Rambach, Heßloch, Igstadt) şu an %0 kreş yeri var. En büyük mutlak açık Westend'de (−157 yer).", kita_action_register: "Çocuk kaydı (WiKITA)", kita_action_source: "Orijinal rapor (PDF)", kita_action_open_data: "Open Data Wiesbaden", kita_summary_label: "Şehir geneli", kita_summary_bilanz: "şehir genelinde eksik yer" });
+Object.assign(I18N.ua, { kita_modal_title: "Покриття дитсадків 2024/25 · 26 районів", kita_modal_sub: "Джерело: звіт про догляд за дітьми 2024/25 · Соцслужба Вісбадена · вересень 2025", kita_modal_u3: "Ясла (0–3 р.)", kita_modal_elem: "Дитсадок (3–6 р.)", kita_col_district: "Район", kita_col_quote: "Покриття", kita_col_bilanz: "Баланс", kita_col_delta: "Δ до минулого року", kita_status_critical: "Критично", kita_status_under: "Дефіцит", kita_status_balanced: "Достатньо", kita_status_over: "Надлишок", kita_legend: "Покриття = місця ÷ діти · 100% = потреба задоволена. Чотири райони (Frauenstein, Rambach, Heßloch, Igstadt) мають 0% місць у яслах. Найбільший дефіцит — Westend (−157 місць).", kita_action_register: "Записати дитину (WiKITA)", kita_action_source: "Оригінальний звіт (PDF)", kita_action_open_data: "Open Data Wiesbaden", kita_summary_label: "У місті", kita_summary_bilanz: "місць не вистачає в місті" });
 Object.assign(I18N.kr, { kita_modal_title: "어린이집 수급률 2024/25 · 26개 동네 전체", kita_modal_sub: "출처: 2024/25 보육 보고서 · 비스바덴 사회복지국 · 2025년 9월", kita_modal_u3: "0–3세 (Krippe)", kita_modal_elem: "3–6세 (Kindergarten)", kita_col_district: "동네", kita_col_quote: "수급률", kita_col_bilanz: "수지", kita_col_delta: "Δ 전년비", kita_status_critical: "위기", kita_status_under: "부족", kita_status_balanced: "충분", kita_status_over: "잉여", kita_legend: "수급률 = 자리 ÷ 아동 수 · 100% = 수요 충족. 4개 동네 (Frauenstein, Rambach, Heßloch, Igstadt)는 0–3세 자리 0개. 절대 부족 최대치는 Westend (−157자리).", kita_action_register: "WiKITA 등록", kita_action_source: "원본 보고서 (PDF)", kita_action_open_data: "Open Data Wiesbaden", kita_summary_label: "시 전체", kita_summary_bilanz: "시 전체 부족 자리" });
 
 // =================================================================
@@ -2394,7 +2394,7 @@ Object.assign(I18N.tr, {
   story_source_label: "Veri kaynağı", story_modal_close: "Kapat",
   story_modal_view_source: "opendata.cloud.wiesbaden.de'de aç ↗",
   story1_finding: "Wiesbaden seçmenlerinin %48,1'i 2026'da oy kullandı — 25 yılın en yüksek katılımı. CDU en güçlü parti olmaya devam ediyor (%26,5), AfD %11,9'a iki katına çıktı, Yeşiller 6,2 puan kaybetti. Heßloch'ta %73, Amöneburg'da sadece %28 oy kullandı.",
-  story1_fact1: "Katılım 2026", story1_fact2: "2021'e göre", story1_fact3: "Aralık Heßloch ↔ Amöneburg",
+  story1_fact1: "Katılım 2026", story1_fact2: "2021'e göre", story1_fact3: "Aralık (Heßloch ↔ Amöneburg)",
   story1_chart_ds: "Yerel seçim katılımı (%)", story1_chart_y: "Katılım (%)",
   story2_finding: "Medyan ilan kirası 2007'den bu yana %62 arttı — 7,80 €/m²'den 12,60 €/m²'ye. Aynı dönemde sosyal konut stoku %24 azaldı, 11.255'ten 8.513'e. 2024 yeni tamamlanan konut: sadece 555 — 2017'den bu yana en düşük.",
   story2_fact1: "Kira 2007 → 2024", story2_fact2: "Sosyal konut 2014 → 2024", story2_fact3: "Medyan kira 2024",
@@ -2404,21 +2404,21 @@ Object.assign(I18N.tr, {
   story3_fact1: "Toplam nüfus", story3_fact2: "Ort. yaş (en genç ↔ en yaşlı)", story3_fact3: "Yabancı oranı",
   story3_chart_ds: "Ortalama yaş (yıl)", story3_chart_y: "Yıl",
   story4_finding: "Şehir genelinde kişi başına satın alma gücü 32.375 €. En yüksek Sonnenberg 42.177 €, en düşük Amöneburg 27.095 € — fark 15.082 €. Yurttaş yardımı (Bürgergeld) alanlar: Westend'de %14,7, Heßloch'ta sadece %1,2.",
-  story4_fact1: "Şehir ortalaması", story4_fact2: "Aralık (en yüksek − en düşük)", story4_fact3: "Bürgergeld oranı (Westend ↔ Heßloch)",
+  story4_fact1: "Şehir ortalaması", story4_fact2: "Fark (en yüksek − en düşük)", story4_fact3: "Bürgergeld oranı (Westend ↔ Heßloch)",
   story4_chart_ds: "Satın alma gücü (€/kişi)", story4_chart_y: "€/kişi"
 });
 Object.assign(I18N.ua, {
   story_finding_label: "ВИСНОВОК", story_facts_label: "КОНТЕКСТ", story_chart_label: "ДАНІ",
   story_source_label: "Джерело даних", story_modal_close: "Закрити",
   story_modal_view_source: "Відкрити на opendata.cloud.wiesbaden.de ↗",
-  story1_finding: "48,1 % мешканців Вісбадена проголосували у 2026 році — найвища явка за 25 років. ХДС залишається найсильнішою партією (26,5 %), АдН подвоюється до 11,9 %, Зелені втрачають 6,2 пункти. У Гесслосі — 73 %, в Амонебурзі — лише 28 %.",
+  story1_finding: "48,1 % мешканців Вісбадена проголосували у 2026 році — найвища явка за 25 років. CDU лишається найсильнішою партією (26,5 %), AfD подвоюється до 11,9 %, Grüne втрачають 6,2 пункту. У Heßloch проголосували 73 %, в Amöneburg — лише 28 %.",
   story1_fact1: "Явка 2026", story1_fact2: "до 2021", story1_fact3: "Розмах Heßloch ↔ Amöneburg",
   story1_chart_ds: "Явка на місцевих виборах (%)", story1_chart_y: "Явка (%)",
-  story2_finding: "Медіанна орендна ставка зросла на 62 % з 2007 року — з 7,80 €/м² до 12,60 €/м². За той самий період запас соціального житла зменшився на 24 %, з 11 255 до 8 513 квартир. У 2024 здано лише 555 нових квартир — мінімум з 2017.",
+  story2_finding: "Медіанна ціна пропозиції зросла на 62 % з 2007 року — з 7,80 €/м² до 12,60 €/м². За той самий період фонд соціального житла зменшився на 24 %, з 11.255 до 8.513 квартир. У 2024 році здано лише 555 квартир — мінімум з 2017 року.",
   story2_fact1: "Орендна плата 2007 → 2024", story2_fact2: "Соцжитло 2014 → 2024", story2_fact3: "Медіанна оренда 2024",
   story2_chart_ds1: "Медіанна оренда (€/м²)", story2_chart_ds2: "Соцжитло (квартир)",
   story2_chart_y1: "€/м²", story2_chart_y2: "Квартир",
-  story3_finding: "299 811 мешканців Вісбадена живуть у 26 районах. У наймолодшому районі — Westend/Bleichstraße — середній вік 37,0 років. У найстарішому — Heßloch — 50,3. 25,3 % — іноземці, 48,0 % мають міграційне походження.",
+  story3_finding: "299.811 мешканців Вісбадена живуть у 26 районах. У наймолодшому районі — Westend/Bleichstraße — середній вік 37,0 року. У найстарішому, Heßloch, — 50,3. Іноземці становлять 25,3 %, а 48,0 % мають міграційне походження.",
   story3_fact1: "Усього мешканців", story3_fact2: "Сер. вік (наймолодший ↔ найстарший)", story3_fact3: "Частка іноземців",
   story3_chart_ds: "Середній вік (роки)", story3_chart_y: "Роки",
   story4_finding: "Середня купівельна спроможність по місту — 32 375 € на мешканця. Лідер Sonnenberg — 42 177 €, Amöneburg — 27 095 €, розрив 15 082 €. Громадянська допомога (Bürgergeld): 14,7 % у Westend, лише 1,2 % у Heßloch.",
@@ -2429,17 +2429,17 @@ Object.assign(I18N.kr, {
   story_finding_label: "결론", story_facts_label: "맥락", story_chart_label: "데이터",
   story_source_label: "데이터 출처", story_modal_close: "닫기",
   story_modal_view_source: "opendata.cloud.wiesbaden.de에서 열기 ↗",
-  story1_finding: "비스바덴 시민 48.1%가 2026년에 투표 — 25년 만의 최고 투표율. CDU가 26.5%로 1당, AfD는 11.9%로 두 배 증가, 녹색당은 6.2%p 하락. Heßloch 73% vs. Amöneburg 28%로 26개 동네 격차 큼.",
+  story1_finding: "비스바덴 시민 48,1%가 2026년에 투표했습니다 — 25년 만의 최고 투표율입니다. CDU가 26,5%로 제1당을 유지했고, AfD는 11,9%로 두 배가 됐으며, 녹색당은 6,2%p 하락했습니다. Heßloch에서는 73%가, Amöneburg에서는 28%만 투표했습니다.",
   story1_fact1: "2026 투표율", story1_fact2: "2021년 대비", story1_fact3: "최고/최저 격차",
   story1_chart_ds: "지방선거 투표율 (%)", story1_chart_y: "투표율 (%)",
-  story2_finding: "비스바덴 평균 호가월세는 2007년 €7.80/㎡에서 2024년 €12.60/㎡로 17년간 62% 상승. 같은 기간 공공임대주택은 11,255호에서 8,513호로 24% 감소. 2024년 신규 준공은 555호로 2017년 이후 최저.",
+  story2_finding: "비스바덴 중간 호가 월세는 2007년 7,80 €/㎡에서 2024년 12,60 €/㎡로 62% 올랐습니다. 같은 기간 공공임대주택은 11.255호에서 8.513호로 24% 줄었습니다. 2024년 신규 준공은 555호로 2017년 이후 최저치입니다.",
   story2_fact1: "월세 2007 → 2024", story2_fact2: "공공임대 2014 → 2024", story2_fact3: "2024 중간 월세",
   story2_chart_ds1: "중간 월세 (€/㎡)", story2_chart_ds2: "공공임대 (호)",
   story2_chart_y1: "€/㎡", story2_chart_y2: "호",
-  story3_finding: "비스바덴 시민 299,811명이 26개 동네에 거주. 가장 젊은 동네 Westend/Bleichstraße는 평균 37.0세, 가장 늙은 동네 Heßloch는 50.3세. 외국인 비율 25.3%, 이민 배경자 48.0%.",
+  story3_finding: "비스바덴 시민 299.811명이 26개 동네에 살고 있습니다. 가장 젊은 동네 Westend/Bleichstraße는 평균 37,0세, 가장 나이 든 동네 Heßloch는 50,3세입니다. 외국인 비율은 25,3%, 이주 배경 주민은 48,0%입니다.",
   story3_fact1: "총 인구", story3_fact2: "평균 연령 (최저↔최고)", story3_fact3: "외국인 비율",
   story3_chart_ds: "평균 연령 (세)", story3_chart_y: "세",
-  story4_finding: "비스바덴 1인당 평균 구매력 €32,375. 최고는 Sonnenberg €42,177, 최저는 Amöneburg €27,095 — 격차 €15,082. 시민수당(Bürgergeld) 수급률: Westend 14.7% vs. Heßloch 1.2%.",
+  story4_finding: "비스바덴 1인당 평균 구매력은 32.375 €입니다. 최고는 Sonnenberg(42.177 €), 최저는 Amöneburg(27.095 €)로 격차는 15.082 €입니다. 시민수당(Bürgergeld) 수급률은 Westend 14,7%, Heßloch 1,2%입니다.",
   story4_fact1: "시 평균", story4_fact2: "최고-최저 격차", story4_fact3: "Bürgergeld 수급률 (Westend↔Heßloch)",
   story4_chart_ds: "구매력 (€/인)", story4_chart_y: "€/인"
 });
@@ -2450,7 +2450,7 @@ const STORIES = [
     titleKey: "story1",
     findingKey: "story1_finding",
     sourceUrl: "https://opendata.cloud.wiesbaden.de/app/dataset/wahlbeteiligung-bei-bundestags-landtags-europa-und-kommunalwahlen-in-wiesbaden-1972-bis-2026",
-    sourceLabelDe: "Wahlbeteiligung 1972–2026 + Stadtverordnetenwahl-Ergebnis · Stadt Wiesbaden",
+    sourceLabelDe: "Wahlbeteiligung 1972–2026 + Stadtverordnetenwahl-Ergebnis · Stadt Wiesbaden", sourceLabelEn: "Voter turnout 1972–2026 + city council election results · Stadt Wiesbaden", sourceLabelTr: "Seçime katılım 1972–2026 + belediye meclisi seçim sonuçları · Stadt Wiesbaden", sourceLabelUa: "Явка на виборах 1972–2026 + результати виборів до міської ради · Stadt Wiesbaden", sourceLabelKr: "투표율 1972–2026 + 시의회 선거 결과 · Stadt Wiesbaden",
     facts: [
       { labelKey: "story1_fact1", value: "48,1 %" },
       { labelKey: "story1_fact2", value: "+6,3 pp" },
@@ -2470,7 +2470,7 @@ const STORIES = [
     titleKey: "story2",
     findingKey: "story2_finding",
     sourceUrl: "https://opendata.cloud.wiesbaden.de/app/dataset/angebotsmieten-in-wiesbaden-2007-bis-2024",
-    sourceLabelDe: "Angebotsmieten 2007–2024 + Sozialwohnungen 2014–2024 · Stadt Wiesbaden",
+    sourceLabelDe: "Angebotsmieten 2007–2024 + Sozialwohnungen 2014–2024 · Stadt Wiesbaden", sourceLabelEn: "Asking rents 2007–2024 + social housing 2014–2024 · Stadt Wiesbaden", sourceLabelTr: "Arz fiyatları 2007–2024 + sosyal konutlar 2014–2024 · Stadt Wiesbaden", sourceLabelUa: "Ціни пропозиції оренди 2007–2024 + соціальне житло 2014–2024 · Stadt Wiesbaden", sourceLabelKr: "호가 임대료 2007–2024 + 사회임대주택 2014–2024 · Stadt Wiesbaden",
     facts: [
       { labelKey: "story2_fact1", value: "+62 %" },
       { labelKey: "story2_fact2", value: "−24 %" },
@@ -2493,7 +2493,7 @@ const STORIES = [
     titleKey: "story3",
     findingKey: "story3_finding",
     sourceUrl: "https://opendata.cloud.wiesbaden.de/app/dataset/kurzinfo-bevoelkerungsbestand-nach-ortsbezirken-in-wiesbaden-januar-2026",
-    sourceLabelDe: "Bevölkerungsbestand & Durchschnittsalter Jan 2026 · Stadt Wiesbaden",
+    sourceLabelDe: "Bevölkerungsbestand & Durchschnittsalter Jan 2026 · Stadt Wiesbaden", sourceLabelEn: "Population stock & average age, Jan 2026 · Stadt Wiesbaden", sourceLabelTr: "Nüfus mevcudu ve ortalama yaş Ocak 2026 · Stadt Wiesbaden", sourceLabelUa: "Чисельність населення та середній вік, січень 2026 · Stadt Wiesbaden", sourceLabelKr: "인구 현황 & 평균 연령 2026년 1월 · Stadt Wiesbaden",
     facts: [
       { labelKey: "story3_fact1", value: "299.811" },
       { labelKey: "story3_fact2", value: "37,0 J. ↔ 50,3 J." },
@@ -2514,7 +2514,7 @@ const STORIES = [
     titleKey: "story4",
     findingKey: "story4_finding",
     sourceUrl: "https://opendata.cloud.wiesbaden.de/app/dataset/kaufkraft-und-arbeitsmarkt-nach-ortsbezirken-in-wiesbaden-dezember-2025",
-    sourceLabelDe: "Kaufkraft & Arbeitsmarkt nach Ortsbezirken Dez 2025 · Stadt Wiesbaden",
+    sourceLabelDe: "Kaufkraft & Arbeitsmarkt nach Ortsbezirken Dez 2025 · Stadt Wiesbaden", sourceLabelEn: "Purchasing power & labour market by district, Dec 2025 · Stadt Wiesbaden", sourceLabelTr: "Mahallelere göre alım gücü ve işgücü piyasası Aralık 2025 · Stadt Wiesbaden", sourceLabelUa: "Купівельна спроможність і ринок праці за районами, грудень 2025 · Stadt Wiesbaden", sourceLabelKr: "동네별 구매력 & 노동시장 2025년 12월 · Stadt Wiesbaden",
     facts: [
       { labelKey: "story4_fact1", value: "32.375 €" },
       { labelKey: "story4_fact2", value: "+15.082 €" },
@@ -2538,7 +2538,7 @@ const STORIES = [
     titleKey: "story5",
     findingKey: "story5_finding",
     sourceUrl: "https://opendata.cloud.wiesbaden.de/app/data-catalog/12a473a9-c89c-4811-ab6a-6f497cc0de4b",
-    sourceLabelDe: "Bautätigkeit nach Ortsbezirken 2012–2024 · Stadt Wiesbaden · dl-de-by-2.0",
+    sourceLabelDe: "Bautätigkeit nach Ortsbezirken 2012–2024 · Stadt Wiesbaden · dl-de-by-2.0", sourceLabelEn: "Construction activity by district 2012–2024 · Stadt Wiesbaden · dl-de-by-2.0", sourceLabelTr: "Mahallelere göre inşaat faaliyeti 2012–2024 · Stadt Wiesbaden · dl-de-by-2.0", sourceLabelUa: "Будівельна активність за районами 2012–2024 · Stadt Wiesbaden · dl-de-by-2.0", sourceLabelKr: "동네별 건축 활동 2012–2024 · Stadt Wiesbaden · dl-de-by-2.0",
     surprise: { de: "Biebrich allein lieferte 2024 mehr als die nächsten 3 Bezirke zusammen.",
                 en: "Biebrich alone built more in 2024 than the next 3 districts combined.",
                 tr: "Biebrich 2024'te tek başına en yakın 3 bölgenin toplamından fazla inşa etti.",
@@ -2564,7 +2564,7 @@ const STORIES = [
     titleKey: "story6",
     findingKey: "story6_finding",
     sourceUrl: "https://opendata.cloud.wiesbaden.de/app/dataset/wahlbeteiligung-bei-bundestags-landtags-europa-und-kommunalwahlen-in-wiesbaden-1972-bis-2026",
-    sourceLabelDe: "Wahlbeteiligung 2026 + Bevölkerung Jan 2026 · Stadt Wiesbaden · dl-de-by-2.0",
+    sourceLabelDe: "Wahlbeteiligung 2026 + Bevölkerung Jan 2026 · Stadt Wiesbaden · dl-de-by-2.0", sourceLabelEn: "Voter turnout 2026 + population Jan 2026 · Stadt Wiesbaden · dl-de-by-2.0", sourceLabelTr: "Seçime katılım 2026 + nüfus Ocak 2026 · Stadt Wiesbaden · dl-de-by-2.0", sourceLabelUa: "Явка 2026 + населення, січень 2026 · Stadt Wiesbaden · dl-de-by-2.0", sourceLabelKr: "투표율 2026 + 인구 2026년 1월 · Stadt Wiesbaden · dl-de-by-2.0",
     surprise: { de: "Heßloch mit 9,8 % Ausländeranteil hatte 73 % Beteiligung. Mainz-Amöneburg mit 25,6 % hatte 28 %. Korrelation oder Strukturproblem?",
                 en: "Heßloch (9.8% foreign-born) had 73% turnout. Amöneburg (25.6%) had 28%. Correlation or structural?",
                 tr: "Heßloch (%9,8 yabancı) %73 katılım. Amöneburg (%25,6) %28. Korelasyon mu yapısal mı?",
@@ -2589,7 +2589,7 @@ const STORIES = [
     titleKey: "story8",
     findingKey: "story8_finding",
     sourceUrl: "https://opendata.cloud.wiesbaden.de/app/data-catalog/61bd11e9-2d59-4421-a521-716185fa60f5",
-    sourceLabelDe: "Schülerinnen & Schüler 2016–2024 · Stadt Wiesbaden · dl-de-by-2.0",
+    sourceLabelDe: "Schülerinnen & Schüler 2016–2024 · Stadt Wiesbaden · dl-de-by-2.0", sourceLabelEn: "Pupils 2016–2024 · Stadt Wiesbaden · dl-de-by-2.0", sourceLabelTr: "Öğrenciler 2016–2024 · Stadt Wiesbaden · dl-de-by-2.0", sourceLabelUa: "Учні 2016–2024 · Stadt Wiesbaden · dl-de-by-2.0", sourceLabelKr: "초·중등 학생 2016–2024 · Stadt Wiesbaden · dl-de-by-2.0",
     surprise: { de: "Vielfalt wuchs schneller als die Schulen selbst: Migrationshintergrund 42,8 % → 54,8 % in 8 Jahren.",
                 en: "Diversity grew faster than schools: migration background 42.8% → 54.8% in 8 years.",
                 tr: "Çeşitlilik okuldan hızlı büyüdü: göçmen kökeni %42,8 → %54,8 (8 yıl).",
@@ -2615,7 +2615,7 @@ const STORIES = [
     titleKey: "story7",
     findingKey: "story7_finding",
     sourceUrl: "https://opendata.cloud.wiesbaden.de/app/data-catalog/ergebnis-und-planungshaushalt-wiesbaden",
-    sourceLabelDe: "Ergebnishaushalt 2023–2025 · Stadt Wiesbaden Stadtkämmerei · dl-de-by-2.0",
+    sourceLabelDe: "Ergebnishaushalt 2023–2025 · Stadt Wiesbaden Stadtkämmerei · dl-de-by-2.0", sourceLabelEn: "Operating budget 2023–2025 · Stadt Wiesbaden city treasury · dl-de-by-2.0", sourceLabelTr: "Sonuç bütçesi 2023–2025 · Stadt Wiesbaden Stadtkämmerei · dl-de-by-2.0", sourceLabelUa: "Бюджет результату 2023–2025 · Stadt Wiesbaden, міське казначейство · dl-de-by-2.0", sourceLabelKr: "손익예산 2023–2025 · Stadt Wiesbaden 시 재무국 · dl-de-by-2.0",
     surprise: { de: "Soziale Leistungen + Kinder-/Jugendhilfe = 61 % aller städtischen Ausgaben 2025.",
                 en: "Welfare + youth services = 61% of all city spending in 2025.",
                 tr: "Sosyal yardımlar + Çocuk ve gençlik hizmetleri = 2025 belediye harcamalarının %61'i.",
@@ -2641,7 +2641,7 @@ const STORIES = [
     titleKey: "story9",
     findingKey: "story9_finding",
     sourceUrl: "https://statistik.arbeitsagentur.de/DE/Navigation/Statistiken/Interaktive-Statistiken/Pendleratlas/Pendleratlas-Nav.html",
-    sourceLabelDe: "IAB Pendleratlas 2023 + ESWE Verkehr Modal-Split-Studie · dl-de-by-2.0",
+    sourceLabelDe: "IAB Pendleratlas 2023 + ESWE Verkehr Modal-Split-Studie · dl-de-by-2.0", sourceLabelEn: "IAB commuter atlas 2023 + ESWE Verkehr modal-split study · dl-de-by-2.0", sourceLabelTr: "IAB İşe Gidiş-Geliş Atlası 2023 + ESWE Verkehr ulaşım türü dağılımı çalışması · dl-de-by-2.0", sourceLabelUa: "IAB Pendleratlas 2023 + дослідження модального спліту ESWE Verkehr · dl-de-by-2.0", sourceLabelKr: "IAB 통근 지도 2023 + ESWE Verkehr 교통 분담률 연구 · dl-de-by-2.0",
     surprise: { de: "60.000 Menschen mehr arbeiten in Wiesbaden als hier wohnen — eine ganze Mittelstadt täglich auf Wanderschaft.",
                 en: "60,000 more people work in Wiesbaden than live here — an entire mid-sized town commuting daily.",
                 tr: "Wiesbaden'de yaşayandan 60.000 kişi daha fazla çalışıyor — orta büyüklükte bir şehir kadar günlük göç.",
@@ -2666,7 +2666,7 @@ const STORIES = [
     titleKey: "story10",
     findingKey: "story10_finding",
     sourceUrl: "https://github.com/sujinpark/wiesbaden-lagebild",
-    sourceLabelDe: "Eigene Build-Logs · v2.6 → v2.8 Diff · MIT (Code) + dl-de-by-2.0 (Daten)",
+    sourceLabelDe: "Eigene Build-Logs · v2.6 → v2.8 Diff · MIT (Code) + dl-de-by-2.0 (Daten)", sourceLabelEn: "Own build logs · v2.6 → v2.8 diff · MIT (code) + dl-de-by-2.0 (data)", sourceLabelTr: "Kendi derleme kayıtları · v2.6 → v2.8 farkı · MIT (kod) + dl-de-by-2.0 (veri)", sourceLabelUa: "Власні build-логи · diff v2.6 → v2.8 · MIT (код) + dl-de-by-2.0 (дані)", sourceLabelKr: "자체 빌드 로그 · v2.6 → v2.8 차이 · MIT (코드) + dl-de-by-2.0 (데이터)",
     surprise: { de: "Das Lagebild kann sich selbst messen: 8 Live-Quellen statt 0 in v2.5, 11 EBENEN statt 6, Action-Box mit 312 möglichen Pfaden.",
                 en: "The dashboard now measures itself: 8 live sources (was 0), 11 layers (was 6), 312 possible action paths.",
                 tr: "Pano kendini ölçüyor: 8 canlı kaynak (önce 0), 11 katman (önce 6), 312 olası eylem yolu.",
@@ -2760,15 +2760,15 @@ Object.assign(I18N.en, {
 });
 Object.assign(I18N.tr, {
   kpi_detail_eyebrow: "CANLI GÖSTERGE · WIESBADEN ŞEHRİ",
-  kpi_disabled_roadmap: "Yol haritası · Açık veri v2",
+  kpi_disabled_roadmap: "Yol haritası · Open-Data v2",
   kpi_population_hint: "↗ Hikaye",
-  kpi_mini_open_view: "Tam görünümü Alltag sekmesinde aç →",
+  kpi_mini_open_view: "Tam görünümü Gündelik sekmesinde aç →",
   kpi_air_title: "Hava kalitesi · 7 günlük trend, şehir merkezi",
-  kpi_air_finding: "Bugünkü AQI 42, DSÖ eşiğinin (50 = \"iyi\") çok altında. Son 7 günde NO2 6 puan düştü — hiçbir gün AB sınırını (40 µg/m³) aşmadı. NO2 ve PM10 yeşil bantta kalıyor.",
+  kpi_air_finding: "Bugünkü AQI 42, DSÖ eşiğinin (50 = \"iyi\") çok altında. Son 7 günde NO₂ değeri 6 puan düştü — AB sınır değerini (40 µg/m³) aşan gün olmadı. Azot dioksit (NO₂) ve PM10 yeşil bantta kalıyor.",
   kpi_air_fact1: "Bugün AQI", kpi_air_fact2: "Δ 7 gün", kpi_air_fact3: "PM10 (günlük ort.)",
   kpi_air_chart_ds: "AQI günlük ortalama (merkez)", kpi_air_y: "AQI",
   kpi_construction_title: "Konut tamamlamaları 2014–2024",
-  kpi_construction_finding: "2024'te Wiesbaden'da yalnızca 555 konut tamamlandı — 2017'den bu yana en düşük. Zirve 2021 yılında 1.562 konuttu. Bugün 23 aktif şantiye izleniyor; Bauüberhang boru hattı 2022'den beri küçülüyor.",
+  kpi_construction_finding: "2024'te Wiesbaden'da yalnızca 555 konut tamamlandı — 2017'den bu yana en düşük değer. Zirve 2021 yılında 1.562 konuttu. 2024'te 23 aktif şantiye sayıldı; başlanmış ama tamamlanmamış inşaat stoku (Bauüberhang) 2022'den beri küçülüyor.",
   kpi_construction_fact1: "Konut 2024", kpi_construction_fact2: "Zirve 2021", kpi_construction_fact3: "Aktif şantiye",
   kpi_construction_chart_ds: "Tamamlanan konutlar (şehir geneli)", kpi_construction_y: "Konut",
   kpi_rent_title: "Medyan ilan kirası 2007–2024 · Wiesbaden",
@@ -2787,24 +2787,24 @@ Object.assign(I18N.tr, {
   kpi_fuel_finding: "Şehirde 33 halka açık istasyon, 1–15 dakikada bir güncellenir. Bugün en ucuz Nordost'ta; Biebrich'teki Total/TotalEnergies şu an en pahalı. Aralık: tepe ile dip arasında 12 cent/litre.",
   kpi_fuel_top_label: "En ucuz 3", kpi_fuel_avg_label: "Şehir ortalaması", kpi_fuel_spread_label: "Aralık",
   kpi_groceries_title: "Sepet endeksi · 4 temel ürün",
-  kpi_groceries_finding: "Wiesbaden'daki 6 market karşılaştırması (vatandaş bildirimli fiyatlar). Aldi indirim sepeti (süt + 10 yumurta + ekmek + tereyağı) organik market sepetinden %14 daha ucuz. Aynı sepet için VPI Hessen referansı: 9,76 €.",
+  kpi_groceries_finding: "Wiesbaden'daki 6 market karşılaştırması (vatandaş tarafından bildirilen fiyatlar). İndirim marketi Aldi'nin sepeti (süt + 10 yumurta + ekmek + tereyağı) organik market sepetinden %14 daha ucuz. Aynı sepet için VPI Hessen karşılaştırma değeri: 9,76 €.",
   kpi_groceries_basket_label: "Sepet (4 ürün)", kpi_groceries_diff_label: "İndirim ↔ Organik", kpi_groceries_vpi_label: "VPI Hessen ort."
 });
 Object.assign(I18N.ua, {
   kpi_detail_eyebrow: "ЖИВИЙ ІНДИКАТОР · МІСТО ВІСБАДЕН",
   kpi_disabled_roadmap: "Дорожня карта · Open Data v2",
   kpi_population_hint: "↗ Історія",
-  kpi_mini_open_view: "Відкрити повний вигляд у вкладці Alltag →",
+  kpi_mini_open_view: "Відкрити повний вигляд у вкладці «Щоденне» →",
   kpi_air_title: "Якість повітря · 7-денний тренд, центр міста",
-  kpi_air_finding: "Сьогоднішній AQI 42 значно нижчий за поріг ВООЗ (50 = «добре»). За останні 7 днів NO2 знизився на 6 пунктів — жодного дня не перевищено межу ЄС (40 мкг/м³). NO2 і PM10 у зеленій зоні.",
+  kpi_air_finding: "Сьогоднішній AQI 42 значно нижчий за поріг ВООЗ (50 = «добре»). За останні 7 днів значення NO₂ знизилося на 6 пунктів — жодного дня перевищення межі ЄС (40 мкг/м³). Діоксид азоту та PM10 лишаються в зеленій зоні.",
   kpi_air_fact1: "AQI сьогодні", kpi_air_fact2: "Δ 7 днів", kpi_air_fact3: "PM10 (середньодобове)",
   kpi_air_chart_ds: "AQI середньодобове (центр)", kpi_air_y: "AQI",
   kpi_construction_title: "Завершення житлового будівництва 2014–2024",
-  kpi_construction_finding: "У 2024 у Вісбадені здано лише 555 квартир — мінімум з 2017. Пік припав на 2021 рік — 1 562 квартири. Сьогодні відстежують 23 активні будмайданчики; черга Bauüberhang скорочується з 2022.",
+  kpi_construction_finding: "У 2024 році у Вісбадені здано лише 555 квартир — найнижчий показник з 2017 року. Піковим був 2021 рік — 1.562 квартири. У 2024 році налічувалося 23 активні будмайданчики; обсяг незавершеного будівництва (Bauüberhang) скорочується з 2022 року.",
   kpi_construction_fact1: "Квартири 2024", kpi_construction_fact2: "Пік 2021", kpi_construction_fact3: "Активні будмайданчики",
   kpi_construction_chart_ds: "Здані квартири (по місту)", kpi_construction_y: "Квартир",
   kpi_rent_title: "Медіанна орендна ставка 2007–2024 · Вісбаден",
-  kpi_rent_finding: "Медіанна орендна ставка зросла з 7,80 €/м² (2007) до 12,60 €/м² (2024) — +62 % за 17 років. Mietspiegel 2025 (кваліфікований за §558d BGB): від 8,78 €/м² (старі будинки, простий район) до 15,68 €/м² (нові, преміум).",
+  kpi_rent_finding: "Медіанна ціна пропозиції зросла з 7,80 €/м² (2007) до 12,60 €/м² (2024) — +62 % за 17 років. Mietspiegel 2025 (кваліфікований за §558d BGB) показує діапазон від 8,78 €/м² (старий рік забудови, проста житлова локація) до 15,68 €/м² (новий рік забудови, дуже гарна локація).",
   kpi_rent_fact1: "Медіана 2024", kpi_rent_fact2: "до 2007", kpi_rent_fact3: "Діапазон Mietspiegel",
   kpi_rent_chart_ds: "Медіанна оренда (€/м²)", kpi_rent_y: "€/м²",
   kpi_unemployment_title: "Рівень безробіття за районом · груд. 2025",
@@ -2812,47 +2812,47 @@ Object.assign(I18N.ua, {
   kpi_unemployment_fact1: "Середнє по місту", kpi_unemployment_fact2: "Breckenheim ↔ Westend", kpi_unemployment_fact3: "Частка Bürgergeld (місто)",
   kpi_unemployment_chart_ds: "Рівень безробіття (%)", kpi_unemployment_y: "%",
   kpi_energy_title: "Частка відновлюваної енергії · 2018–2024",
-  kpi_energy_finding: "Частка відновлюваних у встановленій потужності зросла з 22 % (2018) до 35 % (2024). Найбільший стрибок — 2020–2022 завдяки приватним фотовольтаїчним установкам (стимул EEG 2021). Середнє Гессену — 41 %. Вісбаден відстає в міському порівнянні.",
+  kpi_energy_finding: "Частка відновлюваних джерел у встановленій потужності у Вісбадені зросла з 22 % (2018) до 35 % (2024). Найбільший стрибок припав на 2020–2022 роки завдяки приватним фотовольтаїчним установкам (підтримка EEG 2021). Середнє по Гессену зараз — 41 %, тож у порівнянні міст Вісбаден є відстаючим.",
   kpi_energy_fact1: "Частка 2024", kpi_energy_fact2: "до 2018", kpi_energy_fact3: "Середнє Гессену",
   kpi_energy_chart_ds: "Частка відновлюваних (%)", kpi_energy_y: "%",
   kpi_fuel_title: "Топ-3 найдешевші АЗС сьогодні (Super E10)",
-  kpi_fuel_finding: "33 громадські АЗС у місті, оновлюються кожні 1–15 хв. Найдешевша зараз у Nordost; Total/TotalEnergies у Biebrich — найдорожчі. Розкид: 12 центів/л між топом і дном.",
+  kpi_fuel_finding: "33 публічні АЗС у межах міста, дані оновлюються кожні 1–15 хв. Найдешевша сьогодні розташована в Nordost; Total/TotalEnergies у Biebrich наразі найдорожчі. Розкид: 12 центів/л між найвищою та найнижчою ціною.",
   kpi_fuel_top_label: "Найдешевші 3", kpi_fuel_avg_label: "Середнє по місту", kpi_fuel_spread_label: "Розкид",
   kpi_groceries_title: "Індекс споживчого кошика · 4 базові продукти",
-  kpi_groceries_finding: "Порівняння 6 магазинів у Вісбадені (ціни від громадян). Кошик Aldi (молоко + 10 яєць + хліб + масло) на 14 % дешевший за кошик біо-маркету. Референс VPI Гессену: 9,76 €.",
+  kpi_groceries_finding: "Порівняння 6 магазинів у Вісбадені (ціни, повідомлені мешканцями). Кошик дискаунтера Aldi (молоко + 10 яєць + хліб + масло) на 14 % дешевший за кошик біо-маркету. Порівняльне значення VPI Hessen для того самого кошика: 9,76 €.",
   kpi_groceries_basket_label: "Кошик (4 товари)", kpi_groceries_diff_label: "Дискаунт ↔ Біо", kpi_groceries_vpi_label: "Сер. VPI Гессен"
 });
 Object.assign(I18N.kr, {
-  kpi_detail_eyebrow: "실시간 지표 · 비스바덴",
+  kpi_detail_eyebrow: "실시간 지표 · Stadt Wiesbaden",
   kpi_disabled_roadmap: "로드맵 · 오픈데이터 v2",
   kpi_population_hint: "↗ Story",
   kpi_mini_open_view: "Alltag 탭에서 전체 보기 →",
-  kpi_air_title: "대기질 · 7일 추이 (시 중심)",
-  kpi_air_finding: "오늘 AQI 42 — WHO 기준치(50 = '좋음')보다 한참 낮아. 지난 7일간 NO2가 6포인트 하락했고, EU 한계치(40 µg/m³) 초과일은 0일. NO2/PM10 모두 안전 범위 내.",
+  kpi_air_title: "대기질 · 7일 추이 (도심)",
+  kpi_air_finding: "오늘 AQI는 42로 WHO 기준치(50 = '좋음')보다 크게 낮습니다. 지난 7일간 NO₂가 6포인트 하락했고, EU 한계치(40 µg/m³) 초과일은 0일입니다. NO₂와 PM10 모두 안전 범위 안에 있습니다.",
   kpi_air_fact1: "오늘 AQI", kpi_air_fact2: "7일 Δ", kpi_air_fact3: "PM10 (일평균)",
-  kpi_air_chart_ds: "AQI 일평균 (시 중심)", kpi_air_y: "AQI",
+  kpi_air_chart_ds: "AQI 일평균 (도심)", kpi_air_y: "AQI",
   kpi_construction_title: "주택 준공 2014–2024",
-  kpi_construction_finding: "2024년 비스바덴 신규 주택 준공은 555호로 2017년 이후 최저. 2021년 정점은 1,562호. 현재 활성 공사장 23곳, Bauüberhang 파이프라인은 2022년부터 축소 중.",
+  kpi_construction_finding: "2024년 비스바덴 신규 주택 준공은 555호로 2017년 이후 최저치입니다. 정점은 2021년 1.562호였습니다. 2024년 활성 공사장은 23곳이며, 미착공 잔량(Bauüberhang) 파이프라인은 2022년부터 줄고 있습니다.",
   kpi_construction_fact1: "2024 준공", kpi_construction_fact2: "2021 정점", kpi_construction_fact3: "활성 공사장",
   kpi_construction_chart_ds: "준공 주택 (시 전체)", kpi_construction_y: "호",
   kpi_rent_title: "중간 호가 월세 2007–2024 · 비스바덴",
-  kpi_rent_finding: "중간 호가 월세는 €7.80/㎡ (2007) → €12.60/㎡ (2024)로 17년간 62% 상승. 2025 Mietspiegel (§558d BGB 자격 인정): €8.78/㎡ (구축·단순 입지)부터 €15.68/㎡ (신축·프리미엄)까지.",
+  kpi_rent_finding: "중간 호가 월세는 7,80 €/㎡(2007)에서 12,60 €/㎡(2024)로 17년간 62% 올랐습니다. 2025 임대료 기준표(Mietspiegel, §558d BGB 자격 인정)는 8,78 €/㎡(구축·단순 입지)부터 15,68 €/㎡(신축·최우수 입지)까지 분포합니다.",
   kpi_rent_fact1: "2024 중간값", kpi_rent_fact2: "2007년 대비", kpi_rent_fact3: "Mietspiegel 범위",
   kpi_rent_chart_ds: "중간 호가 월세 (€/㎡)", kpi_rent_y: "€/㎡",
   kpi_unemployment_title: "동네별 실업률 · 2025년 12월",
-  kpi_unemployment_finding: "시 평균 실업률 8.0%. 26개 동네 격차가 큼: Breckenheim (2.8%) Frauenstein (3.1%)이 최저, Westend/Bleichstraße (12.3%) Klarenthal (11.7%)이 최고. 같은 도시 안에서 4배 차이.",
+  kpi_unemployment_finding: "시 평균 실업률은 8,0%입니다. 26개 동네 사이의 격차가 매우 큽니다: Breckenheim(2,8%)과 Frauenstein(3,1%)이 가장 낮고, Westend/Bleichstraße(12,3%)와 Klarenthal(11,7%)이 가장 높습니다. 같은 도시 안에서 4배 차이입니다.",
   kpi_unemployment_fact1: "시 평균", kpi_unemployment_fact2: "Breckenheim ↔ Westend", kpi_unemployment_fact3: "Bürgergeld 수급률 (시)",
   kpi_unemployment_chart_ds: "실업률 (%)", kpi_unemployment_y: "%",
   kpi_energy_title: "재생에너지 비중 · 2018–2024",
-  kpi_energy_finding: "비스바덴 설치 용량 중 재생에너지 비중은 22% (2018) → 35% (2024). 2020–2022년에 민간 태양광 설치(2021 EEG 보조금)로 큰 도약. 헤센 주 평균은 41% — 비스바덴은 도시권 비교에서 후발주자.",
+  kpi_energy_finding: "비스바덴의 설치 용량 중 재생에너지 비중은 22%(2018)에서 35%(2024)로 올랐습니다. 가장 큰 도약은 2020–2022년 민간 태양광 설치(2021년 EEG 보조금)에서 나왔습니다. 헤센주 평균은 현재 41%로, 비스바덴은 도시권 비교에서 후발주자입니다.",
   kpi_energy_fact1: "2024 비중", kpi_energy_fact2: "2018년 대비", kpi_energy_fact3: "헤센 평균",
   kpi_energy_chart_ds: "재생에너지 비중 (%)", kpi_energy_y: "%",
   kpi_fuel_title: "오늘 가장 싼 주유소 Top 3 (Super E10)",
-  kpi_fuel_finding: "시내 공공 주유소 33곳, 데이터 갱신 1–15분. 오늘 최저가는 Nordost. Biebrich의 Total/TotalEnergies가 현재 최고가. 격차: 12센트/리터 (최고-최저).",
+  kpi_fuel_finding: "시내 공공 주유소는 33곳이며, 데이터는 1–15분마다 갱신됩니다. 오늘 최저가는 Nordost에 있고, Biebrich의 Total/TotalEnergies가 현재 가장 비쌉니다. 최고가와 최저가의 격차는 리터당 12센트입니다.",
   kpi_fuel_top_label: "최저가 3", kpi_fuel_avg_label: "시 평균", kpi_fuel_spread_label: "격차",
   kpi_groceries_title: "장바구니 지수 · 4가지 기본 식료품",
-  kpi_groceries_finding: "비스바덴 6개 마트 비교 (시민 제보 가격). Aldi 디스카운터 장바구니(우유 + 계란 10개 + 빵 + 버터)는 유기농 마트 장바구니보다 14% 저렴. 같은 장바구니의 VPI 헤센 기준값: €9.76.",
-  kpi_groceries_basket_label: "장바구니 (4종)", kpi_groceries_diff_label: "할인점 ↔ 유기농", kpi_groceries_vpi_label: "VPI 헤센 평균"
+  kpi_groceries_finding: "비스바덴 6개 마트 비교(시민 제보 가격). Aldi 할인점 장바구니(우유 + 계란 10개 + 빵 + 버터)는 유기농 마트 장바구니보다 14% 저렴합니다. 같은 장바구니의 VPI Hessen 기준값은 9,76 €입니다.",
+  kpi_groceries_basket_label: "장바구니 (4종)", kpi_groceries_diff_label: "할인점 ↔ 유기농", kpi_groceries_vpi_label: "VPI Hessen 평균"
 });
 
 const KPI_DETAILS = {
@@ -2877,7 +2877,7 @@ const KPI_DETAILS = {
       yLabelKey: "kpi_air_y"
     },
     sourceUrl: "https://www.umweltbundesamt.de/daten/luft/luftdaten",
-    sourceLabelDe: "Umweltbundesamt · Stations-ID DEHE112 (Wiesbaden Schiersteiner Straße)"
+    sourceLabelDe: "Umweltbundesamt · Stations-ID DEHE112 (Wiesbaden Schiersteiner Straße)", sourceLabelEn: "Umweltbundesamt · station ID DEHE112 (Wiesbaden, Schiersteiner Straße)", sourceLabelTr: "Umweltbundesamt · İstasyon kimliği DEHE112 (Wiesbaden Schiersteiner Straße)", sourceLabelUa: "Umweltbundesamt · ID станції DEHE112 (Wiesbaden, Schiersteiner Straße)", sourceLabelKr: "Umweltbundesamt · 측정소 ID DEHE112 (Wiesbaden Schiersteiner Straße)"
   },
   construction: {
     icon: "🚧", titleKey: "kpi_construction_title", findingKey: "kpi_construction_finding",
@@ -2895,7 +2895,7 @@ const KPI_DETAILS = {
       yLabelKey: "kpi_construction_y"
     },
     sourceUrl: "https://opendata.cloud.wiesbaden.de/app/dataset/bautaetigkeit-in-wiesbaden-nach-ortsbezirken-2012-bis-2024",
-    sourceLabelDe: "Bautätigkeit nach Ortsbezirken 2012–2024 · Stadt Wiesbaden"
+    sourceLabelDe: "Bautätigkeit nach Ortsbezirken 2012–2024 · Stadt Wiesbaden", sourceLabelEn: "Construction activity by district 2012–2024 · Stadt Wiesbaden", sourceLabelTr: "Mahallelere göre inşaat faaliyeti 2012–2024 · Stadt Wiesbaden", sourceLabelUa: "Будівельна активність за районами 2012–2024 · Stadt Wiesbaden", sourceLabelKr: "동네별 건축 활동 2012–2024 · Stadt Wiesbaden"
   },
   rent: {
     icon: "🏠", titleKey: "kpi_rent_title", findingKey: "kpi_rent_finding",
@@ -2913,7 +2913,7 @@ const KPI_DETAILS = {
       yLabelKey: "kpi_rent_y"
     },
     sourceUrl: "https://opendata.cloud.wiesbaden.de/app/dataset/angebotsmieten-in-wiesbaden-2007-bis-2024",
-    sourceLabelDe: "Angebotsmieten 2007–2024 + Mietspiegel 2025 · Stadt Wiesbaden"
+    sourceLabelDe: "Angebotsmieten 2007–2024 + Mietspiegel 2025 · Stadt Wiesbaden", sourceLabelEn: "Asking rents 2007–2024 + Mietspiegel 2025 · Stadt Wiesbaden", sourceLabelTr: "Arz fiyatları 2007–2024 + Mietspiegel 2025 · Stadt Wiesbaden", sourceLabelUa: "Ціни пропозиції оренди 2007–2024 + Mietspiegel 2025 · Stadt Wiesbaden", sourceLabelKr: "호가 임대료 2007–2024 + Mietspiegel 2025 · Stadt Wiesbaden"
   },
   unemployment: {
     icon: "👔", titleKey: "kpi_unemployment_title", findingKey: "kpi_unemployment_finding",
@@ -2931,7 +2931,7 @@ const KPI_DETAILS = {
       yLabelKey: "kpi_unemployment_y"
     },
     sourceUrl: "https://opendata.cloud.wiesbaden.de/app/dataset/kaufkraft-und-arbeitsmarkt-nach-ortsbezirken-in-wiesbaden-dezember-2025",
-    sourceLabelDe: "Kaufkraft & Arbeitsmarkt nach Ortsbezirken Dez 2025 · Stadt Wiesbaden"
+    sourceLabelDe: "Kaufkraft & Arbeitsmarkt nach Ortsbezirken Dez 2025 · Stadt Wiesbaden", sourceLabelEn: "Purchasing power & labour market by district, Dec 2025 · Stadt Wiesbaden", sourceLabelTr: "Mahallelere göre alım gücü ve işgücü piyasası Aralık 2025 · Stadt Wiesbaden", sourceLabelUa: "Купівельна спроможність і ринок праці за районами, грудень 2025 · Stadt Wiesbaden", sourceLabelKr: "동네별 구매력 & 노동시장 2025년 12월 · Stadt Wiesbaden"
   },
   energy: {
     icon: "⚡", titleKey: "kpi_energy_title", findingKey: "kpi_energy_finding",
@@ -2949,7 +2949,7 @@ const KPI_DETAILS = {
       yLabelKey: "kpi_energy_y"
     },
     sourceUrl: "https://www.marktstammdatenregister.de/MaStR",
-    sourceLabelDe: "Marktstammdatenregister (BNetzA) · regionale Auswertung"
+    sourceLabelDe: "Marktstammdatenregister (BNetzA) · regionale Auswertung", sourceLabelEn: "Marktstammdatenregister (BNetzA) · regional analysis", sourceLabelTr: "Marktstammdatenregister (BNetzA) · bölgesel değerlendirme", sourceLabelUa: "Marktstammdatenregister (BNetzA) · регіональний аналіз", sourceLabelKr: "Marktstammdatenregister (BNetzA) · 지역별 분석"
   },
   fuel: {
     tier: "mini",
@@ -2962,7 +2962,7 @@ const KPI_DETAILS = {
     actionView: "alltag",
     actionLabelKey: "kpi_mini_open_view",
     sourceUrl: "https://opendata.cloud.wiesbaden.de/app/datasets",
-    sourceLabelDe: "MTS-K Tankerkönig (BNetzA) · 33 Stationen Wiesbaden"
+    sourceLabelDe: "MTS-K Tankerkönig (BNetzA) · 33 Stationen Wiesbaden", sourceLabelEn: "MTS-K Tankerkönig (BNetzA) · 33 stations in Wiesbaden", sourceLabelTr: "MTS-K Tankerkönig (BNetzA) · Wiesbaden'da 33 istasyon", sourceLabelUa: "MTS-K Tankerkönig (BNetzA) · 33 станції у Вісбадені", sourceLabelKr: "MTS-K Tankerkönig (BNetzA) · 비스바덴 33개 주유소"
   },
   groceries: {
     tier: "mini",
@@ -2975,7 +2975,7 @@ const KPI_DETAILS = {
     actionView: "alltag",
     actionLabelKey: "kpi_mini_open_view",
     sourceUrl: "https://www-genesis.destatis.de/genesis/online?operation=table&code=61111-0001",
-    sourceLabelDe: "VPI Hessen + Bürger·crowdsourced (6 Märkte, 269 Samples)"
+    sourceLabelDe: "VPI Hessen + Bürger·crowdsourced (6 Märkte, 269 Samples)", sourceLabelEn: "VPI Hessen (consumer price index) + citizen-crowdsourced (6 markets, 269 samples)", sourceLabelTr: "VPI Hessen + vatandaş katkılı (6 market, 269 örnek)", sourceLabelUa: "VPI Hessen + дані від мешканців (6 магазинів, 269 вимірювань)", sourceLabelKr: "VPI Hessen + 시민 크라우드소싱 (6개 마트, 269개 표본)"
   }
 };
 
@@ -2984,7 +2984,7 @@ Object.assign(I18N.de, { cat_title: "Datenkatalog Browser", cat_subtitle: "Alle 
 Object.assign(I18N.en, { cat_title: "Data catalog browser", cat_subtitle: "All 232 public datasets from opendata.cloud.wiesbaden.de — search, filter, jump straight to the source.", cat_filter_search: "Search", cat_search_ph: "Population, election, transport…", cat_filter_themes: "Themes", cat_filter_formats: "Formats", cat_filter_sort: "Sort", cat_sort_modified: "Newest first", cat_sort_title: "Alphabetical", cat_reset: "Reset filters", cat_show_more: "Show 50 more", cat_no_results: "No datasets match your filters.", cat_empty_cta: "→ Submit as data request", cat_stats_label: "TOP SEARCHES (LAST 30 DAYS)", cat_stats_note: "Anonymous, stored locally in your browser. The aggregate signals what citizens are searching for — feedback to the open-data team." });
 Object.assign(I18N.tr, { cat_title: "Veri kataloğu tarayıcısı", cat_subtitle: "opendata.cloud.wiesbaden.de'den 232 kamu veri seti — ara, filtrele, kaynağa atla.", cat_filter_search: "Ara", cat_search_ph: "Nüfus, seçim, ulaşım…", cat_filter_themes: "Konular", cat_filter_formats: "Formatlar", cat_filter_sort: "Sırala", cat_sort_modified: "En yeni", cat_sort_title: "Alfabetik", cat_reset: "Filtreleri sıfırla", cat_show_more: "50 daha göster", cat_no_results: "Filtrelerinize uyan veri seti bulunamadı.", cat_empty_cta: "→ Veri talebi olarak gönder", cat_stats_label: "SON 30 GÜN ARANMA", cat_stats_note: "Anonim, tarayıcınızda yerel saklanır. Toplam istatistik, vatandaşların hangi verileri aradığını gösterir — açık veri ekibine sinyal." });
 Object.assign(I18N.ua, { cat_title: "Каталог даних", cat_subtitle: "Усі 232 публічні набори даних з opendata.cloud.wiesbaden.de — пошук, фільтр, перехід до джерела.", cat_filter_search: "Пошук", cat_search_ph: "Населення, вибори, транспорт…", cat_filter_themes: "Теми", cat_filter_formats: "Формати", cat_filter_sort: "Сортування", cat_sort_modified: "Найновіші", cat_sort_title: "За алфавітом", cat_reset: "Скинути фільтри", cat_show_more: "Ще 50", cat_no_results: "Жоден набір не відповідає фільтрам.", cat_empty_cta: "→ Надіслати як запит", cat_stats_label: "ТОП-ЗАПИТИ (30 ДНІВ)", cat_stats_note: "Анонімно, локально у браузері. Агрегат показує, що шукають громадяни — сигнал команді відкритих даних." });
-Object.assign(I18N.kr, { cat_title: "데이터 카탈로그 브라우저", cat_subtitle: "opendata.cloud.wiesbaden.de의 232개 공공 데이터셋 — 검색·필터·출처로 바로 이동.", cat_filter_search: "검색", cat_search_ph: "인구, 선거, 교통…", cat_filter_themes: "테마", cat_filter_formats: "포맷", cat_filter_sort: "정렬", cat_sort_modified: "최신순", cat_sort_title: "가나다순", cat_reset: "필터 초기화", cat_show_more: "50개 더 보기", cat_no_results: "조건에 맞는 데이터셋 없음.", cat_empty_cta: "→ 데이터 요청으로 등록", cat_stats_label: "최근 30일 인기 검색어", cat_stats_note: "익명, 브라우저 로컬 저장. 시민 검색 패턴 → Open Data 팀에 시그널." });
+Object.assign(I18N.kr, { cat_title: "데이터 카탈로그 브라우저", cat_subtitle: "opendata.cloud.wiesbaden.de의 232개 공공 데이터셋 — 검색하고, 필터링하고, 출처로 바로 이동하세요.", cat_filter_search: "검색", cat_search_ph: "인구, 선거, 교통…", cat_filter_themes: "테마", cat_filter_formats: "포맷", cat_filter_sort: "정렬", cat_sort_modified: "최신순", cat_sort_title: "가나다순", cat_reset: "필터 초기화", cat_show_more: "50개 더 보기", cat_no_results: "조건에 맞는 데이터셋이 없습니다.", cat_empty_cta: "→ 데이터 요청으로 등록", cat_stats_label: "최근 30일 인기 검색어", cat_stats_note: "익명으로 브라우저에 로컬 저장됩니다. 집계 결과는 시민이 어떤 데이터를 찾는지 보여주는 Open Data 팀을 위한 신호입니다." });
 Object.assign(I18N.ls, { cat_title: "Daten-Katalog", cat_subtitle: "Hier sehen Sie 232 Daten-Sätze von der Stadt Wiesbaden. Sie können suchen und filtern.", cat_filter_search: "Suchen", cat_search_ph: "Tippen Sie ein Wort", cat_filter_themes: "Themen", cat_filter_formats: "Formate", cat_filter_sort: "Reihenfolge", cat_sort_modified: "Neue zuerst", cat_sort_title: "Nach Buchstaben", cat_reset: "Filter weg", cat_show_more: "50 mehr", cat_no_results: "Keine Daten gefunden.", cat_empty_cta: "→ Daten-Wunsch schicken", cat_stats_label: "OFT GESUCHT (30 TAGE)", cat_stats_note: "Wir speichern das nur in Ihrem Computer. Niemand außer Ihnen sieht das." });
 
 // v2.5 — Datenassistent (drawer + Algorithmus-Karte) i18n (5+1 langs)
@@ -3095,7 +3095,7 @@ Object.assign(I18N.ua, {
   algorithm_card_no_llm_label: "Без ШІ / без LLM",
   algorithm_card_no_llm: "Детерміновано та відтворювано. Без галюцинацій, без тренування, без персоналізації. Аудит можливий.",
   algorithm_card_data_label: "Джерело",
-  algorithm_card_data: "Piveau API opendata.cloud.wiesbaden.de · 232 набори · локальний кеш від 04.05.2026.",
+  algorithm_card_data: "Piveau API opendata.cloud.wiesbaden.de · 232 набори даних · локальний кеш від 04.05.2026.",
   algorithm_card_privacy_label: "Приватність",
   algorithm_card_privacy: "Пошук виконується повністю в браузері. Без серверів, без cookies, без зовнішніх запитів. GDPR.",
   algorithm_card_a11y_label: "Доступність",
@@ -3112,7 +3112,7 @@ Object.assign(I18N.kr, {
   assist_submit_aria: "검색",
   assist_close_aria: "닫기",
   assist_info_aria: "알고리즘 카드 보기",
-  assist_info_short: "어떻게 작동해?",
+  assist_info_short: "어떻게 작동하나요?",
   assist_hint_title: "예시 질문",
   assist_match: "일치",
   assist_no_results_title: "결과 없음: ",
@@ -3131,7 +3131,7 @@ Object.assign(I18N.kr, {
   algorithm_card_a11y: "BITV 2.0 / WCAG 2.1 AA. 키보드 완전 네비게이션 (Tab, Enter, ESC). 스크린리더 라벨 (ARIA).",
   algorithm_card_lang_label: "언어",
   algorithm_card_lang: "검색 인덱스: 독일어 + 영어. UI: 6개 언어. 데이터셋 제목은 시청 원어(독일어) 유지.",
-  algorithm_card_inspired: "영감: 헬싱키 AI Register ↗"
+  algorithm_card_inspired: "영감: Helsinki AI Register ↗"
 });
 Object.assign(I18N.ls, {
   assist_btn_label: "Daten-Helfer öffnen",
@@ -3305,12 +3305,12 @@ Object.assign(I18N.en, {
 Object.assign(I18N.tr, {
   nav_kiez: "Mahallem",
   kiez_title: "Mahallem — burada neler oluyor?",
-  kiez_subtitle: "Vatandaş günlük hayatından altı kaynak: kafeler, park, gıda fiyatları, çöp, güvenlik, etkinlikler. Üçü otomatik (OSM, destatis), üçü şeffaf elle güncel (ELW, Hessen Polisi, şehir etkinlikleri).",
+  kiez_subtitle: "Vatandaşın günlük hayatından altı kaynak: kafeler, park, gıda fiyatları, çöp toplama, güvenlik, etkinlikler. Üçü otomatik (OSM, destatis), üçü şeffaf biçimde elle güncellenir (ELW, Polizei Hessen, şehir etkinlikleri) — veriler bağlantılı, kopyalanmış değil.",
   kiez_pick: "Mahalle seç",
   kiez_pick_placeholder: "— şehir geneli —",
   kiez_pick_hint: "„Mahallem“ ile paylaşılır",
   kiez_clear: "Seçimi temizle",
-  kiez_einwohner: "Sakin",
+  kiez_einwohner: "Sakin sayısı",
   kiez_citywide: "Şehir geneli",
   kiez_card_open: "Detayları aç",
   kiez_detail_close: "Kapat",
@@ -3325,7 +3325,7 @@ Object.assign(I18N.tr, {
   kiez_amenity_cafe: "Kafe",
   kiez_amenity_restaurant: "Restoran",
   kiez_amenity_bar: "Bar",
-  kiez_amenity_pub: "Pub",
+  kiez_amenity_pub: "Birahane",
   kiez_amenity_biergarten: "Bira bahçesi",
   kiez_amenity_fast_food: "Fast food",
   kiez_parking_title: "Park",
@@ -3355,7 +3355,7 @@ Object.assign(I18N.tr, {
 Object.assign(I18N.ua, {
   nav_kiez: "Мій район",
   kiez_title: "Мій район — що тут відбувається?",
-  kiez_subtitle: "Шість джерел із повсякденного життя мешканців: кафе, паркування, ціни на продукти, вивіз сміття, безпека, події. Три — автоматично (OSM, destatis), три — прозоро вручну (ELW, поліція Гессену, міські події).",
+  kiez_subtitle: "Шість джерел із повсякденного життя мешканців: кафе, паркування, ціни на продукти, вивіз сміття, безпека, події. Три набори автоматизовано (OSM, destatis), три ведуться прозоро вручну (ELW, поліція Гессену, міські події) — дані пов'язані посиланнями, а не скопійовані.",
   kiez_pick: "Обрати район",
   kiez_pick_placeholder: "— все місто —",
   kiez_pick_hint: "Спільне з «Мій район»",
@@ -3396,16 +3396,16 @@ Object.assign(I18N.ua, {
   kiez_pks_title: "Безпека",
   kiez_pks_sub: "Поліцейська статистика злочинів 2025 · Вісбаден",
   kiez_pks_yoy: "проти 2024",
-  kiez_pks_no_breakdown: "PKS виходить тільки на рівні міста, без розподілу за районами.",
+  kiez_pks_no_breakdown: "PKS публікується лише щорічно на рівні міста — без розподілу за районами.",
   kiez_events_title: "Події",
   kiez_events_sub: "Топ-дати 2026 із річного плану міста",
   kiez_events_count: "Топ-події",
-  kiez_honesty: "Прозорість: три з шести наборів (OSM гастрономія, OSM паркування, destatis ІСЦ) завантажуються автоматично під час збірки. Три (ELW, поліція Гессену, події міста) не мають відкритого API й переносяться з оригіналу вручну — дата і посилання вказані на кожній картці. Щоб не перевантажувати державні сервери, живих викликів немає."
+  kiez_honesty: "Прозорість: три з шести наборів (OSM гастрономія, OSM паркування, destatis ІСЦ) завантажуються автоматично під час збірки. Три (ELW, поліція Гессену, події міста) не мають відкритого API й переносяться з оригіналу вручну — дата і посилання вказані на кожній картці. Щоб не перевантажувати сервери відомств, живих викликів немає; за потреби картки ведуть напряму до оригінального джерела."
 });
 Object.assign(I18N.kr, {
   nav_kiez: "내 동네",
   kiez_title: "내 동네 — 여긴 뭐가 있지?",
-  kiez_subtitle: "시민 일상에서 진짜 궁금한 6가지 — 카페, 주차, 식료품 가격, 쓰레기 수거, 치안, 이벤트. 셋은 자동(OSM·destatis), 셋은 투명하게 수기 관리(ELW·헤센 경찰·시 행사).",
+  kiez_subtitle: "시민 일상에서 진짜 궁금한 6가지 — 카페, 주차, 식료품 가격, 쓰레기 수거, 치안, 이벤트. 세 가지는 자동으로 불러오고(OSM·destatis), 세 가지는 투명하게 수기로 관리합니다(ELW·헤센 경찰·시 행사) — 데이터는 미러링이 아니라 링크로 연결됩니다.",
   kiez_pick: "동네 선택",
   kiez_pick_placeholder: "— 시 전체 —",
   kiez_pick_hint: "「내 동네」 와 공유됨",
@@ -3434,7 +3434,7 @@ Object.assign(I18N.kr, {
   kiez_park_free: "무료",
   kiez_park_paid: "유료",
   kiez_park_unknown: "정보 없음",
-  kiez_park_capacity_note: "OSM에는 면수가 일부만 기록됨.",
+  kiez_park_capacity_note: "OSM에는 주차 면수가 일부만 기록되어 있습니다.",
   kiez_cpi_title: "식료품 가격",
   kiez_cpi_sub: "소비자물가지수 — 기본 식품 5종 · 12개월",
   kiez_cpi_period: "최근 12개월",
@@ -3442,15 +3442,15 @@ Object.assign(I18N.kr, {
   kiez_elw_title: "쓰레기 수거",
   kiez_elw_sub: "4종 컨테이너 일반 주기",
   kiez_elw_lookup: "주소별 정확한 날짜 조회",
-  kiez_elw_note: "정확한 요일은 주소에 따라 다름 — ELW에서 확인.",
+  kiez_elw_note: "정확한 요일은 주소에 따라 다릅니다 — ELW에서 확인하세요.",
   kiez_pks_title: "치안",
   kiez_pks_sub: "경찰 범죄통계 2025 · 비스바덴 시",
   kiez_pks_yoy: "2024 대비",
-  kiez_pks_no_breakdown: "PKS는 시 단위 연간만 공개 — 동별 분리 없음.",
+  kiez_pks_no_breakdown: "경찰 범죄통계(PKS)는 시 단위 연간 자료만 공개됩니다 — 동네별 세부는 없습니다.",
   kiez_events_title: "이벤트",
   kiez_events_sub: "시 연간계획 2026 주요 일정",
   kiez_events_count: "주요 이벤트",
-  kiez_honesty: "투명성: 6개 데이터셋 중 3개(OSM 음식점·OSM 주차·destatis CPI)는 빌드 시 자동 로드. 나머지 3개(ELW·헤센 경찰·시 행사)는 공개 API가 없어 원천에서 수기 전사 — 갱신일자와 링크는 카드마다 표시. 정부 서버 보호를 위해 실시간 호출 없음."
+  kiez_honesty: "투명성: 6개 데이터셋 중 3개(OSM 음식점·OSM 주차·destatis VPI)는 빌드 시 자동으로 로드됩니다. 나머지 3개(ELW·헤센 경찰·시 행사)는 공개 API가 없어 원천에서 수기로 옮깁니다 — 기준일자와 출처 링크는 카드마다 표시됩니다. 행정 서버 부담을 줄이기 위해 실시간 호출은 하지 않으며, 필요 시 카드에서 원천으로 바로 이동할 수 있습니다."
 });
 Object.assign(I18N.ls, {
   nav_kiez: "Mein Stadt-Teil",
@@ -3568,7 +3568,7 @@ Object.assign(I18N.en, {
 Object.assign(I18N.tr, {
   kiez_gastro_top_title: "Kategoriye göre İlk 10",
   kiez_gastro_top_note: "OSM etiket eksiksizliğine göre sıralanır (ad · mutfak · saat · site · erişilebilirlik). Bir puan değil — Google Places API harici yıldızları göstermeyi yasaklar. Tam doldurulmuş girişler 'gerçekten açık, bakımlı' yerlerin iyi bir göstergesidir.",
-  kiez_gastro_score_hint: "OSM etiket eksiksizliği",
+  kiez_gastro_score_hint: "OSM veri eksiksizliği: ad · mutfak · açılış saatleri · web sitesi · erişilebilirlik",
   kiez_gastro_outdoor: "🌤 Dış mekan",
   kiez_gastro_wheelchair: "♿ Erişilebilir",
   kiez_gastro_website: "Web sitesi ↗",
@@ -3593,7 +3593,7 @@ Object.assign(I18N.ua, {
 });
 Object.assign(I18N.kr, {
   kiez_gastro_top_title: "카테고리별 Top 10",
-  kiez_gastro_top_note: "OSM 태그 완전성(이름·음식 종류·영업시간·웹사이트·휠체어 접근) 기준 정렬. 평점 점수 아님 — Google Places 약관이 외부 별점 표시 금지. 태그가 잘 채워진 OSM 항목 = 실제로 운영 중이고 관리된 곳이라는 좋은 프록시.",
+  kiez_gastro_top_note: "OSM 태그 완전성(이름·음식 종류·영업시간·웹사이트·휠체어 접근) 기준으로 정렬했습니다. 평점 점수가 아닙니다 — Google Places API 약관이 외부 별점 표시를 금지하기 때문입니다. 다만 태그가 잘 채워진 항목은 '실제로 잘 운영되고 관리되는' 곳을 가늠하는 좋은 지표입니다.",
   kiez_gastro_score_hint: "OSM 태그 완전성",
   kiez_gastro_outdoor: "🌤 야외석",
   kiez_gastro_wheelchair: "♿ 휠체어 OK",
@@ -3649,7 +3649,7 @@ Object.assign(I18N.tr, {
   kiez_cpi_overall_note_geo: "Eyalet değeri (Wiesbaden'a daha yakın)",
   kiez_cpi_overall_note_de: "Federal ortalama",
   kiez_cpi_overall_caveat: "Tek tek gıda endeksleri (üstte) yalnızca federal düzeyde yayımlanır — eyalet örneklemi çok küçük. Genel Hessen endeksi Wiesbaden için en yakın değerdir.",
-  kiez_cpi_disclaimer: "Kaynak: destatis TÜFE tabloları 61111-0006, 61111-0011, 61111-0002. Genesis API üzerinden derleme sırasında yüklendi. Baz 2020 = 100."
+  kiez_cpi_disclaimer: "Kaynak: destatis VPI tabloları 61111-0006 (5 haneli), 61111-0011 (eyaletler), 61111-0002 (Almanya). Derleme sırasında Genesis API üzerinden canlı yüklendi. Endeks 2020 = 100."
 });
 Object.assign(I18N.ua, {
   kiez_cpi_items_title: "5 базових продуктів · Німеччина",
@@ -3659,7 +3659,7 @@ Object.assign(I18N.ua, {
   kiez_cpi_overall_note_geo: "Значення землі (ближче до Вісбадена)",
   kiez_cpi_overall_note_de: "Федеральне середнє",
   kiez_cpi_overall_caveat: "Індекси окремих продуктів (вище) публікуються лише на федеральному рівні — вибірка по землях замала. Загальний індекс Гессену — найближче доступне значення для Вісбадена.",
-  kiez_cpi_disclaimer: "Джерело: destatis ІСЦ таблиці 61111-0006, 61111-0011, 61111-0002. Завантажено через Genesis API під час збірки. База 2020 = 100."
+  kiez_cpi_disclaimer: "Джерело: destatis ІСЦ, таблиці 61111-0006 (5-значні коди), 61111-0011 (землі), 61111-0002 (Німеччина). Завантажено наживо через Genesis API під час збірки. Індекс 2020 = 100."
 });
 Object.assign(I18N.kr, {
   kiez_cpi_items_title: "기본 식품 5종 · 독일",
@@ -3668,8 +3668,8 @@ Object.assign(I18N.kr, {
   kiez_cpi_germany: "독일",
   kiez_cpi_overall_note_geo: "주(Land) 단위 값 (비스바덴에 더 가까움)",
   kiez_cpi_overall_note_de: "전국 평균",
-  kiez_cpi_overall_caveat: "식품 개별 지수(위)는 전국 단위로만 발표됨 — Bundesland 샘플이 작아서 분리 못함. 헤센 전체 지수가 비스바덴에 가장 근접한 공식 값.",
-  kiez_cpi_disclaimer: "출처: destatis CPI 테이블 61111-0006(5-Steller), 61111-0011(주별), 61111-0002(전국). 빌드 시 Genesis API 라이브 호출. 2020 = 100 기준."
+  kiez_cpi_overall_caveat: "식품 개별 지수(위)는 전국 단위로만 발표됩니다 — 주(Bundesland) 표본이 작아 분리할 수 없습니다. 헤센 전체 지수가 비스바덴에 가장 근접한 공식 값입니다.",
+  kiez_cpi_disclaimer: "출처: destatis VPI 테이블 61111-0006(5자리), 61111-0011(주별), 61111-0002(전국). 빌드 시 Genesis API로 라이브 호출. 2020 = 100 기준."
 });
 Object.assign(I18N.ls, {
   kiez_cpi_items_title: "5 Lebensmittel · ganz Deutschland",
@@ -3681,6 +3681,59 @@ Object.assign(I18N.ls, {
   kiez_cpi_overall_caveat: "Wichtig: Die Preise für Eier, Milch, Brot, Butter und Kartoffeln gibt es nur für ganz Deutschland. Für Hessen alleine gibt es keine eigene Liste. Aber der Gesamt-Wert für Hessen ist da. Das ist näher bei Wiesbaden.",
   kiez_cpi_disclaimer: "Quelle: destatis. Das ist das Statistische Bundes-Amt. Die Daten kommen automatisch beim Bauen der Webseite. Wert 2020 = 100."
 });
+
+// =================================================================
+// v2.9 — i18n keys previously hardcoded as German in app.js render
+// logic (ticker labels, Mein-Kiez card headlines, signature).
+// DE = source of truth; LS falls back to DE via t().
+// =================================================================
+Object.assign(I18N.de, {
+  ticker_datasets: "Datensätze", ticker_migration: "Migrationshintergrund", ticker_rank: "Rang",
+  kiez_cafe_short: "Cafés", kiez_rest_short: "Restaurants", kiez_free: "kostenlos", kiez_paid: "gebührenpflichtig",
+  kiez_cpi_eier_label: "Eier", kiez_cpi_window: "12 Mon.", kiez_elw_bins: "Tonnen · Rhythmen",
+  kiez_source_osm: "OpenStreetMap ↗", kiez_source_destatis: "destatis Verbraucherpreise ↗",
+  kiez_park_osm_note: "Quelle: OpenStreetMap. Hoher „Unbekannt\"-Anteil = nicht alle Schilder im OSM gepflegt — ggf. vor Ort prüfen.",
+  signature: "v2.8 · Stand 05.05.2026 · Initiativ-Arbeitsprobe"
+});
+Object.assign(I18N.en, {
+  ticker_datasets: "Datasets", ticker_migration: "Migration background", ticker_rank: "Rank",
+  kiez_cafe_short: "cafés", kiez_rest_short: "restaurants", kiez_free: "free", kiez_paid: "paid",
+  kiez_cpi_eier_label: "Eggs", kiez_cpi_window: "12 mo.", kiez_elw_bins: "bins · schedules",
+  kiez_source_osm: "OpenStreetMap ↗", kiez_source_destatis: "destatis consumer prices ↗",
+  kiez_park_osm_note: "Source: OpenStreetMap. A high \"unknown\" share = not all signs are mapped in OSM — check on site if needed.",
+  signature: "v2.8 · As of 05/05/2026 · Speculative work sample"
+});
+Object.assign(I18N.tr, {
+  ticker_datasets: "Veri setleri", ticker_migration: "Göç kökeni", ticker_rank: "Sıra",
+  kiez_cafe_short: "kafe", kiez_rest_short: "restoran", kiez_free: "ücretsiz", kiez_paid: "ücretli",
+  kiez_cpi_eier_label: "Yumurta", kiez_cpi_window: "12 ay", kiez_elw_bins: "konteyner · döngü",
+  kiez_source_osm: "OpenStreetMap ↗", kiez_source_destatis: "destatis tüketici fiyatları ↗",
+  kiez_park_osm_note: "Kaynak: OpenStreetMap. Yüksek \"bilinmiyor\" oranı = tüm tabelalar OSM'de işlenmemiş — gerekirse yerinde kontrol edin.",
+  signature: "v2.8 · 05.05.2026 itibarıyla · Girişimsel çalışma örneği"
+});
+Object.assign(I18N.ua, {
+  ticker_datasets: "Набори даних", ticker_migration: "Міграційне походження", ticker_rank: "Місце",
+  kiez_cafe_short: "кафе", kiez_rest_short: "ресторани", kiez_free: "безкоштовно", kiez_paid: "платно",
+  kiez_cpi_eier_label: "Яйця", kiez_cpi_window: "12 міс.", kiez_elw_bins: "баки · графіки",
+  kiez_source_osm: "OpenStreetMap ↗", kiez_source_destatis: "destatis споживчі ціни ↗",
+  kiez_park_osm_note: "Джерело: OpenStreetMap. Велика частка \"невідомо\" = не всі знаки внесені в OSM — за потреби перевірте на місці.",
+  signature: "v2.8 · Станом на 05.05.2026 · Ініціативна робоча проба"
+});
+Object.assign(I18N.kr, {
+  ticker_datasets: "데이터셋", ticker_migration: "이주 배경", ticker_rank: "순위",
+  kiez_cafe_short: "카페", kiez_rest_short: "음식점", kiez_free: "무료", kiez_paid: "유료",
+  kiez_cpi_eier_label: "달걀", kiez_cpi_window: "12개월", kiez_elw_bins: "수거함 · 주기",
+  kiez_source_osm: "OpenStreetMap ↗", kiez_source_destatis: "destatis 소비자물가 ↗",
+  kiez_park_osm_note: "출처: OpenStreetMap. '알 수 없음' 비율이 높음 = 모든 표지판이 OSM에 입력된 건 아님 — 필요시 현장 확인.",
+  signature: "v2.8 · 기준일 2026.05.05 · 자발적 작업 샘플"
+});
+
+// v2.9 — header "last/next update" labels (were hardcoded in index.html)
+Object.assign(I18N.de, { stand_last: "LETZTE AKTUALISIERUNG", stand_next: "NÄCHSTE AKTUALISIERUNG" });
+Object.assign(I18N.en, { stand_last: "LAST UPDATED", stand_next: "NEXT UPDATE" });
+Object.assign(I18N.tr, { stand_last: "SON GÜNCELLEME", stand_next: "SONRAKİ GÜNCELLEME" });
+Object.assign(I18N.ua, { stand_last: "ОСТАННЄ ОНОВЛЕННЯ", stand_next: "НАСТУПНЕ ОНОВЛЕННЯ" });
+Object.assign(I18N.kr, { stand_last: "최근 갱신", stand_next: "다음 갱신" });
 
 // =================================================================
 // v2.5 — OPEN_DATA_CATALOG (Piveau API cache, 232 datasets)
