@@ -101,7 +101,7 @@ def main() -> None:
                 print(f"  WARN {st['code']}/{info['key']}: fetch failed ({e})", file=sys.stderr)
                 continue
             avg_by_day = daily_average(rows)
-            series = [round(avg_by_day.get(d), 1) if d in avg_by_day else None for d in days]
+            series = [round(avg_by_day[d], 1) if d in avg_by_day else None for d in days]
             if any(v is not None for v in series):
                 any_data = True
             station_block["components"][info["key"]] = {

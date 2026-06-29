@@ -101,7 +101,7 @@ def fetch_dataset_csv(slug: str) -> tuple[list[dict], dict]:
     return rows, meta
 
 
-def parse_de_number(s: str) -> float | None:
+def parse_de_number(s: str | None) -> float | None:
     """Convert a German-format number ('33.373', '12,3', '4.256.789') to float."""
     if s is None:
         return None

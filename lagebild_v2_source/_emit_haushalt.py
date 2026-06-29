@@ -61,7 +61,7 @@ def main() -> None:
     for (y, p), v in agg.items():
         # Use absolute value because Ausgaben are negative in CSV
         total_per_pb[p] += abs(v)
-    top_pbs = sorted(total_per_pb, key=total_per_pb.get, reverse=True)[:TOP_N]
+    top_pbs = sorted(total_per_pb, key=lambda p: total_per_pb[p], reverse=True)[:TOP_N]
 
     # Structured payload: timeline of |betrag| per top produktbereich.
     out_rows = []

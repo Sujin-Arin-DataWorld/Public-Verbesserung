@@ -38,7 +38,10 @@ def main() -> None:
     print(f"  matched {len(by_district)}/26 districts; skipped {skipped}")
 
     years = sorted({y for d in by_district.values() for y in d.keys()})
-    latest = years[-1] if years else None
+    if not years:
+        print("  no usable data — nothing emitted")
+        return
+    latest = years[-1]
 
     districts = []
     for canon, years_map in sorted(by_district.items()):

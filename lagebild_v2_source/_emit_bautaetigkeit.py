@@ -57,7 +57,10 @@ def main() -> None:
     print(f"  matched {len(by_district)}/26 districts; skipped {skipped}")
 
     years = sorted({y for d in by_district.values() for y in d.keys()})
-    latest = years[-1] if years else None
+    if not years:
+        print("  no usable data — nothing emitted")
+        return
+    latest = years[-1]
 
     districts = []
     for canon, years_map in sorted(by_district.items()):
@@ -90,7 +93,7 @@ def main() -> None:
         "Build-time fetch via Piveau hub-search/store API.",
     ], "_bautaetigkeit.js.snippet")
 
-    print(f"\nLatest year ({latest}): citywide stock {citywide_stock.get(latest):,}, completions {citywide_completions.get(latest):,}")
+    print(f"\nLatest year ({latest}): citywide stock {citywide_stock.get(latest, 0):,}, completions {citywide_completions.get(latest, 0):,}")
     top = sorted(districts, key=lambda x: x["completed_latest"] or 0, reverse=True)[:5]
     print("Top 5 by completions in latest year:")
     for d in top:

@@ -29,7 +29,7 @@ def main() -> None:
     schools_by_year = {}
     for r in school_rows:
         try:
-            y = int(r.get("schuljahr") or r.get("jahr"))
+            y = int(r.get("schuljahr") or r.get("jahr") or "")
         except (TypeError, ValueError):
             continue
         schools_by_year[y] = {
