@@ -787,7 +787,7 @@ function evaluateActionRules(o) {
       icon: 'graduation',
       label: t('action_kita_vormerk', 'Kita-Vormerkung anlegen'),
       reason: t('action_kita_reason', `Hier weil: Kita-Versorgung u3 nur ${kitaQ.toFixed(1)} %`),
-      href: 'https://www.wiesbaden.de/wikita',
+      href: 'https://wikita.wiesbaden.de',
       severity: 'urgent'
     });
   }
@@ -798,7 +798,7 @@ function evaluateActionRules(o) {
       icon: 'ballot',
       label: t('action_briefwahl', 'Briefwahl beantragen'),
       reason: t('action_briefwahl_reason', `Hier weil: Wahlbeteiligung 2026 nur ${turnout.toFixed(1)} %`),
-      href: 'https://www.wiesbaden.de/leben-in-wiesbaden/buergerservice/wahlen/briefwahl.php',
+      href: 'https://www.wiesbaden.de/rathaus/stadtpolitik/wahlen',
       severity: 'civic'
     });
   }
@@ -811,7 +811,7 @@ function evaluateActionRules(o) {
         icon: 'home',
         label: t('action_wbs', 'Wohnberechtigungsschein beantragen'),
         reason: t('action_wbs_reason', `Hier weil: nur ${share.toFixed(1)} % Sozialwohnungs-Quote`),
-        href: 'https://www.wiesbaden.de/leben-in-wiesbaden/wohnen/wohnungen-suchen/wbs.php',
+        href: 'https://www.wiesbaden.de/vv/produkte/51/wohnen/Wohnungsvermittlung',
         severity: 'social'
       });
     }
@@ -834,7 +834,7 @@ function evaluateActionRules(o) {
       icon: 'handshake',
       label: t('action_sozialberatung', 'Sozialberatung der Stadt'),
       reason: t('action_sozial_reason', `Hier weil: ${kk.buergergeld_pct.toFixed(1)} % Bürgergeld-Bezug`),
-      href: 'https://www.wiesbaden.de/leben-in-wiesbaden/soziales/',
+      href: 'https://www.wiesbaden.de/leben-in-wiesbaden/gesellschaft-soziales',
       severity: 'social'
     });
   }
@@ -846,7 +846,7 @@ function evaluateActionRules(o) {
       icon: 'wallet',
       label: t('action_schuldnerberatung', 'Schuldner- & Verbraucherberatung'),
       reason: t('action_schulden_reason', `Hier weil: Kaufkraft ${formatNum(Math.round(kk.kaufkraft_eur_per_capita))} € / Jahr (Stadt-Ø ${formatNum(cityKaufkraftAvg)} €)`),
-      href: 'https://www.wiesbaden.de/leben-in-wiesbaden/soziales/schuldnerberatung.php',
+      href: 'https://www.diakonie-wirt.de/rat-und-angebote/bei-finanziellen-schwierigkeiten/schuldnerberatung',
       severity: 'social'
     });
   }
@@ -857,7 +857,7 @@ function evaluateActionRules(o) {
       icon: 'cone',
       label: t('action_bau', 'Bauleitplanung einsehen'),
       reason: t('action_bau_reason', `Hier weil: ${baut.completed_latest} Wohnungen 2024 fertiggestellt`),
-      href: 'https://www.wiesbaden.de/leben-in-wiesbaden/stadtplanung-bauen/bauleitplanung/',
+      href: 'https://www.o-sp.de/wiesbaden/',
       severity: 'civic'
     });
   }
@@ -868,7 +868,7 @@ function evaluateActionRules(o) {
       icon: 'globe',
       label: t('action_auslaenderbeirat', 'Ausländerbeirat kontaktieren'),
       reason: t('action_ab_reason', `Hier weil: ${o.foreign.toFixed(1)} % nichtdeutsche Einwohner:innen`),
-      href: 'https://www.wiesbaden.de/leben-in-wiesbaden/buergerservice/auslaenderbeirat/',
+      href: 'https://www.wiesbaden.de/rathaus/stadtpolitik/auslaenderbeirat',
       severity: 'civic'
     });
   }
