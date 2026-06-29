@@ -2663,9 +2663,11 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
-  // ----- PDF Snapshot Export (audit Ideation #10) -----
-  // Opens a new window with a print-optimized "Stand der Stadt" snapshot;
-  // user saves as PDF via browser Print → Save dialog. No external libs.
+  // ----- PDF Snapshot Export (audit Ideation #10) — DEAKTIVIERT seit v2.9 -----
+  // Ersetzt durch WYSIWYG-Druck der echten Dashboard-Ansicht (Button → window.print()
+  // + @media print, Leaflet→SVG-Swap). Hier als Referenz/Fallback auskommentiert,
+  // nicht entfernt — bei Bedarf reaktivierbar.
+  /* DISABLED (superseded by WYSIWYG window.print export):
   function exportSnapshotPDF() {
     const today = new Date().toISOString().slice(0, 10);
     // v2.9 — mirror the citizen's actual on-screen KPI curation. The curator
@@ -3047,6 +3049,7 @@ document.addEventListener('DOMContentLoaded', () => {
     w.document.write(html);
     w.document.close();
   }
+  */
 
   // ----- v2.8 First-time visitor onboarding (audit §6.1 hint + BMWK pattern) -----
   // Opens automatically once per browser; localStorage flag prevents re-opening.
