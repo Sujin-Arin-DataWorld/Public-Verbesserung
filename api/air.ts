@@ -37,7 +37,7 @@ export default async function handler(req: Request): Promise<Response> {
     + `&time_from=${timeFrom}&time_to=${timeTo}&station=${station}&component=${component}`;
 
   try {
-    const resp = await fetch(url, { signal: AbortSignal.timeout(8000) });
+    const resp = await fetch(url, { signal: AbortSignal.timeout(15000) });
     if (!resp.ok) {
       return json({ ok: false, error: 'upstream_http', status: resp.status }, 502);
     }
