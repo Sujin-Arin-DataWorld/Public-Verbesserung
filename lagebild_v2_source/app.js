@@ -2682,6 +2682,17 @@ document.addEventListener('DOMContentLoaded', () => {
         .mein-kiez-k { color: #5C6580; font-weight: 600; }
         .mein-kiez-v { color: #1B2B4C; text-align: right; font-family: 'JetBrains Mono', monospace; }
         .mein-note { font-size: 12px; color: #5C6580; font-style: italic; }
+        .story--compact { padding: 5px 0; font-weight: 600; font-size: 13px; border-bottom: 1px dotted #E2E5EB; break-inside: avoid; }
+        .kpi-grid--3 { grid-template-columns: repeat(3, 1fr); }
+        .bh-list { margin: 4px 0 8px; }
+        .bh-row { display: flex; justify-content: space-between; gap: 10px; padding: 5px 0; border-bottom: 1px dotted #E2E5EB; font-size: 11px; break-inside: avoid; }
+        .bh-meta { font-family: 'JetBrains Mono', monospace; color: #5C6580; white-space: nowrap; }
+        .bh-beispiel { font-family: 'JetBrains Mono', monospace; font-size: 8px; color: #8892A8; border: 1px solid #E2E5EB; border-radius: 2px; padding: 0 4px; margin-left: 4px; letter-spacing: .05em; }
+        .mini-map-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 12px; margin: 6px 0 8px; }
+        .mini-map { break-inside: avoid; text-align: center; }
+        .mini-map-label { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #5C6580; margin-bottom: 2px; }
+        .mini-map svg { display: block; width: 100%; height: auto; border: 1px solid #E2E5EB; border-radius: 3px; background: #fff; }
+        .mini-map-range { font-family: 'JetBrains Mono', monospace; font-size: 8px; color: #8892A8; margin-top: 1px; }
       </style>
     `;
 
@@ -2695,16 +2706,16 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>`;
     }).join('');
 
-    const storyBlock = stories.map((s, i) => {
+    // v2.9 — kompakt: nur die (max.) 10 Story-Titel; Quellen-Subzeile entfällt im PDF.
+    const shownStories = stories.slice(0, 10);
+    const storyBlock = shownStories.map((s, i) => {
       const title = (D.I18N.de && D.I18N.de[s.titleKey]) || s.titleKey;
-      return `<div class="story">
-        <div class="story-title">${String(i+1).padStart(2,'0')} · ${title}</div>
-        <div class="story-source">${_slPick(s)}</div>
-      </div>`;
+      return `<div class="story--compact">${String(i + 1).padStart(2, '0')} · ${title}</div>`;
     }).join('');
 
     const sourcesBlock = sources.map(s => {
-      const title = (s.title_de || s.title || s.label || s.slug || '');
+      // DATA_SOURCES uses name_de; older fallbacks kept for safety.
+      const title = (s.name_de || s.title_de || s.title || s.label || s.slug || s.source || '');
       const license = (s.license || s.lizenz || '');
       return `<li>${title}${license ? ' · <em>' + license + '</em>' : ''}</li>`;
     }).join('');
@@ -2758,6 +2769,56 @@ document.addEventListener('DOMContentLoaded', () => {
         </section>`;
     }
     const mapBlock = buildSnapshotMap(currentLayer);
+
+    // ----- v2.9: "Weitere Kartenebenen" — small multiples of the filterable layers -----
+    // The dashboard map has a layer filter (LAYER_GROUPS, ~10 Ebenen). The PDF showed
+    // only the active one; this renders the OTHER filter options as mini-choropleths so
+    // the print mirrors what citizens can switch to. Same geometry + color scale, just smaller.
+    function buildMiniMap(layerKey, label) {
+      const dists = (typeof ORTSBEZIRKE !== 'undefined' ? ORTSBEZIRKE : [])
+        .filter(o => Array.isArray(o.polygon) && o.polygon.length);
+      if (!dists.length) return '';
+      let minLat = Infinity, maxLat = -Infinity, minLng = Infinity, maxLng = -Infinity;
+      dists.forEach(o => o.polygon.forEach(p => {
+        if (p[0] < minLat) minLat = p[0]; if (p[0] > maxLat) maxLat = p[0];
+        if (p[1] < minLng) minLng = p[1]; if (p[1] > maxLng) maxLng = p[1];
+      }));
+      const kx = Math.cos(((minLat + maxLat) / 2) * Math.PI / 180);
+      const W = 220;
+      const geoW = Math.max((maxLng - minLng) * kx, 1e-9);
+      const geoH = Math.max((maxLat - minLat), 1e-9);
+      const H = Math.round(W * geoH / geoW);
+      const px = lng => (((lng - minLng) * kx) / geoW) * W;
+      const py = lat => (((maxLat - lat)) / geoH) * H;
+      const paths = dists.map(o => {
+        const fill = getLayerColor(getLayerValue(o, layerKey), layerKey);
+        const d = o.polygon.map((p, i) => (i ? 'L' : 'M') + px(p[1]).toFixed(1) + ' ' + py(p[0]).toFixed(1)).join(' ') + ' Z';
+        return `<path d="${d}" fill="${fill}" stroke="#ffffff" stroke-width="0.4" stroke-linejoin="round"/>`;
+      }).join('');
+      const mm = getLayerMinMax(layerKey);
+      return `<div class="mini-map">
+        <div class="mini-map-label">${label}</div>
+        <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Choroplethenkarte ${label}">
+          <rect x="0" y="0" width="${W}" height="${H}" fill="#ffffff"/>${paths}
+        </svg>
+        <div class="mini-map-range">${formatLayerValue(mm.min, layerKey)} – ${formatLayerValue(mm.max, layerKey)}</div>
+      </div>`;
+    }
+    function buildLayerMultiples() {
+      const all = (typeof LAYER_GROUPS !== 'undefined' ? LAYER_GROUPS : []).flatMap(g => g.layers || []);
+      const others = all.filter(l => l !== currentLayer);
+      if (!others.length) return '';
+      const maps = others.map(l => {
+        const unit = getLayerUnit(l);
+        return buildMiniMap(l, (getLayerLabelForLayer(l) || l) + (unit ? ' (' + unit + ')' : ''));
+      }).join('');
+      return `
+        <section class="snap-map-block">
+          <h2>Weitere Kartenebenen (Filter)</h2>
+          <div class="mini-map-grid">${maps}</div>
+        </section>`;
+    }
+    const layerMultiplesBlock = buildLayerMultiples();
 
     // ----- v2.9: personalized "Mein Ortsbezirk" + "Mein Kiez" -----
     // Both hang off the district the citizen picked on the dashboard
@@ -2856,6 +2917,45 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const meinBlock = buildMeinBlock();
 
+    // ----- v2.9: Bürger-Hinweise (mirrors renderCitizenReports) -----
+    // Aggregate KPIs from CITIZEN_AGGREGATE (Sicherheitsportal Hessen, real) +
+    // the 5 demo rows — the BEISPIEL tag is preserved (Mock-Badge-Disziplin §9.2).
+    function buildHinweiseBlock() {
+      const agg = D.CITIZEN_AGGREGATE || null;
+      const reports = D.CITIZEN_REPORTS || [];
+      if (!agg && !reports.length) return '';
+      const total30 = agg ? agg.reports_last30d : reports.length;
+      const resolvedCount = agg ? Math.round(agg.reports_last30d * agg.resolved_share) : 0;
+      const openDemo = reports.filter(r => r.status === 'open').length;
+      const inProgressCount = total30 - resolvedCount - openDemo;
+      const openCount = agg ? Math.max(total30 - resolvedCount - inProgressCount, 0) : openDemo;
+      const kpi = (label, val) => `<div class="kpi"><div class="kpi-label">${label}</div><div class="kpi-val">${val}</div></div>`;
+      const kpis = [
+        kpi(t('citizen_open', 'offen'), openCount),
+        kpi(t('citizen_progress', 'in Bearbeitung'), inProgressCount),
+        kpi(t('citizen_resolved', 'erledigt'), resolvedCount)
+      ].join('');
+      const stand = agg
+        ? `${agg.source_de} · Stand ${agg.stand_label} · ${agg.reports_last30d} Hinweise / 30 Tage · Median ${String(agg.median_days_to_resolve).replace('.', ',')} Tage`
+        : '';
+      const statusLabel = s => s === 'open' ? t('citizen_open', 'offen')
+        : s === 'in-progress' ? t('citizen_progress', 'in Bearbeitung')
+        : t('citizen_resolved', 'erledigt');
+      const rows = reports.slice(0, 5).map(r => `
+        <div class="bh-row">
+          <span>${r.type} · ${r.location}${r.demo ? ' <span class="bh-beispiel">BEISPIEL</span>' : ''}</span>
+          <span class="bh-meta">${statusLabel(r.status)} · ${r.date.slice(5)}</span>
+        </div>`).join('');
+      return `
+        <section class="snap-map-block">
+          <h2>${t('citizen_title', 'Bürger-Hinweise')}</h2>
+          <div class="kpi-grid kpi-grid--3">${kpis}</div>
+          ${stand ? `<div class="mein-sub">${stand}</div>` : ''}
+          <div class="bh-list">${rows}</div>
+        </section>`;
+    }
+    const hinweiseBlock = buildHinweiseBlock();
+
     const html = `<!DOCTYPE html><html lang="de"><head>
       <meta charset="utf-8"><title>Wiesbaden-Lagebild · Stand ${today}</title>
       ${css}
@@ -2869,6 +2969,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       ${mapBlock}
 
+      ${layerMultiplesBlock}
+
       ${air ? `<h3>Live-Daten</h3>
         <div style="font-size: 12px; line-height: 1.6;">
           ${wbIcon('wind', 13)} Luftqualität (UBA · DEHE112 Schiersteiner): NO₂ Ø ${airHead.no2_avg} µg/m³ · PM₁₀ Ø ${airHead.pm10_avg} µg/m³ · PM₂,₅ Ø ${airHead.pm25_avg} µg/m³
@@ -2878,8 +2980,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       ${meinBlock}
 
-      <h2>Daten-Stories (${stories.length})</h2>
+      <h2>Daten-Stories (${shownStories.length})</h2>
       ${storyBlock}
+
+      ${hinweiseBlock}
 
       <h2>Datenquellen</h2>
       <ul class="sources">${sourcesBlock}</ul>
