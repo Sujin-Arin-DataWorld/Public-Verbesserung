@@ -2624,8 +2624,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // user saves as PDF via browser Print → Save dialog. No external libs.
   function exportSnapshotPDF() {
     const today = new Date().toISOString().slice(0, 10);
-    const selection = (function(){ try { return JSON.parse(localStorage.getItem('wiesbaden_lagebild_kpi_selection') || 'null'); } catch(e){ return null; } })()
-      || (D.KPI_DEFAULT || []);
+    // v2.9 — mirror the citizen's actual on-screen KPI curation. The curator
+    // persists under 'wiesbaden_lagebild_kpis' (loadKpiSelection); the previous
+    // 'wiesbaden_lagebild_kpi_selection' key was never written, so the PDF always
+    // fell back to defaults and silently ignored any customization.
+    const selection = loadKpiSelection();
     const cards = selection
       .map(id => D.KPI_OPTIONS.find(k => k.id === id))
       .filter(Boolean);
@@ -2657,6 +2660,12 @@ document.addEventListener('DOMContentLoaded', () => {
         .badge { display: inline-block; padding: 2px 6px; font-family: 'JetBrains Mono', monospace; font-size: 9px; border: 1px solid currentColor; border-radius: 3px; color: #2F855A; margin-left: 6px; }
         @media print { body { padding: 0; } .no-print { display: none; } }
         .no-print { background: #1B2B4C; color: #fff; border: 0; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 13px; }
+        .snap-map-block { break-inside: avoid; }
+        .snap-map { display: block; width: 100%; max-width: 500px; height: auto; margin: 6px auto 4px; border: 1px solid #E2E5EB; border-radius: 4px; background: #fff; break-inside: avoid; }
+        .map-legend { display: flex; align-items: center; justify-content: center; gap: 2px; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #5C6580; margin: 0 0 8px 0; break-inside: avoid; }
+        .map-legend .sw { display: inline-block; width: 18px; height: 10px; }
+        .map-legend-min { margin-right: 5px; } .map-legend-max { margin-left: 5px; }
+        .map-legend-note { width: 100%; text-align: center; margin-top: 3px; color: #8892A8; }
       </style>
     `;
 
@@ -2684,6 +2693,56 @@ document.addEventListener('DOMContentLoaded', () => {
       return `<li>${title}${license ? ' · <em>' + license + '</em>' : ''}</li>`;
     }).join('');
 
+    // ----- v2.9: inline SVG choropleth of the active map layer -----
+    // Print-safe vector map (no tiles / no canvas → no CORS taint, no blank
+    // captures). Reuses the live dashboard geometry (ORTSBEZIRKE[].polygon) and
+    // color scale so the PDF mirrors exactly what the citizen sees on screen.
+    function buildSnapshotMap(layerKey) {
+      const dists = (typeof ORTSBEZIRKE !== 'undefined' ? ORTSBEZIRKE : [])
+        .filter(o => Array.isArray(o.polygon) && o.polygon.length);
+      if (!dists.length) return '';
+      let minLat = Infinity, maxLat = -Infinity, minLng = Infinity, maxLng = -Infinity;
+      dists.forEach(o => o.polygon.forEach(p => {
+        if (p[0] < minLat) minLat = p[0]; if (p[0] > maxLat) maxLat = p[0];
+        if (p[1] < minLng) minLng = p[1]; if (p[1] > maxLng) maxLng = p[1];
+      }));
+      const meanLat = (minLat + maxLat) / 2;
+      const kx = Math.cos(meanLat * Math.PI / 180);   // equirectangular aspect correction
+      const W = 700;
+      const geoW = Math.max((maxLng - minLng) * kx, 1e-9);
+      const geoH = Math.max((maxLat - minLat), 1e-9);
+      const H = Math.round(W * geoH / geoW);
+      const px = lng => (((lng - minLng) * kx) / geoW) * W;
+      const py = lat => (((maxLat - lat)) / geoH) * H;   // flip Y so north is up
+      const paths = dists.map(o => {
+        const fill = getLayerColor(getLayerValue(o, layerKey), layerKey);
+        const d = o.polygon
+          .map((p, i) => (i ? 'L' : 'M') + px(p[1]).toFixed(1) + ' ' + py(p[0]).toFixed(1))
+          .join(' ') + ' Z';
+        return `<path d="${d}" fill="${fill}" stroke="#ffffff" stroke-width="0.6" stroke-linejoin="round"/>`;
+      }).join('');
+      const palette = COLOR_PALETTES[layerKey] || COLOR_PALETTES.pop;
+      const mm = getLayerMinMax(layerKey);
+      const swatches = palette.map(c => `<span class="sw" style="background:${c}"></span>`).join('');
+      const label = getLayerLabelForLayer(layerKey) || layerKey;
+      const unit = getLayerUnit(layerKey);
+      return `
+        <section class="snap-map-block">
+        <h2>Karte — ${label}${unit ? ' (' + unit + ')' : ''}</h2>
+        <svg class="snap-map" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Choroplethenkarte ${label}">
+          <rect x="0" y="0" width="${W}" height="${H}" fill="#ffffff"/>
+          ${paths}
+        </svg>
+        <div class="map-legend">
+          <span class="map-legend-min">${formatLayerValue(mm.min, layerKey)}</span>
+          ${swatches}
+          <span class="map-legend-max">${formatLayerValue(mm.max, layerKey)}</span>
+          <span class="map-legend-note">${dists.length} Ortsbezirke · Choroplethenkarte aus dem Live-Dashboard</span>
+        </div>
+        </section>`;
+    }
+    const mapBlock = buildSnapshotMap(currentLayer);
+
     const html = `<!DOCTYPE html><html lang="de"><head>
       <meta charset="utf-8"><title>Wiesbaden-Lagebild · Stand ${today}</title>
       ${css}
@@ -2694,6 +2753,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <h2>KPI-Übersicht (${cards.length} Indikatoren)</h2>
       <div class="kpi-grid">${kpiBlock}</div>
+
+      ${mapBlock}
 
       ${air ? `<h3>Live-Daten</h3>
         <div style="font-size: 12px; line-height: 1.6;">
