@@ -1765,6 +1765,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 30-min localStorage cache to respect rate limits (~15 min refresh on UBA side).
   const UBA_CACHE_KEY = 'wiesbaden_lagebild_uba_cache_v1';
   const UBA_CACHE_MAX_AGE_MS = 30 * 60 * 1000;
+  let _liveAir = null;   // v2.9 — runtime UBA averages, exposed for the PDF export
   async function refreshAirLive() {
     try {
       const cached = JSON.parse(localStorage.getItem(UBA_CACHE_KEY) || 'null');
@@ -1850,6 +1851,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (opt && no2a != null) {
       opt.value = `${no2a} µg/m³ NO₂`;
     }
+    _liveAir = { no2_avg: no2a, pm10_avg: pm10a, pm25_avg: pm25a };
     KPI_STAND.air = { status, standDate: payload.days[payload.days.length - 1] };
     renderKpiGrid();
   }
@@ -2634,9 +2636,14 @@ document.addEventListener('DOMContentLoaded', () => {
       .filter(Boolean);
     const stories = (D.STORIES || []);
     const sources = (D.DATA_SOURCES || []).slice(0, 25);
+    // v2.9 — Live-Daten reflect the runtime fetches (refreshAirLive / refreshFuelLive)
+    // when available, else the build-time snapshot. Badges use fmtStand() so label+date
+    // match the dashboard exactly (live / Stand / zuletzt — never a faked "live").
     const air = D.UBA_AIRQUALITY && D.UBA_AIRQUALITY.headline;
-    const fuel = (D.FUEL_STATIONS_V2 || []).filter(s => s.e10 != null).sort((a,b)=>a.e10-b.e10)[0];
-    const fuelStand = (D.FUEL_STATIONS_V2_META && D.FUEL_STATIONS_V2_META.fetched_at) || '';
+    const airHead = (typeof _liveAir !== 'undefined' && _liveAir) || air;
+    const fuelList = (typeof fuelStations === 'function' ? fuelStations() : (D.FUEL_STATIONS_V2 || []))
+      .filter(s => s.e10 != null && s.isOpen !== false);
+    const fuel = fuelList.slice().sort((a, b) => a.e10 - b.e10)[0];
 
     const css = `
       <style>
@@ -2758,9 +2765,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       ${air ? `<h3>Live-Daten</h3>
         <div style="font-size: 12px; line-height: 1.6;">
-          ${wbIcon('wind', 13)} Luftqualität (UBA · DEHE112 Schiersteiner): NO₂ Ø ${air.no2_avg} µg/m³ · PM₁₀ Ø ${air.pm10_avg} µg/m³ · PM₂,₅ Ø ${air.pm25_avg} µg/m³
-          <span class="badge">live</span>
-          ${fuel ? `<br>${wbIcon('fuel', 13)} Günstigster Super E10 (Tankerkönig): ${fuel.e10.toFixed(3).replace('.',',')} € · ${fuel.brand} ${fuel.addr}<span class="badge">live · ${fuelStand.slice(0,10)}</span>` : ''}
+          ${wbIcon('wind', 13)} Luftqualität (UBA · DEHE112 Schiersteiner): NO₂ Ø ${airHead.no2_avg} µg/m³ · PM₁₀ Ø ${airHead.pm10_avg} µg/m³ · PM₂,₅ Ø ${airHead.pm25_avg} µg/m³
+          <span class="badge">${fmtStand(KPI_STAND.air)}</span>
+          ${fuel ? `<br>${wbIcon('fuel', 13)} Günstigster Super E10 (Tankerkönig): ${fuel.e10.toFixed(3).replace('.',',')} € · ${fuel.brand} ${fuel.addr || fuel.address || ''}<span class="badge">${fmtStand(KPI_STAND.fuel)}</span>` : ''}
         </div>` : ''}
 
       <h2>Daten-Stories (${stories.length})</h2>
