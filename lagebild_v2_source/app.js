@@ -634,6 +634,8 @@ function drawLayer(layerKey) {
     polygon.addTo(layerGroup);
     polygonLayers[o.id] = polygon;
   });
+  // v2.9 — keep the print-only SVG map in sync with the active layer.
+  try { renderPrintMap(); } catch (e) {}
 }
 
 function getLayerLabelForLayer(key) {
@@ -667,6 +669,46 @@ function formatLayerValue(value, layerKey) {
   if (layerKey === 'sozialwohn') return formatNum(value) + ' WE';
   if (layerKey === 'kaufkraft')  return formatNum(Math.round(value)) + ' €';
   return value;
+}
+
+// v2.9 — print-only inline SVG choropleth. Leaflet tile maps print blank/partial,
+// so for "Als PDF" (window.print) we swap the live map for this vector copy of the
+// currently active layer. Reuses the exact geometry + color scale of the screen map.
+function buildChoroplethSVG(layerKey) {
+  const dists = (typeof ORTSBEZIRKE !== 'undefined' ? ORTSBEZIRKE : [])
+    .filter(o => Array.isArray(o.polygon) && o.polygon.length);
+  if (!dists.length) return '';
+  let minLat = Infinity, maxLat = -Infinity, minLng = Infinity, maxLng = -Infinity;
+  dists.forEach(o => o.polygon.forEach(p => {
+    if (p[0] < minLat) minLat = p[0]; if (p[0] > maxLat) maxLat = p[0];
+    if (p[1] < minLng) minLng = p[1]; if (p[1] > maxLng) maxLng = p[1];
+  }));
+  const kx = Math.cos(((minLat + maxLat) / 2) * Math.PI / 180);
+  const W = 680;
+  const geoW = Math.max((maxLng - minLng) * kx, 1e-9);
+  const geoH = Math.max((maxLat - minLat), 1e-9);
+  const H = Math.round(W * geoH / geoW);
+  const px = lng => (((lng - minLng) * kx) / geoW) * W;
+  const py = lat => (((maxLat - lat)) / geoH) * H;
+  const paths = dists.map(o => {
+    const fill = getLayerColor(getLayerValue(o, layerKey), layerKey);
+    const d = o.polygon.map((p, i) => (i ? 'L' : 'M') + px(p[1]).toFixed(1) + ' ' + py(p[0]).toFixed(1)).join(' ') + ' Z';
+    return '<path d="' + d + '" fill="' + fill + '" stroke="#ffffff" stroke-width="0.5" stroke-linejoin="round"/>';
+  }).join('');
+  const palette = (COLOR_PALETTES[layerKey] || COLOR_PALETTES.pop);
+  const mm = getLayerMinMax(layerKey);
+  const swatches = palette.map(c => '<span class="pm-sw" style="background:' + c + '"></span>').join('');
+  const label = getLayerLabelForLayer(layerKey) || layerKey;
+  const unit = getLayerUnit(layerKey);
+  return '<div class="print-map-title">' + label + (unit ? ' (' + unit + ')' : '') + '</div>'
+    + '<svg width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Choroplethenkarte ' + label + '">'
+    + '<rect x="0" y="0" width="' + W + '" height="' + H + '" fill="#ffffff"/>' + paths + '</svg>'
+    + '<div class="print-map-legend"><span>' + formatLayerValue(mm.min, layerKey) + '</span>' + swatches
+    + '<span>' + formatLayerValue(mm.max, layerKey) + '</span><span class="pm-note">26 Ortsbezirke</span></div>';
+}
+function renderPrintMap() {
+  const box = document.getElementById('print-map');
+  if (box && typeof currentLayer !== 'undefined') box.innerHTML = buildChoroplethSVG(currentLayer);
 }
 
 // v2.1 — charging station point markers, shown only when charging layer active.
@@ -3043,7 +3085,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const aiLink = document.getElementById('open-ai-register');
     const metaLink = document.getElementById('open-meta-usage');
     const pdfBtn  = document.getElementById('pdf-snapshot-btn');
-    if (pdfBtn) pdfBtn.addEventListener('click', exportSnapshotPDF);
+    // v2.9 — WYSIWYG: print the actual dashboard (current view) instead of a rebuilt
+    // report. The print stylesheet hides chrome and swaps Leaflet → inline SVG map.
+    if (pdfBtn) pdfBtn.addEventListener('click', () => {
+      try { renderPrintMap(); } catch (e) {}
+      window.print();
+    });
     const aiModal = document.getElementById('ai-modal');
     const metaModal = document.getElementById('meta-modal');
     if (aiLink && aiModal) {

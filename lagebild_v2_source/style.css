@@ -4116,9 +4116,89 @@ html[data-lang="ls"] .ls-banner { display: block; }
   gap: 8px;
 }
 
-/* ---- PDF/print body — keep icons readable ---- */
+/* ---- Print-only inline SVG map (hidden on screen) ---- */
+.print-only { display: none; }
+
+/* ============================================================
+   v2.9 — WYSIWYG PRINT: turn the live dashboard (current view)
+   into a clean A4 PDF. Hide interactive chrome, swap the Leaflet
+   tile map for the inline SVG choropleth, force colours to print.
+   ============================================================ */
 @media print {
-  .wb-icon { color: #000 !important; opacity: 0.9; }
+  @page { size: A4; margin: 12mm; }
+
+  /* Backgrounds + choropleth colours must actually print */
+  *, *::before, *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  html, body { background: #ffffff !important; }
+  .wb-icon { color: #1B2B4C !important; opacity: 0.95; }
+
+  /* Hide interactive / navigational chrome */
+  .ticker-bar,
+  .view-nav,
+  .ls-banner,
+  .kpi-curator-btn, #curator-btn,
+  .lang-switcher, .lang-switch,
+  .assist-btn, #assist-btn,
+  .assist-drawer, #assist-drawer,
+  .leaflet-control-container,
+  .modal-backdrop, .onboarding-modal, .modal,
+  .mo-clear, #mo-clear,
+  .layer-select, #layer-select,
+  .mo-select, #mo-select, label[for="mo-select"],
+  .map-controls,
+  .time-slider, .map-controls .slider,
+  #pdf-snapshot-btn,
+  .footer-extra-links,
+  .btn-primary, .btn-secondary,
+  .kiez-card-cta, .report-cta, .story-row-arrow,
+  .no-print { display: none !important; }
+
+  /* Only the active view prints */
+  .view { display: none !important; }
+  .view.active { display: block !important; }
+
+  /* Swap Leaflet → inline SVG choropleth */
+  #map { display: none !important; }
+  .print-only { display: block !important; }
+  #print-map svg {
+    width: 100%; height: auto;
+    border: 1px solid #E2E5EB; border-radius: 4px; background: #fff;
+  }
+  .print-map-title {
+    font-family: 'Lora', Georgia, serif; font-size: 15px; font-weight: 600;
+    color: #1B2B4C; margin: 2px 0 6px;
+  }
+  .print-map-legend {
+    display: flex; align-items: center; justify-content: center; gap: 3px;
+    flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 9px;
+    color: #5C6580; margin-top: 5px;
+  }
+  .print-map-legend .pm-sw { display: inline-block; width: 16px; height: 9px; }
+  .print-map-legend .pm-note { width: 100%; text-align: center; color: #8892A8; margin-top: 2px; }
+
+  /* Section spacing + avoid breaking cards across pages */
+  section { padding-top: 10px !important; padding-bottom: 10px !important; break-inside: avoid; }
+  .map-section, .map-wrapper, .bottom-grid,
+  .kpi-card, .kiez-card, .grocery-stat-item,
+  .story-row, .report-row, .mo-cards > * {
+    break-inside: avoid;
+  }
+  .header { padding-bottom: 8px !important; }
+  .header-right { gap: 6px; }
+  a { color: inherit !important; text-decoration: none !important; }
+
+  /* Roadmap "not yet in catalog" capsule collides with the Stand badge on the
+     narrow print column — drop it; the Stand badge already carries provenance. */
+  .kpi-card[data-kpi-disabled="1"]::after { display: none !important; }
+
+  /* Mein-Ortsbezirk stat row is a flex nowrap on screen; let it wrap on paper so
+     the 7 cards don't squeeze into one cramped line. */
+  .grocery-stats { flex-wrap: wrap !important; gap: 10px 18px !important; }
+  .grocery-stats .grocery-stat-item { flex: 1 1 140px; min-width: 130px; }
+  .grocery-stat-item span { white-space: normal; }
 }
 
 /* ---- TYPOGRAPHY: editorial weight bump ---- */
