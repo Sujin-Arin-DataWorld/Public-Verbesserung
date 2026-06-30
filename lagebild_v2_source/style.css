@@ -3751,6 +3751,13 @@ html[data-lang="ls"] .ls-banner { display: block; }
   cursor: not-allowed;
   position: relative;
 }
+/* v2.9 — On screen the disabled card carries the ROADMAP capsule (::after, top-right);
+   hide the redundant kpi-stand badge so the two no longer collide. Screen-only:
+   in print the ::after is hidden (@media print below) and the kpi-stand stays as the
+   honest "unverifiziert" disclosure — so it is never lost on paper. */
+@media screen {
+  .kpi-card[data-kpi-disabled="1"] .kpi-stand { display: none; }
+}
 
 /* GSM dialect — top-right capsule badge for "data exists but not yet in
    official Open-Data catalog" disclosure. Mirrors the BMWK / Destatis
@@ -4125,7 +4132,7 @@ html[data-lang="ls"] .ls-banner { display: block; }
    tile map for the inline SVG choropleth, force colours to print.
    ============================================================ */
 @media print {
-  @page { size: A4; margin: 12mm; }
+  @page { size: A4 landscape; margin: 10mm; }
 
   /* Backgrounds + choropleth colours must actually print */
   *, *::before, *::after {
@@ -4135,26 +4142,15 @@ html[data-lang="ls"] .ls-banner { display: block; }
   html, body { background: #ffffff !important; }
   .wb-icon { color: #1B2B4C !important; opacity: 0.95; }
 
-  /* Hide interactive / navigational chrome */
-  .ticker-bar,
-  .view-nav,
-  .ls-banner,
-  .kpi-curator-btn, #curator-btn,
-  .lang-switcher, .lang-switch,
-  .assist-btn, #assist-btn,
-  .assist-drawer, #assist-drawer,
-  .leaflet-control-container,
+  /* v2.9.1 — Screenshot-Treue: NUR echte Overlays / ausgefahrene Panels verstecken.
+     Die sichtbare UI (Tab-Navigation, Ortsbezirk-Auswahl, Datenassistent-Button,
+     Ticker, Karten-Steuerung, Buttons) BLEIBT, damit das PDF der Bildschirm-
+     ansicht entspricht — wie ein Screenshot. */
   .modal-backdrop, .onboarding-modal, .modal,
-  .mo-clear, #mo-clear,
-  .layer-select, #layer-select,
-  .mo-select, #mo-select, label[for="mo-select"],
-  .map-controls,
-  .time-slider, .map-controls .slider,
-  #pdf-snapshot-btn,
-  .footer-extra-links,
-  .btn-primary, .btn-secondary,
-  .kiez-card-cta, .report-cta, .story-row-arrow,
+  .assist-drawer, #assist-drawer,
   .no-print { display: none !important; }
+  /* Floating-Button im Druck statisch ans Seitenende statt überlappend/wiederholt */
+  .assist-btn, #assist-btn { position: static !important; box-shadow: none !important; }
 
   /* Only the active view prints */
   .view { display: none !important; }
@@ -4179,9 +4175,9 @@ html[data-lang="ls"] .ls-banner { display: block; }
   .print-map-legend .pm-sw { display: inline-block; width: 16px; height: 9px; }
   .print-map-legend .pm-note { width: 100%; text-align: center; color: #8892A8; margin-top: 2px; }
 
-  /* Section spacing + avoid breaking cards across pages */
-  section { padding-top: 10px !important; padding-bottom: 10px !important; break-inside: avoid; }
-  .map-section, .map-wrapper, .bottom-grid,
+  /* Let big sections flow naturally (avoid huge empty gaps); only keep small
+     cards from splitting across a page break. */
+  section { padding-top: 10px !important; padding-bottom: 10px !important; }
   .kpi-card, .kiez-card, .grocery-stat-item,
   .story-row, .report-row, .mo-cards > * {
     break-inside: avoid;

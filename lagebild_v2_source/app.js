@@ -3962,7 +3962,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <span style="font-size:11px; color: var(--text-tertiary); font-family: var(--font-mono);">Ortsbezirk ${o.id}</span>
         <span style="flex:1; text-align:right; font-size:11px; color: var(--text-tertiary);" data-i18n="mo_compare_note">Vergleich mit Stadt-Durchschnitt</span>
       </div>
-      <div class="grocery-stats" style="grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));">
+      <div class="grocery-stats" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:14px 18px;">
         ${moCard(t('mo_lbl_pop', 'BEVÖLKERUNG'), o.pop, fmtInt, moDeltaBadge(o.pop, avg.pop / (D.ORTSBEZIRKE || []).length, '', false), t('mo_sub_pop', 'Einwohner'))}
         ${moCard(t('mo_lbl_foreign', 'AUSLÄNDERANTEIL'), o.foreign, fmtPct, moDeltaBadge(o.foreign, avg.foreign, ' pp', false), '')}
         ${moCard(t('mo_lbl_age', 'Ø ALTER'), o.age, fmtAge, moDeltaBadge(o.age, avg.age, ' J.', false), '')}
