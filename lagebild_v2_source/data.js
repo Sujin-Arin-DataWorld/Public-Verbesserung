@@ -1673,7 +1673,7 @@ Object.assign(I18N.kr, {
 // v2.7 — Footer 추가 텍스트 i18n (사용자 보고: footer가 모두 독일어로 노출)
 // 기존 footer-grid <p> 안의 하드코딩 텍스트 + footer-gsm 3 sections 모두 5언어
 Object.assign(I18N.de, {
-  footer_sources_body:   "opendata.cloud.wiesbaden.de · ESWE Verkehr (GTFS-RT) · HLNUG Hessen · DWD Open Data · Marktstammdatenregister · Digitaler Zwilling Wiesbaden (VC Suite)",
+  footer_sources_body:   "opendata.cloud.wiesbaden.de (Piveau) · Umweltbundesamt (UBA, Luftdaten) · Tankerkönig MTS-K (Spritpreise) · Statistisches Bundesamt (Destatis, VPI) · OpenStreetMap/Overpass & Nominatim · Mietspiegel & Bodenrichtwert Wiesbaden · Polizei Westhessen (PKS), ELW & Veranstaltungskalender der LH Wiesbaden · Tagesbetreuungsbericht der LH Wiesbaden · Geplant (Bürgerwissenschaft 2026): HLNUG, DWD",
   footer_update_body:    "Verkehr 60 s · Luftqualität 5 min · Baustellen 24 h · Bevölkerung 30 d · Energie monatlich",
   footer_gsm_cite_h:     "Zitierhinweis",
   footer_gsm_cite_intro: "Bitte zitieren Sie diese Anwendung wie folgt:",
@@ -1686,7 +1686,7 @@ Object.assign(I18N.de, {
   address_button:        "Suchen"
 });
 Object.assign(I18N.en, {
-  footer_sources_body:   "opendata.cloud.wiesbaden.de · ESWE Verkehr (GTFS-RT) · HLNUG (Hesse) · DWD Open Data · Marktstammdatenregister · Wiesbaden Digital Twin (VC Suite)",
+  footer_sources_body:   "opendata.cloud.wiesbaden.de (Piveau) · German Environment Agency (UBA, air data) · Tankerkönig MTS-K (fuel prices) · Federal Statistical Office (Destatis, CPI) · OpenStreetMap/Overpass & Nominatim · Wiesbaden rent index & land values · Westhessen Police (crime stats), ELW & City of Wiesbaden events calendar · City of Wiesbaden childcare report · Planned (citizen science 2026): HLNUG, DWD",
   footer_update_body:    "Transit 60 s · Air 5 min · Construction 24 h · Population 30 d · Energy monthly",
   footer_gsm_cite_h:     "How to cite",
   footer_gsm_cite_intro: "Please cite this application as follows:",
@@ -1699,7 +1699,7 @@ Object.assign(I18N.en, {
   address_button:        "Search"
 });
 Object.assign(I18N.tr, {
-  footer_sources_body:   "opendata.cloud.wiesbaden.de · ESWE Verkehr (GTFS-RT) · HLNUG (Hessen) · DWD Açık Veri · Marktstammdatenregister · Wiesbaden Dijital İkiz (VC Suite)",
+  footer_sources_body:   "opendata.cloud.wiesbaden.de (Piveau) · Federal Çevre Ajansı (UBA, hava verileri) · Tankerkönig MTS-K (yakıt fiyatları) · Federal İstatistik Ofisi (Destatis, TÜFE) · OpenStreetMap/Overpass & Nominatim · Wiesbaden kira endeksi & arsa değerleri · Westhessen Polisi (suç istatistikleri), ELW & Wiesbaden etkinlik takvimi · Wiesbaden çocuk bakımı raporu · Planlanan (yurttaş bilimi 2026): HLNUG, DWD",
   footer_update_body:    "Toplu taşıma 60 sn · Hava 5 dk · İnşaat 24 sa · Nüfus 30 gün · Enerji aylık",
   footer_gsm_cite_h:     "Atıf bilgisi",
   footer_gsm_cite_intro: "Lütfen bu uygulamayı şöyle alıntılayın:",
@@ -1712,7 +1712,7 @@ Object.assign(I18N.tr, {
   address_button:        "Ara"
 });
 Object.assign(I18N.ua, {
-  footer_sources_body:   "opendata.cloud.wiesbaden.de · ESWE Verkehr (GTFS-RT) · HLNUG (Гессен) · DWD Open Data · Marktstammdatenregister · Цифровий двійник Вісбадена (VC Suite)",
+  footer_sources_body:   "opendata.cloud.wiesbaden.de (Piveau) · Федеральне відомство з довкілля (UBA, дані про повітря) · Tankerkönig MTS-K (ціни на пальне) · Федеральне статистичне відомство (Destatis, ІСЦ) · OpenStreetMap/Overpass і Nominatim · Індекс оренди та вартість землі Вісбадена · Поліція Західного Гессену (статистика злочинності), ELW та календар подій Вісбадена · Звіт про догляд за дітьми Вісбадена · Заплановано (громадянська наука 2026): HLNUG, DWD",
   footer_update_body:    "Транспорт 60 с · Повітря 5 хв · Будівництво 24 год · Населення 30 д · Енергія щомісяця",
   footer_gsm_cite_h:     "Як цитувати",
   footer_gsm_cite_intro: "Будь ласка, цитуйте цей застосунок так:",
@@ -1725,7 +1725,7 @@ Object.assign(I18N.ua, {
   address_button:        "Пошук"
 });
 Object.assign(I18N.kr, {
-  footer_sources_body:   "opendata.cloud.wiesbaden.de · ESWE Verkehr (GTFS-RT) · HLNUG 헤센 · DWD 오픈 데이터 · 연방계통자료등록부(Marktstammdatenregister) · 비스바덴 디지털 트윈 (VC Suite)",
+  footer_sources_body:   "opendata.cloud.wiesbaden.de (Piveau) · 연방환경청(UBA, 대기데이터) · Tankerkönig MTS-K(연료가격) · 연방통계청(Destatis, 소비자물가지수) · OpenStreetMap/Overpass·Nominatim · 비스바덴 임대료지수·지가 · 서헤센 경찰(범죄통계)·ELW·비스바덴 행사달력 · 비스바덴 보육보고서 · 예정(시민과학 2026): HLNUG·DWD",
   footer_update_body:    "교통 60초 · 대기질 5분 · 공사 24시간 · 인구 30일 · 에너지 월간",
   footer_gsm_cite_h:     "인용 방법",
   footer_gsm_cite_intro: "이 앱을 인용하실 때는 아래 형식을 사용해 주세요.",
