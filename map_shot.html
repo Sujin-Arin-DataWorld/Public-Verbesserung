@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="utf-8">
+<link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<style>
+  html,body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#fff;color:#1b1f27}
+  .hd{padding:12px 18px 8px}
+  .hd h1{font-size:18px;margin:0 0 4px;color:#1f4e79}
+  .hd .mode{font-size:13px;color:#0f9d6e;font-weight:600}
+  .hd .mode b{color:#1b1f27}
+  #map{width:1100px;height:600px;border-top:1px solid #e3e6ea}
+  .lg{display:flex;align-items:center;gap:10px;font-size:12px;color:#55606e;padding:8px 18px}
+  .bar{height:11px;width:170px;border-radius:3px;background:linear-gradient(90deg,#ffffcc,#a1dab4,#41b6c4,#2c7fb8,#253494)}
+  .maplibregl-popup-content{font-size:12px}
+</style></head>
+<body>
+<div class="hd"><h1 id="t">…</h1><div class="mode" id="m"></div></div>
+<div id="map"></div>
+<div class="lg" id="lg"></div>
+<script>
+const P=new URLSearchParams(location.search);
+const RAMP=['#ffffcc','#a1dab4','#41b6c4','#2c7fb8','#253494'];
+function deNum(s){if(s==null)return null;s=(""+s).trim();if(!s||s==="-")return null;
+  if(/^\d{1,4}[.\-/]\d{1,2}[.\-/]\d{1,4}$/.test(s))return null;
+  if(s.includes(",")&&s.includes("."))s=s.replace(/\./g,"").replace(",",".");
+  else if(s.includes(","))s=s.replace(",",".");else if(/^\d{1,3}(\.\d{3})+$/.test(s))s=s.replace(/\./g,"");
+  if(!/^-?\d+(\.\d+)?$/.test(s))return null;const n=parseFloat(s);return isNaN(n)?null:n;}
+function parseCSV(text){const d=(text.split("\n")[0].split(";").length>text.split("\n")[0].split(",").length)?";":",";
+  const rows=[];let row=[],cur="",q=false;
+  for(let i=0;i<text.length;i++){const c=text[i];
+    if(q){if(c==='"'){if(text[i+1]==='"'){cur+='"';i++;}else q=false;}else cur+=c;}
+    else if(c==='"')q=true;else if(c===d){row.push(cur);cur="";}
+    else if(c==="\n"){row.push(cur);rows.push(row);row=[];cur="";}else if(c!=="\r")cur+=c;}
+  if(cur!==""||row.length){row.push(cur);rows.push(row);}
+  const headers=rows.shift().map(h=>h.trim());
+  const objs=rows.filter(r=>r.some(v=>v!=="")).map(r=>{const o={};headers.forEach((h,i)=>o[h]=(r[i]||"").trim());return o;});
+  return {headers,objs};}
+function inferType(rows,col){let n=0,num=0;for(const r of rows){const v=r[col];if(v===""||v==null)continue;n++;if(deNum(v)!==null)num++;}return n>0&&num/n>=0.9?"numeric":"text";}
+function isMeasure(id){const n=(id||"").toLowerCase();
+  if(/(^|[ _\-.])(id|nr|nummer|hausnummer|schl(ü|ue)ssel|key|code|plz|postleitzahl)\d*$/.test(n))return false;
+  if(/datum|date/.test(n))return false;if(/jahr$|year$/.test(n)||/^(monat|month|quartal|kw|stand)$/.test(n))return false;
+  if(/breitengrad|l(ä|ae)ngengrad|^lat$|^lon$|^lng$|latitude|longitude|x[_ ]?coord|y[_ ]?coord|rechtswert|hochwert/.test(n))return false;
+  return true;}
+function norm(s){s=(s||"").toLowerCase();for(const[k,v]of Object.entries({"ä":"a","ö":"o","ü":"u","ß":"ss"}))s=s.split(k).join(v);return s.replace(/[\/\-\s,.()]+/g,"");}
+let GEO,GEO_NORM=[];
+function matchGeo(name){const n=norm(name);if(!n||n==="wiesbaden")return null;
+  for(const g of GEO_NORM)if(n===g.n)return g.name;
+  for(const g of GEO_NORM)if(n.length>=5&&g.n.length>n.length&&g.n.endsWith(n))return g.name;return null;}
+function centroid(f){const g=f.geometry;let ring;if(g.type==="Polygon")ring=g.coordinates[0];
+  else if(g.type==="MultiPolygon")ring=g.coordinates.map(p=>p[0]).sort((a,b)=>b.length-a.length)[0];else return[8.24,50.08];
+  let x=0,y=0;ring.forEach(c=>{x+=c[0];y+=c[1];});return[x/ring.length,y/ring.length];}
+function fmt(n){return Number.isInteger(n)?n.toLocaleString("de"):n.toLocaleString("de",{maximumFractionDigits:n>=1000?1:1});}
+
+(async function(){
+  document.getElementById('t').textContent=P.get('title')||'';
+  GEO=await (await fetch('lagebild_v2_source/wiesbaden_ortsbezirke.geojson')).json();
+  GEO_NORM=GEO.features.map(f=>({name:f.properties.name,n:norm(f.properties.name)}));
+  const {headers,objs}=parseCSV(await (await fetch(P.get('csv'))).text());
+  const fields=headers.map(h=>({id:h,type:inferType(objs,h)}));
+  const kind=P.get('kind');
+  const MINI={version:8,sources:{},layers:[{id:'bg',type:'background',paint:{'background-color':'#eef1f4'}}]};
+  const map=new maplibregl.Map({container:'map',style:P.get('style')==='mini'?MINI:'https://tiles.openfreemap.org/styles/positron',
+    center:[8.305,50.075],zoom:10.4,attributionControl:{compact:true},preserveDrawingBuffer:true});
+  map.on('error',e=>{console.error('MAP ERROR:',(e&&e.error&&e.error.message)||e);});
+  map.addControl(new maplibregl.NavigationControl(),'top-right');
+  map.on('load',()=>{ try{
+    if(kind==='cluster'){
+      const lat=fields.find(f=>/breitengrad|^lat$|latitude/i.test(f.id)).id, lng=fields.find(f=>/l(ae|ä)ngengrad|^lng$|^lon$|longitude/i.test(f.id)).id;
+      const feats=[];objs.forEach(r=>{const la=deNum(r[lat]),lo=deNum(r[lng]);if(la==null||lo==null||la<46||la>56||lo<4||lo>17)return;feats.push({type:'Feature',geometry:{type:'Point',coordinates:[lo,la]},properties:{}});});
+      map.addSource('cp',{type:'geojson',data:{type:'FeatureCollection',features:feats},cluster:true,clusterRadius:48,clusterMaxZoom:14});
+      map.addLayer({id:'cl',type:'circle',source:'cp',filter:['has','point_count'],paint:{'circle-color':'#2563eb','circle-opacity':.85,'circle-radius':['step',['get','point_count'],14,10,20,50,28],'circle-stroke-color':'#fff','circle-stroke-width':1.5}});
+      map.addLayer({id:'cn',type:'symbol',source:'cp',filter:['has','point_count'],layout:{'text-field':['get','point_count_abbreviated'],'text-size':12},paint:{'text-color':'#fff'}});
+      map.addLayer({id:'un',type:'circle',source:'cp',filter:['!',['has','point_count']],paint:{'circle-color':'#2563eb','circle-radius':5,'circle-opacity':.8,'circle-stroke-color':'#fff','circle-stroke-width':1}});
+      const b=new maplibregl.LngLatBounds();feats.forEach(f=>b.extend(f.geometry.coordinates));if(feats.length)map.fitBounds(b,{padding:50,maxZoom:13});
+      setTimeout(()=>{try{const s=map.getSource('cp');if(s)s.setData({type:'FeatureCollection',features:feats});map.resize();map.triggerRepaint&&map.triggerRepaint();}catch(e){console.error('nudge',e);}},300);
+      document.getElementById('m').innerHTML=`Punktdaten → <b>Cluster</b> · ${feats.length} Standorte`;
+      document.getElementById('lg').innerHTML='○ Cluster = Anzahl der Standorte je Gebiet';
+    } else {
+      const geo=P.get('geo')||fields.find(f=>/name|bezirk/i.test(f.id)).id;
+      let val=P.get('val'); if(!val||!fields.find(f=>f.id===val)) val=(fields.find(f=>f.type==='numeric'&&isMeasure(f.id))||{}).id;
+      const yCol=fields.find(f=>/^jahr$|^year$/i.test(f.id)); const years=yCol?[...new Set(objs.map(r=>r[yCol.id]).filter(Boolean))].sort():[];
+      const yr=years.length?years[years.length-1]:null;
+      const rows=yr?objs.filter(r=>r[yCol.id]===yr):objs;
+      const by={};rows.forEach(r=>{const g=matchGeo(r[geo]);if(!g)return;const v=deNum(r[val]);if(v==null)return;(by[g]=by[g]||[]).push(v);});
+      const vals=[];GEO.features.forEach(f=>{const a=by[f.properties.name];if(a&&a.length){f.properties._v=a.reduce((x,y)=>x+y,0)/a.length;vals.push(f.properties._v);f.properties._c=centroid(f);}else delete f.properties._v;});
+      let mn=Math.min(...vals),mx=Math.max(...vals);if(mn===mx)mx=mn+1;
+      map.addSource('bez',{type:'geojson',data:GEO});
+      if(kind==='symbol'){
+        map.addLayer({id:'ln',type:'line',source:'bez',paint:{'line-color':'#9aa3b2','line-width':.7}});
+        const smin=Math.sqrt(Math.max(0,mn)),smax=Math.sqrt(Math.max(0,mx))||1;
+        const pts={type:'FeatureCollection',features:GEO.features.filter(f=>f.properties._v!=null).map(f=>({type:'Feature',geometry:{type:'Point',coordinates:f.properties._c},properties:{_r:Math.max(5,7+30*((Math.sqrt(Math.max(0,f.properties._v))-smin)/((smax-smin)||1)))}}))};
+        map.addSource('pts',{type:'geojson',data:pts});
+        map.addLayer({id:'sym',type:'circle',source:'pts',paint:{'circle-radius':['get','_r'],'circle-color':'#2563eb','circle-opacity':.66,'circle-stroke-color':'#fff','circle-stroke-width':1.2}});
+        document.getElementById('m').innerHTML=`Anzahl → <b>proportionale Kreise</b> (Fläche ∝ Wert) · ${val}${yr?' · '+yr:''}`;
+        document.getElementById('lg').innerHTML=`● Kreisfläche ∝ Wert &nbsp;·&nbsp; ${fmt(mn)} – ${fmt(mx)}`;
+      } else {
+        const stops=[];RAMP.forEach((c,i)=>stops.push(mn+(mx-mn)*i/(RAMP.length-1),c));
+        map.addLayer({id:'fill',type:'fill',source:'bez',paint:{'fill-color':['case',['has','_v'],['interpolate',['linear'],['get','_v'],...stops],'#e3e3e3'],'fill-opacity':.82}});
+        map.addLayer({id:'ln',type:'line',source:'bez',paint:{'line-color':'#9aa3b2','line-width':.6}});
+        document.getElementById('m').innerHTML=`Rate → <b>Choropleth</b> (Flächenfärbung) · ${val}${yr?' · '+yr:''}`;
+        document.getElementById('lg').innerHTML=`<span>${fmt(mn)}</span><span class="bar"></span><span>${fmt(mx)}</span> &nbsp; €/m² (Ø je Ortsbezirk)`;
+      }
+    }
+    setTimeout(()=>{try{map.resize();map.triggerRepaint&&map.triggerRepaint();}catch(e){}},350);
+    }catch(err){console.error('LOAD HANDLER ERROR:',err);document.getElementById('m').innerHTML='<span style="color:#c00">Render-Fehler: '+(err&&err.message||err)+'</span>';}
+    map.once('idle',()=>{ map.resize(); setTimeout(()=>{window.__ready=true;document.title='READY';},700); });
+  });
+})();
+</script></body></html>

@@ -1,0 +1,2780 @@
+{
+  "geprueft": 239,
+  "mit_befund": 199,
+  "mit_fehler": 7,
+  "nach_regel": {
+    "R-OB-GES": 24,
+    "R-NA": 6,
+    "R-ENC": 177,
+    "R-NUM": 2,
+    "R-COL": 56,
+    "R-OB-NAME": 6,
+    "R-OB-ID": 1
+  },
+  "nach_schwere": {
+    "HINWEIS": 24,
+    "WARNUNG": 241,
+    "FEHLER": 7
+  },
+  "encoding_breakdown": {
+    "utf8_bom": 177,
+    "nicht_utf8_undeklariert": 0,
+    "nicht_utf8_deklariert": 0
+  },
+  "berichte": [
+    {
+      "dataset": "Sozialwohnungen in Wiesbaden nach Ortsbezirken – 2014 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d64bab5ad02500bdfa65",
+      "findings": [
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Ortsbezirken in Wiesbaden - Dezember 2025",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696a88a9ab5ad02500bdfa97",
+      "findings": []
+    },
+    {
+      "dataset": "Baugenehmigungen Wohngebäude in Wiesbaden – 2001 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d165ab5ad02500bdfa35",
+      "findings": []
+    },
+    {
+      "dataset": "Immobilienmarkt Wohnbauland Bodenrichtwert in Wiesbaden – 2000 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d179ab5ad02500bdfa3d",
+      "findings": [
+        {
+          "regel": "R-NA",
+          "schwere": "WARNUNG",
+          "detail": "Platzhalter statt leerem Feld in 'bodenrichtwert_durchschnittspreise_eur_pro_qm'"
+        }
+      ]
+    },
+    {
+      "dataset": "Schülerinnen und Schüler an beruflichen Schulen in Wiesbaden - 2016 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696808d6ab5ad02500bdfa75",
+      "findings": []
+    },
+    {
+      "dataset": "Baufertigstellungen Wohngebäude in Wiesbaden – 1987 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d15fab5ad02500bdfa31",
+      "findings": []
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Ortsbezirken in Wiesbaden - August 2025",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696a889dab5ad02500bdfa8f",
+      "findings": []
+    },
+    {
+      "dataset": "Ortsbezirke in Wiesbaden",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6980da3056a7e02d9876f11d",
+      "findings": [
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Schülerinnen und Schüler an beruflichen Schulen nach Schulformen in Wiesbaden - 2016 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696808daab5ad02500bdfa77",
+      "findings": []
+    },
+    {
+      "dataset": "Genehmigte Neubauwohnungen Wiesbaden nach Ortsbezirken– 2012 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d63aab5ad02500bdfa5f",
+      "findings": [
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Bauüberhang in Wiesbaden – 2011 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d170ab5ad02500bdfa39",
+      "findings": []
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand mit Nebenwohnsitz nach Ortsbezirken in Wiesbaden - Januar 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6981252f56a7e02d9876f15e",
+      "findings": [
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Schülerinnen und Schüler an allgemeinbildenden Schulen in Wiesbaden - 2016 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696808d0ab5ad02500bdfa71",
+      "findings": []
+    },
+    {
+      "dataset": "Wohnungsbestand nach Ortsbezirken in Wiesbaden – 2020 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d655ab5ad02500bdfa69",
+      "findings": [
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Ortsbezirken in Wiesbaden - Juli 2025",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696a8899ab5ad02500bdfa8d",
+      "findings": []
+    },
+    {
+      "dataset": "Schülerinnen und Schüler an Schulen für Erwachsene in Wiesbaden - 2016 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696808ddab5ad02500bdfa79",
+      "findings": []
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Ortsbezirken in Wiesbaden - Juni 2025",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696a8896ab5ad02500bdfa8b",
+      "findings": []
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Ortsbezirken in Wiesbaden - April 2025",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696a8890ab5ad02500bdfa87",
+      "findings": []
+    },
+    {
+      "dataset": "Bauabgänge in Wiesbaden – 2011 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d15cab5ad02500bdfa2f",
+      "findings": []
+    },
+    {
+      "dataset": "Bodenrichtwerte in Euro je qm in Wiesbaden nach Ortsbezirken – 2001 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d62eab5ad02500bdfa5b",
+      "findings": [
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Durchschnittsalter nach Wahlbezirken in Wiesbaden - Januar 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6981256056a7e02d9876f168",
+      "findings": []
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Ortsbezirken in Wiesbaden - Januar 2025",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696a8842ab5ad02500bdfa81",
+      "findings": []
+    },
+    {
+      "dataset": "Angebotsmieten in Wiesbaden – 2007 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d156ab5ad02500bdfa2d",
+      "findings": []
+    },
+    {
+      "dataset": "Baugenehmigungen Wohnungen in Wiesbaden – 2001 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d168ab5ad02500bdfa37",
+      "findings": [
+        {
+          "regel": "R-NA",
+          "schwere": "WARNUNG",
+          "detail": "Platzhalter statt leerem Feld in 'kosten_insgesamt'"
+        }
+      ]
+    },
+    {
+      "dataset": "Öffentlich geförderter Wohnungsbau und Mietpreis in Wiesbaden nach Ortsbezirken – 2014 bis 2023",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d646ab5ad02500bdfa63",
+      "findings": [
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ausländerbeiratswahlen in Wiesbaden - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e74ff14da6a86120cf2146",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnishaushalt der Landeshauptstadt Wiesbaden - 2023 bis 2025",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69cbc4f24da6a86120cf2143",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-NUM",
+          "schwere": "WARNUNG",
+          "detail": "Tausenderpunkt in Zahlen ('betrag')"
+        }
+      ]
+    },
+    {
+      "dataset": "Durchschnittsalter und Frauenanteil der Kandidierenden und Wahlberechtigten zu den Ortsbeiratswahlen nach Ortsbezirken in Wiesbaden - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/699737d956a7e02d9876f170",
+      "findings": []
+    },
+    {
+      "dataset": "Durchschnittsalter und Frauenanteil der Kandidierenden und Wahlberechtigten zu den Kommunalwahlen in Wiesbaden - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/699737d456a7e02d9876f16e",
+      "findings": []
+    },
+    {
+      "dataset": "Kaufkraft und Arbeitsmarkt nach Ortsbezirken in Wiesbaden - Dezember 2025",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/699737d656a7e02d9876f16f",
+      "findings": [
+        {
+          "regel": "R-NUM",
+          "schwere": "WARNUNG",
+          "detail": "Tausenderpunkt in Zahlen ('kaufkraft_pro_einwohner')"
+        },
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Wahlergebnisse Ortsbeiratswahl nach Ortsbezirken in Wiesbaden - 2021",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/699737dc56a7e02d9876f171",
+      "findings": []
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Bierstadt - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7501e4da6a86120cf2160",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Bierstadt - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7501b4da6a86120cf215e",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Sonnenberg - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750084da6a86120cf2154",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Wahlberechtigte, Brief- und Urnenwähler/-innen zu den Ausländerbeiratswahlen in Wiesbaden - 2010 bis 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e74ff44da6a86120cf2148",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Übersicht der Wahlvorschläge zu den Ausländerbeiratswahlen in Wiesbaden - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e74ff74da6a86120cf214a",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Sonnenberg - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750004da6a86120cf2150",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Sonnenberg - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e74ffd4da6a86120cf214e",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Erbenheim - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750304da6a86120cf216a",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Biebrich - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750424da6a86120cf2174",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Rambach - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750794da6a86120cf2192",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Heßloch - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750884da6a86120cf219a",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Biebrich - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7503b4da6a86120cf2170",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "5 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke', 'PRO AUTO']"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Biebrich - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750374da6a86120cf216e",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Biebrich - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750344da6a86120cf216c",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Heßloch - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7507d4da6a86120cf2194",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Mitte - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750674da6a86120cf2188",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Mitte - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750634da6a86120cf2186",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Dotzheim - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750514da6a86120cf217c",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Dotzheim - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7504e4da6a86120cf217a",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "3 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke', 'Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Mitte - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750604da6a86120cf2184",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "3 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke', 'Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Nordenstadt - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750b44da6a86120cf21b4",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Heßloch - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750814da6a86120cf2196",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Dotzheim - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7504a4da6a86120cf2178",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Dotzheim- 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750464da6a86120cf2176",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Delkenheim - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750d04da6a86120cf21c4",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Delkenheim - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750cb4da6a86120cf21c2",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Delkenheim - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750c84da6a86120cf21c0",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "1 Spaltennamen nicht snake_case: ['Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Nordenstadt - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750b84da6a86120cf21b6",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "4 Spaltennamen nicht snake_case: ['GRÜNE', 'N! - Norschter Zukunft', 'FREIE WÄHLER']"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Heßloch - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750854da6a86120cf2198",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "1 Spaltennamen nicht snake_case: ['Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Delkenheim - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750c44da6a86120cf21be",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Rambach - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7506f4da6a86120cf218c",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Schierstein - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750d34da6a86120cf21c6",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Delkenheim- 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750c14da6a86120cf21bc",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Nordost - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751064da6a86120cf21e0",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Medenbach - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7513b4da6a86120cf21fc",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "2 Spaltennamen nicht snake_case: ['Die Linke', 'Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Breckenheim - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7514e4da6a86120cf2206",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "2 Spaltennamen nicht snake_case: ['GRÜNE', 'Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Igstadt - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750a94da6a86120cf21ac",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "3 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke', 'Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Nordost - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751024da6a86120cf21de",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "3 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke', 'Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Südost - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751634da6a86120cf2210",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "5 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke', 'PRO AUTO']"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Nordost - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750fe4da6a86120cf21dc",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Naurod - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751114da6a86120cf21e6",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Naurod - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7510d4da6a86120cf21e4",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Auringen - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751304da6a86120cf21f6",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Südost - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7516a4da6a86120cf2214",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Auringen - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7512c4da6a86120cf21f4",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Auringen - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751294da6a86120cf21f2",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "3 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke', 'Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Medenbach - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751374da6a86120cf21fa",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Amöneburg - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751724da6a86120cf2218",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Amöneburg - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7516e4da6a86120cf2216",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Medenbach - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751344da6a86120cf21f8",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Auringen - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751214da6a86120cf21ee",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Kastel - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751904da6a86120cf2228",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Kastel - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7518c4da6a86120cf2226",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Kastel - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751884da6a86120cf2224",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "2 Spaltennamen nicht snake_case: ['AUF AKK', 'Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Kostheim - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7519a4da6a86120cf222e",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "2 Spaltennamen nicht snake_case: ['AUF AKK', 'Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Rheingauviertel, Hollerborn - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751a94da6a86120cf2236",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Rheingauviertel, Hollerborn - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751a54da6a86120cf2234",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Kastel - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751854da6a86120cf2222",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Kostheim - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751974da6a86120cf222c",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Kostheim - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751934da6a86120cf222a",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Rheingauviertel, Hollerborn - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751b54da6a86120cf223c",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Westend, Bleichstraße - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751db4da6a86120cf2250",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Westend, Bleichstraße - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751d74da6a86120cf224e",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Klarenthal - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751c84da6a86120cf2246",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Klarenthal - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751c44da6a86120cf2244",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Westend, Bleichstraße - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751d04da6a86120cf224a",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Wahlberechtigte und Wahlbeteiligung zu den Ortsbeiratswahlen in Wiesbaden - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751de4da6a86120cf2252",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-OB-NAME",
+          "schwere": "FEHLER",
+          "detail": "Name passt nicht zur ID: ['06:Hollerborn', '08:Bleichstraße']"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Westend, Bleichstraße - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751cc4da6a86120cf2248",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Klarenthal - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751b94da6a86120cf223e",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Veränderung der Stimmenanteile nach Wahlvorschlägen und Ortsbezirken zur Stadtverordnetenwahl in Wiesbaden - 2026 gegenüber 2021",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751f54da6a86120cf225e",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "6 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke', 'PRO AUTO']"
+        },
+        {
+          "regel": "R-OB-NAME",
+          "schwere": "FEHLER",
+          "detail": "Name passt nicht zur ID: ['06:06 Rheingauviertel, Hollerborn_name', '08:08 Westend, Bleichstraße_name']"
+        },
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Stimmenanteile der Wahlvorschläge nach Wahlbeteiligungskategorien in den Ortsbezirken zur Stadtverordnetenwahl in Wiesbaden - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e752074da6a86120cf2268",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "5 Spaltennamen nicht snake_case: ['GRÜNE', 'DIE LINKE', 'FREIE WÄHLER']"
+        }
+      ]
+    },
+    {
+      "dataset": "Wahlberechtigte, Brief- und Urnenwähler/-innen zur Stadtverordnetenwahl in Wiesbaden - 2011 bis 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7520e4da6a86120cf226c",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zur Stadtverordnetenwahl in Wiesbaden - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e752034da6a86120cf2266",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "7 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke', 'PRO AUTO']"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung der Wahlvorschläge in der Stadverordnetenversammlung in Wiesbaden - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751f14da6a86120cf225c",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Wahlbeteiligung bei Bundestags-, Landtags-, Europa- und Kommunalwahlen in Wiesbaden - 1972 bis 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751ed4da6a86120cf225a",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Übersicht der Wahlvorschläge zu den Ortsbeiratswahlen in Wiesbaden - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751e24da6a86120cf2254",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung der Wahlvorschläge in den Ortsbeiräten in Wiesbaden - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751e94da6a86120cf2258",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "6 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke', 'PRO AUTO']"
+        },
+        {
+          "regel": "R-OB-NAME",
+          "schwere": "FEHLER",
+          "detail": "Name passt nicht zur ID: ['06:Hollerborn', '08:Bleichstraße']"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Rambach - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7506b4da6a86120cf218a",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis nach Wahlvorschlägen und Ortsbezirken zur Stadtverordnetenwahl in Wiesbaden - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e752214da6a86120cf2276",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "6 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke', 'PRO AUTO']"
+        },
+        {
+          "regel": "R-OB-NAME",
+          "schwere": "FEHLER",
+          "detail": "Name passt nicht zur ID: ['06:Hollerborn', '08:Bleichstraße']"
+        },
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Stimmenanteile aus Urnen- und Briefwahl zur Stadtverordnetenversammlung in Wiesbaden - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e752254da6a86120cf2278",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gültige Urnenwahlstimmzettel zur Stadtverordnetenwahl - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e752164da6a86120cf2270",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zur Stadtverordnetenwahl in Wiesbaden - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7521d4da6a86120cf2274",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Liquidität (Bilanzposition „flüssige Mittel“) der Kernverwaltung",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e78de54da6a86120cf227a",
+      "findings": []
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Ortsbezirken in Wiesbaden - Februar 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a0c447b4da6a86120cf2280",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "5 Spaltennamen nicht snake_case: ['Ortsbezirk ID', 'Bevölkerungsbestand', 'Männer']"
+        },
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Ortsbezirken in Wiesbaden - April 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a0c44824da6a86120cf2286",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "5 Spaltennamen nicht snake_case: ['Ortsbezirk ID', 'Bevölkerungsbestand', 'Männer']"
+        },
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Wahlbezirken in Wiesbaden - Februar 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a0c448f4da6a86120cf2292",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "4 Spaltennamen nicht snake_case: ['Wahlbezirk ID', 'Bevölkerungsbestand', 'Männer']"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Durchschnittsalter nach Ortsbezirken in Wiesbaden - März 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a0c449d4da6a86120cf229e",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "2 Spaltennamen nicht snake_case: ['Ortsbezirk ID', 'Ortsbezirk Name']"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Durchschnittsalter nach Ortsbezirken in Wiesbaden - April 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a0c44a04da6a86120cf22a1",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "2 Spaltennamen nicht snake_case: ['Ortsbezirk ID', 'Ortsbezirk Name']"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Durchschnittsalter nach Wahlbezirken in Wiesbaden - Februar 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a0c44ae4da6a86120cf22ad",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "1 Spaltennamen nicht snake_case: ['Wahlbezirk ID']"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Durchschnittsalter nach Ortsbezirken in Wiesbaden - Dezember 2025",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a0efba5bed1417d864298bb",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "2 Spaltennamen nicht snake_case: ['Ortsbezirk ID', 'Ortsbezirk Name']"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Durchschnittsalter nach Wahlbezirken in Wiesbaden - Dezember 2025",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a0efba8bed1417d864298be",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "1 Spaltennamen nicht snake_case: ['Wahlbezirk ID']"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Wahlbezirken in Wiesbaden - Mai 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a20041fbed1417d864298c4",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "4 Spaltennamen nicht snake_case: ['Wahlbezirk ID', 'Bevölkerungsbestand', 'Männer']"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Durchschnittsalter nach Ortsbezirken in Wiesbaden - Mai 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a200422bed1417d864298c7",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "2 Spaltennamen nicht snake_case: ['Ortsbezirk ID', 'Ortsbezirk Name']"
+        }
+      ]
+    },
+    {
+      "dataset": "Wahlverhalten von Männern nach Alter bei der Kommunalwahl -2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a3570abbed1417d864298cf",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "2 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke']"
+        }
+      ]
+    },
+    {
+      "dataset": "Wahlverhalten von Frauen nach Alter bei der Kommunalwahl -2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a3570eebed1417d864298d1",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "2 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke']"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Wahlbezirken in Wiesbaden - Januar 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6981252456a7e02d9876f15c",
+      "findings": []
+    },
+    {
+      "dataset": "Haushalte nach Art der Wohnungsnutzung in Wiesbaden nach Ortsbezirken– 2006 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d640ab5ad02500bdfa61",
+      "findings": [
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Ortsbezirken in Wiesbaden - März 2025",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696a888dab5ad02500bdfa85",
+      "findings": []
+    },
+    {
+      "dataset": "Kurzinfo Durchschnittsalter nach Ortsbezirken in Wiesbaden - Januar 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6981254d56a7e02d9876f164",
+      "findings": [
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Ortsbezirken in Wiesbaden - November 2025",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696a88a6ab5ad02500bdfa95",
+      "findings": []
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Ortsbezirken in Wiesbaden - Oktober 2025",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696a88a3ab5ad02500bdfa93",
+      "findings": []
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Ortsbezirken in Wiesbaden - Mai 2025",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696a8893ab5ad02500bdfa89",
+      "findings": []
+    },
+    {
+      "dataset": "Bauzeit in Wiesbaden – 1987 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d173ab5ad02500bdfa3b",
+      "findings": []
+    },
+    {
+      "dataset": "Wohnungs- und Wohngebäudestruktur nach Ortsbezirken in Wiesbaden – 2011 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d65aab5ad02500bdfa6b",
+      "findings": [
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Ortsbezirken in Wiesbaden - Februar 2025",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696a888aab5ad02500bdfa83",
+      "findings": []
+    },
+    {
+      "dataset": "Schülerinnen und Schüler an allgemeinbildenden Schulen nach Jahrgangsstufen in Wiesbaden - 2016 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696808d3ab5ad02500bdfa73",
+      "findings": []
+    },
+    {
+      "dataset": "Öffentliche Ladeeinrichtungen in Wiesbaden - Januar 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696ad14eab5ad02500bdfaa1",
+      "findings": [
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "23 Spaltennamen nicht snake_case: ['Anzeigename (Karte)', 'Art der Ladeeinrichtung', 'Anzahl Ladepunkte']"
+        },
+        {
+          "regel": "R-NA",
+          "schwere": "WARNUNG",
+          "detail": "Platzhalter statt leerem Feld in 'Öffnungszeiten'"
+        },
+        {
+          "regel": "R-OB-ID",
+          "schwere": "FEHLER",
+          "detail": "ungueltige ortsbezirk_id: ['nan']"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Ortsbezirken in Wiesbaden - Januar 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6981251156a7e02d9876f158",
+      "findings": [
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Übersicht Bauen und Wohnen in Wiesbaden – 2012 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d182ab5ad02500bdfa41",
+      "findings": []
+    },
+    {
+      "dataset": "Schulentlassene aus beruflichen Schulen in Wiesbaden - 2016 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696808e3ab5ad02500bdfa7d",
+      "findings": []
+    },
+    {
+      "dataset": "Langzeitübersicht Bildung in Wiesbaden - 2016 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696808cdab5ad02500bdfa6f",
+      "findings": []
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Ortsbezirken in Wiesbaden - September 2025",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696a88a0ab5ad02500bdfa91",
+      "findings": []
+    },
+    {
+      "dataset": "Fertiggestellte Neubauwohnungen in Wiesbaden nach Ortsbezirken – 2020 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d637ab5ad02500bdfa5d",
+      "findings": [
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Bautätigkeit in Wiesbaden nach Ortsbezirken – 2012 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d62bab5ad02500bdfa59",
+      "findings": [
+        {
+          "regel": "R-NA",
+          "schwere": "WARNUNG",
+          "detail": "Platzhalter statt leerem Feld in 'zu_abgang_von_wohnungen'"
+        },
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Wohnungen nach Größe in Wiesbaden nach Ortsbezirken – 2011 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d651ab5ad02500bdfa67",
+      "findings": [
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Allgemeinbildende Schulen nach Schulformen in Wiesbaden - 2016 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696808caab5ad02500bdfa6d",
+      "findings": []
+    },
+    {
+      "dataset": "Baufertigstellungen Wohnungen in Wiesbaden – 2011 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d162ab5ad02500bdfa33",
+      "findings": [
+        {
+          "regel": "R-NA",
+          "schwere": "WARNUNG",
+          "detail": "Platzhalter statt leerem Feld in 'zu_abgang_von_wohnungen_an_bestehenden_gebaeuden_in_der_baufertiggestellung'"
+        }
+      ]
+    },
+    {
+      "dataset": "Öffentlich geförderter Wohnungsbau, Eigentümerquote, Leerstandsquote in Wiesbaden – 2015 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d17cab5ad02500bdfa3f",
+      "findings": []
+    },
+    {
+      "dataset": "Wohnungs- und Gebäudestruktur in Wiesbaden – 2012 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/6966d186ab5ad02500bdfa43",
+      "findings": [
+        {
+          "regel": "R-NA",
+          "schwere": "WARNUNG",
+          "detail": "Platzhalter statt leerem Feld in 'veraenderung'"
+        }
+      ]
+    },
+    {
+      "dataset": "Schulentlassene aus allgemeinbildenden Schulen in Wiesbaden - 2019 bis 2024",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/696808e0ab5ad02500bdfa7b",
+      "findings": []
+    },
+    {
+      "dataset": "Altersgruppen der Wahlberechtigten zur Stadtverordnetenversammlung und zu den Ortsbeiräten nach Ortsbezirken in Wiesbaden - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/699738e056a7e02d9876f172",
+      "findings": [
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Altersgruppen der Wahlberechtigten zum Ausländerbeirat nach Ortsbezirken in Wiesbaden - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/699737ca56a7e02d9876f16b",
+      "findings": [
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Wahlberechtigte zum Ausländerbeirat nach Alter und Geschlecht in Wiesbaden - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/699737ce56a7e02d9876f16c",
+      "findings": []
+    },
+    {
+      "dataset": "Wohndauer der Wahlberechtigten zum Ausländerbeirat in Wiesbaden - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store//data/699737d056a7e02d9876f16d",
+      "findings": []
+    },
+    {
+      "dataset": "Ergebnis zu den Ausländerbeiratswahlen in Wiesbaden - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e74ffa4da6a86120cf214c",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Sonnenberg - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7500b4da6a86120cf2156",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Erbenheim - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7502d4da6a86120cf2168",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Sonnenberg - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750044da6a86120cf2152",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "3 Spaltennamen nicht snake_case: ['GRÜNE', 'FREIE WÄHLER', 'Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Erbenheim - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750294da6a86120cf2166",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "4 Spaltennamen nicht snake_case: ['FWG Erbenheim', 'Die Linke', 'FREIE WÄHLER']"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Bierstadt - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750174da6a86120cf215c",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "3 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke', 'Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Erbenheim - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750264da6a86120cf2164",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Bierstadt - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750134da6a86120cf215a",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Bierstadt - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7500f4da6a86120cf2158",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Heßloch - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7508c4da6a86120cf219c",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Dotzheim - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750554da6a86120cf217e",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Biebrich - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7503f4da6a86120cf2172",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Rambach - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750764da6a86120cf2190",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Rambach - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750724da6a86120cf218e",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "3 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke', 'Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Kloppenheim - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750934da6a86120cf21a0",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Mitte - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7505c4da6a86120cf2182",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Kloppenheim - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750904da6a86120cf219e",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Erbenheim- 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750224da6a86120cf2162",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Kloppenheim - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7509e4da6a86120cf21a6",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Igstadt - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750af4da6a86120cf21b0",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Kloppenheim - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7509b4da6a86120cf21a4",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Nordenstadt - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750bb4da6a86120cf21b8",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Igstadt - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750ac4da6a86120cf21ae",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Kloppenheim - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750974da6a86120cf21a2",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "1 Spaltennamen nicht snake_case: ['Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Igstadt - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750a54da6a86120cf21aa",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Igstadt - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750a24da6a86120cf21a8",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Nordenstadt - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750b14da6a86120cf21b2",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Nordenstadt - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750be4da6a86120cf21ba",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Schierstein - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750e24da6a86120cf21ce",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Frauenstein - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750f24da6a86120cf21d6",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Schierstein - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750df4da6a86120cf21cc",
+      "findings": []
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Frauenstein - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750ee4da6a86120cf21d4",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "1 Spaltennamen nicht snake_case: ['Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Schierstein - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750db4da6a86120cf21ca",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "3 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke', 'Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Frauenstein - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750ea4da6a86120cf21d2",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Schierstein - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750d74da6a86120cf21c8",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Frauenstein - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750e64da6a86120cf21d0",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Breckenheim - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751564da6a86120cf220a",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Frauenstein - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750f64da6a86120cf21d8",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Nordost - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751094da6a86120cf21e2",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Breckenheim - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751524da6a86120cf2208",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Südost - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751674da6a86120cf2212",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Amöneburg - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751764da6a86120cf221a",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "2 Spaltennamen nicht snake_case: ['AUF AKK', 'Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Südost - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7515e4da6a86120cf220e",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Nordost - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750f94da6a86120cf21da",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Südost - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7515a4da6a86120cf220c",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Medenbach - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751434da6a86120cf2200",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Amöneburg - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7517e4da6a86120cf221e",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Naurod - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7511d4da6a86120cf21ec",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Amöneburg - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7517a4da6a86120cf221c",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Medenbach - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7513f4da6a86120cf21fe",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Naurod - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751194da6a86120cf21ea",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Naurod - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751154da6a86120cf21e8",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "3 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke', 'Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Auringen - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751254da6a86120cf21f0",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Mitte - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e750584da6a86120cf2180",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Rheingauviertel, Hollerborn - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751b14da6a86120cf223a",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Rheingauviertel, Hollerborn - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751ad4da6a86120cf2238",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "3 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke', 'Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen in Wiesbaden Kostheim - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751a24da6a86120cf2232",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Westend, Bleichstraße - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751d34da6a86120cf224c",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "3 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke', 'Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Gewählte Kandidierende nach Wahlvorschlägen und Stimmen zu den Ortsbeiratswahlen in Wiesbaden Kostheim - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7519e4da6a86120cf2230",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Panaschiersalden zwischen den Wahlvorschlägen zu den Ortsbeiratswahlen in Wiesbaden Klarenthal - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751c04da6a86120cf2242",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "3 Spaltennamen nicht snake_case: ['GRÜNE', 'FREIE WÄHLER', 'Insgesamt von anderen erhalten']"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Klarenthal - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751bc4da6a86120cf2240",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Sitzverteilung zu den Ortsbeiratswahlen in Wiesbaden Breckenheim - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7514b4da6a86120cf2204",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Breckenheim - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751474da6a86120cf2202",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Verbindlichkeiten aus Kreditaufnahmen für Investitionen",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e78f0d4da6a86120cf227c",
+      "findings": []
+    },
+    {
+      "dataset": "Anteile von unveränderten, kumulierten und panaschierten Stimmzetteln nach Wahlvorschlägen zur Stadtverordnetenwahl in Wiesbaden - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751ff4da6a86120cf2264",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "6 Spaltennamen nicht snake_case: ['unverändert abs.', 'unverändert %', 'kumuliert abs.']"
+        }
+      ]
+    },
+    {
+      "dataset": "Wahlbeteiligung nach Ortsbezirken zur Stadtverordnetenwahl in Wiesbaden - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e7520a4da6a86120cf226a",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-OB-NAME",
+          "schwere": "FEHLER",
+          "detail": "Name passt nicht zur ID: ['06:Hollerborn', '08:Bleichstraße']"
+        },
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Übersicht der Wahlvorschläge zur Stadtverordnetenwahl in Wiesbaden - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751f84da6a86120cf2260",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Wahlberechtigte bei Stadtverordnetenwahlen in Wiesbaden - 1977 bis 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751fc4da6a86120cf2262",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gültige Briefwahlstimmzettel zur Stadtverordnetenwahl - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e752194da6a86120cf2272",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Stimmenanteile der Wahlvorschläge in den Ortsbeiräten in Wiesbaden - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751e64da6a86120cf2256",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "6 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke', 'PRO AUTO']"
+        },
+        {
+          "regel": "R-OB-NAME",
+          "schwere": "FEHLER",
+          "detail": "Name passt nicht zur ID: ['06:Hollerborn', '08:Bleichstraße']"
+        }
+      ]
+    },
+    {
+      "dataset": "Ergebnis zu den Ortsbeiratswahlen in Wiesbaden Kastel - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e751814da6a86120cf2220",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Gültige Stimmzettel zur Stadtverordnetenwahl - 2021 und 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e752124da6a86120cf226e",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Bürgschaftsvolumen (gegenüber verbundenen Unternehmen und Dritten)",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/69e791624da6a86120cf227e",
+      "findings": []
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Ortsbezirken in Wiesbaden - März 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a0c447e4da6a86120cf2283",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "5 Spaltennamen nicht snake_case: ['Ortsbezirk ID', 'Bevölkerungsbestand', 'Männer']"
+        },
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Wahlbezirken in Wiesbaden - März 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a0c44934da6a86120cf2295",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "4 Spaltennamen nicht snake_case: ['Wahlbezirk ID', 'Bevölkerungsbestand', 'Männer']"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Wahlbezirken in Wiesbaden - April 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a0c44964da6a86120cf2298",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "4 Spaltennamen nicht snake_case: ['Wahlbezirk ID', 'Bevölkerungsbestand', 'Männer']"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Durchschnittsalter nach Ortsbezirken in Wiesbaden - Februar 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a0c44994da6a86120cf229b",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "2 Spaltennamen nicht snake_case: ['Ortsbezirk ID', 'Ortsbezirk Name']"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Durchschnittsalter nach Wahlbezirken in Wiesbaden - März 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a0c44b14da6a86120cf22b0",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "1 Spaltennamen nicht snake_case: ['Wahlbezirk ID']"
+        }
+      ]
+    },
+    {
+      "dataset": "Struktur der Wählerschaft der Wahlvorschläge nach Alter und Geschlecht bei der Kommunalwahl - 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a3571f2bed1417d864298d5",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "1 Spaltennamen nicht snake_case: ['Die Linke']"
+        }
+      ]
+    },
+    {
+      "dataset": "Wahlverhalten nach Alter bei der Kommunalwahl -2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a357043bed1417d864298cd",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "2 Spaltennamen nicht snake_case: ['GRÜNE', 'Die Linke']"
+        }
+      ]
+    },
+    {
+      "dataset": "Wahlbeteiligung nach Alter und Geschlecht bei der Kommunalwahl - 2026 und 2021",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a35718abed1417d864298d3",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Bevölkerungsbestand nach Ortsbezirken in Wiesbaden - Mai 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a20041bbed1417d864298c1",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "5 Spaltennamen nicht snake_case: ['Ortsbezirk ID', 'Bevölkerungsbestand', 'Männer']"
+        },
+        {
+          "regel": "R-OB-GES",
+          "schwere": "HINWEIS",
+          "detail": "unbeschriftete Gesamtzeile (00) zwischen den Bezirken"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Durchschnittsalter nach Wahlbezirken in Wiesbaden - Mai 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a200425bed1417d864298ca",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "1 Spaltennamen nicht snake_case: ['Wahlbezirk ID']"
+        }
+      ]
+    },
+    {
+      "dataset": "Kurzinfo Durchschnittsalter nach Wahlbezirken in Wiesbaden - April 2026",
+      "url": "https://opendata.cloud.wiesbaden.de/api/hub/store/data/6a0c4f974da6a86120cf22b9",
+      "findings": [
+        {
+          "regel": "R-ENC",
+          "schwere": "WARNUNG",
+          "detail": "UTF-8 mit BOM (Leitfaden: ohne BOM)"
+        },
+        {
+          "regel": "R-COL",
+          "schwere": "WARNUNG",
+          "detail": "1 Spaltennamen nicht snake_case: ['Wahlbezirk ID']"
+        }
+      ]
+    }
+  ]
+}

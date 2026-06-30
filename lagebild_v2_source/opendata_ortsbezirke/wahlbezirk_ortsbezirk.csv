@@ -1,0 +1,30 @@
+statistischer_bezirk;ortsbezirk_nummer;anzahl_wahlbezirke;ortsbezirk_name;methode
+01;01;10;Mitte;praefix_gleich_ortsbezirk
+02;02;14;Nordost;praefix_gleich_ortsbezirk
+03;03;4;Südost;praefix_gleich_ortsbezirk
+04;;5;;ungeklaert_amtliche_gebietsgliederung_noetig
+05;;5;;ungeklaert_amtliche_gebietsgliederung_noetig
+06;06;10;Rheingauviertel, Hollerborn;praefix_gleich_ortsbezirk
+07;07;4;Klarenthal;praefix_gleich_ortsbezirk
+08;08;7;Westend, Bleichstraße;praefix_gleich_ortsbezirk
+11;11;6;Sonnenberg;praefix_gleich_ortsbezirk
+12;12;9;Bierstadt;praefix_gleich_ortsbezirk
+13;13;5;Erbenheim;praefix_gleich_ortsbezirk
+14;14;10;Biebrich;praefix_gleich_ortsbezirk
+15;;10;;ungeklaert_amtliche_gebietsgliederung_noetig
+16;16;14;Dotzheim;praefix_gleich_ortsbezirk
+21;21;2;Rambach;praefix_gleich_ortsbezirk
+22;22;1;Heßloch;praefix_gleich_ortsbezirk
+23;23;2;Kloppenheim;praefix_gleich_ortsbezirk
+24;24;2;Igstadt;praefix_gleich_ortsbezirk
+25;25;6;Nordenstadt;praefix_gleich_ortsbezirk
+26;26;3;Delkenheim;praefix_gleich_ortsbezirk
+27;27;6;Schierstein;praefix_gleich_ortsbezirk
+28;28;2;Frauenstein;praefix_gleich_ortsbezirk
+31;31;3;Naurod;praefix_gleich_ortsbezirk
+32;32;3;Auringen;praefix_gleich_ortsbezirk
+33;33;2;Medenbach;praefix_gleich_ortsbezirk
+34;34;3;Breckenheim;praefix_gleich_ortsbezirk
+51;51;1;Amöneburg;praefix_gleich_ortsbezirk
+52;52;6;Kastel;praefix_gleich_ortsbezirk
+53;53;8;Kostheim;praefix_gleich_ortsbezirk
