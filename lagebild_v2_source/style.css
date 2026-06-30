@@ -3234,6 +3234,24 @@ html[data-lang="ls"] .ls-banner { display: block; }
   background: color-mix(in srgb, var(--warn, #B7873E) 6%, transparent);
   opacity: 0.7;
 }
+/* v2.8 — Illustrativ-Badge: Werte ohne verifizierte Open-Data-Quelle ehrlich kennzeichnen.
+   Gestrichelter Rahmen (vs. solide Stand-Badges) signalisiert „kein fester Datenpunkt". */
+.kpi-illustrativ {
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 1px 6px;
+  margin-top: 2px;
+  border-radius: 3px;
+  border: 1px dashed var(--warn, #B7873E);
+  color: var(--warn, #B7873E);
+  background: color-mix(in srgb, var(--warn, #B7873E) 8%, transparent);
+  white-space: nowrap;
+  opacity: 0.9;
+}
 
 /* ========== KPI clickability hint (e.g. Kita) ========== */
 .kpi-card[data-kpi-clickable="1"] {

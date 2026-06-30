@@ -1752,9 +1752,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const KPI_STAND = {
     population:   { status: 'static_real', standDate: '2025-01' },
     air:          { status: 'static_real', standDate: (UBA_AIRQUALITY && UBA_AIRQUALITY.meta && UBA_AIRQUALITY.meta.period && UBA_AIRQUALITY.meta.period.to) || '' },
-    transit:      { status: 'unconfirmed', standDate: '' },
+    transit:      { status: 'unconfirmed', standDate: '', illustrative: true },
     construction: { status: 'static_real', standDate: '2024' },
-    energy:       { status: 'static_real', standDate: '2024-Q4' },
+    energy:       { status: 'static_real', standDate: '2024-Q4', illustrative: true },
     // v2.7: build-time snapshot is real Tankerkönig data; refreshFuelLive() upgrades to 'live'.
     fuel:         (function(){
       var meta = (window.LAGEBILD_DATA && window.LAGEBILD_DATA.FUEL_STATIONS_V2_META) || null;
@@ -1927,6 +1927,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const standHtml = stand
         ? `<span class="kpi-stand kpi-stand--${stand.status}" title="${fmtStand(stand)}">${fmtStand(stand)}</span>`
         : '';
+      // v2.8: Illustrativ-Badge — Werte ohne verifizierte Open-Data-Quelle ehrlich markieren
+      const illuDict = D.I18N[document.querySelector('.lang-btn.active')?.dataset.lang || 'de'] || D.I18N.de;
+      const illuHtml = (stand && stand.illustrative)
+        ? `<span class="kpi-illustrativ" title="${illuDict.kpi_illustrativ_tip || ''}">${illuDict.kpi_illustrativ || 'Illustrativ'}</span>`
+        : '';
       card.innerHTML = `
         <div class="kpi-card-header">
           <span class="kpi-icon">${opt.icon}</span>
@@ -1937,6 +1942,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="kpi-meta">
           <span class="kpi-change">${change}</span>
           <span class="kpi-source">${source}</span>
+          ${illuHtml}
         </div>
         ${popHint}
       `;
