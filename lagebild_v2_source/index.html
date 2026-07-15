@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wiesbaden-Lagebild · Echtzeit-Daten der Landeshauptstadt</title>
 
+  <!-- Google Analytics (GA4). Must stay above the "Leaflet" block below —
+       build_v2.sh's head-extraction (sed, line 21) only keeps head content
+       up through the Leaflet <link>; anything placed after it is dropped
+       from the built/deployed file. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QTCVMKSQ9H"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-QTCVMKSQ9H');
+  </script>
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
